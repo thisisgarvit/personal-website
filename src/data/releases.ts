@@ -11,17 +11,22 @@
  * ticker line reproduces the PRD strings verbatim, e.g.
  * `v2.4.1 — fixed: hero said “passionate”. rolled back.`
  *
- * DATES (content-QA note): PRD §5.1 forbids invented dates — each date
- * below is a real recorded project milestone:
- *  - 2026-08-15 → production build started (DESIGN.md/PRD locked,
- *    Task 3 scaffold committed). Mapped to the v2.4.1 "fixed" note —
- *    the newest entry belongs to the newest milestone.
- *  - 2026-07-17 → approved vertical slice shipped (slice-product.html,
- *    slice-notes.md). Mapped to the "shipped" note — the slice is the
- *    build in which portfolio tickets first became a working board.
- *  - 2026-07-16 → "This site is my product" concept chosen
- *    (design-directions-curated.md / concept spec). Mapped to the
- *    "known issue" note as the oldest surviving entry.
+ * DATES (content-QA note, verified in Task 5): PRD §5.1 forbids invented
+ * dates — each date below is a real recorded project milestone:
+ *  - 2026-08-15 → production build started (DESIGN.md/PRD locked and
+ *    Task 3 scaffold committed 2026-08-15 per git log). Mapped to the
+ *    v2.4.1 "fixed" note — the newest entry belongs to the newest
+ *    milestone.
+ *  - 2026-07-17 → approved vertical slice shipped AND "This site is my
+ *    product" concept chosen (slice-product.html / slice-notes.md file
+ *    dates 17 Jul; CONCEPT-SPEC-product-site.md records the choice as
+ *    2026-07-17). Mapped to the "shipped" note — the slice is the build
+ *    in which portfolio tickets first became a working board.
+ *  - 2026-07-14 → Stay Portal built: all 21 commits dated 2026-07-14
+ *    (airbnb-portal-case-study-raw.md — Quantifiable facts). Mapped to
+ *    the "known issue" note as the oldest surviving entry. (Task 4 had
+ *    mapped this note to a 2026-07-16 "concept chosen" milestone, but no
+ *    record supports 07-16 — the concept choice is recorded as 07-17.)
  * Task 12 records the actual v2.4.1 launch date at release.
  */
 
@@ -57,7 +62,7 @@ export const releases: readonly ReleaseNote[] = [
   {
     id: "rel-2-3-2",
     version: "2.3.2",
-    date: "2026-07-16",
+    date: "2026-07-14",
     type: "known-issue",
     copy: "still opens too many product tabs.",
   },

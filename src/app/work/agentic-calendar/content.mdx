@@ -1,0 +1,97 @@
+{/* Source of truth: content-source/agentic-calendar.md (faithful Notion
+    conversion). Every factual claim below traces to that file. */}
+
+A concept for an agentic layer that sits on top of the calendar tools you
+already use — one that understands your priorities, schedules proactively,
+takes actions on your behalf, and knows when to ask first.
+
+## Situation
+
+The brief: imagine a future where the calendar itself is an intelligent
+agent, and redesign how people interact with a proactive, autonomous
+scheduling system from the ground up.
+
+Today's calendars — including the AI schedulers — still make you do the
+work: block focus time, add personal time, enter every task, maintain the
+grid by hand. The scan of current players (Reclaim, FlowSavvy, Clockwise,
+Todoist, Motion, Toki, Codot, SkedPal, Notion Calendar) plus user-needs
+mining on Reddit and blogs shaped where an agent could genuinely differ.
+
+## The bet
+
+Don't build another feature-heavy calendar app. Build an intelligent
+agentic layer that works with the tools people already run — Google
+Calendar, Notion Calendar, Reclaim — and reduces cognitive load through
+close-to-autonomous decision-making.
+
+There is a second, colder reason to ship a layer instead of an app: it
+collects real data on user behavior and problems first, so build effort
+stays pointed at things that will never go to waste.
+
+## The system
+
+Everything an agent does well starts with context. The concept's first
+commitment is context-aware intelligence assembled through integrations
+with the tools a working week actually touches:
+
+1. **Existing calendars** (Google Calendar, Notion Calendar, tools like
+   Reclaim) — meeting, work, and personal commitment patterns; creating and
+   managing events.
+2. **Slack and Gmail** — conversations, tags, flight bookings, and action
+   items that reveal task priority.
+3. **Google or Atlassian workspace** (Docs, Jira tickets and roadmaps) —
+   what work matters and how much.
+4. **Meeting-notes tools like Granola** — action items owed to you, so
+   nothing is forgotten.
+5. **Apps like Uber and MakeMyTrip** — so the agent can act, such as
+   booking the cab before the flight.
+
+On that context, four capabilities:
+
+1. **Intelligent monitoring of goals and priorities.** Instead of forcing
+   you to block every minute, the agent learns your natural work rhythms
+   and classifies time into creative, operational, and restorative
+   timespace — then schedules work into the times it will actually fit.
+2. **Autonomous permissions to negotiate on your behalf.** Tell it "this
+   meeting will run 30 minutes over and I need two hours after" and it
+   reschedules what follows, messaging attendees through mail or Slack —
+   prioritized by attendees, agenda, and task priority pulled from the
+   integrations. On sick leave, it attends as your proxy or declines
+   intelligently. People who want your time talk to your agent, not your
+   assistant.
+3. **An all-time helper across past, present, and future.** It prepares as
+   well as schedules: notes from previous meetings ready before the next
+   one, the follow-up drafted after, the cab booked before the flight, and
+   agent-to-agent scheduling inside the business with no intervention.
+4. **You stay in control of the smart suggestions.** The agent proposes
+   improvements based on your observed patterns — and autonomy never means
+   losing the wheel.
+
+## Approval boundaries
+
+The line between "do it" and "ask me" is itself priority-aware: the agent
+is expected to know when an action needs approval and when it does not. The
+prototype makes that boundary a first-class surface — an Actions tab
+listing every agent decision that needs sign-off, each with clear context
+and simple approve/decline buttons, keeping a deliberate balance between
+automation and user control.
+
+## Prototype walkthrough
+
+The [mockups](https://html-starter-sandy-sigma.vercel.app/) — wireframes
+generated with Claude, deployed on Vercel — show five tabs in web and
+mobile views, plus chat and mic input for talking to the agent in real
+time:
+
+1. **Calendar** — a clean day view of AI-optimized blocks from every
+   connected calendar, with personal events routed to personal calendars
+   and professional events to professional ones.
+2. **Actions** — the approval queue described above.
+3. **Suggestions** — recommendations from pattern analysis shown as a
+   git-style diff, each with its expected benefit; align them at the start
+   of the day and follow a conflict-free schedule.
+4. **Tasks** — a unified list from Gmail, Jira, Slack, and Notion with
+   priority, source, due date, and time estimates, for work not yet on the
+   calendar.
+5. **Analytics** — quantifying how much time the agent streamlined versus
+   manual calendar management.

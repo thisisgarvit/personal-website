@@ -63,19 +63,19 @@ export const workItems: readonly WorkItem[] = [
         value: "5",
         label: "rooms",
         sourceRef:
-          "PRD.md §8 permitted evidence (five apartments); slice-product.html cases.stay",
+          "airbnb-portal-case-study-raw.md — The product (5 apartments); PRD.md §8 permitted evidence",
       },
       {
         value: "484",
         label: "bookings imported",
         sourceRef:
-          "PRD.md §8 permitted evidence (484 historical bookings); slice-product.html cases.stay",
+          "airbnb-portal-case-study-raw.md — Quantifiable facts (484 historical bookings); PRD.md §8 permitted evidence",
       },
       {
         value: "₹0",
         label: "monthly infra",
         sourceRef:
-          "PRD.md §8 permitted evidence (₹0 monthly infrastructure cost); slice-product.html cases.stay",
+          "airbnb-portal-case-study-raw.md — Quantifiable facts (₹0/month running cost); PRD.md §8 permitted evidence",
       },
     ],
   },
@@ -164,19 +164,19 @@ export const workItems: readonly WorkItem[] = [
         value: "1",
         label: "hardware constraint",
         sourceRef:
-          "content-source/one-delightful-product-experience.md; slice-product.html cases.island",
+          "content-source/garvit-sukhija-product-thinking-and-case-studies.md — Dynamic Island teaser (“turning hardware constraints into product magic”); slice-product.html cases.island",
       },
       {
         value: "0",
         label: "new core functions",
         sourceRef:
-          "content-source/one-delightful-product-experience.md; slice-product.html cases.island",
+          "content-source/one-delightful-product-experience.md — What Made it Special (“the functionality in itself was not new”); slice-product.html cases.island",
       },
       {
         value: "10%",
         label: "where delight lives",
         sourceRef:
-          "content-source/one-delightful-product-experience.md; slice-product.html cases.island",
+          "PRD.md §8 /notes/dynamic-island required story (the final 10%); slice-product.html cases.island",
       },
     ],
   },
@@ -203,4 +203,13 @@ export const boardColumns: readonly { id: BoardColumn; label: string }[] = [
 
 export function itemsForColumn(column: BoardColumn): readonly WorkItem[] {
   return workItems.filter((item) => item.authoredColumn === column);
+}
+
+/** Lookup by slug; the union type makes a miss unrepresentable. */
+export function workBySlug(slug: WorkSlug): WorkItem {
+  const item = workItems.find((candidate) => candidate.slug === slug);
+  if (!item) {
+    throw new Error(`Unknown work slug: ${slug}`);
+  }
+  return item;
 }

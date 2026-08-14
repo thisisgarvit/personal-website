@@ -1,0 +1,46 @@
+/* Case-route artifact frames (DESIGN.md §11): rule/radius system frame for
+   physical screenshots; screenshots keep their authored appearance in dark
+   mode (DESIGN.md §6 — no inversion/blending). */
+
+.figure {
+  margin: var(--space-12) 0;
+}
+
+.frame {
+  display: block;
+  overflow: hidden;
+  border: var(--rule);
+  border-radius: var(--radius-panel);
+  background: var(--color-panel);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  margin-top: var(--space-3);
+  font: 400 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+  color: var(--color-muted);
+}
+
+/* Phone-viewport screenshots sit two-up where the column allows. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin: var(--space-12) 0;
+}
+
+.grid .figure {
+  margin: 0;
+}
+
+@media (max-width: 559px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

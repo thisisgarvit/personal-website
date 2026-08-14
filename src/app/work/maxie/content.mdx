@@ -1,0 +1,239 @@
+{/* Source of truth: content-source/ai-browser-maxie.md (faithful Notion
+    conversion). Every factual claim below traces to that file. Per PRD §8:
+    this is Garvit's concept, not protected IP — the source's stronger
+    ownership phrasing is deliberately not reproduced. */}
+
+import { CaseFigure } from "@/components/case/CaseFigure";
+import styles from "@/components/case/CaseShell.module.css";
+import prototype from "./maxie-prototype.png";
+
+Maxie is a 0→1 concept for an AI browser built for active knowledge work —
+contextual memory, trainable agents, and an agent marketplace — rather than
+another chat sidebar. It exists as a full product spec and a clickable
+prototype; it was never built.
+
+## Problem
+
+Knowledge workers spend most of their working hours in a browser, yet the
+browser is still designed for passive consumption. Even the new AI browsers
+— Comet, Dia — have mostly added a chat panel to the side of the same old
+surface. Three problems stay unsolved:
+
+1. **Tab chaos and cognitive load.** Users sit on 20+ open tabs with no
+   organization beyond willpower, and professionals lose productive time
+   every day just relocating information they have already seen.
+2. **Information isolation across tools and time.** The browser sits at the
+   center of knowledge work but keeps no persistent memory of insights,
+   discoveries, or work patterns. Hit a similar problem weeks later and you
+   start the research from zero.
+3. **No automation.** The web became the primary platform for business
+   tools, but browsers offer no way to automate the multi-step workflows
+   people repeat daily — checking dashboards, updating spreadsheets,
+   monitoring competitor pricing, generating reports.
+
+## The bet
+
+Treat the browser as a partner with the human in control: it remembers what
+you have learned, organizes information contextually, and automates
+repetitive workflows under your oversight. The sharper claim underneath:
+**agents will replace browser extensions.** Whoever owns the surface where
+agents are built, trained, and traded owns the next browser platform.
+
+## Assumptions
+
+- **Who.** Knowledge professionals — PMs, analysts, consultants,
+  researchers — plus developers and data workers. Jobs to be done:
+  summarize, compare, and decide; automate repeated web workflows; extract
+  web data; evaluate APIs or a local build; test and monitor.
+- **What.** "AI browser" means agentic AI applied to the browsing surface
+  itself, not a chat add-on. No direct competitor owns this yet; the
+  adjacent field includes Fellou, Comet, Dia, Brave Leo, BrightData's Agent
+  Browser, Operator, Sigma, BrowserBase, DoBrowser, and Opera Neon.
+- **Why.** Improve retention and open a productive revenue model.
+- **When.** No fixed timeline; MVP assumed within 6 months.
+
+## The system
+
+Three systems carry the concept:
+
+1. **Contextual memory and tab management.** The browser auto-groups
+   browsing, mail, and documents into projects, each with summaries and
+   quick views you can interrogate later — a NotebookLM-style "chat with
+   what you visited." A visual browsing tree shows your research path as a
+   map, including forecast branches worth visiting next. Context persists
+   across time, tools, and sessions.
+2. **Agent builder and marketplace.** Agents are built from prompts and
+   trained by demonstration — DOM, vision, voice, files, APIs, recorded
+   workflows, and device context — asking questions as they learn. Finished
+   agents can be shared across an organization or sold on a marketplace,
+   one-time or subscription. Example: a frontend developer trains an agent
+   on the local build that runs dev tests before each deploy and sends back
+   a report.
+3. **In-built agents with self or guided training.** A daily assistant
+   covers the table stakes — close tabs, summarize pages, answer questions
+   in place. A memory agent surfaces relevant material from what you have
+   already visited. Agents can be linked: a summarizer chained to a mail
+   agent sends a work summary to the right recipients when triggered.
+
+<CaseFigure
+  image={prototype}
+  alt="Maxie prototype: a browser window with a projects bar of research workspaces across the top, agent icons in a left sidebar, a start screen of project cards in the center, and a Daily Assistant chat panel on the right with proactive suggestions."
+  caption="The prototype: projects bar across the top, recruited agents on the left, main viewport in the center, assistant / browsing-tree panel on the right."
+  sizes="(max-width: 720px) 92vw, 640px"
+/>
+
+The clickable prototype is
+[available here](https://claude.ai/public/artifacts/8dab7fe9-602d-4307-b116-0b805c664b13).
+
+## Provenance and human control
+
+Autonomy without accountability is how a browser loses trust, so control is
+specified as a feature, not a caveat:
+
+- Retrieval always shows where a fact came from.
+- A policy and safety engine holds allow/deny rules, spending limits,
+  content categories, and jurisdictional compliance.
+- Verifiable action logs: run logs, reproducible replays, audit trails.
+- Agent training on your data is optional, and that data is encrypted to
+  your account.
+
+## Differentiation and moat
+
+Maxie's moats compound: the more users train agents, the better the
+platform's workflow intelligence becomes; the longer someone browses with
+contextual memory, the more expensive switching gets; and the marketplace
+carries its own network effects.
+
+<div className={styles.tableScroll}>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Proposition</th>
+        <th scope="col">Legacy browsers</th>
+        <th scope="col">New AI browsers</th>
+        <th scope="col">Maxie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Core purpose</td>
+        <td>Rendering web pages</td>
+        <td>Enhanced search and easy access to information</td>
+        <td>Active partner that remembers, organizes, and completes tasks</td>
+      </tr>
+      <tr>
+        <td>AI capability</td>
+        <td>None</td>
+        <td>Just a chat window</td>
+        <td>AI-native agents and contextual memory</td>
+      </tr>
+      <tr>
+        <td>Tab management</td>
+        <td>Grouping available</td>
+        <td>Tab context available</td>
+        <td>Automatic project synthesis plus visual browsing trees</td>
+      </tr>
+      <tr>
+        <td>Automation</td>
+        <td>None</td>
+        <td>Limited to a single page</td>
+        <td>Trainable automated agents</td>
+      </tr>
+      <tr>
+        <td>Collaboration</td>
+        <td>Some extensions</td>
+        <td>Limited or none</td>
+        <td>Co-browsing with shared team projects</td>
+      </tr>
+      <tr>
+        <td>Extensibility</td>
+        <td>Extensions marketplace</td>
+        <td>Limited</td>
+        <td>Agent marketplace with org-level sharing</td>
+      </tr>
+      <tr>
+        <td>Compounding value</td>
+        <td>Static</td>
+        <td>Better answers</td>
+        <td>Smarter with every project and workflow</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Adoption
+
+Start with a pilot release to validate usefulness and test the experience:
+an invite-only beta with a waiting list, aimed at developers, PMs,
+analysts, consultants, and researchers in communities where AI adoption is
+already high. Go-to-market runs product-led — freemium with the memory and
+tab-management features demonstrating value immediately — alongside dev and
+research community engagement, enterprise pilots with consulting firms and
+SaaS teams to prove ROI, and case-study content on agentic browsers as the
+next paradigm. Expansion adds the agent marketplace to hook teams, deep
+integrations with productivity tools, and broader marketing to
+non-technical professionals once traction is built.
+
+## Pricing hypothesis
+
+Subscription-first, because LLM costs are themselves subscriptions; the
+marketplace adds a 20–30% commission on agent sales, plus bulk credits for
+internal enterprise marketplaces. Enterprise plans come later as custom
+"talk to sales" pricing.
+
+<div className={styles.tableScroll}>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Plan</th>
+        <th scope="col">Free — $0, 1 seat</th>
+        <th scope="col">Pro — $25, 1 seat</th>
+        <th scope="col">Team — $115, 5 seats</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Limits</td>
+        <td>5 projects, 2 agents, no LLM cap</td>
+        <td>Unlimited projects and agents; monthly cloud AI credits with usage-based overage</td>
+        <td>Shared projects; everything in Pro with higher AI credits</td>
+      </tr>
+      <tr>
+        <td>LLM options</td>
+        <td>Locally installed LLM only (on-device)</td>
+        <td>Local, cloud, or hybrid</td>
+        <td>Local, cloud, or hybrid</td>
+      </tr>
+      <tr>
+        <td>Agents</td>
+        <td>In-built or local agents only</td>
+        <td>All agents supported</td>
+        <td>All agents supported</td>
+      </tr>
+      <tr>
+        <td>MCP connectivity</td>
+        <td>No</td>
+        <td>Yes</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Co-browsing</td>
+        <td>No</td>
+        <td>No</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Storage</td>
+        <td>Limited</td>
+        <td>Limited</td>
+        <td>Unlimited</td>
+      </tr>
+      <tr>
+        <td>Other</td>
+        <td>—</td>
+        <td>Support access</td>
+        <td>Support access, SSO (OAuth), private-cloud option</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

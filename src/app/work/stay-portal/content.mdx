@@ -1,0 +1,122 @@
+{/* Source of truth: airbnb-portal-case-study-raw.md (2026-07-17 codebase
+    evaluation). Every factual claim below traces to that file. Screenshots
+    are the PII-cleared demo set (open-questions-answers.md §6) — synthetic
+    guests and sequential fake mobile numbers, never production data. */}
+
+import { CaseFigure, CaseFigureGrid } from "@/components/case/CaseFigure";
+import dayView from "./day-view.png";
+import bookingOverlap from "./booking-overlap.png";
+import availability from "./availability.png";
+import pending from "./pending.png";
+import analytics1 from "./analytics-1.png";
+import analytics2 from "./analytics-2.png";
+
+Five apartments, rented by the full day, the half day, or the hour, run
+entirely from a phone. Stay Portal is the booking system that replaced the
+spreadsheet holding that operation together.
+
+## Situation
+
+The operation ran on a Google Sheets workbook — one tab per room, edited by
+hand. Bookings arrive from Airbnb, offline walk-ins, and referrals, and they
+do not behave like vacation-rental bookings: one room can turn over several
+times in a single day across full-day, half-day, and hourly stays. Tools
+built around one nightly booking per room cannot model the actual business.
+
+The workbook's failure modes were predictable: accidental double-bookings,
+no at-a-glance view of what is happening today, pending payments nobody
+chased because nothing tracked them, and zero analytics. The people running
+it are non-technical and work from their phones.
+
+## The bet
+
+Build the smallest product that fixes those four failures, and make the
+expensive one — double-booking — structurally impossible rather than merely
+discouraged. Ship it phone-first as an installable web app, because that is
+where the operators already work. And do not ask anyone to abandon the
+spreadsheet: mirror the product's data back into a familiar workbook every
+night, so trusting the new system never requires giving up the old one.
+
+## The product
+
+<CaseFigure
+  image={dayView}
+  alt="Stay Portal day view on a phone: each apartment listed with a 24-hour timeline bar and its bookings for Friday 17 July — guest name, hours, booking channel, amount, and payment due. All guests and numbers are synthetic demo data."
+  caption="Day view, the home screen: every room as a 24-hour timeline for any date, bookings color-coded by payment state, check-out and add-booking in place."
+  sizes="(max-width: 720px) 92vw, 640px"
+  priority
+/>
+
+Day view is the signature screen because it answers the operator's actual
+question — what is happening today, across every room, right now — and it is
+the one place the hourly-stay model becomes visible.
+
+<CaseFigureGrid>
+  <CaseFigure
+    image={bookingOverlap}
+    alt="New-booking form warning that the selected room is already booked for the chosen window, showing the conflicting demo booking and the note 'Adjust the room or times to save'."
+    caption="The booking form warns about an overlap while you type — and the database refuses the clash even if the warning is ignored."
+    sizes="(max-width: 559px) 92vw, 320px"
+  />
+  <CaseFigure
+    image={availability}
+    alt="Availability checker with a date-time range query, one room listed as free with a 'Book this room' button, and busy rooms listed with their conflicting demo bookings."
+    caption="Availability answers “is anything free Saturday afternoon?” without scanning five timelines."
+    sizes="(max-width: 559px) 92vw, 320px"
+  />
+</CaseFigureGrid>
+
+<CaseFigureGrid>
+  <CaseFigure
+    image={pending}
+    alt="Pending payments screen totalling ₹8,950 outstanding across 7 demo bookings, each with amount due, a Call button, and a Mark fully paid button."
+    caption="Pending payments: the money-recovery view, one tap from calling the guest. Demo data."
+    sizes="(max-width: 559px) 92vw, 320px"
+  />
+  <CaseFigure
+    image={analytics1}
+    alt="Analytics screen for a 30-day range showing income, collected, pending, booking count, occupancy percentage, and a daily income bar chart — all synthetic demo figures."
+    caption="Analytics the spreadsheet never had: income, collected vs pending, occupancy, daily trend."
+    sizes="(max-width: 559px) 92vw, 320px"
+  />
+</CaseFigureGrid>
+
+<CaseFigure
+  image={analytics2}
+  alt="Analytics screen with occupancy by room, repeat guests ranked by stays with sequential fake mobile numbers, and a referral leaderboard — synthetic demo data."
+  caption="Occupancy by room, repeat guests (deduplicated by mobile number), and the referral leaderboard."
+  sizes="(max-width: 720px) 92vw, 640px"
+/>
+
+The [live demo](https://airbnb-portal-demo.vercel.app) is a fully isolated
+deployment seeded with synthetic data — fictional guests, fake numbers.
+
+## Decisions and exclusions
+
+- **Overlap prevention is layered, and the strongest layer is the deepest.**
+  The database enforces an exclusion constraint on room + time range, so two
+  conflicting bookings cannot both exist; the booking form warns live while
+  the operator types; and the API rejects a clash with the conflict attached.
+  A UI warning alone still loses the race between two phones.
+- **The Google Sheets mirror is an adoption bridge, not a legacy crutch.**
+  A nightly one-way sync writes bookings back into a workbook with one tab
+  per room — the exact shape the operators already trust. They keep the
+  familiar view and get a free daily backup; the product stays the single
+  source of truth.
+- **Two operator accounts, nothing more.** No roles, no admin console, no
+  team features. The business has two people in it.
+- **The browser never talks to the database directly** — every read and
+  write goes through the app's own API.
+- **The public demo is isolated from production by design.** Production
+  holds real guest names and mobile numbers, so the demo environment and
+  every screenshot on this page use synthetic data instead. Showing the real
+  thing was never on the table.
+
+## Evidence
+
+- 484 historical bookings imported from the old workbook across the five
+  apartments — the product started with the operation's full history, not an
+  empty state.
+- ₹0 per month in infrastructure to run.
+- The nightly Sheets mirror has a second job: it is the operation's daily
+  backup.

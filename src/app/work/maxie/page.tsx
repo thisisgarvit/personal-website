@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
 import { CaseShell } from "@/components/case/CaseShell";
+import { workBySlug } from "@/data/work";
+import Content from "./content.mdx";
+
+const work = workBySlug("maxie");
 
 export const metadata: Metadata = {
-  title: "AI Browser — Maxie",
+  title: work.title,
+  description: work.summary,
 };
 
 export default function MaxiePage() {
   return (
     <CaseShell
       kindLabel="0→1 product concept"
-      ticketId="GAR-204"
-      title="AI Browser — Maxie"
+      ticketId={work.id}
+      title={work.title}
     >
-      <p>Product concept case study — full narrative lands in Task 5.</p>
+      <Content />
     </CaseShell>
   );
 }
