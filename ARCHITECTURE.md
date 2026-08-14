@@ -176,3 +176,60 @@ production build:
 `pnpm build && pnpm start & node --experimental-strip-types scripts/shell-screens.mts`.
 `src/data/phone-privacy.test.ts` enforces PRD §5.4 (no assembled phone
 number anywhere under `src/`).
+
+# Task 7 additions — sprint-board physics (Codex lane)
+
+## Interactive board island
+
+`src/features/board/InteractiveBoardSection.tsx` replaces the homepage's
+static `BoardSection` import while reusing its approved CSS module classes.
+Its server snapshot is still the authored four-ticket matrix with direct route
+links, so no-JS behavior is unchanged. Pointer transforms, keyboard moves,
+dialog state, and reset are contained in the client island.
+
+The island imports the Task 4 `CasePreviewDialog` contract unchanged. Preview
+copy in `preview-content.tsx` is the approved slice `cases` copy; the four
+artifacts are local CSS/HTML diagrams and introduce no remote assets.
+
+## Board persistence
+
+`BOARD_STORAGE_KEY` stores only a JSON slug-to-column mapping. Missing or
+invalid slugs/columns fall back individually to the authored matrix; malformed
+JSON falls back completely. Reset removes the entry rather than writing the
+authored mapping.
+
+## Physics constants and conversion
+
+Pure, tested mechanics live in `src/features/board/physics.ts`: 10px intent
+hysteresis, `.55` rubber-band resistance, a 100ms sample window, pointer-up as
+the final sample, a 2400px/s defensive release-velocity cap, decay `.998`, and
+projection capped at ±280px. The previously-unspecified outlier cap is 2400px/s
+because projected destination selection already saturates at ~561px/s, while
+the higher cap preserves expressive spring handoff without allowing a single
+bad timestamp to destabilize the settle.
+
+The locked response/damping-ratio tokens are converted for Motion's physical
+spring API with mass 1 (`ω = 2π/response`, `k = ω²`, `c = 2ζω`). X and Y use
+independent critically damped springs. Rotation uses the `.42s`/`.82` flick
+spring only when pointer velocity created a lean. Re-grab reads the computed
+presentation transform through `DOMMatrixReadOnly` before stopping the current
+controls and carries their live axis velocity into the next release.
+
+Keyboard relocation never calls the spring runner: it commits immediately,
+moves focus with the ticket, applies the locked 160ms non-spatial destination
+acknowledgement, and routes its message through the shared `announce()` API.
+
+## MascotSignal contract
+
+The shared decorative signal bus now lives at
+`src/features/mascot/signals.ts`:
+
+```ts
+import { emitMascotSignal, subscribeMascotSignals } from "@/features/mascot/signals";
+```
+
+It implements PRD §9's `MascotSignal` shape exactly. Task 7 emits `drag-watch`
+only after hysteresis, `idle` on release/cancel/reset, and `shipped` after a
+pointer settle into Shipped. Keyboard board moves emit no mascot reaction.
+Task 6 flag events bridge to the same bus as `flag-check`; Task 8 should consume
+this bus and apply the locked reaction priority/expiry state machine.

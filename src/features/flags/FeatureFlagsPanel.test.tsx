@@ -6,6 +6,10 @@ import {
   FLAG_CONFETTI_KEY,
   THEME_STORAGE_KEY,
 } from "@/data/storage";
+import {
+  subscribeMascotSignals,
+  type MascotSignal,
+} from "@/features/mascot/signals";
 import { FeatureFlagsPanel } from "./FeatureFlagsPanel";
 
 function installMatchMedia({ dark = false, reducedMotion = false } = {}) {
@@ -83,7 +87,11 @@ describe("FeatureFlagsPanel", () => {
 
   it("applies and persists each user-controlled effect immediately", () => {
     const events: ToastEvent[] = [];
+    const mascotSignals: MascotSignal[] = [];
     const unsubscribe = subscribeToasts((event) => events.push(event));
+    const unsubscribeMascot = subscribeMascotSignals((signal) =>
+      mascotSignals.push(signal),
+    );
     render(<FeatureFlagsPanel />);
 
     fireEvent.click(screen.getByLabelText("Toggle dark mode"));
@@ -103,6 +111,14 @@ describe("FeatureFlagsPanel", () => {
       "field notes hidden",
     ]);
     expect(events.every((event) => event.announce === false)).toBe(true);
+    expect(
+      mascotSignals.map(({ reaction, source }) => ({ reaction, source })),
+    ).toEqual([
+      { reaction: "flag-check", source: "dark_mode" },
+      { reaction: "flag-check", source: "confetti_on_scroll" },
+      { reaction: "flag-check", source: "candid_mode" },
+    ]);
     unsubscribe();
+    unsubscribeMascot();
   });
 });

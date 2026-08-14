@@ -2,7 +2,7 @@ import { ProductChrome } from "@/components/chrome/ProductChrome";
 import { ExperimentStrip } from "@/components/experiment/ExperimentStrip";
 import { Hero } from "@/components/hero/Hero";
 import { OperationsRail } from "@/components/ops/OperationsRail";
-import { BoardSection } from "@/components/board/BoardSection";
+import { InteractiveBoardSection } from "@/features/board";
 import { SiteFooter } from "@/components/footer/SiteFooter";
 import styles from "./page.module.css";
 
@@ -22,7 +22,7 @@ export default function HomePage() {
           <Hero />
           <OperationsRail />
         </div>
-        <BoardSection />
+        <InteractiveBoardSection />
       </main>
       <SiteFooter />
     </>

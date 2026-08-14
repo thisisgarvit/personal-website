@@ -1,0 +1,62 @@
+.helper {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.interactiveTicket {
+  transform-origin: center;
+  isolation: isolate;
+}
+
+.interactiveTicket[data-drag-state="pressed"],
+.interactiveTicket[data-drag-state="dragging"] {
+  z-index: 30;
+  box-shadow: var(--shadow-lift);
+}
+
+.interactiveTicket[data-drag-state="dragging"] {
+  pointer-events: none;
+}
+
+.interactiveTicket[data-settle="reduced"] {
+  transition: opacity var(--duration-feedback) var(--ease-out);
+}
+
+.interactiveTicket[data-keyboard-ack="true"] {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  background: var(--color-panel-2);
+}
+
+.interactiveGrip:active {
+  cursor: grabbing;
+}
+
+.interactiveColumn {
+  border-radius: var(--radius-button);
+}
+
+.interactiveColumn[data-drop-target="true"] {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 6px;
+  background: var(--color-panel-2);
+}
+
+@media (max-width: 879.98px) {
+  .helper { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactiveTicket[data-drag-state="pressed"],
+  .interactiveTicket[data-drag-state="dragging"] {
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .interactiveTicket[data-drag-state="pressed"],
+  .interactiveTicket[data-drag-state="dragging"] {
+    outline: 2px solid Highlight;
+  }
+}
