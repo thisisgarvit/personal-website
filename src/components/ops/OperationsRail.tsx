@@ -1,4 +1,4 @@
-import { FlagsPanel } from "./FlagsPanel";
+import { FeatureFlagsPanel } from "@/features/flags";
 import { MascotSlot } from "./MascotSlot";
 import styles from "./ops.module.css";
 
@@ -15,7 +15,7 @@ export function OperationsRail() {
         </header>
         <MascotSlot />
       </section>
-      <FlagsPanel />
+      <FeatureFlagsPanel />
     </aside>
   );
 }

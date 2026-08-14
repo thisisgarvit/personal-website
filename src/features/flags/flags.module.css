@@ -1,0 +1,61 @@
+/* Task 6 effects stay subordinate to the product shell: edge-only, token
+   colors, no pointer interception, and no new chrome vocabulary. */
+
+:global(:root[data-candid="off"] [data-candid-note]) {
+  display: none !important;
+}
+
+.effectNote {
+  margin: 0;
+  border-top: var(--rule);
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  color: var(--color-muted);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+}
+
+.confettiLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.confettiPiece {
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 10px;
+  opacity: 0;
+  animation: confetti-edge-burst 680ms var(--ease-out) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes confetti-edge-burst {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.7);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-x), var(--confetti-y), 0)
+      rotate(var(--confetti-r)) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confettiLayer {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .confettiLayer {
+    display: none;
+  }
+}
