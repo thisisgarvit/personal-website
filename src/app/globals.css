@@ -1,0 +1,22 @@
+/*
+ * Bare global reset only (Task 3).
+ * All visual design — tokens, themes, typography scale, spacing — is owned
+ * by Task 4 per DESIGN.md. Do not add visual styling here during Task 3.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
