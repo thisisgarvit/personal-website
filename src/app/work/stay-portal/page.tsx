@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CaseShell } from "@/components/case/CaseShell";
 
 export const metadata: Metadata = {
   title: "Stay Portal",
@@ -6,9 +7,8 @@ export const metadata: Metadata = {
 
 export default function StayPortalPage() {
   return (
-    <main>
-      <h1>Stay Portal</h1>
+    <CaseShell kindLabel="Shipped product" ticketId="GAR-101" title="Stay Portal">
       <p>Shipped product case study — full narrative lands in Task 5.</p>
-    </main>
+    </CaseShell>
   );
 }

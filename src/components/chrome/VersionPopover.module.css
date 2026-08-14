@@ -1,0 +1,125 @@
+/* Release-note popover (DESIGN.md §5.2): 300–340px wide, panel surface,
+   one-pixel rule, 12px radius, 16px padding, anchored to the version
+   label with its transform origin. Motion: 200ms opacity + .98→1 enter,
+   140ms exit (DESIGN.md §7.3 version-popover row); the global
+   reduced-motion kill collapses this to an opacity change. */
+
+.trigger {
+  border: 0;
+  background: transparent;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-control);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background-color var(--duration-feedback) var(--ease-out),
+    color var(--duration-feedback) var(--ease-out);
+}
+
+.trigger:hover,
+.trigger[data-state="open"] {
+  background: var(--color-panel-2);
+  color: var(--color-ink);
+}
+
+.content {
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: var(--color-panel);
+  border: var(--rule);
+  border-radius: var(--radius-panel);
+  padding: var(--space-4);
+  z-index: 120;
+  transform-origin: var(--radix-popover-content-transform-origin);
+}
+
+.content[data-state="open"] {
+  animation: pop-enter var(--duration-enter) var(--ease-out);
+}
+
+.content[data-state="closed"] {
+  animation: pop-exit var(--duration-exit) var(--ease-out);
+}
+
+@keyframes pop-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pop-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: var(--rule);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.head strong {
+  font-size: 0.9375rem;
+  letter-spacing: var(--track-small);
+}
+
+.head span {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.list li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.noteMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Version/date in mono, candid sentence in Archivo (DESIGN.md §5.2). */
+.noteMeta b {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-release);
+}
+
+.noteVersion {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.noteCopy {
+  font: 400 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+}

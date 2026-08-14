@@ -1,0 +1,47 @@
+/* Toast stack — DESIGN.md §7.3 toast row: 180ms translate/opacity enter,
+   140ms exit; reduced motion collapses to opacity via the global kill +
+   these transforms being transition-driven. Visual style follows the
+   approved slice toast (ink surface, canvas text, product mono). */
+
+.stack {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 150;
+  display: grid;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  border: 1px solid var(--color-canvas);
+  border-radius: var(--radius-button);
+  padding: var(--space-3) var(--space-4);
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  max-width: 330px;
+  animation: toast-in var(--duration-enter) var(--ease-out) both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 619.98px) {
+  .stack {
+    left: var(--space-3);
+    right: var(--space-3);
+  }
+  .toast {
+    max-width: none;
+  }
+}

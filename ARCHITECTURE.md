@@ -84,3 +84,95 @@ yet** — do not use before their owning task:
 
 CSS Modules + approved custom properties only. No Tailwind, no CSS-in-JS,
 no styled-components. Task 4 owns all tokens/visuals.
+
+---
+
+# Task 4 additions — tokens + structural shell (Claude lane)
+
+## Tokens
+
+All DESIGN.md §3 + §7.2 (CSS timing) tokens live in `src/app/globals.css`:
+light values on `:root`, dark values under BOTH
+`@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`
+and `:root[data-theme="dark"]` (override wins in both directions; the two
+dark blocks are intentionally duplicated — keep them identical). Type ramp
+tokens are `font:` -shorthand size/line-height pairs (`--type-hero` …
+`--type-product`) with companion `--track-*` tokens; `--track-hero` moves
+between the three locked hero values via media queries at 842px/1264px
+(derived from the §3.2 clamp). Reduced-transparency, increased-contrast,
+forced-colors, and reduced-motion behaviors are also global there.
+
+## Theme bootstrap
+
+Inline script (first child of `<body>` in `src/app/layout.tsx`) reads
+`THEME_STORAGE_KEY` and sets `document.documentElement.dataset.theme`
+before content paints; `<html>` carries `suppressHydrationWarning` for
+this attribute only. Codex Task 6's `dark_mode` flag must write
+`"light" | "dark"` to that key and set the same attribute.
+
+## Storage keys — `src/data/storage.ts`
+
+`THEME_STORAGE_KEY` (`garvit-theme:v1`, localStorage),
+`BOARD_STORAGE_KEY` (`garvit-board:v1`, sessionStorage),
+`BANNER_DISMISSED_KEY` (`garvit-banner:v1`, sessionStorage),
+`FLAG_CONFETTI_KEY` (`garvit-flag-confetti:v1`, sessionStorage),
+`FLAG_CANDID_KEY` (`garvit-flag-candid:v1`, sessionStorage).
+Import these constants; never inline key strings.
+
+## Toast / live region — `src/components/toast/`
+
+ONE polite live region for the whole product (PRD §13), rendered by
+`<Toaster />` in the root layout. API (client only):
+
+```ts
+import { toast, announce } from "@/components/toast/toast";
+toast("message");                    // visual toast + polite announcement
+toast("message", { announce: false }); // visual only
+announce("message");                 // live region only, no toast
+```
+
+Do not render additional `aria-live` regions; route board/flag
+announcements (keyboard moves, reset toast) through this module.
+
+## Component contracts for Codex lanes
+
+- **Flags shell** — `src/components/ops/FlagsPanel.tsx` is a static
+  visual shell (no handlers/state). Task 6 rewires the inputs or swaps in
+  a stateful component reusing `ops.module.css` classes. Preserve: row
+  order (`dark_mode`, `confetti_on_scroll`, `candid_mode`, `comic_sans`),
+  descriptors (`theme` / `ship signal` / `field notes` / `prod locked` —
+  never `CODEX LAB`), native checkbox semantics, `3 / 4 live` header,
+  Comic Sans tooltip copy. Intended row props:
+  `{ definition: FeatureFlagDefinition; checked: boolean; onCheckedChange(next: boolean): void }`.
+- **Mascot slot** — `src/components/ops/MascotSlot.tsx` reserves the
+  on-call stage (`[data-mascot-slot]`, min-height 204px, panel-2 fill,
+  `ON CALL` label). Task 8 renders poster/canvas inside it, keeping the
+  label and stage geometry.
+- **Case preview** — `src/components/case-preview/CasePreviewDialog.tsx`
+  (Radix dialog, §5.9 styling; focus trap/Escape/restore handled). Props:
+  `{ open, onOpenChange, kindLabel, ticketId, title, lede, facts (≤3), artifact?, children?, readFullCaseHref }`.
+  Task 7 owns open-state wiring from tickets. A dev-only styling demo
+  lives at `/dev/preview` (404s in production; not linked in nav).
+- **Candid notes** — ticket markup includes `[data-candid-note]`
+  (visible by default). Task 6/7 toggle visibility via that attribute.
+- **Board shell** — `src/components/board/` renders the authored matrix
+  statically (real route links, inert 44px grips, inert reset). Task 7
+  replaces interactivity in `src/features/board/**`; the reset toast
+  (`Board reset. No sprint ceremony required.`) and helper copy
+  (`State lasts for this tab.`) ship with Task 7, not the shell.
+
+## Task 4 dependencies
+
+`@radix-ui/react-popover`, `@radix-ui/react-dialog`,
+`@radix-ui/react-tooltip`, `@radix-ui/react-visually-hidden` (installed;
+visually-hidden currently unused — the global `.sr-only` utility covers
+it — kept for Codex overlay work).
+
+## QA artifacts
+
+`scripts/shell-screens.mts` captures the four design-gate screenshots
+(1440×900 + 390×844, light + dark) to `docs/qa/task4/` against a running
+production build:
+`pnpm build && pnpm start & node --experimental-strip-types scripts/shell-screens.mts`.
+`src/data/phone-privacy.test.ts` enforces PRD §5.4 (no assembled phone
+number anywhere under `src/`).

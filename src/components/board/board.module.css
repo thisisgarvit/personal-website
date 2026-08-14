@@ -1,0 +1,264 @@
+/* Sprint board (DESIGN.md §5.7): panel surface, 12px radius, 32–48px
+   padding, 24px column gaps, 16px ticket gaps, quiet column status
+   rules, no decorative column backgrounds. */
+
+.section {
+  background: var(--color-panel);
+  border: var(--rule);
+  border-radius: var(--radius-panel);
+  padding: clamp(2rem, 4vw, 3rem); /* 32–48px (§5.7) */
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  margin: 0;
+  font: 700 var(--type-section) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-section);
+}
+
+/* Concise product-state subtitle (§5.7), product mono. */
+.subtitle {
+  margin: var(--space-2) 0 0;
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.keyboardHint {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+/* Reset: visible text control on desktop, icon control on narrow (§5.7).
+   44px target (§9). */
+.reset {
+  min-height: 44px;
+  border: var(--rule);
+  border-radius: var(--radius-button);
+  background: var(--color-panel);
+  padding: 0 var(--space-3);
+  cursor: pointer;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  transition: background-color var(--duration-feedback) var(--ease-out);
+}
+
+.reset:hover {
+  background: var(--color-panel-2);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6); /* 24px column gap (§5.7) */
+}
+
+/* Columns: label, count, quiet status rule — no decorative fill (§5.7). */
+.column {
+  min-width: 0;
+}
+
+.columnHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule);
+  margin-bottom: var(--space-4);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.columnHead b {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.count {
+  min-width: 24px;
+  text-align: center;
+  padding: var(--space-1) var(--space-2);
+  border: var(--rule);
+  border-radius: var(--radius-pill);
+}
+
+.ticketList {
+  display: grid;
+  gap: var(--space-4); /* 16px ticket gap (§5.7) */
+  align-content: start;
+  min-height: 280px;
+}
+
+/* Ticket (§5.8): panel fill, one-pixel rule, 8px radius, no diffuse
+   shadow at rest; accent as a small semantic edge + chip, never a full
+   decorative card treatment. */
+.ticket {
+  position: relative;
+  background: var(--color-panel);
+  border: var(--rule);
+  border-inline-start: 3px solid var(--ticket-accent);
+  border-radius: var(--radius-button);
+}
+
+.ticket[data-accent="merge"] {
+  --ticket-accent: var(--color-merge);
+}
+.ticket[data-accent="context"] {
+  --ticket-accent: var(--color-context);
+}
+.ticket[data-accent="question"] {
+  --ticket-accent: var(--color-question);
+}
+.ticket[data-accent="incident"] {
+  --ticket-accent: var(--color-incident);
+}
+
+/* Entire non-grip body is the case link (§5.8 / no-JS path). */
+.ticketBody {
+  display: block;
+  padding: var(--space-4);
+  padding-inline-end: calc(44px + var(--space-2));
+  text-decoration: none;
+  border-radius: inherit;
+}
+
+.ticketId {
+  display: block;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.ticketTitle {
+  margin: var(--space-3) 0 var(--space-2);
+  font: 700 var(--type-card-title) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-card-title);
+}
+
+.ticketSummary {
+  margin: 0;
+  font: 400 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+  color: var(--color-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.chip {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  border: var(--rule);
+  border-radius: var(--radius-control);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-panel-2);
+  color: var(--color-ink);
+}
+
+/* Priority chip carries the semantic accent (§5.8); constant dark text
+   on the bright accent fills (see §3.1 selection-text constant). */
+.chipPriority {
+  background: var(--ticket-accent);
+  color: #171923;
+  border-color: #171923;
+}
+
+/* Candid field note (§5.8 item 5): markup present; visibility toggling
+   belongs to the flags/board lane via [data-candid-note]. */
+.candidNote {
+  display: block;
+  margin-top: var(--space-3);
+  padding-inline-start: var(--space-2);
+  border-inline-start: 3px solid var(--ticket-accent);
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+/* 44px inert grip (§5.8, §7.4: drag begins only on the grip). */
+.grip {
+  position: absolute;
+  top: var(--space-1);
+  inset-inline-end: var(--space-1);
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  border-radius: var(--radius-control);
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+  font-size: 1rem;
+}
+
+.grip:hover {
+  background: var(--color-panel-2);
+  color: var(--color-ink);
+}
+
+/* §4 breakpoints: 620–879px the board scrolls horizontally by column;
+   <620px columns are 86vw with proximity snap (§5.7, §8 touch). */
+@media (max-width: 879.98px) {
+  .board {
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: var(--space-2);
+  }
+  .column {
+    scroll-snap-align: start;
+  }
+  .keyboardHint {
+    display: none;
+  }
+}
+
+@media (max-width: 619.98px) {
+  .section {
+    padding: var(--space-4);
+  }
+  .head {
+    align-items: flex-start;
+  }
+  .board {
+    grid-template-columns: repeat(3, 86vw);
+  }
+  /* Reset collapses to an accessible icon control (§5.7). */
+  .resetLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .reset {
+    width: 44px;
+    padding: 0;
+  }
+}

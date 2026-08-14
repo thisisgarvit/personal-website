@@ -1,0 +1,70 @@
+/* Experiment strip (DESIGN.md §5.3): solid release blue, never
+   translucent, ~40px tall, left semantic label, right 44px dismiss. */
+
+.strip {
+  min-height: 40px;
+  background: var(--color-release);
+  color: var(--color-on-release);
+  border-bottom: 1px solid var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-1) 52px var(--space-1) var(--space-4);
+  position: relative;
+}
+
+.variant {
+  font: 600 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  border: 1px solid var(--color-on-release);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-2);
+  white-space: nowrap;
+}
+
+.copy {
+  margin: 0;
+  font: 600 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+}
+
+.copyQuiet {
+  font-weight: 400;
+}
+
+/* 44px dismiss target (DESIGN.md §5.3 / §9 minimum target size). */
+.dismiss {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 1.125rem;
+  display: grid;
+  place-items: center;
+  transition: background-color var(--duration-feedback) var(--ease-out);
+}
+
+.dismiss:hover {
+  background: color-mix(in srgb, var(--color-on-release) 12%, transparent);
+}
+
+@media (max-width: 619.98px) {
+  .strip {
+    justify-content: flex-start;
+    padding-left: var(--space-3);
+  }
+}
+
+@media (forced-colors: active) {
+  .strip {
+    border-bottom: 1px solid CanvasText;
+  }
+}

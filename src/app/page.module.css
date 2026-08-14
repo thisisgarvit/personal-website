@@ -1,0 +1,40 @@
+/* Homepage frame (DESIGN.md §4 global frame + breakpoints). */
+
+/* Application shell: min(100% - 2rem, 100rem), 16–32px gutters. */
+.shell {
+  width: min(100% - 2rem, 100rem);
+  margin-inline: auto;
+  padding-top: var(--space-4);
+}
+
+/* Hero grid (§5.4): primary content + 340–380px operations rail, 24px
+   gap at ≥1180px. */
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
+  gap: var(--space-6);
+  align-items: stretch;
+  /* Hero-to-board rhythm: 64–96px (§4). */
+  margin-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+/* §4: 880–1179px the hero rail narrows. */
+@media (max-width: 1179.98px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
+/* §4: 620–879px hero and operations rail stack. */
+@media (max-width: 879.98px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* §4: <620px one-column shell with 16px gutters. */
+@media (max-width: 619.98px) {
+  .shell {
+    width: calc(100% - 2rem);
+  }
+}

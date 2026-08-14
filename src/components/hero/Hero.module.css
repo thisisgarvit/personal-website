@@ -1,0 +1,137 @@
+/* Hero (DESIGN.md §5.4): release-blue solid field, 12px panel radius,
+   visible ink rule, 48–80px desktop inset / 24–32px mobile, minimum
+   desktop height ~560px (never forced 100vh). */
+
+.hero {
+  background: var(--color-release);
+  color: var(--color-on-release);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-panel);
+  padding: clamp(3rem, 5vw, 5rem); /* 48–80px (§5.4) */
+  min-height: 560px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-6);
+}
+
+/* Top metadata (§5.4): availability line + DELHI / IST, product mono. */
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+}
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Merge dot = healthy/available status companion (§3.1 merge role;
+   status color always paired with text per §9). */
+.availabilityDot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--color-merge);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-merge) 18%, transparent);
+}
+
+.main {
+  align-self: center;
+}
+
+/* One positioning sentence at --type-hero with the locked tracking
+   (§3.2 validated table via --track-hero region tokens). */
+.headline {
+  margin: 0;
+  font: 800 var(--type-hero) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-hero);
+  max-width: 920px;
+}
+
+.intro {
+  margin: var(--space-6) 0 0;
+  font: 400 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+  max-width: 700px;
+}
+
+/* Primary CTAs (§5.5): 56px min height, 8px radius, ≥16px horizontal
+   inset, visible focus ring separated by 3px (global focus-visible). */
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.cta {
+  min-height: 56px;
+  border-radius: var(--radius-button);
+  padding: 0 var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  justify-content: space-between;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: var(--track-lead);
+  transition: transform var(--duration-feedback) var(--ease-out);
+}
+
+/* §7.3 primary CTA row: immediate scale(.98) on press. */
+.cta:active {
+  transform: scale(0.98);
+}
+
+.cta svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* Resume: merge fill + ink text (§5.5). Text is the constant dark ink
+   value in both themes — lime stays bright in dark mode, so the §3.1
+   selection-text constant (#171923) applies, not the flipped ink token. */
+.ctaResume {
+  background: var(--color-merge);
+  color: #171923;
+}
+
+/* Contact: ink fill with canvas text; the same tokens flip to the tuned
+   high-contrast equivalent in dark mode (§5.5). */
+.ctaContact {
+  background: var(--color-ink);
+  color: var(--color-canvas);
+}
+
+@media (max-width: 619.98px) {
+  .hero {
+    padding: clamp(1.5rem, 6vw, 2rem); /* 24–32px mobile inset (§5.4) */
+    min-height: 0;
+  }
+  /* §4 <620px: full-width CTAs. */
+  .ctas {
+    display: grid;
+  }
+  .cta {
+    width: 100%;
+  }
+}
+
+/* Forced colors (§7.7): decorative accents drop; structure (borders,
+   labels, focus) survives via system colors. */
+@media (forced-colors: active) {
+  .hero {
+    border: 1px solid CanvasText;
+  }
+  .cta {
+    border: 1px solid LinkText;
+  }
+  .availabilityDot {
+    outline: 1px solid CanvasText;
+  }
+}

@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import { CaseShell } from "@/components/case/CaseShell";
 
 export const metadata: Metadata = {
-  title: "Maxie",
+  title: "AI Browser — Maxie",
 };
 
 export default function MaxiePage() {
   return (
-    <main>
-      <h1>Maxie</h1>
-      <p>0→1 product concept case study — full narrative lands in Task 5.</p>
-    </main>
+    <CaseShell
+      kindLabel="0→1 product concept"
+      ticketId="GAR-204"
+      title="AI Browser — Maxie"
+    >
+      <p>Product concept case study — full narrative lands in Task 5.</p>
+    </CaseShell>
   );
 }

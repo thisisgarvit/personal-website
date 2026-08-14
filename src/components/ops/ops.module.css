@@ -1,0 +1,205 @@
+/* Operations rail (DESIGN.md §5.6): on-call PM + feature flags.
+   Panels share the hero's radius and ink rule with contrasting panel
+   backgrounds. */
+
+.rail {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+.panelTitle {
+  min-height: 44px;
+  border-bottom: var(--rule);
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+}
+
+/* On-call PM stage: reserved mascot surface (DESIGN.md §5.6 — the figure
+   occupies most of the surface; a small ON CALL label provides the joke). */
+.mascotStage {
+  position: relative;
+  min-height: 204px;
+  background: var(--color-panel-2);
+}
+
+.onCallLabel {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-control);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+}
+
+/* Feature flags (DESIGN.md §5.6): expanded by default, four single-line
+   rows with native checkbox semantics and product-styled switches. */
+
+.flagCount {
+  background: var(--color-panel-2);
+  border: var(--rule);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
+  text-transform: none;
+}
+
+.flagsBody {
+  padding: var(--space-2) var(--space-4) var(--space-3);
+}
+
+.flagRow {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: var(--rule);
+}
+
+.flagRow:last-child {
+  border-bottom: 0;
+}
+
+.flagName {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.flagName code {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+}
+
+.flagName small {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+/* Product-styled switch over a native checkbox. Pill radius is status
+   semantics (§3.4). The input stays focusable/toggleable natively. */
+.switch {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  flex: 0 0 auto;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.switch input:disabled {
+  cursor: not-allowed;
+}
+
+.switchTrack {
+  position: absolute;
+  inset: 0;
+  border: var(--rule);
+  background: var(--color-panel-2);
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  transition: background-color var(--duration-feedback) var(--ease-out),
+    border-color var(--duration-feedback) var(--ease-out);
+}
+
+.switchTrack::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--color-muted);
+  border-radius: var(--radius-pill);
+  transition: transform var(--duration-feedback) var(--ease-out),
+    background-color var(--duration-feedback) var(--ease-out);
+}
+
+.switch input:checked + .switchTrack {
+  background: var(--color-merge);
+}
+
+.switch input:checked + .switchTrack::after {
+  transform: translateX(16px);
+  background: #171923; /* constant ink-on-merge, per §3.1 selection row */
+}
+
+.switch input:focus-visible + .switchTrack {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.switch input:disabled + .switchTrack {
+  opacity: 0.42;
+}
+
+/* Comic Sans tooltip (DESIGN.md §5.6): "disabled in prod for a reason". */
+.tooltip {
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  border-radius: var(--radius-control);
+  padding: var(--space-2) var(--space-3);
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  z-index: 130;
+  animation: tooltip-in var(--duration-feedback) var(--ease-out);
+}
+
+.tooltipArrow {
+  fill: var(--color-ink);
+}
+
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* §4 breakpoints: 620–879px the rail panels may sit in a two-column
+   subgrid once the hero stacks. */
+@media (min-width: 620px) and (max-width: 879.98px) {
+  .rail {
+    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+@media (forced-colors: active) {
+  .switchTrack {
+    forced-color-adjust: auto;
+  }
+  .onCallLabel {
+    border: 1px solid CanvasText;
+  }
+}

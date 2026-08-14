@@ -1,0 +1,102 @@
+/* Product chrome (DESIGN.md §5.1): 56px desktop / 52px mobile, sticky,
+   translucent panel with blur; reduced transparency handled by the
+   --color-chrome/--chrome-blur token switch in globals.css. Density zone
+   allows 4–16px spacing (DESIGN.md §4 density map). */
+
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  background: var(--color-chrome);
+  -webkit-backdrop-filter: var(--chrome-blur);
+  backdrop-filter: var(--chrome-blur);
+  border-bottom: var(--rule);
+}
+
+.productId {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+/* Build dot: merge = healthy build (DESIGN.md §3.1 --color-merge role). */
+.buildDot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-merge);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-merge) 22%, transparent);
+}
+
+/* Wordmark is the only Archivo in the chrome (DESIGN.md §5.1). */
+.wordmark {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: var(--track-card-title);
+}
+
+.ticker {
+  margin: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  text-align: center;
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  white-space: nowrap;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+}
+
+.location {
+  color: var(--color-muted);
+}
+
+/* Compact release status (DESIGN.md §5.1 right side); pill radius is
+   reserved for status semantics (§3.4 --radius-pill row). */
+.status {
+  border: var(--rule);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-2);
+}
+
+@media (max-width: 879.98px) {
+  /* §4: 880–1179 the ticker may shorten; below 880 chrome density wins —
+     drop the ticker rather than shrinking type (§4 "Reflow first"). */
+  .ticker {
+    display: none;
+  }
+}
+
+@media (max-width: 619.98px) {
+  .chrome {
+    height: 52px;
+    padding: 0 var(--space-3);
+  }
+  .status {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .buildDot {
+    outline: 1px solid CanvasText;
+  }
+}

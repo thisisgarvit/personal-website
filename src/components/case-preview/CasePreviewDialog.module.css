@@ -1,0 +1,204 @@
+/* Case preview (DESIGN.md §5.9): max 1120px wide, max height
+   min(86vh, 760px), desktop split 42% artifact / 58% reading, centered
+   18px-radius material over a dim scrim, visible close target. Motion:
+   200ms opacity + .985→1 (§7.3 case-preview row); the scrim dims but
+   never applies a large moving scale to the background (§9). */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-scrim);
+  z-index: 140;
+}
+
+.overlay[data-state="open"] {
+  animation: overlay-in var(--duration-enter) var(--ease-out);
+}
+
+.overlay[data-state="closed"] {
+  animation: overlay-out var(--duration-exit) var(--ease-out);
+}
+
+.content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1120px, calc(100vw - 2rem));
+  max-height: min(86vh, 760px);
+  background: var(--color-panel);
+  border: var(--rule);
+  border-radius: var(--radius-dialog);
+  box-shadow: var(--shadow-dialog);
+  z-index: 141;
+  overflow: auto;
+}
+
+.content[data-state="open"] {
+  animation: dialog-in var(--duration-enter) var(--ease-out);
+}
+
+.content[data-state="closed"] {
+  animation: dialog-out var(--duration-exit) var(--ease-out);
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes overlay-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.985);
+  }
+}
+@keyframes dialog-out {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.985);
+  }
+}
+
+/* Visible close target (§5.9), 44px (§9). */
+.close {
+  position: absolute;
+  top: var(--space-3);
+  inset-inline-end: var(--space-3);
+  width: 44px;
+  height: 44px;
+  border: var(--rule);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel);
+  color: var(--color-ink);
+  font-size: 1.125rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.close:hover {
+  background: var(--color-panel-2);
+}
+
+/* Desktop split: artifact 42% / reading 58% (§5.9). */
+.split {
+  display: grid;
+  grid-template-columns: 42fr 58fr;
+  min-height: 420px;
+}
+
+.artifact {
+  background: var(--color-panel-2);
+  border-inline-end: var(--rule);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.artifactHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--rule);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.artifactBody {
+  min-height: 280px;
+  padding: var(--space-4);
+}
+
+.copy {
+  padding: var(--space-8);
+}
+
+.kicker {
+  margin: 0 0 var(--space-3);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.title {
+  margin: 0;
+  font: 700 var(--type-card-title) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-card-title);
+}
+
+.lede {
+  margin: var(--space-3) 0 0;
+  font: 400 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+  color: var(--color-muted);
+}
+
+/* No more than three verified facts (§5.9 / PRD §8). */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-6) 0 0;
+}
+
+.fact dd {
+  margin: 0;
+  border: var(--rule);
+  border-radius: var(--radius-button);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
+}
+
+.fact b {
+  font: 700 var(--type-card-title) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-card-title);
+}
+
+.fact span {
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.readCase {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  min-height: 44px;
+  font-weight: 700;
+  letter-spacing: var(--track-lead);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Mobile: one scroll surface, artifact first (§5.9). */
+@media (max-width: 879.98px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .artifact {
+    border-inline-end: 0;
+    border-bottom: var(--rule);
+  }
+  .copy {
+    padding: var(--space-6) var(--space-4);
+  }
+  .facts {
+    grid-template-columns: 1fr 1fr;
+  }
+}

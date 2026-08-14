@@ -1,0 +1,65 @@
+/* Footer (DESIGN.md §5.11): one compact full-width build strip. */
+
+.footer {
+  border-top: var(--rule);
+  background: var(--color-panel);
+  margin-top: clamp(4rem, 8vw, 6rem); /* hero/board rhythm band (§3.3/§4) */
+}
+
+.inner {
+  width: min(100% - 2rem, 100rem); /* application shell (§4) */
+  margin-inline: auto;
+  padding: var(--space-6) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.build {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.links a,
+.phoneButton,
+.phoneLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font: 500 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.phoneButton {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.phoneLink {
+  font-family: var(--font-plex-mono), monospace;
+}
+
+.note {
+  margin: 0;
+  font: 400 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-muted);
+}

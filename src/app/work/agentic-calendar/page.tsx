@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CaseShell } from "@/components/case/CaseShell";
 
 export const metadata: Metadata = {
   title: "Agentic Calendar",
@@ -6,9 +7,12 @@ export const metadata: Metadata = {
 
 export default function AgenticCalendarPage() {
   return (
-    <main>
-      <h1>Agentic Calendar</h1>
+    <CaseShell
+      kindLabel="Product concept"
+      ticketId="GAR-207"
+      title="Agentic Calendar"
+    >
       <p>Product concept case study — full narrative lands in Task 5.</p>
-    </main>
+    </CaseShell>
   );
 }
