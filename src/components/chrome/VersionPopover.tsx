@@ -39,7 +39,10 @@ function displayDate(isoDate: string): string {
 export function VersionPopover() {
   return (
     <Popover.Root>
-      <Popover.Trigger className={styles.trigger}>
+      <Popover.Trigger
+        className={styles.trigger}
+        data-mascot-notice="release"
+      >
         v{siteConfig.version}
       </Popover.Trigger>
       <Popover.Portal>

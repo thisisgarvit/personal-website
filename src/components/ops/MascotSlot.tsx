@@ -1,3 +1,4 @@
+import { MascotExperience } from "@/features/mascot";
 import styles from "./ops.module.css";
 
 /**
@@ -12,9 +13,7 @@ import styles from "./ops.module.css";
 export function MascotSlot() {
   return (
     <div className={styles.mascotStage} data-mascot-slot>
-      {/* Empty state: stage surface + the ON CALL label that provides the
-          joke (DESIGN.md §5.6). Codex Task 8 replaces this comment's
-          siblings with the poster/scene, keeping the label. */}
+      <MascotExperience />
       <span className={styles.onCallLabel}>ON CALL</span>
     </div>
   );

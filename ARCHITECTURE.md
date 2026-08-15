@@ -233,3 +233,74 @@ only after hysteresis, `idle` on release/cancel/reset, and `shipped` after a
 pointer settle into Shipped. Keyboard board moves emit no mascot reaction.
 Task 6 flag events bridge to the same bus as `flag-check`; Task 8 should consume
 this bus and apply the locked reaction priority/expiry state machine.
+
+# Task 8 additions — procedural on-call PM (Codex lane)
+
+## Poster-first runtime
+
+`src/features/mascot/MascotExperience.tsx` is the small client controller
+mounted inside the existing `[data-mascot-slot]`. The inline
+`MascotPoster.tsx` SVG is present in server HTML and remains the only rendered
+figure until the lazy WebGL renderer completes its first explicit frame. The
+poster is decorative (`aria-hidden`) and uses the same semantic palette,
+headset, pager, proportions, and crop as the live figure.
+
+The R3F module is loaded with a native `import("./ProceduralMascotScene")`
+only after all of these are true: the first animation frame has passed, the
+slot is in/near the viewport, the document is visible, and the capability
+policy allows WebGL. `requestIdleCallback({ timeout: 1500 })` supplies the
+locked maximum delay. This native import is intentional: `next/dynamic`
+rendered lazily but caused R3F runtime code to enter the homepage entry group
+under Turbopack.
+
+The scene crossfade is generation-bound. A runtime kill and re-enable remounts
+the canvas behind the poster and must commit a new successful frame before the
+poster can leave again. A React error boundary, render-loop try/catch, and
+`webglcontextlost` listener all converge on the renderer-failure poster path.
+
+## Capability and pause policy
+
+Pure fallback selection lives in `capability-policy.ts`. WebGL is skipped for
+reduced motion, Save-Data, a reported `deviceMemory` value of 4GB or less, the
+shared `[data-effects-disabled="true"]` performance kill, or a renderer
+failure. Browsers that omit the non-standard memory hint are not penalized.
+
+Offscreen and document-hidden states pause the retained R3F canvas through
+`frameloop="never"`; they do not destroy a healthy renderer. DPR is clamped to
+`[1, 1.5]`. Touch keeps the authored forward pose; global cursor targets are
+accepted only under `(hover: hover) and (pointer: fine)`.
+
+## Reaction and look rigs
+
+`reaction-machine.ts` consumes the Task 7 `MascotSignal` bus. Shipped blocks
+flag-check/notice, drag-watch owns the rig during active direct manipulation,
+and the best queued timed reaction resumes only if it has not aged out. Locked
+expiry maxima are 900ms / 1000ms / 1400ms.
+
+`rig.ts` converts the `.30s`, damping-ratio-1 look token with
+`omega = 2π / response`, `k = omega²`, and `c = 2 * damping * omega` (mass 1).
+Every retarget integrates from current joint value and velocity. The target is
+split across torso (35%), head (65%), and pupil finish; joint clamps prevent an
+unnatural turn. There is no whole-body idle float. Only the approved random
+2.6–5.2s blink remains ambient.
+
+Fine-pointer notice sources use `data-mascot-notice="resume|contact|release"`
+on the two hero CTAs and version trigger. These events are silent and never
+carry unique information.
+
+## Procedural scene and budgets
+
+The scene is code-only: 18 visible meshes/draw calls, five reused matte
+materials, one ambient fill, one directional key, no GLB, texture, environment
+map, post-processing, particles, pedestal, or network asset request. Direct
+Three `RoundedBoxGeometry` avoids importing the broad Drei surface. The
+imperative mesh tree opts out of React Compiler memo-cache generation with the
+supported `"use no memo"` directive; R3F already owns its frame lifecycle and
+the compiler scaffolding pushed the lazy chunk over budget without improving
+runtime behavior.
+
+Turbopack currently emits the scene and shared R3F/Three code in one lazy
+file. Task 9's gzip-9 check measures that combined file at 229.5KiB, under the
+230KiB vendor ceiling; the scene source alone is 3.0KiB gzip, under its 25KiB
+ceiling. The inline poster source is 3.0KB raw, under 35KB. Hashes are not
+recorded because they change on every production build.

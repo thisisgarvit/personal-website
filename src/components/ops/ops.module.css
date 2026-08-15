@@ -35,10 +35,12 @@
   position: relative;
   min-height: 204px;
   background: var(--color-panel-2);
+  overflow: hidden;
 }
 
 .onCallLabel {
   position: absolute;
+  z-index: 3;
   left: var(--space-3);
   bottom: var(--space-3);
   background: var(--color-ink);

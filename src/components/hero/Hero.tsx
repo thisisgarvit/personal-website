@@ -30,6 +30,7 @@ export function Hero() {
       <div className={styles.ctas}>
         <a
           id="resume-cta"
+          data-mascot-notice="resume"
           className={`${styles.cta} ${styles.ctaResume}`}
           href={siteConfig.resumePath}
           download
@@ -46,6 +47,7 @@ export function Hero() {
           </svg>
         </a>
         <a
+          data-mascot-notice="contact"
           className={`${styles.cta} ${styles.ctaContact}`}
           href={`mailto:${siteConfig.email}`}
         >
