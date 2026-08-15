@@ -3,6 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import type { ReactNode } from "react";
 import type { PreviewFact } from "@/data/work";
+import { analytics } from "@/lib/analytics";
 import styles from "./CasePreviewDialog.module.css";
 
 /**
@@ -88,7 +89,13 @@ export function CasePreviewDialog({
                 </dl>
               )}
               {children}
-              <a className={styles.readCase} href={readFullCaseHref}>
+              <a
+                className={styles.readCase}
+                href={readFullCaseHref}
+                onClick={() =>
+                  analytics.track("full_case_read", { ticket_id: ticketId })
+                }
+              >
                 Read full case <span aria-hidden="true">→</span>
               </a>
             </article>

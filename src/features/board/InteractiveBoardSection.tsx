@@ -28,6 +28,7 @@ import {
   type WorkSlug,
 } from "@/data/work";
 import { emitMascotSignal } from "@/features/mascot/signals";
+import { analytics } from "@/lib/analytics";
 import { publishBoardHealth } from "./build-health";
 import { recordJourneyEvent } from "@/features/journey/journey-store";
 import styles from "./board-interactions.module.css";
@@ -133,6 +134,7 @@ export function InteractiveBoardSection() {
     setPreviewSlug(slug);
     setPreviewOpen(true);
     recordJourneyEvent({ type: "read-work", slug });
+    analytics.track("case_open", { case_slug: slug });
   }, []);
 
   const handlePreviewOpenChange = useCallback((open: boolean) => {

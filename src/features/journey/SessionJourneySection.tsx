@@ -58,7 +58,7 @@ export function SessionJourneySection() {
             Your session, instrumented.
           </h2>
           <p className={styles.disclosure}>
-            computed in your browser. I never see it.
+            this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.
           </p>
         </div>
         <span className={styles.liveState}>

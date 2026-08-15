@@ -7,6 +7,12 @@
 3. **OG tagline: NEITHER proposed line.** Garvit (verbatim): "It should contain my name actually. God knows I want to reach out to someone not as a product manager going forward." Direction: the OG card headline is **"Garvit Sukhija"** — name first, NOT boxed by the "Product Manager" role label. Descriptor beneath: the approved hero sentence ("I turn fuzzy product ideas into things people can use"), which needs no new approval. Do not use "Product Manager who builds" or "— Product Manager" as the OG headline. (HTML metadata <title> per PRD §10 is unchanged for now.)
 4. **Claude mentions: KEEP** — "wireframes generated with Claude" and the claude.ai prototype link are references to a public product, not internal-tool leaks.
 
+## Round 3 — elevation-phase decisions (2026-08-16)
+
+5. **PostHog: APPROVED by Garvit, integrate via `npx -y @posthog/wizard@latest`.** Real user-behavior tracking is wanted. SUPERSEDES PRD §12's "aggregate page views only" stance — PRD amended by this note. Implementation rules (Claude lead): run the wizard AFTER the elevation build lands (no concurrent file edits with codex); Claude's lane owns the integration (plumbing); reconcile the funnel section's trust line — it may no longer claim "I never see it"; reword candidly acknowledging PostHog (stronger joke anyway). Defaults: autocapture + pageviews on; session recording OFF until Garvit explicitly enables; keys via env vars, never committed. The wizard needs Garvit's PostHog account login (browser auth) — expect one interactive moment.
+6. **Post-finalization sections backlog** (Garvit: "thinking of adding other sections too"): session receipt, satirical pricing-as-contact, The Cut List (research/pm-website-patterns.md) + whatever Garvit proposes. Ship each as a versioned release with a candid changelog entry.
+7. **Repo restructure APPROVED**: process docs move under docs/ (briefs, plans, reviews, signoffs, research); app code stays at root (src/, e2e/, public/, scripts/). Execute AFTER elevation lands in one commit; content-source/ stays at root (input archive referenced by sourceRefs).
+
 Authoritative input for the PRD (Task 2). Supersedes the recommended defaults where they differ.
 
 1. **Hero copy — APPROVED.** "I turn fuzzy product ideas into things people can use" ships as-is. No longer blocks launch; may be revisited later as a copy tweak.

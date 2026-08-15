@@ -63,19 +63,19 @@ export const workItems: readonly WorkItem[] = [
         value: "5",
         label: "rooms",
         sourceRef:
-          "airbnb-portal-case-study-raw.md — The product (5 apartments); PRD.md §8 permitted evidence",
+          "docs/process/airbnb-portal-case-study-raw.md — The product (5 apartments); PRD.md §8 permitted evidence",
       },
       {
         value: "484",
         label: "bookings imported",
         sourceRef:
-          "airbnb-portal-case-study-raw.md — Quantifiable facts (484 historical bookings); PRD.md §8 permitted evidence",
+          "docs/process/airbnb-portal-case-study-raw.md — Quantifiable facts (484 historical bookings); PRD.md §8 permitted evidence",
       },
       {
         value: "₹0",
         label: "monthly infra",
         sourceRef:
-          "airbnb-portal-case-study-raw.md — Quantifiable facts (₹0/month running cost); PRD.md §8 permitted evidence",
+          "docs/process/airbnb-portal-case-study-raw.md — Quantifiable facts (₹0/month running cost); PRD.md §8 permitted evidence",
       },
     ],
   },
@@ -96,19 +96,19 @@ export const workItems: readonly WorkItem[] = [
         value: "20+",
         label: "tabs in the problem",
         sourceRef:
-          "content-source/ai-browser-maxie.md; slice-product.html cases.maxie",
+          "content-source/ai-browser-maxie.md; docs/process/slice-product.html cases.maxie",
       },
       {
         value: "3",
         label: "core systems",
         sourceRef:
-          "content-source/ai-browser-maxie.md; slice-product.html cases.maxie",
+          "content-source/ai-browser-maxie.md; docs/process/slice-product.html cases.maxie",
       },
       {
         value: "6 mo",
         label: "MVP frame",
         sourceRef:
-          "content-source/ai-browser-maxie.md; slice-product.html cases.maxie",
+          "content-source/ai-browser-maxie.md; docs/process/slice-product.html cases.maxie",
       },
     ],
   },
@@ -129,19 +129,19 @@ export const workItems: readonly WorkItem[] = [
         value: "5",
         label: "product surfaces",
         sourceRef:
-          "content-source/agentic-calendar.md; slice-product.html cases.calendar",
+          "content-source/agentic-calendar.md; docs/process/slice-product.html cases.calendar",
       },
       {
         value: "4",
         label: "core capabilities",
         sourceRef:
-          "content-source/agentic-calendar.md; slice-product.html cases.calendar",
+          "content-source/agentic-calendar.md; docs/process/slice-product.html cases.calendar",
       },
       {
         value: "1",
         label: "agentic layer",
         sourceRef:
-          "content-source/agentic-calendar.md; slice-product.html cases.calendar",
+          "content-source/agentic-calendar.md; docs/process/slice-product.html cases.calendar",
       },
     ],
   },
@@ -164,13 +164,13 @@ export const workItems: readonly WorkItem[] = [
         value: "1",
         label: "hardware constraint",
         sourceRef:
-          "content-source/garvit-sukhija-product-thinking-and-case-studies.md — Dynamic Island teaser (“turning hardware constraints into product magic”); slice-product.html cases.island",
+          "content-source/garvit-sukhija-product-thinking-and-case-studies.md — Dynamic Island teaser (“turning hardware constraints into product magic”); docs/process/slice-product.html cases.island",
       },
       {
         value: "0",
         label: "new core functions",
         sourceRef:
-          "content-source/one-delightful-product-experience.md — What Made it Special (“the functionality in itself was not new”); slice-product.html cases.island",
+          "content-source/one-delightful-product-experience.md — What Made it Special (“the functionality in itself was not new”); docs/process/slice-product.html cases.island",
       },
       {
         value: "S25",

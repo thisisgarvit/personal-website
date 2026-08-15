@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { analytics } from "@/lib/analytics";
 import { recordJourneyEvent, startJourney } from "./journey-store";
 
 export function JourneyObserver() {
@@ -17,6 +18,9 @@ export function JourneyObserver() {
         ?.dataset.journeyConversion;
       if (conversion === "resume" || conversion === "contact") {
         recordJourneyEvent({ type: "converted", target: conversion });
+        analytics.track(
+          conversion === "resume" ? "resume_download" : "contact_click",
+        );
       }
     };
     handleScroll();

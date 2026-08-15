@@ -23,7 +23,7 @@ describe("Your session, instrumented", () => {
     expect(
       screen.getByRole("heading", { name: "Your session, instrumented." }),
     ).toBeTruthy();
-    expect(screen.getByText("computed in your browser. I never see it.")).toBeTruthy();
+    expect(screen.getByText("this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.")).toBeTruthy();
     expect(screen.getAllByRole("listitem").map((item) => item.textContent)).toEqual([
       expect.stringContaining("Landed"),
       expect.stringContaining("Scrolled"),

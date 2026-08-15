@@ -1,17 +1,31 @@
 import { expect, test } from "@playwright/test";
 
-/** The portfolio's privacy joke is literal: v1 makes no third-party request. */
-test("all requests stay same-origin", async ({
+/**
+ * Only sanctioned origins may be contacted: the site itself and — since
+ * Garvit approved real behavioral analytics (open-questions-answers.md
+ * round 3) — the configured PostHog host. Anything else is an offender.
+ * In CI the PostHog env vars are absent, so the effective policy there
+ * remains strictly same-origin.
+ */
+test("all requests stay within sanctioned origins", async ({
   page,
   baseURL,
 }) => {
   const origin = new URL(baseURL ?? "http://localhost:3000").origin;
+  const allowed = new Set([origin]);
+  const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST;
+  if (posthogHost) {
+    const phOrigin = new URL(posthogHost).origin;
+    allowed.add(phOrigin);
+    // posthog-js loads lazy bundles from the regional asset host
+    allowed.add(phOrigin.replace(".i.posthog.com", "-assets.i.posthog.com"));
+  }
   const offenders: string[] = [];
 
   page.on("request", (request) => {
     const url = new URL(request.url());
     if (url.protocol === "data:" || url.protocol === "blob:") return;
-    if (url.origin === origin) return;
+    if (allowed.has(url.origin)) return;
     offenders.push(request.url());
   });
 

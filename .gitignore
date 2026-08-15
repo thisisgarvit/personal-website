@@ -25,3 +25,10 @@ playwright/.cache/
 
 # task-lane isolated build outputs (Task 9 QA harness)
 .next-*/
+
+# env files (PostHog keys live here; never commit)
+.env
+.env.local
+.env*.local
+test-results
+tsconfig.tsbuildinfo
