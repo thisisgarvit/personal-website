@@ -61,9 +61,14 @@ describe("FeatureFlagsPanel", () => {
       (screen.getByLabelText("Toggle candid ticket annotations") as HTMLInputElement)
         .checked,
     ).toBe(true);
-    expect(
-      (screen.getByLabelText("Comic Sans disabled") as HTMLInputElement).disabled,
-    ).toBe(true);
+    const comicSans = screen.getByLabelText(
+      "Comic Sans disabled",
+    ) as HTMLInputElement;
+    expect(comicSans.disabled).toBe(true);
+    expect(comicSans.getAttribute("aria-describedby")).toBe(
+      "comic-sans-note",
+    );
+    expect(screen.getByText("disabled in prod for a reason")).toBeTruthy();
   });
 
   it("hydrates from the OS and versioned stores without changing row semantics", async () => {

@@ -51,7 +51,7 @@ export function ExperimentStrip() {
   };
 
   return (
-    <div className={styles.strip}>
+    <aside className={styles.strip} aria-label="Experiment status">
       <span className={styles.variant}>EXPERIMENT · B</span>
       <p className={styles.copy}>
         You’re in variant B of this hero.{" "}
@@ -65,6 +65,6 @@ export function ExperimentStrip() {
       >
         <span aria-hidden="true">×</span>
       </button>
-    </div>
+    </aside>
   );
 }

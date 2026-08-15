@@ -18,6 +18,12 @@
   margin-bottom: clamp(4rem, 8vw, 6rem);
 }
 
+/* Grid children must be allowed below their min-content width so 200% text
+   reflows inside the shell instead of widening the document (PRD §12). */
+.heroGrid > * {
+  min-width: 0;
+}
+
 /* §4: 880–1179px the hero rail narrows. */
 @media (max-width: 1179.98px) {
   .heroGrid {

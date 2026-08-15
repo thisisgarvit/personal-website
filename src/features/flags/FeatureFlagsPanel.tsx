@@ -1,6 +1,5 @@
 "use client";
 
-import * as Tooltip from "@radix-ui/react-tooltip";
 import opsStyles from "@/components/ops/ops.module.css";
 import { ConfettiScrollEffects } from "./ConfettiScrollEffects";
 import {
@@ -31,13 +30,16 @@ function FlagRow({
   onCheckedChange,
   describedBy,
 }: FlagRowProps) {
+  const inputDescription = definition.disabled
+    ? "comic-sans-note"
+    : describedBy;
   const control = (
     <label className={opsStyles.switch}>
       <input
         type="checkbox"
         checked={checked}
         disabled={definition.disabled}
-        aria-describedby={describedBy}
+        aria-describedby={inputDescription}
         onChange={(event) => onCheckedChange(event.currentTarget.checked)}
       />
       <span className={opsStyles.switchTrack} aria-hidden="true" />
@@ -52,15 +54,15 @@ function FlagRow({
         <small>{definition.descriptor}</small>
       </span>
       {definition.disabled ? (
-        <Tooltip.Root>
-          <Tooltip.Trigger asChild>{control}</Tooltip.Trigger>
-          <Tooltip.Portal>
-            <Tooltip.Content className={opsStyles.tooltip} sideOffset={6}>
-              disabled in prod for a reason
-              <Tooltip.Arrow className={opsStyles.tooltipArrow} />
-            </Tooltip.Content>
-          </Tooltip.Portal>
-        </Tooltip.Root>
+        <span
+          className={styles.tooltipAnchor}
+          data-tooltip="disabled in prod for a reason"
+        >
+          {control}
+          <span id="comic-sans-note" className="sr-only">
+            disabled in prod for a reason
+          </span>
+        </span>
       ) : (
         control
       )}
@@ -79,7 +81,7 @@ export function FeatureFlagsPanel() {
       : null;
 
   return (
-    <Tooltip.Provider delayDuration={200}>
+    <>
       <section className={opsStyles.panel} aria-labelledby="flags-title">
         <header className={opsStyles.panelTitle}>
           <span id="flags-title">Feature flags</span>
@@ -107,6 +109,6 @@ export function FeatureFlagsPanel() {
         ) : null}
       </section>
       <ConfettiScrollEffects suppression={confettiSuppression} />
-    </Tooltip.Provider>
+    </>
   );
 }

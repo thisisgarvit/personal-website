@@ -190,14 +190,7 @@ test.describe("keyboard-only homepage journey", () => {
     await expect(dialog).toBeHidden();
   });
 
-  // KNOWN BUG (Task 7/10 lane, PRD §13 "Preview: … focus return"):
-  // closing the preview drops focus on <body> instead of restoring it to
-  // the ticket. The board unmounts the whole Dialog.Root on close
-  // (`{previewItem ? <CasePreviewDialog…/> : null}`), which skips Radix's
-  // focus restoration. Fix belongs in src/features/board/** (keep the
-  // Root mounted, or restore focus in onOpenChange). Flip fixme → test
-  // once fixed.
-  test.fixme(
+  test(
     "Escape returns focus to the ticket that opened the preview",
     async ({ page }) => {
       await page.goto("/");

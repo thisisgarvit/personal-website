@@ -17,6 +17,7 @@
 /* Top metadata (§5.4): availability line + DELHI / IST, product mono. */
 .meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
@@ -52,6 +53,17 @@
   font: 800 var(--type-hero) var(--font-archivo), system-ui, sans-serif;
   letter-spacing: var(--track-hero);
   max-width: 920px;
+  overflow-wrap: anywhere;
+}
+
+/* Task 10 density refinement: the global ramp still owns small/medium
+   regions, while wide two-column layouts use a calmer in-ramp size so the
+   approved sentence reads in three beats and the portfolio board enters the
+   first-scroll context. Locked optical tracking remains untouched. */
+@media (min-width: 1180px) {
+  .headline {
+    font-size: clamp(5.25rem, 6vw, 5.75rem);
+  }
 }
 
 .intro {

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import {
+  lazy,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -13,7 +15,6 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { flushSync } from "react-dom";
-import { CasePreviewDialog } from "@/components/case-preview/CasePreviewDialog";
 import { announce, toast } from "@/components/toast/toast";
 import shellStyles from "@/components/board/board.module.css";
 import { BOARD_STORAGE_KEY } from "@/data/storage";
@@ -44,11 +45,6 @@ import {
   type PresentationTransform,
   type TicketSettleHandle,
 } from "./presentation";
-import {
-  PreviewArtifact,
-  PreviewDetails,
-  previewContent,
-} from "./preview-content";
 import { applyTicketTransform, startTicketSettle } from "./spring";
 import {
   authoredBoardPositions,
@@ -59,6 +55,10 @@ import {
 import { useReducedMotion } from "./useReducedMotion";
 
 const emptySubscribe = () => () => undefined;
+
+const CasePreview = lazy(() =>
+  import("./CasePreview").then((module) => ({ default: module.CasePreview })),
+);
 
 function readStoredBoard(): string | null {
   try {
@@ -109,6 +109,7 @@ export function InteractiveBoardSection() {
   );
   const [dropTarget, setDropTarget] = useState<BoardColumn | null>(null);
   const [previewSlug, setPreviewSlug] = useState<WorkSlug | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const positions = userPositions ?? storedPositions;
   const reducedMotion = useReducedMotion();
   const boardRef = useRef<HTMLDivElement>(null);
@@ -116,6 +117,27 @@ export function InteractiveBoardSection() {
   const settles = useRef(new Map<WorkSlug, TicketSettleHandle>());
   const activeDrag = useRef<ActiveDrag | null>(null);
   const acknowledgementTimers = useRef(new Set<number>());
+  const previewReturnFocus = useRef<HTMLElement | null>(null);
+
+  const openPreview = useCallback((slug: WorkSlug, opener?: HTMLElement | null) => {
+    previewReturnFocus.current =
+      opener ??
+      ticketRefs.current
+        .get(slug)
+        ?.querySelector<HTMLAnchorElement>("a") ??
+      null;
+    setPreviewSlug(slug);
+    setPreviewOpen(true);
+  }, []);
+
+  const handlePreviewOpenChange = useCallback((open: boolean) => {
+    setPreviewOpen(open);
+    if (!open) {
+      requestAnimationFrame(() => {
+        previewReturnFocus.current?.focus({ preventScroll: true });
+      });
+    }
+  }, []);
 
   useEffect(
     () => () => {
@@ -396,7 +418,7 @@ export function InteractiveBoardSection() {
         source: drag.slug,
         timestamp: Date.now(),
       });
-      setPreviewSlug(drag.slug);
+      openPreview(drag.slug);
     });
   };
 
@@ -459,7 +481,7 @@ export function InteractiveBoardSection() {
     announce(`${item.title} moved to ${destination.label}`);
 
     if (destination.id === "shipped") {
-      window.setTimeout(() => setPreviewSlug(item.slug), 0);
+      window.setTimeout(() => openPreview(item.slug, link), 0);
     }
   };
 
@@ -474,7 +496,7 @@ export function InteractiveBoardSection() {
       return;
     }
     event.preventDefault();
-    setPreviewSlug(slug);
+    openPreview(slug, event.currentTarget);
   };
 
   const resetBoard = () => {
@@ -611,21 +633,13 @@ export function InteractiveBoardSection() {
       </section>
 
       {previewItem ? (
-        <CasePreviewDialog
-          open
-          onOpenChange={(open) => {
-            if (!open) setPreviewSlug(null);
-          }}
-          kindLabel={previewContent[previewItem.slug].kindLabel}
-          ticketId={previewItem.id}
-          title={previewItem.title}
-          lede={previewContent[previewItem.slug].lede}
-          facts={previewItem.previewFacts}
-          artifact={<PreviewArtifact slug={previewItem.slug} />}
-          readFullCaseHref={previewItem.route}
-        >
-          <PreviewDetails slug={previewItem.slug} />
-        </CasePreviewDialog>
+        <Suspense fallback={null}>
+          <CasePreview
+            item={previewItem}
+            open={previewOpen}
+            onOpenChange={handlePreviewOpenChange}
+          />
+        </Suspense>
       ) : null}
     </>
   );

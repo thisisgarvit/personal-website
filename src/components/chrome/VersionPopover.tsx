@@ -1,6 +1,6 @@
 "use client";
 
-import * as Popover from "@radix-ui/react-popover";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/data/site";
 import { releases, releaseTypeLabel } from "@/data/releases";
 import styles from "./VersionPopover.module.css";
@@ -37,19 +37,54 @@ function displayDate(isoDate: string): string {
 }
 
 export function VersionPopover() {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+      requestAnimationFrame(() => triggerRef.current?.focus());
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Node && !rootRef.current?.contains(target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [open]);
+
   return (
-    <Popover.Root>
-      <Popover.Trigger
+    <div className={styles.root} ref={rootRef}>
+      <button
+        type="button"
+        ref={triggerRef}
         className={styles.trigger}
         data-mascot-notice="release"
+        data-state={open ? "open" : "closed"}
+        aria-expanded={open}
+        aria-controls="release-notes"
+        aria-haspopup="dialog"
+        onClick={() => setOpen((current) => !current)}
       >
         v{siteConfig.version}
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
+      </button>
+      {open ? (
+        <div
+          id="release-notes"
+          role="dialog"
           className={styles.content}
-          align="start"
-          sideOffset={8}
+          data-state="open"
           aria-label="Release notes"
         >
           <div className={styles.head}>
@@ -69,8 +104,8 @@ export function VersionPopover() {
               </li>
             ))}
           </ul>
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+        </div>
+      ) : null}
+    </div>
   );
 }
