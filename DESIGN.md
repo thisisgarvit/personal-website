@@ -711,10 +711,17 @@ board physics, or accessibility contracts.
 
 ### Sourced figure
 
-- The runtime composes Quaternius CC0 Universal Base Characters with the CC0
-  Modular Character Outfits ranger garment and compatible hair. Fantasy hood,
-  pauldron, and bracer are omitted; the authored garment is release-blue
-  reskinned. Headset and pager are the only primitive props.
+- The runtime uses Ariana Chow / CaptainRipley's CC0 rigged robot as an
+  abstract brand-mascot base. It has a large faceted head, compact torso,
+  simplified mechanical eyes, and no realistic skin, facial topology,
+  garment, hair, likeness, or game-class silhouette.
+- The body is re-skinned in release blue with an independently authored dark
+  treatment. A fitted incident-coral headset hugs the head silhouette; its mic
+  terminates at the face. The incident-coral pager is visibly clipped to the
+  chest and retains the merge-lime live-state dot. Neither prop may float.
+- The camera remains a friendly head-and-torso crop. A simple smile is part of
+  the default expression; the figure must read as a designed product mascot,
+  not a game avatar or marketplace demo.
 - Reactions remain spring-driven and interruptible: load wave, idle board guide,
   pointer look-at, milestone pager check, drag lean, work-read notice, shipped
   celebration, and board-demotion/resolution variants.

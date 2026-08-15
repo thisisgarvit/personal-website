@@ -8,7 +8,8 @@ describe("MascotPoster", () => {
 
     expect(markup).toContain("<img");
     expect(markup).toContain('aria-hidden="true"');
-    expect(markup).toContain("session-analyst-poster.webp");
+    expect(markup).toContain("session-analyst-robot-poster.webp");
+    expect(markup).toContain("session-analyst-robot-poster-dark.webp");
     expect(markup).toContain('data-mascot-part="session-analyst"');
     expect(markup).not.toContain("canvas");
   });

@@ -436,11 +436,12 @@ Rollback:
   comparison values (`100 / 76 / 49 / 28 / 11`), step-over-step status, four
   live readouts, and at most two candid auto-insights. Comparison values are
   explicitly labelled an authored benchmark, not measured analytics.
-- `SourcedMascotScene.tsx` composes Quaternius CC0 Universal Base Characters,
-  the authored Modular Character Outfits ranger garment, and a compatible
-  hairstyle. The garment texture is palette-reskinned; non-product fantasy
-  accessories are hidden. Only the headset and pager are project-authored
-  primitive props.
+- `SourcedMascotScene.tsx` loads one CC0 rigged stylized robot GLB from Ariana
+  Chow / CaptainRipley. Runtime material clones remove the source texture and
+  apply semantic release/ink/panel colors; project-authored coral headset,
+  smile, and chest-clipped pager primitives are excluded from that traversal.
+  GLTFLoader sanitizes the source bone dots (`spine.004` → `spine004`, etc.),
+  and `robot-rig.ts` owns that explicit mapping for the existing pose layer.
 - The live scene retains the poster-first, capability, visibility-pause, and
   failure-boundary architecture. Light and dark same-crop WebP posters are
   rendered from the live asset for reduced-motion/WebGL fallback.

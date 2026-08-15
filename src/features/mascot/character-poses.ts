@@ -42,7 +42,7 @@ const IDLE: CharacterPose = {
 };
 
 /**
- * Bone offsets layered over the CC0 character's authored bind pose.
+ * Bone offsets layered over the CC0 robot's authored bind pose.
  * Values are deliberately broad enough to read in a 360×204 viewport.
  */
 export function characterPose(

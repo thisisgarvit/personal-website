@@ -545,7 +545,7 @@ Do not imply employment at or inside knowledge of Apple.
 
 ---
 
-## 9. Procedural On-Call PM
+## 9. Sourced Session Analyst
 
 ### Functional role
 
@@ -580,9 +580,11 @@ Priority: shipped → flag-check → notice → idle. Drag-watch owns the figure
 
 ### Rendering
 
-- Procedural R3F groups/primitives only; no GLB, textures, environment map, or post-processing.
-- Use the approved mesh/material/light limits from `DESIGN.md`.
-- Immediate SVG poster uses the same crop, silhouette, and palette.
+- One locally hosted, CC0, rigged stylized-robot GLB; no realistic human base,
+  likeness, remote model request, environment map, or post-processing.
+- Runtime re-skin and fitted primitive props use the approved semantic
+  materials and light limits from `DESIGN.md`.
+- Immediate light/dark WebP posters use the same crop, silhouette, and palette.
 - Lazy WebGL begins after first paint when visible/idle, with a 1.5-second maximum delay.
 - Crossfade only after the first successful WebGL frame.
 - DPR cap `1.5`; pause offscreen and document-hidden.
@@ -747,7 +749,7 @@ Global requirements:
 |---|---:|
 | Initial homepage JS excluding lazy R3F | ≤170KB gzip |
 | Lazy R3F/Three vendor chunk | ≤230KB gzip |
-| Procedural mascot scene module | ≤25KB gzip |
+| Mascot scene module | ≤25KB gzip |
 | Mascot poster | ≤35KB |
 | LCP | ≤2.5s on agreed mobile profile |
 | CLS | ≤0.05 |
@@ -781,7 +783,7 @@ The terra lane is dissolved. Claude owns mechanical work through its subagent la
 | 5. Content and route port | Claude | Claude/Haiku source-fidelity and PII gate |
 | 6. Feature flags | Codex | Claude judges product effect, a11y, persistence, and restraint |
 | 7. Sprint-board physics | Codex | Claude judges low-sample, mid-settle, real-device feel, and parity |
-| 8. Procedural mascot | Codex | Claude judges personality, loading, fallbacks, and restraint |
+| 8. Sourced mascot | Codex | Claude judges personality, loading, fallbacks, and restraint |
 | 8A. OG/social card | Codex | Garvit resolves tagline; Claude judges all three output sizes |
 | 9. Mechanical QA/deploy wiring | Claude | Claude owns config/tests/plumbing review |
 | 10. Integration and craft | Codex | Claude judges final preview |

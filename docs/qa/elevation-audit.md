@@ -39,18 +39,17 @@ No repeated implementation shortcut, token drift, horizontal-overflow pattern, k
 
 ## Rendered product judgment
 
-- **Does it look 2026? Yes.** The source character, authored light/dark materials, directional lighting, layered translucent chrome, physical controls, and restrained materialize transitions replace the flat July-slice finish without importing template gradients or ornamental glass.
+- **Does it look 2026? Yes.** The curated big-head robot reads as a brand mascot rather than a game avatar: simple mechanical eyes and smile, fitted coral headset, chest-clipped pager, authored light/dark materials, and the existing causal reaction rig. No realistic skin, face topology, bodysuit, garment, or likeness remains in the production asset set.
 - **Is the mascot's purpose obvious? Yes.** It is explicitly labeled `SESSION ANALYST` / `TRACKING YOUR SESSION`; its pager and pose react to the same milestones that visibly fill the adjacent session funnel.
 - **Zero visitor homework holds.** Landed and scroll progress appear passively; play, work-read, and conversion update as side effects of normal browsing. No score or task is imposed.
 
 ## Verification evidence
 
-- Unit/component: 27 files, 89 tests passed.
+- Unit/component: 29 files, 93 tests passed.
 - Cross-browser E2E: 168 passed, 3 intentional skips.
 - Production build: 12/12 static routes generated.
 - Initial homepage JS: 159.6KB gzip / 170KB.
 - Lazy Three/R3F: 227.2KB gzip / 234.6KB.
-- Mascot posters: 10.2KB and 11.1KB / 35KB each.
+- Mascot posters: 9.4KB and 12.0KB / 35KB each.
 - Fonts: 63.6KB / 100KB.
 - Network audit: same-origin only; no analytics or third-party request allowance.
-

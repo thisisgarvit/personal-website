@@ -4,14 +4,15 @@ import { ContactShadows, useGLTF } from "@react-three/drei";
 import { Canvas, createPortal, useFrame, useThree } from "@react-three/fiber";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
 import {
-  Bone,
   Color,
   Euler,
   Group,
   Mesh,
+  MeshBasicMaterial,
   MeshStandardMaterial,
-  Object3D,
+  QuadraticBezierCurve3,
   Quaternion,
+  Vector3,
 } from "three";
 import { useEffect, useMemo, useRef } from "react";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
@@ -21,6 +22,7 @@ import {
   type CharacterPose,
 } from "./character-poses";
 import { splitLookTarget, stepSpring, type SpringState } from "./rig";
+import { resolveRobotBones, type RobotBones } from "./robot-rig";
 import type { MascotReaction } from "./signals";
 
 export interface MascotPalette {
@@ -41,9 +43,7 @@ interface SourcedMascotSceneProps {
 
 type AnimatedValue = keyof CharacterPose | "lookTorso" | "lookHeadX" | "lookHeadY";
 
-const MODEL_URL = "/mascot/session-analyst.gltf";
-const OUTFIT_URL = "/mascot/session-analyst-outfit.gltf";
-const HAIR_URL = "/mascot/session-analyst-hair.gltf";
+const MODEL_URL = "/mascot/session-analyst-robot.glb";
 const springSeed = (): Record<AnimatedValue, SpringState> => ({
   rootY: { value: 0, velocity: 0 },
   rootRoll: { value: 0, velocity: 0 },
@@ -63,40 +63,8 @@ const springSeed = (): Record<AnimatedValue, SpringState> => ({
   lookHeadY: { value: 0, velocity: 0 },
 });
 
-interface CharacterBones {
-  head: Bone;
-  neck: Bone;
-  spine: Bone;
-  leftUpperArm: Bone;
-  rightUpperArm: Bone;
-  leftForearm: Bone;
-  rightForearm: Bone;
-  leftHand: Bone;
-  rightHand: Bone;
-}
-
-function requireBone(root: Object3D, name: string): Bone {
-  const bone = root.getObjectByName(name);
-  if (!(bone instanceof Bone)) throw new Error(`Mascot rig is missing ${name}`);
-  return bone;
-}
-
-function getBones(root: Object3D): CharacterBones {
-  return {
-    head: requireBone(root, "Head"),
-    neck: requireBone(root, "neck_01"),
-    spine: requireBone(root, "spine_02"),
-    leftUpperArm: requireBone(root, "upperarm_l"),
-    rightUpperArm: requireBone(root, "upperarm_r"),
-    leftForearm: requireBone(root, "lowerarm_l"),
-    rightForearm: requireBone(root, "lowerarm_r"),
-    leftHand: requireBone(root, "hand_l"),
-    rightHand: requireBone(root, "hand_r"),
-  };
-}
-
 function addLocalRotation(
-  bone: Bone,
+  bone: RobotBones[keyof RobotBones],
   base: Quaternion,
   x: number,
   y: number,
@@ -141,32 +109,28 @@ function usePointerLook(lastActivity: React.MutableRefObject<number>) {
 
 function RoundedPager({ palette }: { palette: MascotPalette }) {
   const body = useMemo(
-    () => new RoundedBoxGeometry(0.15, 0.105, 0.045, 4, 0.018),
+    () => new RoundedBoxGeometry(0.19, 0.135, 0.055, 5, 0.024),
     [],
   );
   useEffect(() => () => body.dispose(), [body]);
 
   return (
-    <group rotation={[0.04, -0.18, -0.08]}>
+    <group name="mascot-pager" rotation={[0, -0.08, -0.06]}>
+      <mesh position={[0, 0, -0.035]}>
+        <boxGeometry args={[0.11, 0.16, 0.024]} />
+        <meshBasicMaterial color={palette.ink} />
+      </mesh>
       <mesh geometry={body} castShadow>
-        <meshPhysicalMaterial
-          color={palette.incident}
-          roughness={0.44}
-          clearcoat={0.28}
-          clearcoatRoughness={0.5}
-        />
+        <meshBasicMaterial color={palette.incident} />
       </mesh>
-      <mesh position={[-0.018, 0.012, 0.025]}>
-        <planeGeometry args={[0.072, 0.036]} />
-        <meshStandardMaterial color={palette.ink} roughness={0.78} />
+      <mesh position={[-0.02, 0.012, 0.03]}>
+        <planeGeometry args={[0.088, 0.044]} />
+        <meshBasicMaterial color={palette.ink} />
       </mesh>
-      <mesh name="pager-status" position={[0.048, 0.024, 0.03]}>
-        <sphereGeometry args={[0.012, 18, 12]} />
-        <meshStandardMaterial
+      <mesh name="pager-status" position={[0.06, 0.032, 0.034]}>
+        <sphereGeometry args={[0.014, 18, 12]} />
+        <meshBasicMaterial
           color={palette.merge}
-          emissive={palette.merge}
-          emissiveIntensity={0.45}
-          roughness={0.4}
         />
       </mesh>
     </group>
@@ -175,35 +139,50 @@ function RoundedPager({ palette }: { palette: MascotPalette }) {
 
 function Headset({ palette }: { palette: MascotPalette }) {
   return (
-    <group position={[0, 0.105, 0.005]} rotation={[0, 0, -0.03]}>
-      <mesh rotation={[0, 0, Math.PI]} castShadow>
-        <torusGeometry args={[0.135, 0.014, 12, 40, Math.PI]} />
-        <meshPhysicalMaterial
-          color={palette.incident}
-          roughness={0.42}
-          clearcoat={0.34}
-          clearcoatRoughness={0.45}
-        />
+    <group name="mascot-headset" position={[0, 0.62, 0.78]}>
+      <mesh castShadow>
+        <torusGeometry args={[0.39, 0.035, 16, 64, Math.PI]} />
+        <meshBasicMaterial color={palette.incident} />
       </mesh>
       {[-1, 1].map((side) => (
-        <mesh key={side} position={[side * 0.137, -0.012, 0]} castShadow>
-          <capsuleGeometry args={[0.027, 0.055, 6, 12]} />
-          <meshPhysicalMaterial
-            color={palette.incident}
-            roughness={0.38}
-            clearcoat={0.28}
-          />
+        <mesh
+          key={side}
+          position={[side * 0.43, -0.055, 0.025]}
+          scale={[0.48, 1, 1]}
+          castShadow
+        >
+          <sphereGeometry args={[0.12, 20, 16]} />
+          <meshBasicMaterial color={palette.incident} />
         </mesh>
       ))}
-      <mesh position={[0.112, -0.075, 0.045]} rotation={[0, 0, -0.6]}>
-        <cylinderGeometry args={[0.006, 0.006, 0.15, 12]} />
-        <meshStandardMaterial color={palette.incident} roughness={0.48} />
+      <mesh position={[0.325, -0.14, 0.1]} rotation={[0, 0, -2.27]}>
+        <cylinderGeometry args={[0.01, 0.01, 0.27, 16]} />
+        <meshBasicMaterial color={palette.incident} />
       </mesh>
-      <mesh position={[0.165, -0.128, 0.056]}>
-        <sphereGeometry args={[0.012, 12, 8]} />
-        <meshStandardMaterial color={palette.ink} roughness={0.7} />
+      <mesh position={[0.2, -0.23, 0.11]}>
+        <sphereGeometry args={[0.026, 16, 12]} />
+        <meshBasicMaterial color={palette.ink} />
       </mesh>
     </group>
+  );
+}
+
+function FriendlySmile({ palette }: { palette: MascotPalette }) {
+  const curve = useMemo(
+    () =>
+      new QuadraticBezierCurve3(
+        new Vector3(-0.12, 0.02, 0),
+        new Vector3(0, -0.045, 0),
+        new Vector3(0.12, 0.02, 0),
+      ),
+    [],
+  );
+
+  return (
+    <mesh name="mascot-smile" position={[0, 0.16, 1.1]}>
+      <tubeGeometry args={[curve, 24, 0.018, 8, false]} />
+      <meshBasicMaterial color={palette.ink} />
+    </mesh>
   );
 }
 
@@ -216,52 +195,20 @@ function SourcedCharacter({
 }) {
   "use no memo";
   const source = useGLTF(MODEL_URL);
-  const outfitSource = useGLTF(OUTFIT_URL);
-  const hairSource = useGLTF(HAIR_URL);
   const figure = useMemo(() => cloneSkeleton(source.scene), [source.scene]);
-  const outfit = useMemo(
-    () => cloneSkeleton(outfitSource.scene),
-    [outfitSource.scene],
-  );
-  const hair = useMemo(
-    () => cloneSkeleton(hairSource.scene),
-    [hairSource.scene],
-  );
   const root = useRef<Group>(null);
   const springs = useRef(springSeed());
   const mountedAt = useRef(0);
   const lastActivity = useRef(0);
   const guided = useRef(false);
   const pointer = usePointerLook(lastActivity);
-  const bones = useMemo(() => getBones(figure), [figure]);
-  const outfitBones = useMemo(() => getBones(outfit), [outfit]);
-  const hairBones = useMemo(() => getBones(hair), [hair]);
+  const bones = useMemo(() => resolveRobotBones(figure), [figure]);
   const bases = useMemo(
     () =>
       Object.fromEntries(
         Object.entries(bones).map(([key, bone]) => [key, bone.quaternion.clone()]),
-      ) as Record<keyof CharacterBones, Quaternion>,
+      ) as Record<keyof RobotBones, Quaternion>,
     [bones],
-  );
-  const outfitBases = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(outfitBones).map(([key, bone]) => [
-          key,
-          bone.quaternion.clone(),
-        ]),
-      ) as Record<keyof CharacterBones, Quaternion>,
-    [outfitBones],
-  );
-  const hairBases = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(hairBones).map(([key, bone]) => [
-          key,
-          bone.quaternion.clone(),
-        ]),
-      ) as Record<keyof CharacterBones, Quaternion>,
-    [hairBones],
   );
 
   useEffect(() => {
@@ -272,66 +219,47 @@ function SourcedCharacter({
 
   useEffect(() => {
     const owned: MeshStandardMaterial[] = [];
-    const ownedGeometry = [] as Mesh["geometry"][];
-    [figure, outfit, hair].forEach((model) => {
-      model.traverse((child) => {
-        if (!(child instanceof Mesh)) return;
-        if (
-          child.name === "Male_Ranger_Head_Hood" ||
-          child.name === "Male_Ranger_Acc_Pauldron" ||
-          child.name === "Male_Ranger_Arms_Bracer"
-        ) {
-          child.visible = false;
-          return;
-        }
-        if (child.name === "SuperHero_Male") {
-          const geometry = child.geometry.clone();
-          const positions = geometry.getAttribute("position");
-          const indices = geometry.index;
-          if (indices) {
-            const kept: number[] = [];
-            for (let offset = 0; offset < indices.count; offset += 3) {
-              const a = indices.getX(offset);
-              const b = indices.getX(offset + 1);
-              const c = indices.getX(offset + 2);
-              if (
-                positions.getY(a) > 1.43 &&
-                positions.getY(b) > 1.43 &&
-                positions.getY(c) > 1.43
-              ) {
-                kept.push(a, b, c);
-              }
-            }
-            geometry.setIndex(kept);
-            child.geometry = geometry;
-            ownedGeometry.push(geometry);
+    figure.traverse((child) => {
+      if (!(child instanceof Mesh)) return;
+      if (child.name.startsWith("mascot-")) return;
+      let owner = child.parent;
+      while (owner) {
+        if (owner.name.startsWith("mascot-")) return;
+        owner = owner.parent;
+      }
+      child.castShadow = true;
+      // ContactShadows ground the figure; self-receiving the low-resolution
+      // directional map creates stippled shadow acne on the compact stage.
+      child.receiveShadow = false;
+
+      const materials = Array.isArray(child.material)
+        ? child.material
+        : [child.material];
+      const clones = materials.map((material, index) => {
+        const clone = material.clone() as MeshStandardMaterial;
+        clone.map = null;
+        clone.roughness = child.name === "Face" ? 0.62 : 0.38;
+        clone.metalness = 0;
+        clone.envMapIntensity = 0.68;
+        clone.flatShading = false;
+        if (child.name === "Bottom") clone.color.set(palette.ink);
+        else if (child.name === "Face") {
+          clone.color.set(index === 0 ? palette.panel : palette.ink);
+          if (index === 0) {
+            clone.emissive.set(palette.panel);
+            clone.emissiveIntensity = 0.06;
           }
-        }
-        child.castShadow = true;
-        child.receiveShadow = true;
-        const materials = Array.isArray(child.material)
-          ? child.material
-          : [child.material];
-        const clones = materials.map((material) => {
-          const clone = material.clone() as MeshStandardMaterial;
-          clone.roughness = Math.min(0.78, Math.max(0.42, clone.roughness));
-          clone.metalness = 0;
-          clone.envMapIntensity = 0.72;
-          if (child.name === "Hair_SimpleParted") {
-            clone.color.set("#171923");
-            clone.roughness = 0.62;
-          }
-          owned.push(clone);
-          return clone;
-        });
-        child.material = Array.isArray(child.material) ? clones : clones[0];
+        } else clone.color.set(palette.release);
+        clone.needsUpdate = true;
+        owned.push(clone);
+        return clone;
       });
+      child.material = Array.isArray(child.material) ? clones : clones[0];
     });
     return () => {
       owned.forEach((material) => material.dispose());
-      ownedGeometry.forEach((geometry) => geometry.dispose());
     };
-  }, [figure, hair, outfit]);
+  }, [figure, palette.ink, palette.panel, palette.release]);
 
   useEffect(() => {
     if (reaction !== "idle") lastActivity.current = performance.now();
@@ -365,7 +293,7 @@ function SourcedCharacter({
       return next.value;
     };
 
-    root.current.position.y = -2.38 + value("rootY", authored.rootY);
+    root.current.position.y = -0.58 + value("rootY", authored.rootY);
     root.current.rotation.z = value("rootRoll", authored.rootRoll);
     const lookTorso = value("lookTorso", look.torsoYaw);
     const lookHeadX = value("lookHeadX", look.headYaw);
@@ -385,8 +313,8 @@ function SourcedCharacter({
     };
 
     const applyPose = (
-      rig: CharacterBones,
-      rest: Record<keyof CharacterBones, Quaternion>,
+      rig: RobotBones,
+      rest: Record<keyof RobotBones, Quaternion>,
     ) => {
       addLocalRotation(rig.spine, rest.spine, pose.spinePitch, lookTorso, pose.spineRoll);
       addLocalRotation(
@@ -405,17 +333,12 @@ function SourcedCharacter({
       addLocalRotation(rig.rightHand, rest.rightHand, 0, pose.rightHand, 0);
     };
     applyPose(bones, bases);
-    applyPose(outfitBones, outfitBases);
-    applyPose(hairBones, hairBases);
 
     const pager = figure.getObjectByName("pager-status") as Mesh | undefined;
-    if (pager?.material instanceof MeshStandardMaterial) {
+    if (pager?.material instanceof MeshBasicMaterial) {
       const incident = reaction === "incident";
       const color = new Color(incident ? palette.incident : palette.merge);
       pager.material.color.lerp(color, Math.min(1, delta * 12));
-      pager.material.emissive.lerp(color, Math.min(1, delta * 12));
-      pager.material.emissiveIntensity =
-        0.35 + value("pagerPulse", authored.pagerPulse) * 1.2;
       pager.scale.setScalar(1 + Math.max(0, authored.pagerPulse) * 0.2);
     }
   });
@@ -423,16 +346,15 @@ function SourcedCharacter({
   return (
     <group
       ref={root}
-      position={[0.16, -2.38, 0]}
-      rotation={[0, 0.08, 0]}
-      scale={2.05}
+      position={[0.5, -0.58, 0]}
+      rotation={[0, 0.06, 0]}
+      scale={1.45}
     >
       <primitive object={figure} />
-      <primitive object={outfit} />
-      <primitive object={hair} />
       {createPortal(<Headset palette={palette} />, bones.head)}
+      {createPortal(<FriendlySmile palette={palette} />, bones.head)}
       {createPortal(
-        <group position={[0.16, 0.055, 0.16]}>
+        <group position={[0.1, 0.15, 1]} scale={1.18}>
           <RoundedPager palette={palette} />
         </group>,
         bones.spine,
@@ -495,10 +417,10 @@ export function SourcedMascotScene({
       shadows
       dpr={[1, 1.6]}
       frameloop={playing ? "always" : "never"}
-      camera={{ position: [0.05, 1.15, 4.6], fov: 28, near: 0.1, far: 30 }}
+      camera={{ position: [0.05, 1.2, 4.4], fov: 29, near: 0.1, far: 30 }}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
       onCreated={({ camera, gl }) => {
-        camera.lookAt(0.05, 1.02, 0);
+        camera.lookAt(0.05, 1.08, 0);
         gl.setClearColor(0x000000, 0);
       }}
     >
@@ -511,11 +433,11 @@ export function SourcedMascotScene({
         intensity={3.5}
         shadow-mapSize={[512, 512]}
       />
-      <pointLight color={palette.release} position={[3.5, 2.8, 2]} intensity={9} distance={7} />
+      <pointLight color={palette.release} position={[3.5, 2.8, 2]} intensity={2.5} distance={7} />
       <pointLight color={palette.incident} position={[-2.4, 1.2, -1.5]} intensity={4.5} distance={6} />
       <SourcedCharacter palette={palette} reaction={reaction} />
       <ContactShadows
-        position={[0, -0.34, 0]}
+        position={[0, -0.38, 0]}
         opacity={0.32}
         scale={3.2}
         blur={2.6}
@@ -532,5 +454,3 @@ export function SourcedMascotScene({
 }
 
 useGLTF.preload(MODEL_URL);
-useGLTF.preload(OUTFIT_URL);
-useGLTF.preload(HAIR_URL);

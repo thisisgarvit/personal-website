@@ -9,7 +9,7 @@ export function MascotPoster() {
         className={styles.posterLight}
         aria-hidden="true"
         data-mascot-part="session-analyst"
-        src="/mascot/session-analyst-poster.webp"
+        src="/mascot/session-analyst-robot-poster.webp"
         alt=""
         width={760}
         height={408}
@@ -19,7 +19,7 @@ export function MascotPoster() {
       <Image
         className={styles.posterDark}
         aria-hidden="true"
-        src="/mascot/session-analyst-poster-dark.webp"
+        src="/mascot/session-analyst-robot-poster-dark.webp"
         alt=""
         width={760}
         height={408}

@@ -1,22 +1,17 @@
 # Mascot source and license
 
-The humanoid character foundation and hair are adapted from **Universal Base Characters** by Quaternius (2025):
+The stylized robot base is adapted from **3D Godot Robot Platformer
+Character** by Ariana Chow / CaptainRipley:
 
-- Source: https://quaternius.com/packs/universalbasecharacters.html
+- Source: https://github.com/AGChow/3D-Godot-Robot-Platformer-Character
 - License: CC0 1.0 Universal (public domain dedication)
-- Original format: rigged glTF, “Superhero Male Full Body” base
+- Original format: rigged and animated GLB
+- Source revision: `fecf5b23e825cabedb9a6c9872d03ee57b5fdd61`
 
-The authored garment is adapted from **Modular Character Outfits — Fantasy**
-by Quaternius (2026):
-
-- Source: https://quaternius.itch.io/modular-character-outfits-fantasy
-- License: CC0 1.0 Universal (public domain dedication)
-- Original format: rigged glTF, `Male_Ranger` outfit; hood, pauldron, and
-  bracer meshes are intentionally omitted from the product adaptation
-
-Project modifications: palette reskin and texture compression, cropped staging,
-coral headset and pager, palette-specific materials, custom lighting, look-at
-rig, and original journey-state animation poses.
+Project modifications: product-palette materials, cropped head-and-torso
+staging, fitted coral headset and chest-clipped pager, custom lighting,
+pointer look-at, and original journey-state animation poses. The source
+animations are not used by the site.
 
 The original pack's license text is preserved below.
 
