@@ -1,5 +1,12 @@
 # Garvit's answers to the plan's open questions (2026-08-15)
 
+## Round 2 — Task 11 content decisions (2026-08-16)
+
+1. **Stay Portal screenshots: SHIP AS-IS, explicitly confirmed.** Garvit re-confirmed the full set including the referral first names (Ishika/Harsh/Kshitij/Yash) and the room numbers (4202/3707/3611/2206/2128). PRD §8's "real room identifiers" prohibition is AMENDED: room numbers are permitted in demo media (they identify apartments, not people).
+2. **"10% where delight lives" chip: SWAPPED** for the essay-sourced fact (S25 Now Bar = first direct rival) in src/data/work.ts. The candid note's "last 10%" prose framing stays (it was the approved slice copy).
+3. **OG tagline: NEITHER proposed line.** Garvit (verbatim): "It should contain my name actually. God knows I want to reach out to someone not as a product manager going forward." Direction: the OG card headline is **"Garvit Sukhija"** — name first, NOT boxed by the "Product Manager" role label. Descriptor beneath: the approved hero sentence ("I turn fuzzy product ideas into things people can use"), which needs no new approval. Do not use "Product Manager who builds" or "— Product Manager" as the OG headline. (HTML metadata <title> per PRD §10 is unchanged for now.)
+4. **Claude mentions: KEEP** — "wireframes generated with Claude" and the claude.ai prototype link are references to a public product, not internal-tool leaks.
+
 Authoritative input for the PRD (Task 2). Supersedes the recommended defaults where they differ.
 
 1. **Hero copy — APPROVED.** "I turn fuzzy product ideas into things people can use" ships as-is. No longer blocks launch; may be revisited later as a copy tweak.

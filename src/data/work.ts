@@ -173,10 +173,10 @@ export const workItems: readonly WorkItem[] = [
           "content-source/one-delightful-product-experience.md — What Made it Special (“the functionality in itself was not new”); slice-product.html cases.island",
       },
       {
-        value: "10%",
-        label: "where delight lives",
+        value: "S25",
+        label: "the first direct rival (Now Bar)",
         sourceRef:
-          "PRD.md §8 /notes/dynamic-island required story (the final 10%); slice-product.html cases.island",
+          "content-source/one-delightful-product-experience.md — “There was no direct alternative to this until Samsung S25's Now Bar.” (Garvit swapped authored ‘10%’ framing for this sourced fact, 2026-08-15)",
       },
     ],
   },
