@@ -1,10 +1,6 @@
 /* Task 6 effects stay subordinate to the product shell: edge-only, token
    colors, no pointer interception, and no new chrome vocabulary. */
 
-:global(:root[data-candid="off"] [data-candid-note]) {
-  display: none !important;
-}
-
 .effectNote {
   margin: 0;
   border-top: var(--rule);

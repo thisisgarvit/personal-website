@@ -28,6 +28,8 @@ import {
   type WorkSlug,
 } from "@/data/work";
 import { emitMascotSignal } from "@/features/mascot/signals";
+import { publishBoardHealth } from "./build-health";
+import { recordJourneyEvent } from "@/features/journey/journey-store";
 import styles from "./board-interactions.module.css";
 import {
   DRAG_HYSTERESIS,
@@ -119,6 +121,8 @@ export function InteractiveBoardSection() {
   const acknowledgementTimers = useRef(new Set<number>());
   const previewReturnFocus = useRef<HTMLElement | null>(null);
 
+  useEffect(() => publishBoardHealth(positions), [positions]);
+
   const openPreview = useCallback((slug: WorkSlug, opener?: HTMLElement | null) => {
     previewReturnFocus.current =
       opener ??
@@ -128,6 +132,7 @@ export function InteractiveBoardSection() {
       null;
     setPreviewSlug(slug);
     setPreviewOpen(true);
+    recordJourneyEvent({ type: "read-work", slug });
   }, []);
 
   const handlePreviewOpenChange = useCallback((open: boolean) => {
@@ -294,6 +299,7 @@ export function InteractiveBoardSection() {
     if (!drag.dragging) {
       drag.dragging = true;
       drag.element.dataset.dragState = "dragging";
+      recordJourneyEvent({ type: "played", kind: "drag" });
       emitMascotSignal({
         reaction: "drag-watch",
         source: drag.slug,
@@ -392,6 +398,7 @@ export function InteractiveBoardSection() {
     const nextPositions = { ...positions, [drag.slug]: destination };
     flushSync(() => setUserPositions(nextPositions));
     persistPositions(nextPositions);
+    publishBoardHealth(nextPositions);
 
     const moved = ticketRefs.current.get(drag.slug);
     if (!moved) return;
@@ -465,9 +472,11 @@ export function InteractiveBoardSection() {
     if (nextIndex === currentIndex) return;
 
     const destination = boardColumns[nextIndex];
+    recordJourneyEvent({ type: "played", kind: "keyboard-move" });
     const nextPositions = { ...positions, [item.slug]: destination.id };
     flushSync(() => setUserPositions(nextPositions));
     persistPositions(nextPositions);
+    publishBoardHealth(nextPositions);
 
     const moved = ticketRefs.current.get(item.slug);
     const link = moved?.querySelector<HTMLAnchorElement>("a");
@@ -522,6 +531,7 @@ export function InteractiveBoardSection() {
       delete element.dataset.settle;
     });
     flushSync(() => setUserPositions({ ...authoredBoardPositions }));
+    publishBoardHealth(authoredBoardPositions);
     try {
       sessionStorage.removeItem(BOARD_STORAGE_KEY);
     } catch {
@@ -535,7 +545,11 @@ export function InteractiveBoardSection() {
 
   return (
     <>
-      <section className={shellStyles.section} aria-labelledby="board-title">
+      <section
+        id="work-board"
+        className={shellStyles.section}
+        aria-labelledby="board-title"
+      >
         <header className={shellStyles.head}>
           <div>
             <h2 id="board-title" className={shellStyles.title}>

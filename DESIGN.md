@@ -684,3 +684,66 @@ Claude’s approval checklist:
 - ~~Garvit’s approval of the provisional hero sentence.~~ **Approved by Garvit 2026-08-15.** The OG positioning line remains a pending Task 8A gate.
 
 **Claude review status (2026-08-15): APPROVED as locked production design direction** — see design-review-claude.md for the four items to fold into the PRD (phone-number treatment, "Full changelog" destination, brand-string token, microcopy dedupe). Rendered-state gates in §12 apply at implementation reviews (Tasks 4–10), not to this document.
+
+---
+
+## Elevation Amendment — 2026-08-16
+
+This amendment supersedes the procedural/on-call mascot language in §§1, 2,
+5.6, 7.5, and 12 without changing the locked palette, type, spacing, content,
+board physics, or accessibility contracts.
+
+### Session product mechanic
+
+- The mascot is the `SESSION ANALYST`, visibly tracking this tab’s coarse
+  product journey. Public label: `TRACKING YOUR SESSION`.
+- One shared `garvit-journey:v1` event array owns `Landed → Scrolled → Played
+  → Read work → Converted`. It is capped, schema-validated, current-tab only,
+  and never transmitted.
+- The homepage section title is `Your session, instrumented.` and must disclose
+  `computed in your browser. I never see it.`
+- Five horizontal step bars fill live. Each row shows step-over-step status and
+  a muted authored comparison (`100 / 76 / 49 / 28 / 11`) labelled `typical
+  visitor · authored benchmark`. It is a display, never a visitor score.
+- The pager gives one silent physical buzz on a first milestone. Existing board
+  demotion/resolution may affect chrome and pose only as journey events; no
+  on-call identity or event-log stream returns.
+
+### Sourced figure
+
+- The runtime composes Quaternius CC0 Universal Base Characters with the CC0
+  Modular Character Outfits ranger garment and compatible hair. Fantasy hood,
+  pauldron, and bracer are omitted; the authored garment is release-blue
+  reskinned. Headset and pager are the only primitive props.
+- Reactions remain spring-driven and interruptible: load wave, idle board guide,
+  pointer look-at, milestone pager check, drag lean, work-read notice, shipped
+  celebration, and board-demotion/resolution variants.
+- Light and dark same-crop WebP renders of the live figure replace the old
+  illustrated poster for reduced-motion, Save-Data, low-memory, WebGL failure,
+  and no-scene states.
+
+### Materials and depth
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `--color-chrome` | `rgba(248,249,244,.82)` | `rgba(25,29,37,.82)` | Sticky functional chrome |
+| `--material-panel` | `rgba(248,249,244,.94)` | `rgba(25,29,37,.94)` | Primary resting surfaces |
+| `--material-panel-soft` | `rgba(248,249,244,.84)` | `rgba(25,29,37,.84)` | Nested product surfaces |
+| `--material-overlay` | `rgba(248,249,244,.90)` | `rgba(25,29,37,.90)` | Popover/dialog material |
+| `--chrome-blur` | `blur(22px) saturate(135%)` | same | Chrome only |
+| `--shadow-panel` | `0 20px 54px rgba(23,25,35,.09), 0 3px 10px rgba(23,25,35,.06)` | `0 24px 60px rgba(0,0,0,.28), 0 3px 12px rgba(0,0,0,.24)` | Major panel lift |
+
+- Blur is functional: sticky chrome 22px, popover/dialog 28–32px, scrim 8px.
+  Resting content panels do not use backdrop blur.
+- Major panels use one softened edge plus offset light, not border-plus-shadow
+  ghost cards. Tickets use a 3px top semantic rail, never a thick side border.
+- Entering overlays materialize with small translation/scale and blur settling;
+  control hover/press follows physical elevation. Reduced transparency and
+  increased contrast collapse to solid authored surfaces.
+
+### Deliberate error surface
+
+The not-found route is a compact `SEV-3 · RESOLVED` blameless incident
+postmortem. Its root cause is `PM overestimated his own information
+architecture.` and resolution links are home and `/#work-board`. No other
+research patterns enter the v1 scope.

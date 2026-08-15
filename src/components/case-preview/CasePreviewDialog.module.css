@@ -8,6 +8,8 @@
   position: fixed;
   inset: 0;
   background: var(--color-scrim);
+  -webkit-backdrop-filter: blur(8px) saturate(92%);
+  backdrop-filter: blur(8px) saturate(92%);
   z-index: 140;
 }
 
@@ -26,12 +28,15 @@
   transform: translate(-50%, -50%);
   width: min(1120px, calc(100vw - 2rem));
   max-height: min(86vh, 760px);
-  background: var(--color-panel);
-  border: var(--rule);
+  background: var(--material-overlay);
+  border: 1px solid color-mix(in srgb, var(--color-rule) 72%, transparent);
   border-radius: var(--radius-dialog);
   box-shadow: var(--shadow-dialog);
   z-index: 141;
   overflow: auto;
+  -webkit-backdrop-filter: blur(32px) saturate(128%);
+  backdrop-filter: blur(32px) saturate(128%);
+  box-shadow: var(--shadow-dialog), inset 0 1px 0 var(--material-highlight);
 }
 
 .content[data-state="open"] {
@@ -55,13 +60,15 @@
 @keyframes dialog-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.985);
+    transform: translate(-50%, calc(-50% + 8px)) scale(0.975);
+    filter: blur(8px);
   }
 }
 @keyframes dialog-out {
   to {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.985);
+    transform: translate(-50%, calc(-50% + 5px)) scale(0.982);
+    filter: blur(5px);
   }
 }
 
@@ -81,10 +88,22 @@
   place-items: center;
   cursor: pointer;
   z-index: 1;
+  box-shadow: var(--shadow-control);
+  transition:
+    transform var(--duration-feedback) var(--ease-out),
+    box-shadow var(--duration-feedback) var(--ease-out),
+    background-color var(--duration-feedback) var(--ease-out);
 }
 
 .close:hover {
   background: var(--color-panel-2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-control-hover);
+}
+
+.close:active {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: var(--shadow-press);
 }
 
 /* Desktop split: artifact 42% / reading 58% (§5.9). */

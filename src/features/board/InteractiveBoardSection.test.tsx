@@ -14,6 +14,10 @@ import {
   type MascotSignal,
 } from "@/features/mascot/signals";
 import { InteractiveBoardSection } from "./InteractiveBoardSection";
+import {
+  getBuildHealthSnapshot,
+  resetBuildHealthForTests,
+} from "./build-health";
 
 class TestPointerEvent extends MouseEvent {
   readonly pointerId: number;
@@ -54,6 +58,7 @@ describe("InteractiveBoardSection", () => {
 
   afterEach(() => {
     cleanup();
+    resetBuildHealthForTests();
     vi.unstubAllGlobals();
   });
 
@@ -105,6 +110,17 @@ describe("InteractiveBoardSection", () => {
       "shipped",
     );
     unsubscribe();
+  });
+
+  it("turns a demoted shipped product into an incident and reset resolves it", () => {
+    render(<InteractiveBoardSection />);
+    const stayPortal = screen.getByRole("link", { name: /Stay Portal/ });
+
+    fireEvent.keyDown(stayPortal, { key: "ArrowRight", altKey: true });
+    expect(getBuildHealthSnapshot()).toBe("incident");
+
+    fireEvent.click(screen.getByRole("button", { name: "Reset board" }));
+    expect(getBuildHealthSnapshot()).toBe("healthy");
   });
 
   it("opens a substantial preview from the ticket body without mutating its route", () => {

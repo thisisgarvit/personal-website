@@ -3,15 +3,20 @@ import type { MascotReaction, MascotSignal } from "./signals";
 const ACTIVE_MS: Readonly<Partial<Record<MascotReaction, number>>> = {
   notice: 900,
   "flag-check": 1000,
+  milestone: 1100,
   shipped: 1400,
+  resolved: 1600,
 };
 
 const PRIORITY: Readonly<Record<MascotReaction, number>> = {
   idle: 0,
   notice: 1,
   "flag-check": 2,
-  shipped: 3,
+  milestone: 3,
+  shipped: 4,
   "drag-watch": 4,
+  incident: 5,
+  resolved: 6,
 };
 
 export interface QueuedMascotReaction {
@@ -39,7 +44,11 @@ export function createMascotState(): MascotReactionState {
 function timedReaction(
   signal: MascotSignal,
 ): QueuedMascotReaction | null {
-  if (signal.reaction === "idle" || signal.reaction === "drag-watch") {
+  if (
+    signal.reaction === "idle" ||
+    signal.reaction === "drag-watch" ||
+    signal.reaction === "incident"
+  ) {
     return null;
   }
   return {
@@ -87,6 +96,25 @@ export function receiveMascotSignal(
   now: number,
 ): MascotReactionState {
   const state = advanceMascotState(current, now);
+
+  if (signal.reaction === "incident") {
+    return {
+      reaction: "incident",
+      source: signal.source,
+      expiresAt: null,
+      queued: null,
+    };
+  }
+
+  if (signal.reaction === "resolved") {
+    const incoming = timedReaction(signal)!;
+    return {
+      reaction: incoming.reaction,
+      source: incoming.source,
+      expiresAt: incoming.expiresAt,
+      queued: null,
+    };
+  }
 
   if (signal.reaction === "drag-watch") {
     const active =

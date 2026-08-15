@@ -1,4 +1,4 @@
-/* Operations rail (DESIGN.md §5.6): on-call PM + feature flags.
+/* Operations rail: session journey tracker + feature flags.
    Panels share the hero's radius and ink rule with contrasting panel
    backgrounds. */
 
@@ -10,10 +10,11 @@
 }
 
 .panel {
-  background: var(--color-panel);
-  border: 1px solid var(--color-ink);
+  background: var(--material-panel);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 72%, transparent);
   border-radius: var(--radius-panel);
   overflow: hidden;
+  box-shadow: var(--shadow-panel), inset 0 1px 0 var(--material-highlight);
 }
 
 .panelTitle {
@@ -35,19 +36,35 @@
 .mascotStage {
   position: relative;
   min-height: 204px;
-  background: var(--color-panel-2);
+  background:
+    radial-gradient(circle at 50% 8%, color-mix(in srgb, var(--color-question) 38%, transparent), transparent 42%),
+    linear-gradient(160deg, color-mix(in srgb, var(--color-panel) 75%, var(--color-context)), var(--color-panel-2));
   overflow: hidden;
 }
 
-.onCallLabel {
+.mascotStage::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 8px;
+  height: 22px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  filter: blur(11px);
+  pointer-events: none;
+}
+
+.trackerLabel {
   position: absolute;
   z-index: 3;
   left: var(--space-3);
   bottom: var(--space-3);
-  background: var(--color-ink);
-  color: var(--color-canvas);
+  background: color-mix(in srgb, var(--color-ink) 88%, transparent);
+  color: var(--color-panel);
   padding: var(--space-2) var(--space-2);
   border-radius: var(--radius-control);
+  box-shadow: var(--shadow-control);
   font: 500 var(--type-product) var(--font-plex-mono), monospace;
   letter-spacing: var(--track-product);
 }
@@ -137,6 +154,7 @@
   pointer-events: none;
   transition: background-color var(--duration-feedback) var(--ease-out),
     border-color var(--duration-feedback) var(--ease-out);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--color-ink) 12%, transparent);
 }
 
 .switchTrack::after {
@@ -154,6 +172,7 @@
 
 .switch input:checked + .switchTrack {
   background: var(--color-merge);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), var(--shadow-press);
 }
 
 .switch input:checked + .switchTrack::after {
@@ -195,21 +214,14 @@
   }
 }
 
-/* §4 breakpoints: 620–879px the rail panels may sit in a two-column
-   subgrid once the hero stacks. */
-@media (min-width: 620px) and (max-width: 879.98px) {
-  .rail {
-    grid-template-rows: none;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-}
+/* The rail stays one-column once the hero stacks. This gives long product
+   labels enough inline room at 200% text size without widening the page. */
 
 @media (forced-colors: active) {
   .switchTrack {
     forced-color-adjust: auto;
   }
-  .onCallLabel {
+  .trackerLabel {
     border: 1px solid CanvasText;
   }
 }

@@ -145,7 +145,7 @@ announcements (keyboard moves, reset toast) through this module.
   Comic Sans tooltip copy. Intended row props:
   `{ definition: FeatureFlagDefinition; checked: boolean; onCheckedChange(next: boolean): void }`.
 - **Mascot slot** — `src/components/ops/MascotSlot.tsx` reserves the
-  on-call stage (`[data-mascot-slot]`, min-height 204px, panel-2 fill,
+  session-analyst stage (`[data-mascot-slot]`, min-height 204px, panel-2 fill,
   `ON CALL` label). Task 8 renders poster/canvas inside it, keeping the
   label and stage geometry.
 - **Case preview** — `src/components/case-preview/CasePreviewDialog.tsx`
@@ -234,7 +234,7 @@ pointer settle into Shipped. Keyboard board moves emit no mascot reaction.
 Task 6 flag events bridge to the same bus as `flag-check`; Task 8 should consume
 this bus and apply the locked reaction priority/expiry state machine.
 
-# Task 8 additions — procedural on-call PM (Codex lane)
+# Task 8 additions — mascot runtime (superseded by elevation amendment below)
 
 ## Poster-first runtime
 
@@ -320,7 +320,7 @@ recorded because they change on every production build.
 | E2E — phone | `e2e/phone-reveal.spec.ts` | 〃 | server-HTML privacy on all five routes (no digits, no `tel:`), reveal → exact `tel:+91…` href + one announcement, memory-only reveal state |
 | E2E — reduced motion | `e2e/reduced-motion.spec.ts` | 〃 (`reducedMotion: reduce`) | board keyboard + pointer moves still work, confetti suppression note, dialog, mascot poster-only fallback |
 | E2E — a11y | `e2e/a11y.spec.ts` | 〃 (@axe-core/playwright) | axe scan on all five routes × light/dark; serious/critical fail, milder findings attach as needs-review |
-| E2E — network | `e2e/network.spec.ts` | 〃 | request purity (same-origin + `/_vercel/insights` only — the PRD §16 external-origin rule as amended for §12 analytics), zero console/page errors |
+| E2E — network | `e2e/network.spec.ts` | 〃 | strict same-origin request purity, zero console/page errors |
 | Budgets | `scripts/check-budgets.mts` | `pnpm check:budgets` (after `pnpm build`) | PRD §14: initial homepage JS (excl. lazy R3F + noModule polyfill), per-route JS, lazy three-vendor chunk, mascot poster (skip-if-absent), fonts regression ceiling |
 
 Harness conventions:
@@ -334,10 +334,8 @@ Harness conventions:
   chromium/firefox; Playwright's synthesized pointer capture is
   chromium-only, so the pointer-drag smoke skips FF/WebKit (keyboard moves
   cover those engines; real-device drag is the Task 7/12 gate).
-- KNOWN BUG (board lane): closing the case preview drops focus on `<body>`
-  instead of the opening ticket (Dialog.Root unmounts on close, skipping
-  Radix focus restoration — PRD §13 "focus return"). Tracked as a
-  `test.fixme` in `e2e/keyboard.spec.ts`; fix in `src/features/board/**`.
+- RESOLVED (Task 10): closing the case preview returns focus to its opening
+  ticket. The keyboard E2E now exercises the restoration path.
 - Isolated QA builds: `NEXT_DIST_DIR=.next-e2e pnpm build`, then
   `NEXT_DIST_DIR=.next-e2e pnpm start -p 3105` and
   `E2E_PORT=3105 pnpm test:e2e`. This keeps the suite's chunks stable while
@@ -347,16 +345,15 @@ Harness conventions:
 
 ## Analytics wiring (PRD §12)
 
-- `@vercel/analytics` is a production dependency; `<Analytics />` is
-  mounted once in `src/app/layout.tsx` — aggregate page views only.
+- `@vercel/analytics` remains an unused dependency, but no analytics component
+  or script is mounted in v1.
 - `src/lib/analytics.ts` defines the four `PublicAnalyticsEvent` names and
   the strict no-op `analytics` adapter. Nothing may call a transport
   directly; enabling real event tracking is a deliberate future decision
   with its own privacy review. The banner-dismiss "event logged" toast is
   product humor and must never route through this adapter.
-- The external-origin test intent (PRD §16) is amended accordingly: the
-  only allowed non-page request path is same-origin `/_vercel/insights/*`
-  (plus, in local dev only, the @vercel/analytics debug script).
+- `e2e/network.spec.ts` permits only same-origin requests. There is no dev-only
+  analytics exception.
 
 ## Preview/production metadata
 
@@ -371,11 +368,10 @@ Harness conventions:
 `.github/workflows/ci.yml` (push to `main` + PRs): pnpm (from
 `packageManager`) → Node 22.17 → `install --frozen-lockfile` → typecheck →
 lint → unit → build → `check:budgets` → Playwright chromium E2E against
-the production server. Budgets are temporarily `continue-on-error` in CI
-(see below); the local command still fails honestly.
+the production server. Budgets are a blocking CI gate.
 
-**Known budget overage (owner: Task 10 integration/craft).** Measured at
-Task 9 close, gzip -9, modern-browser payload (noModule polyfill excluded):
+**Historical Task 9 budget snapshot — resolved in Task 10.** At Task 9 close,
+gzip -9, modern-browser payload (noModule polyfill excluded):
 
 - Initial homepage JS: **~205KB gzip vs ≤170KB** (framework baseline
   ~136KB: react-dom + App Router client; homepage islands board/flags/
@@ -386,8 +382,9 @@ Task 9 close, gzip -9, modern-browser payload (noModule polyfill excluded):
   across builds — build-order sensitive). Needs a couple of KB of headroom
   before Task 12.
 - All other enforced budgets pass (per-route JS 136–142KB, fonts 63.6KB).
-  TODO(Task 10): fix overages, then remove `continue-on-error` from the CI
-  budgets step.
+  Task 10 split the heavy islands and removed the mounted analytics client.
+  Current enforced results are 159.6KB initial homepage JS and 227.2KB lazy
+  Three/R3F; both pass `pnpm check:budgets`.
 
 ## Deploy / rollback runbook (Task 12 executes this)
 
@@ -403,11 +400,11 @@ Creation (one-time):
    deployment. Previews are automatically noindex via `robots.ts`
    (`VERCEL_ENV`), and their sitemap/metadata URLs self-resolve via
    `VERCEL_URL`.
-5. Enable Vercel Web Analytics (page views) in the project dashboard —
-   the `<Analytics />` mount is already in the layout. No custom events.
+5. Keep Vercel Web Analytics disabled for v1; the visible session funnel is
+   browser-local and makes no network request.
 6. Verify on the preview: `/robots.txt` disallows all; headers include
-   nosniff/referrer/permissions-policy; `/_vercel/insights/script.js`
-   serves 200.
+   nosniff/referrer/permissions-policy; the homepage makes no third-party
+   request.
 
 Domain attach (later, PRD §18):
 
@@ -426,3 +423,35 @@ Rollback:
   offending commit on `main` and push — Vercel redeploys automatically.
 - The five routes are fully static with no data dependencies, so rollback
   has no migration/coordination concerns.
+
+---
+
+# Elevation additions — sourced session analyst + local funnel
+
+- `src/features/journey/journey-store.ts` is the single external-store owner
+  for the validated `garvit-journey:v1` event array. The funnel and mascot
+  reaction bridge subscribe to this same stream; it is capped at 80 events,
+  survives same-tab reloads, and has no transport.
+- `SessionJourneySection` renders five Amplitude-style step bars, authored
+  comparison values (`100 / 76 / 49 / 28 / 11`), step-over-step status, four
+  live readouts, and at most two candid auto-insights. Comparison values are
+  explicitly labelled an authored benchmark, not measured analytics.
+- `SourcedMascotScene.tsx` composes Quaternius CC0 Universal Base Characters,
+  the authored Modular Character Outfits ranger garment, and a compatible
+  hairstyle. The garment texture is palette-reskinned; non-product fantasy
+  accessories are hidden. Only the headset and pager are project-authored
+  primitive props.
+- The live scene retains the poster-first, capability, visibility-pause, and
+  failure-boundary architecture. Light and dark same-crop WebP posters are
+  rendered from the live asset for reduced-motion/WebGL fallback.
+- `src/app/not-found.tsx` is the deliberate SEV-3 blameless postmortem and
+  links directly home and to `/#work-board`.
+- Material tokens in `globals.css` define separately tuned light/dark panel,
+  overlay, highlight, and control elevation values. Blur remains limited to
+  functional chrome, popover, and dialog layers.
+- Production `pnpm build` explicitly selects Next’s supported Webpack builder.
+  Next 16.3.1 Turbopack build deadlocks in the compile phase in this workspace
+  (zero CPU, all Tokio workers waiting) even with the lazy mascot replaced by a
+  null stub and with both default/isolated dist directories. Webpack compiles,
+  typechecks, prerenders all routes, and satisfies the same budget script; dev
+  may continue using Turbopack.

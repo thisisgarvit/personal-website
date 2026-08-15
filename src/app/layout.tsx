@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { resolveSiteOrigin, siteConfig } from "@/data/site";
 import { THEME_STORAGE_KEY } from "@/data/storage";
@@ -64,10 +63,6 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
         {children}
         <Toaster />
-        {/* Aggregate page views only (PRD §12). No custom events, no
-            properties, no identity — the four PublicAnalyticsEvent names
-            stay wired to the no-op adapter in src/lib/analytics.ts. */}
-        <Analytics />
       </body>
     </html>
   );

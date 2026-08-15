@@ -21,14 +21,20 @@
   letter-spacing: var(--track-product);
   color: var(--color-muted);
   cursor: pointer;
-  transition: background-color var(--duration-feedback) var(--ease-out),
-    color var(--duration-feedback) var(--ease-out);
+  transition:
+    background-color var(--duration-feedback) var(--ease-out),
+    color var(--duration-feedback) var(--ease-out),
+    transform var(--duration-feedback) var(--ease-out);
 }
 
 .trigger:hover,
 .trigger[data-state="open"] {
-  background: var(--color-panel-2);
+  background: color-mix(in srgb, var(--material-highlight) 58%, transparent);
   color: var(--color-ink);
+}
+
+.trigger:active {
+  transform: scale(0.97);
 }
 
 .content {
@@ -37,12 +43,15 @@
   left: 0;
   width: 320px;
   max-width: calc(100vw - 32px);
-  background: var(--color-panel);
-  border: var(--rule);
+  background: var(--material-overlay);
+  border: 1px solid color-mix(in srgb, var(--color-rule) 72%, transparent);
   border-radius: var(--radius-panel);
   padding: var(--space-4);
   z-index: 120;
   transform-origin: top left;
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  backdrop-filter: blur(28px) saturate(140%);
+  box-shadow: var(--shadow-panel), inset 0 1px 0 var(--material-highlight);
 }
 
 .content[data-state="open"] {
@@ -68,11 +77,13 @@
 @keyframes pop-enter {
   from {
     opacity: 0;
-    transform: scale(0.98);
+    transform: translateY(-5px) scale(0.97);
+    filter: blur(7px);
   }
   to {
     opacity: 1;
     transform: scale(1);
+    filter: blur(0);
   }
 }
 
@@ -83,7 +94,8 @@
   }
   to {
     opacity: 0;
-    transform: scale(0.98);
+    transform: translateY(-3px) scale(0.98);
+    filter: blur(4px);
   }
 }
 

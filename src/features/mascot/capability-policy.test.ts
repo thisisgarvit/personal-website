@@ -10,7 +10,7 @@ const capable = {
 };
 
 describe("mascot WebGL capability policy", () => {
-  it("keeps the procedural scene eligible on a capable device", () => {
+  it("keeps the sourced scene eligible on a capable device", () => {
     expect(getMascotFallback(capable)).toBeNull();
   });
 

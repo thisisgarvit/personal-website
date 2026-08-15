@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/data/site";
 import { releases, releaseTypeLabel } from "@/data/releases";
 import styles from "./VersionPopover.module.css";
+import { recordJourneyEvent } from "@/features/journey/journey-store";
 
 /**
  * Release-note popover anchored to the version affordance
@@ -75,7 +76,10 @@ export function VersionPopover() {
         aria-expanded={open}
         aria-controls="release-notes"
         aria-haspopup="dialog"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => {
+          if (!open) recordJourneyEvent({ type: "played", kind: "popover" });
+          setOpen((current) => !current);
+        }}
       >
         v{siteConfig.version}
       </button>

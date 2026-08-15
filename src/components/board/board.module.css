@@ -3,10 +3,11 @@
    rules, no decorative column backgrounds. */
 
 .section {
-  background: var(--color-panel);
-  border: var(--rule);
+  background: var(--material-panel);
+  border: 1px solid color-mix(in srgb, var(--color-rule) 78%, transparent);
   border-radius: var(--radius-panel);
   padding: clamp(2rem, 4vw, 3rem); /* 32–48px (§5.7) */
+  box-shadow: var(--shadow-panel), inset 0 1px 0 var(--material-highlight);
 }
 
 .head {
@@ -55,11 +56,22 @@
   cursor: pointer;
   font: 500 var(--type-product) var(--font-plex-mono), monospace;
   letter-spacing: var(--track-product);
-  transition: background-color var(--duration-feedback) var(--ease-out);
+  box-shadow: var(--shadow-control);
+  transition:
+    background-color var(--duration-feedback) var(--ease-out),
+    transform var(--duration-feedback) var(--ease-out),
+    box-shadow var(--duration-feedback) var(--ease-out);
 }
 
 .reset:hover {
   background: var(--color-panel-2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-control-hover);
+}
+
+.reset:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--shadow-press);
 }
 
 .board {
@@ -112,10 +124,30 @@
    decorative card treatment. */
 .ticket {
   position: relative;
-  background: var(--color-panel);
-  border: var(--rule);
-  border-inline-start: 3px solid var(--ticket-accent);
+  overflow: hidden;
+  background: var(--material-panel-soft);
+  border: 1px solid color-mix(in srgb, var(--color-rule) 74%, transparent);
   border-radius: var(--radius-button);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-ink) 6%, transparent),
+    inset 0 1px 0 var(--material-highlight);
+  transition:
+    transform var(--duration-feedback) var(--ease-out),
+    box-shadow var(--duration-feedback) var(--ease-out),
+    border-color var(--duration-feedback) var(--ease-out);
+}
+
+.ticket::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--ticket-accent);
+}
+
+.ticket:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ticket-accent) 46%, var(--color-rule));
+  box-shadow: var(--shadow-control-hover), inset 0 1px 0 var(--material-highlight);
 }
 
 .ticket[data-accent="merge"] {
@@ -192,7 +224,7 @@
   display: block;
   margin-top: var(--space-3);
   padding-inline-start: var(--space-2);
-  border-inline-start: 3px solid var(--ticket-accent);
+  border-inline-start: 1px solid var(--ticket-accent);
   font: 400 var(--type-product) var(--font-plex-mono), monospace;
   letter-spacing: var(--track-product);
   color: var(--color-muted);

@@ -29,7 +29,7 @@ import {
   subscribeMascotSignals,
   type MascotSignal,
 } from "./signals";
-import type { MascotPalette } from "./ProceduralMascotScene";
+import type { MascotPalette } from "./SourcedMascotScene";
 import styles from "./mascot.module.css";
 
 interface SceneProps {
@@ -262,8 +262,8 @@ export function MascotExperience() {
     let cancelled = false;
     const loadScene = async () => {
       try {
-        const importedScene = await import("./ProceduralMascotScene");
-        if (!cancelled) setScene(() => importedScene.ProceduralMascotScene);
+        const importedScene = await import("./SourcedMascotScene");
+        if (!cancelled) setScene(() => importedScene.SourcedMascotScene);
       } catch {
         if (!cancelled) setRendererFailed(true);
       }

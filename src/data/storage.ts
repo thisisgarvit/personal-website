@@ -14,6 +14,7 @@
  * | BANNER_DISMISSED_KEY    | sessionStorage | current tab         |
  * | FLAG_CONFETTI_KEY       | sessionStorage | current tab         |
  * | FLAG_CANDID_KEY         | sessionStorage | current tab         |
+ * | JOURNEY_STORAGE_KEY     | sessionStorage | current tab         |
  *
  * Memory-only state (flags-panel disclosure, phone reveal, active drag,
  * mascot queue) has no key on purpose — do not add one.
@@ -36,3 +37,6 @@ export const FLAG_CONFETTI_KEY = "garvit-flag-confetti:v1";
 
 /** `candid_mode` session state: `"on" | "off"` (PRD §6). */
 export const FLAG_CANDID_KEY = "garvit-flag-candid:v1";
+
+/** Local-only session-event stream for the visitor-visible funnel. */
+export const JOURNEY_STORAGE_KEY = "garvit-journey:v1";

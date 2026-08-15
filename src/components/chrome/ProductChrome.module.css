@@ -16,7 +16,10 @@
   background: var(--color-chrome);
   -webkit-backdrop-filter: var(--chrome-blur);
   backdrop-filter: var(--chrome-blur);
-  border-bottom: var(--rule);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-rule) 58%, transparent);
+  box-shadow:
+    0 1px 0 var(--material-edge) inset,
+    0 10px 30px rgba(23, 25, 35, 0.07);
 }
 
 .productId {
@@ -33,6 +36,19 @@
   border-radius: var(--radius-pill);
   background: var(--color-merge);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-merge) 22%, transparent);
+}
+
+.chrome[data-build-health="incident"] .buildDot {
+  background: var(--color-incident);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-incident) 24%, transparent);
+  animation: incident-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes incident-pulse {
+  50% {
+    opacity: 0.42;
+    transform: scale(0.82);
+  }
 }
 
 /* Wordmark is the only Archivo in the chrome (DESIGN.md §5.1). */
@@ -72,15 +88,22 @@
 /* Compact release status (DESIGN.md §5.1 right side); pill radius is
    reserved for status semantics (§3.4 --radius-pill row). */
 .status {
-  border: var(--rule);
+  border: 1px solid color-mix(in srgb, var(--color-rule) 68%, transparent);
   border-radius: var(--radius-pill);
   padding: var(--space-1) var(--space-2);
+  background: color-mix(in srgb, var(--material-highlight) 42%, transparent);
 }
 
 @media (max-width: 879.98px) {
   /* §4: 880–1179 the ticker may shorten; below 880 chrome density wins —
      drop the ticker rather than shrinking type (§4 "Reflow first"). */
   .ticker {
+    display: none;
+  }
+
+  /* DELHI / IST is repeated in the hero. Reclaiming it here lets the
+     product id and build status remain intact at 200% text size. */
+  .location {
     display: none;
   }
 }

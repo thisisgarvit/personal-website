@@ -3,12 +3,13 @@ import { describe, expect, it } from "vitest";
 import { MascotPoster } from "./MascotPoster";
 
 describe("MascotPoster", () => {
-  it("server-renders the on-call figure before any WebGL can load", () => {
+  it("server-renders the sourced session analyst before WebGL can load", () => {
     const markup = renderToStaticMarkup(<MascotPoster />);
 
-    expect(markup).toContain("<svg");
+    expect(markup).toContain("<img");
     expect(markup).toContain('aria-hidden="true"');
-    expect(markup).toContain('data-mascot-part="pager"');
+    expect(markup).toContain("session-analyst-poster.webp");
+    expect(markup).toContain('data-mascot-part="session-analyst"');
     expect(markup).not.toContain("canvas");
   });
 });

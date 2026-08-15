@@ -3,7 +3,13 @@
    desktop height ~560px (never forced 100vh). */
 
 .hero {
-  background: var(--color-release);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.15), transparent 32%),
+    radial-gradient(circle at 14% 88%, rgba(23, 25, 35, 0.13), transparent 34%),
+    var(--color-release);
   color: var(--color-on-release);
   border: 1px solid var(--color-ink);
   border-radius: var(--radius-panel);
@@ -12,6 +18,24 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: var(--space-6);
+  box-shadow:
+    0 30px 70px color-mix(in srgb, var(--color-release) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 -1px 0 rgba(23, 25, 35, 0.2);
+}
+
+.hero::after {
+  content: "RELEASE / DELHI / 02:17";
+  position: absolute;
+  right: -1.25rem;
+  bottom: 3rem;
+  z-index: -1;
+  color: color-mix(in srgb, var(--color-on-release) 11%, transparent);
+  font: 700 clamp(2rem, 3.6vw, 4.5rem) / 1 var(--font-plex-mono), monospace;
+  letter-spacing: 0.055em;
+  transform: rotate(-90deg) translateX(100%);
+  transform-origin: bottom right;
+  white-space: nowrap;
 }
 
 /* Top metadata (§5.4): availability line + DELHI / IST, product mono. */
@@ -92,12 +116,23 @@
   text-decoration: none;
   font-weight: 700;
   letter-spacing: var(--track-lead);
-  transition: transform var(--duration-feedback) var(--ease-out);
+  box-shadow: var(--shadow-control), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition:
+    transform var(--duration-feedback) var(--ease-out),
+    box-shadow var(--duration-feedback) var(--ease-out),
+    filter var(--duration-feedback) var(--ease-out);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-control-hover), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  filter: saturate(1.05);
 }
 
 /* §7.3 primary CTA row: immediate scale(.98) on press. */
 .cta:active {
-  transform: scale(0.98);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--shadow-press);
 }
 
 .cta svg {

@@ -15,7 +15,7 @@
   gap: var(--space-6);
   align-items: stretch;
   /* Hero-to-board rhythm: 64–96px (§4). */
-  margin-bottom: clamp(4rem, 8vw, 6rem);
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
 }
 
 /* Grid children must be allowed below their min-content width so 200% text

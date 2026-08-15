@@ -3,15 +3,15 @@ import { MascotSlot } from "./MascotSlot";
 import styles from "./ops.module.css";
 
 /**
- * Operations rail (DESIGN.md §5.6): exactly two authored surfaces — the
- * on-call PM and feature flags. Not a sidebar for secondary biography.
+ * Operations rail: the session-journey analyst and live feature flags.
  */
 export function OperationsRail() {
   return (
     <aside className={styles.rail} aria-label="Product controls">
-      <section className={styles.panel} aria-labelledby="oncall-title">
+      <section className={styles.panel} aria-labelledby="journey-analyst-title">
         <header className={styles.panelTitle}>
-          <span id="oncall-title">On-call PM</span>
+          <span id="journey-analyst-title">Session analyst</span>
+          <span className={styles.analystState}>THIS TAB</span>
         </header>
         <MascotSlot />
       </section>

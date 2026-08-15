@@ -9,8 +9,8 @@ const sceneBoundary = vi.hoisted(() => ({
   },
 }));
 
-vi.mock("./ProceduralMascotScene", () => ({
-  ProceduralMascotScene: function SceneBoundary(props: {
+vi.mock("./SourcedMascotScene", () => ({
+  SourcedMascotScene: function SceneBoundary(props: {
       onFirstFrame(): void;
       playing: boolean;
     }) {

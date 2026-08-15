@@ -19,10 +19,19 @@ export function SiteFooter() {
           <span>DELHI / IST</span>
         </div>
         <nav className={styles.links} aria-label="Contact">
-          <a href={siteConfig.resumePath} download>
+          <a
+            href={siteConfig.resumePath}
+            data-journey-conversion="resume"
+            download
+          >
             Download resume
           </a>
-          <a href={`mailto:${siteConfig.email}`}>Contact Garvit</a>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            data-journey-conversion="contact"
+          >
+            Contact Garvit
+          </a>
           <PhoneReveal />
         </nav>
         <p className={styles.note}>

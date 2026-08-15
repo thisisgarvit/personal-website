@@ -106,4 +106,28 @@ describe("mascot reaction arbitration", () => {
     expect(state.reaction).toBe("idle");
     expect(state.queued).toBeNull();
   });
+
+  it("holds an incident until board health resolves, then shows relief", () => {
+    let state = receiveMascotSignal(
+      createMascotState(),
+      signal("incident", 100, "stay-portal"),
+      100,
+    );
+
+    expect(state.reaction).toBe("incident");
+    expect(state.expiresAt).toBeNull();
+    expect(
+      receiveMascotSignal(state, signal("notice", 200, "resume"), 200)
+        .reaction,
+    ).toBe("incident");
+
+    state = receiveMascotSignal(
+      state,
+      signal("resolved", 400, "stay-portal"),
+      400,
+    );
+    expect(state.reaction).toBe("resolved");
+    expect(advanceMascotState(state, 1999).reaction).toBe("resolved");
+    expect(advanceMascotState(state, 2000).reaction).toBe("idle");
+  });
 });

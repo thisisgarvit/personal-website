@@ -1,9 +1,9 @@
 /**
  * Public analytics event contract (PRD §12).
  *
- * Launch mode is aggregate Vercel page views only (mounted in the root
- * layout). These four event names are DEFINED but NOT ENABLED: the v1
- * adapter is a strict no-op, and nothing in the product may bypass it.
+ * Launch mode has no analytics transport. These four event names are DEFINED
+ * but NOT ENABLED: the v1 adapter is a strict no-op, and nothing in the
+ * product may bypass it.
  *
  * Forbidden forever by PRD §12 — no properties, identity, URL query
  * persistence, cursor coordinates, ticket paths, flag state, phone

@@ -22,7 +22,7 @@ Garvit’s portfolio behaves like a live product he is visibly PM-ing. The visit
 - feature flags change the actual website;
 - a sprint board is the portfolio index;
 - case-study tickets open, move, reset, and route to real work;
-- a procedural on-call PM silently reacts to visitor actions.
+- a sourced session-analyst figure silently reacts to the visitor-visible local journey.
 
 The site demonstrates product judgment without asking the visitor to demonstrate theirs.
 
@@ -76,8 +76,8 @@ The founder-level outcome is voluntary sharing or screensharing, not completion 
 | Student title | `SSMS President` is correct; `SAC President` is prohibited |
 | Product brand | `garvit.app` is a placeholder until a domain is purchased; all appearances consume one config module |
 | Version | Launch at `v2.4.1`; bump on material content/feature releases with a candid release note |
-| Analytics | Aggregate Vercel page views only; four-event typed adapter remains disabled/no-op at v1 launch |
-| Mascot | Procedural abstract on-call PM; no likeness and no GLB pipeline |
+| Analytics | No transport in v1; visitor-visible journey remains current-tab local |
+| Mascot | Sourced CC0 rigged session analyst with same-crop light/dark fallback posters |
 | Stay Portal media | Six cleared demo screenshots only; never production data |
 | OG tagline | “Garvit Sukhija — Product Manager who builds” remains provisional until Garvit approves it during Task 8A |
 
@@ -662,7 +662,9 @@ Requirements:
 
 ### Analytics
 
-Launch with aggregate Vercel page views only.
+Launch with no analytics transport. The visitor-visible session funnel is
+computed from a `garvit-journey:v1` event array in `sessionStorage`; nothing in
+that stream is sent to Garvit, Vercel Analytics, PostHog, or another party.
 
 Define but do not enable:
 
@@ -679,6 +681,11 @@ interface AnalyticsAdapter {
 ```
 
 The v1 adapter is a no-op. No properties, identity, URL query persistence, cursor coordinates, ticket paths, flag state, phone reveal, mascot state, replay, heatmap, or fake `banner_dismissed` event may be sent.
+
+The local event stream may contain only the coarse authored stages and action
+kinds required to render `Landed → Scrolled → Played → Read work → Converted`.
+It is capped, schema-validated, current-tab only, and candidly disclosed on the
+page as `computed in your browser. I never see it.`
 
 ### Public contact privacy
 
@@ -851,7 +858,8 @@ Claude may choose equivalent scaffold paths during Task 3, but must record them 
 - Signal priority and interruption rules.
 - DPR cap, offscreen/document-hidden pause.
 - Reduced-motion, Save-Data, low-memory, renderer-error, and manual-kill fallbacks.
-- No GLB/texture/model requests.
+- No GLB/texture/model request before the mascot capability and lazy-load
+  boundary admits the live scene; fallback sessions remain poster-only.
 - Scene and vendor budgets.
 
 ### Accessibility and browser tests
@@ -895,7 +903,7 @@ The release candidate passes only when:
 6. Hero copy and tracking match the approved/validated values.
 7. Feature flags visibly change the product and obey kill switches.
 8. Ticket drag passes low-sample and mid-settle tests on real browsers/touch hardware.
-9. The procedural mascot adds personality without blocking first paint or fallback access.
+9. The sourced CC0 session-analyst mascot visibly reacts to the same local journey stream without blocking first paint or fallback access.
 10. The OG card passes Claude’s judged off-site founder-screenshot test.
 11. Email and the lightly obfuscated phone path work; the hero still has only two CTAs.
 12. No real guest PII, recovered financial media, forbidden title, stronger-than-resume claim, surveillance behavior, or banned AI-template signature ships.

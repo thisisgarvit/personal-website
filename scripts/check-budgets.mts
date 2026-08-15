@@ -102,9 +102,11 @@ function chunkPathFromSrc(src: string): string {
 
 function listFiles(dir: string, suffix: string): string[] {
   if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((file) => file.endsWith(suffix))
-    .map((file) => join(dir, file));
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) return listFiles(path, suffix);
+    return entry.name.endsWith(suffix) ? [path] : [];
+  });
 }
 
 // ---------------------------------------------------------------- guard
@@ -218,7 +220,7 @@ if (posterCandidates.length === 0) {
     status: "SKIP",
     measured: "no standalone asset",
     limit: `≤${kb(LIMITS.posterBytes)}`,
-    note: "Task 8 ships the poster as inline SVG (≈3KB source, within budget); nothing to measure as a file",
+    note: "no rendered fallback poster was found",
   });
 } else {
   for (const poster of posterCandidates) {

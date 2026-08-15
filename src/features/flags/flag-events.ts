@@ -1,5 +1,6 @@
 import type { FeatureFlagKey } from "./definitions";
 import { emitMascotSignal } from "@/features/mascot/signals";
+import { recordJourneyEvent } from "@/features/journey/journey-store";
 
 export const FLAG_EFFECT_EVENT = "garvit:flag-effect";
 
@@ -25,6 +26,12 @@ export function subscribeFlagEffects(listener: FlagEffectListener): () => void {
 export function emitFlagEffect(detail: FlagEffectDetail): void {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent<FlagEffectDetail>(FLAG_EFFECT_EVENT, { detail }));
+  if (detail.source === "user") {
+    recordJourneyEvent({
+      type: "played",
+      kind: detail.key === "dark_mode" ? "dark_mode" : "flag",
+    });
+  }
   emitMascotSignal({
     reaction: "flag-check",
     source: detail.key,

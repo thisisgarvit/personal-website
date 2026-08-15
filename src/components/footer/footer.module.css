@@ -2,8 +2,23 @@
 
 .footer {
   border-top: var(--rule);
-  background: var(--color-panel);
+  background: var(--material-panel-soft);
   margin-top: clamp(4rem, 8vw, 6rem); /* hero/board rhythm band (§3.3/§4) */
+}
+
+.links a,
+.phoneButton,
+.phoneLink {
+  transition:
+    color var(--duration-feedback) var(--ease-out),
+    text-decoration-thickness var(--duration-feedback) var(--ease-out);
+}
+
+.links a:hover,
+.phoneButton:hover,
+.phoneLink:hover {
+  color: var(--color-release);
+  text-decoration-thickness: 2px;
 }
 
 .inner {

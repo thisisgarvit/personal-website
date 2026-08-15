@@ -6,11 +6,26 @@ export type MascotReaction =
   | "notice"
   | "flag-check"
   | "drag-watch"
-  | "shipped";
+  | "shipped"
+  | "milestone"
+  | "incident"
+  | "resolved";
+
+export type JourneySignalSource =
+  | "journey:scrolled"
+  | "journey:played"
+  | "journey:read-work"
+  | "journey:converted";
 
 export interface MascotSignal {
   reaction: MascotReaction;
-  source: "resume" | "contact" | "release" | FeatureFlagKey | WorkSlug;
+  source:
+    | "resume"
+    | "contact"
+    | "release"
+    | FeatureFlagKey
+    | WorkSlug
+    | JourneySignalSource;
   timestamp: number;
 }
 

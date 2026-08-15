@@ -31,6 +31,7 @@ export function Hero() {
         <a
           id="resume-cta"
           data-mascot-notice="resume"
+          data-journey-conversion="resume"
           className={`${styles.cta} ${styles.ctaResume}`}
           href={siteConfig.resumePath}
           download
@@ -48,6 +49,7 @@ export function Hero() {
         </a>
         <a
           data-mascot-notice="contact"
+          data-journey-conversion="contact"
           className={`${styles.cta} ${styles.ctaContact}`}
           href={`mailto:${siteConfig.email}`}
         >

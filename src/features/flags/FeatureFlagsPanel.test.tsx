@@ -11,6 +11,7 @@ import {
   type MascotSignal,
 } from "@/features/mascot/signals";
 import { FeatureFlagsPanel } from "./FeatureFlagsPanel";
+import { resetJourneyForTests } from "@/features/journey/journey-store";
 
 function installMatchMedia({ dark = false, reducedMotion = false } = {}) {
   Object.defineProperty(window, "matchMedia", {
@@ -36,6 +37,7 @@ describe("FeatureFlagsPanel", () => {
   beforeEach(() => {
     localStorage.clear();
     sessionStorage.clear();
+    resetJourneyForTests();
     delete document.documentElement.dataset.theme;
     delete document.documentElement.dataset.candid;
     delete document.documentElement.dataset.effectsDisabled;
@@ -119,6 +121,7 @@ describe("FeatureFlagsPanel", () => {
     expect(
       mascotSignals.map(({ reaction, source }) => ({ reaction, source })),
     ).toEqual([
+      { reaction: "milestone", source: "journey:played" },
       { reaction: "flag-check", source: "dark_mode" },
       { reaction: "flag-check", source: "confetti_on_scroll" },
       { reaction: "flag-check", source: "candid_mode" },
