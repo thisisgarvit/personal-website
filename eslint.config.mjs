@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Task 9: isolated QA build outputs (NEXT_DIST_DIR=.next-<lane>).
+    ".next-*/**",
   ]),
 ]);
 

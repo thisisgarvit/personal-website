@@ -16,6 +16,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  // Isolated build output for QA harnesses (Task 9): the E2E/budget gate
+  // can build into its own dist dir so a concurrently running dev server
+  // or build in another work lane cannot invalidate the chunks under
+  // test. Defaults to `.next` — production/Vercel behavior is unchanged.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   async headers() {
     return [

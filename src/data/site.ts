@@ -36,3 +36,22 @@ export const siteConfig: SiteConfig = {
  * string that can drift.
  */
 export const productLabel = `${siteConfig.productName} v${siteConfig.version}`;
+
+/**
+ * Absolute origin for metadata/sitemap URL construction (server-only —
+ * relies on Vercel-injected env vars that are not exposed to the client).
+ *
+ * Resolution order (PRD §18 fallback chain):
+ *  1. `siteConfig.siteOrigin` — set at release time once the production
+ *     domain/deploy origin is decided; always wins.
+ *  2. `https://${VERCEL_URL}` — the deployment's own origin, so preview
+ *     deployments emit self-consistent absolute URLs (previews are
+ *     noindex regardless; see `src/app/robots.ts`).
+ *  3. `http://localhost:3000` — local builds only.
+ */
+export function resolveSiteOrigin(): string {
+  if (siteConfig.siteOrigin) return siteConfig.siteOrigin;
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return `https://${vercelUrl}`;
+  return "http://localhost:3000";
+}

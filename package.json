@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:budgets": "node --experimental-strip-types scripts/check-budgets.mts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -21,6 +22,7 @@
     "@radix-ui/react-visually-hidden": "^1.2.11",
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
+    "@vercel/analytics": "^2.0.1",
     "motion": "^13.1.0",
     "next": "16.3.1",
     "react": "19.2.8",
@@ -28,6 +30,7 @@
     "three": "^0.185.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@testing-library/react": "^16.3.2",
     "@types/mdx": "^2.0.14",

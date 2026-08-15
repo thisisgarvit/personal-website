@@ -22,3 +22,6 @@ playwright/.cache/
 
 # typescript build info
 *.tsbuildinfo
+
+# task-lane isolated build outputs (Task 9 QA harness)
+.next-*/

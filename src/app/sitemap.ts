@@ -1,13 +1,14 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/data/site";
+import { resolveSiteOrigin } from "@/data/site";
 
 /**
  * Exactly the five public routes (PRD §3). No /changelog, /about, /resume,
  * /contact, or /blog.
  *
- * `siteOrigin` is null until a production domain/deploy origin is configured
- * at release time (PRD §18); localhost is a placeholder base for local builds
- * and is replaced by config, never inferred from request headers.
+ * The base origin comes from `resolveSiteOrigin()` (PRD §18 fallback
+ * chain: configured `siteOrigin` → deployment `VERCEL_URL` → localhost)
+ * and is never inferred from request headers. Preview deployments emit
+ * self-consistent absolute URLs but stay noindex via `robots.ts`.
  */
 const PUBLIC_ROUTES = [
   "/",
@@ -18,7 +19,7 @@ const PUBLIC_ROUTES = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteConfig.siteOrigin ?? "http://localhost:3000";
+  const base = resolveSiteOrigin();
   return PUBLIC_ROUTES.map((route) => ({
     url: `${base}${route === "/" ? "" : route}`,
   }));
