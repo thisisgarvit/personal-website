@@ -1,0 +1,49 @@
+{
+  "candidate": "muko",
+  "title": "Astronaut character stylized rigged free model",
+  "creator": "Muko_Art",
+  "sourceUrl": "https://sketchfab.com/3d-models/astronaut-character-stylized-rigged-free-model-c8daa753952e454eb3c6195446751e88",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "revision": "download package metadata has no revision/date; acquired 2026-08-17 and frozen by per-file SHA-256",
+  "sourceSha256": "0de174a9a2458b70d7a234e18910f16514c0f74f9a11e67d50908d8d10ddb6ff",
+  "sourceFiles": {
+    "scene.gltf": "0de174a9a2458b70d7a234e18910f16514c0f74f9a11e67d50908d8d10ddb6ff",
+    "scene.bin": "e794f5c3b0b3204a503d686e863339d39c2dc3aed0951c58e920e099dc02709b",
+    "textures/NPC_Mat_baseColor.jpeg": "44fe899dcf888e7c133244bb183fc53e94aa36bfe6a296b58de92b0107d5b286",
+    "textures/NPC_Mat_metallicRoughness.png": "f5efdb251e12eed61e19f2daa93f56d463c530dafba53b14f9abcc9898d6c740",
+    "textures/NPC_Mat_normal.png": "da905071809b4b680ed8dad83adf406f15e29eb2571e1ebfd14580449db9f34d"
+  },
+  "sourceBytes": 7001981,
+  "sourceNodes": 66,
+  "sourceBones": {
+    "count": 58,
+    "root": "_rootJoint",
+    "hips": "mixamorig:Hips_01",
+    "spine": ["mixamorig:Spine_02", "mixamorig:Spine1_03", "mixamorig:Spine2_04"],
+    "neck": "mixamorig:Neck_00",
+    "head": "mixamorig:Head_05",
+    "leftArm": ["mixamorig:LeftArm_08", "mixamorig:LeftForeArm_09", "mixamorig:LeftHand_010"],
+    "rightArm": ["mixamorig:RightArm_028", "mixamorig:RightForeArm_029", "mixamorig:RightHand_030"]
+  },
+  "sourceTriangles": 11458,
+  "sourceMeshes": 1,
+  "sourceMaterials": ["NPC_Mat"],
+  "sourcePrimitiveDrawCalls": 1,
+  "textureDimensions": [
+    {"name": "NPC_Mat_baseColor.jpeg", "size": "2048x2048", "colorSpace": "sRGB"},
+    {"name": "NPC_Mat_metallicRoughness.png", "size": "2048x2048", "colorSpace": "non-color"},
+    {"name": "NPC_Mat_normal.png", "size": "2048x2048", "colorSpace": "non-color"}
+  ],
+  "animations": [
+    {"name": "mixamo.com", "channels": 41, "durationSeconds": 0, "note": "single bind-pose keyframe; procedural posing required"}
+  ],
+  "rootScale": "Sketchfab FBX import hierarchy resolves through a 0.01 armature world scale; evidence renderer normalizes to 1.8m non-destructively",
+  "previewOnly": {
+    "glbBytes": 287236,
+    "glbSha256": "c8ae088cd51f71f6a6aeaff37211f532596dd96fb68875b2d9d069a2484b0908",
+    "note": "temporary optimization feasibility artifact in /private/tmp only; not Task 4 production GLB"
+  },
+  "trademarksOrThirdPartyPatches": "none visible in mesh or texture inspection",
+  "attributionPolicy": "repository-only attribution approved by Garvit if selected; preserve exact creator/source/license/modification record"
+}

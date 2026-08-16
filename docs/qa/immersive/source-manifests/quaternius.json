@@ -1,0 +1,44 @@
+{
+  "candidate": "quaternius",
+  "title": "Universal Base Characters — Standard",
+  "creator": "Quaternius",
+  "sourceUrl": "https://quaternius.com/packs/universalbasecharacters.html",
+  "downloadUrl": "https://quaternius.itch.io/universal-base-characters",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "revision": "Standard archive upload dated 2025-12-16; official page identifies pack as August 2025",
+  "sourceSha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+  "sourceBytes": 128968391,
+  "sourceNodes": 69,
+  "sourceBones": {
+    "count": 65,
+    "root": "root",
+    "hips": "pelvis",
+    "spine": ["spine_01", "spine_02", "spine_03"],
+    "neck": "neck_01",
+    "head": "Head",
+    "leftArm": ["upperarm_l", "lowerarm_l", "hand_l"],
+    "rightArm": ["upperarm_r", "lowerarm_r", "hand_r"]
+  },
+  "inspectedVariant": "Superhero_Male_FullBody (the free Standard archive does not include the specified Regular/Teen masculine source models)",
+  "sourceTriangles": 14318,
+  "sourceMeshes": 3,
+  "sourceMaterials": ["MI_Hair_1", "MI_Eyes", "MI_Superhero_Male"],
+  "sourcePrimitiveDrawCalls": 3,
+  "textureDimensions": [
+    {"group": "hair/body", "size": "2048x2048", "colorSpace": "base color sRGB; normal/roughness non-color"},
+    {"group": "eyes", "size": "256x256", "colorSpace": "base color sRGB; normal non-color"}
+  ],
+  "animations": [],
+  "rootScale": "identity at the glTF armature root; source bounds are approximately 1.86m wide in T-pose and 1.82m tall",
+  "previewOnly": {
+    "glbBytes": 372572,
+    "glbSha256": "981f04deb9fc40e462fbd8e710daaa3dcea988f3d8dde1cef48c76ce15ce353e",
+    "note": "temporary optimization feasibility artifact in /private/tmp only; not Task 4 production GLB"
+  },
+  "sourceDefects": [
+    "official glTF references T_Hair_1_Normal_png.png and T_Eye_Normal_png.png, but the archive supplies the same images without _png; staged preview copied files to the referenced names without changing the untouched archive",
+    "free Standard tier exposes only Superhero male/female; Regular/Teen and .blend sources require the paid Source tier"
+  ],
+  "trademarksOrThirdPartyPatches": "none visible in mesh or texture inspection"
+}
