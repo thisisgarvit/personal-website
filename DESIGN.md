@@ -1,7 +1,7 @@
 # garvit.app — Production Design System
 
-**Status:** Draft for Claude review  
-**Version:** 2.0 · 15 August 2026  
+**Status:** Approved · immersive amendment locked 17 August 2026
+**Version:** 2.1 · 17 August 2026
 **Concept:** “This site is my product”  
 **Primary lens:** Apple-style purpose, agency, continuity, and physical response  
 **Type licenses:** Archivo and IBM Plex Mono, SIL Open Font License only
@@ -16,7 +16,7 @@ Each subsection's **Concept defense** applies to every visual specification in t
 
 ## 1. Product Idea and Design Test
 
-The portfolio behaves like a live product Garvit is visibly PM-ing. Version chrome, release notes, feature flags, sprint tickets, and the on-call PM are the navigation and interaction model—not a theme placed over a conventional portfolio.
+The portfolio behaves like a live product Garvit is visibly PM-ing. Version chrome, release notes, feature flags, sprint tickets, and the persistent metaverse guide are the navigation and interaction model—not a theme placed over a conventional portfolio.
 
 The first screen must answer within ten seconds:
 
@@ -74,7 +74,7 @@ Three audience reactions define success:
 
 1. Every visual table in this document includes a concept defense.
 2. The palette is semantic: release, merge, incident, experiment, and context.
-3. The only 3D object is the functional on-call PM.
+3. The only 3D object is the functional persistent metaverse guide.
 4. Product artifacts—not atmospheric imagery—carry case-study richness.
 5. Motionsites.ai may set a confidence bar for committed motion; it may not supply composition, styling, or effects.
 6. If an implementer needs a value missing here, they must request a design amendment. “Close enough” values are not allowed.
@@ -168,7 +168,7 @@ The optical decision outranks numeric consistency. Tight display type should fee
 
 #### Copy status
 
-The hero line—“I turn fuzzy product ideas into things people can use”—was **explicitly approved by Garvit on 2026-08-15** (see open-questions-answers.md). It is no longer provisional and no longer blocks launch. The OG card's positioning line ("Garvit Sukhija — Product Manager who builds") remains **provisional** pending Garvit's separate sign-off at Task 8A.
+The hero line—“I turn fuzzy product ideas into things people can use”—was **explicitly approved by Garvit on 2026-08-15** (see open-questions-answers.md). It is no longer provisional and no longer blocks launch. The OG direction is also locked: large name-first headline `Garvit Sukhija`, with the approved hero sentence beneath it. Role-first variants are rejected.
 
 ### 3.3 Spacing
 
@@ -231,10 +231,10 @@ The page becomes more spacious with distance from the top, but never turns into 
 
 Breakpoints respond to composition, not device names:
 
-- **≥1180px:** hero uses a primary content region plus a 340–380px operations rail; board shows three equal columns.
-- **880–1179px:** hero rail narrows; ticker may shorten; board retains three columns if each remains at least 280px.
-- **620–879px:** hero and operations rail stack; mascot and flags may sit in a two-column subgrid; board scrolls horizontally by column.
-- **<620px:** one-column hero, full-width CTAs, stacked operations panels, board columns at `86vw`, 16px shell gutters.
+- **≥1180px:** hero uses a broad release field with a 40–50% edge-cropped guide; the real board overlaps its lower boundary and shows three equal columns.
+- **880–1179px:** the guide crop narrows while copy and CTAs retain priority; the board keeps three columns only while each remains at least 280px.
+- **620–879px:** copy and guide share a composed field; the compact flag dock reflows without becoming a rail; explicit board controls begin replacing desktop-only discovery.
+- **<620px:** purposeful upper/right guide crop, full-width CTAs, 16px shell gutters, and explicit board tabs/previous/next/position/peek controls.
 
 Do not reduce type or targets merely to preserve the desktop composition. Reflow first.
 
@@ -243,7 +243,7 @@ Do not reduce type or targets merely to preserve the desktop composition. Reflow
 | Zone | Allowed spacing | Visual load | Concept defense |
 |---|---|---|---|
 | Chrome | 4–16px | Version, build state, changelog, location | Product metadata earns density because it establishes the premise. |
-| Hero | 24–80px | One headline, one intro, two CTAs, two operations surfaces | Larger type and fewer competing messages answer Garvit’s request for cleaner expansion. |
+| Hero | 24–80px | One headline, one intro, two CTAs, dominant guide, compact flag dock | The broad world field stays rich without returning to a dashboard-card stack. |
 | Board | 16–48px internally; 64–96px externally | Three columns and four authored tickets | Work stays visibly actionable while the surrounding space lowers cognitive load. |
 | Case routes | 32–160px | One decision or artifact per section | Deep reading gets air without importing art-site theatrics into the homepage. |
 
@@ -285,16 +285,16 @@ Do not reduce type or targets merely to preserve the desktop composition. Reflow
 
 ### 5.4 Hero
 
-- Release-blue solid field, 12px panel radius, visible ink rule.
-- Desktop grid: `minmax(0, 1fr) minmax(340px, 380px)` with a 24px gap.
+- Broad, mostly borderless release field connected to the board below.
+- Desktop composition reserves a meaningful 40–50% edge crop for the guide without reducing the copy to a narrow card column.
 - Primary hero inset: 48–80px desktop, 24–32px mobile.
 - Minimum desktop height approximately 560px; do not force `100vh`.
-- Top metadata: `Product manager · available for the right problem` and `DELHI / IST`.
+- Top metadata: `Product manager · available for the right problem`; `DELHI / IST` appears once in product chrome, not again here.
 - Main content: one hero sentence and one lead paragraph.
 - Bottom: two equal-priority-at-a-glance controls, with resume visually primary.
 - No floating badges, orbiting words, client-logo row, metric row, headshot, or decorative screenshots.
 
-**Concept defense:** a solid launch field carries the product premise; the operations rail supplies richness without turning the hero into a template collage.
+**Concept defense:** the guide, real work edge, and compact live controls make the interaction the website while copy and career actions remain immediate.
 
 ### 5.5 Primary CTAs
 
@@ -313,25 +313,11 @@ Both use at least 16px horizontal inset and a visible focus ring separated by 3p
 
 **Concept defense:** the two career actions are obvious product controls, directly correcting the rejected small-CTA direction.
 
-### 5.6 Operations rail
+### 5.6 Compact feature-flag dock
 
-The operations rail contains exactly two authored surfaces: the on-call PM and feature flags. It is not a sidebar for secondary biography.
-
-#### On-call PM panel
-
-- Same panel radius and rule as the hero, but a contrasting panel background.
-- Figure occupies most of the surface; a small `ON CALL` or pager label provides the joke.
-- No event log, speech bubble stream, analytics chart, or instructions.
-
-#### Procedural figure art direction
-
-- Abstract human figure, not a likeness of Garvit.
-- Three-quarter orthographic view with a slightly oversized rounded head, compact torso, simple capsule arms, clear eyes, and one pager badge.
-- Matte semantic materials only: ink structure, release-blue body, incident-coral pager, merge-lime success detail, panel-white eyes.
-- No chrome material, environment map, texture, blob geometry, particles, pedestal, or post-processing.
-- The SVG poster uses the identical silhouette, angle, palette, and crop.
-
-**Concept defense:** readable human posture and PM props carry the reaction gag; production-simple geometry keeps the object authored rather than asset-marketplace slick.
+The retired operations rail and procedural/on-call figure must not be rebuilt.
+The selected sourced guide lives in the persistent world; this section owns
+only the compact dock presentation of the existing functional flags.
 
 #### Feature flags panel
 
@@ -408,7 +394,8 @@ The social card is the off-site founder-screenshot test, not metadata plumbing.
 - Exact canvas: 1200×630.
 - Dense 64px product bar with build dot, `garvit.app v2.4.1`, and `DELHI / IST`.
 - One candid changelog line below the bar.
-- Stable positioning: `Garvit Sukhija — Product Manager who builds.` Do not use the provisional hero line.
+- Large name-first headline: `Garvit Sukhija`.
+- Descriptor beneath: `I turn fuzzy product ideas into things people can use`.
 - Compact board fragment with three column labels and at least one recognisable real-work ticket.
 - Use the production solid palette, Archivo/Plex typography, hard rules, and semantic chips.
 - No mascot, CTA simulation, gradient, glass, photograph, or fake browser frame.
@@ -571,7 +558,7 @@ Keyboard defense: keyboard movement is the board’s efficiency path. Immediate 
 
 ### Desktop pointer
 
-- Full operations rail and three-column board.
+- Persistent world composition and three-column board; the flag dock remains compact rather than becoming a rail.
 - Hover motion is enabled only under `(hover: hover) and (pointer: fine)`.
 - Hover never reveals information unavailable through focus or activation.
 
@@ -584,7 +571,7 @@ Keyboard defense: keyboard movement is the board’s efficiency path. Immediate 
 
 ### Keyboard
 
-- Tab order follows the visual hierarchy: chrome → banner → hero CTAs → mascot-adjacent controls → flags → board → footer.
+- Tab order follows the visual hierarchy: chrome → banner → hero CTAs → feature flags → board → journey → footer. The decorative canvas never enters tab order.
 - Tickets expose Enter-to-open and `Alt+Left/Right` move instructions in accessible help text.
 - Escape closes only the topmost dismissible surface.
 - Focus never disappears into a moved ticket, dismissed banner, closed popover, or modal backdrop.
@@ -593,7 +580,7 @@ Keyboard defense: keyboard movement is the board’s efficiency path. Immediate 
 
 - Render the hero, primary links, authored board columns, ticket summaries, and direct case links on the server.
 - Hide or render inert interactive flag controls without implying they work.
-- Show the SVG mascot poster.
+- Show the camera-matched, theme-selected guide poster.
 - Do not display an instruction that makes enabling JavaScript visitor homework.
 
 ---
@@ -661,7 +648,7 @@ Before Claude can approve this document, render and judge:
 3. Flags open/closed and all four flag states.
 4. Board resting, ticket press, drag, valid drop, keyboard destination highlight, and reset.
 5. Case preview desktop/mobile.
-6. Procedural mascot poster and live-scene first frame from the same crop.
+6. Selected guide's camera-matched theme poster and live-scene first frame from the same crop.
 7. Reduced-motion, reduced-transparency, increased-contrast, and forced-colors states.
 8. OG card at 1200×630, 600×315, and 300×158.
 
@@ -672,7 +659,7 @@ Claude’s approval checklist:
 - Resume and contact remain unmissable.
 - Archivo tracking is optically legible, not merely within the allowed numeric range.
 - Product work remains the homepage spine.
-- The mascot reads as an on-call PM, not a floating 3D asset.
+- The guide reads as a purposeful metaverse field agent, not a marketplace asset or floating decoration.
 - Motion is causal, interruptible, and restrained by frequency.
 - Dark mode looks independently authored.
 - The OG card passes the off-site founder-screenshot test.
@@ -681,7 +668,7 @@ Claude’s approval checklist:
 ### Values pending this review
 
 - ~~Final hero tracking at small, medium, and large clamp stops.~~ **Resolved 2026-08-15**: −.055em large / −.05em medium / −.045em small (see §3.2 validation table).
-- ~~Garvit’s approval of the provisional hero sentence.~~ **Approved by Garvit 2026-08-15.** The OG positioning line remains a pending Task 8A gate.
+- ~~Garvit’s approval of the provisional hero sentence.~~ **Approved by Garvit 2026-08-15.** The OG is also locked: `Garvit Sukhija` as the large headline with the approved hero sentence beneath.
 
 **Claude review status (2026-08-15): APPROVED as locked production design direction** — see design-review-claude.md for the four items to fold into the PRD (phone-number treatment, "Full changelog" destination, brand-string token, microcopy dedupe). Rendered-state gates in §12 apply at implementation reviews (Tasks 4–10), not to this document.
 
@@ -701,7 +688,7 @@ board physics, or accessibility contracts.
   → Read work → Converted`. It is capped, schema-validated, current-tab only,
   and never transmitted.
 - The homepage section title is `Your session, instrumented.` and must disclose
-  `computed in your browser. I never see it.`
+  `this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.`
 - Five horizontal step bars fill live. Each row shows step-over-step status and
   a muted authored comparison (`100 / 76 / 49 / 28 / 11`) labelled `typical
   visitor · authored benchmark`. It is a display, never a visitor score.
@@ -709,7 +696,7 @@ board physics, or accessibility contracts.
   demotion/resolution may affect chrome and pose only as journey events; no
   on-call identity or event-log stream returns.
 
-### Sourced figure
+### Sourced figure — superseded by the 2026-08-17 amendment
 
 - The runtime uses Ariana Chow / CaptainRipley's CC0 rigged robot as an
   abstract brand-mascot base. It has a large faceted head, compact torso,
@@ -754,3 +741,109 @@ The not-found route is a compact `SEV-3 · RESOLVED` blameless incident
 postmortem. Its root cause is `PM overestimated his own information
 architecture.` and resolution links are home and `/#work-board`. No other
 research patterns enter the v1 scope.
+
+---
+
+## Immersive Product World Amendment — 2026-08-17
+
+**Status:** Approved by Garvit. This amendment supersedes conflicting robot,
+operations-rail, homepage-order, poster-budget, and static-panel language in
+§§1–2, 4–5, 7–8, 12, and the 2026-08-16 elevation amendment. Unaffected type,
+semantic color, board physics, copy, accessibility, privacy, and case-content
+rules remain locked.
+
+**Shared execution checkout:**
+`/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July` on `main` is the
+single checkout used by Codex, Claude, and Garvit's local play-through. Do not
+create or serve a split worktree during this implementation.
+
+### Approved visual and interaction direction
+
+- The homepage is one continuous product world across named `hero`, `board`,
+  and `journey` anchors. It is not a hero card followed by dashboard panels.
+- Dense product chrome remains. The hero becomes a broad, mostly borderless
+  release field with the approved sentence, two unmissable CTAs, a dominant
+  metaverse guide, and the real board entering its lower boundary.
+- The actual board overlaps upward; the hero never renders a duplicate ticket.
+  The public order is chrome, experiment strip, hero, board, journey, footer.
+- `OperationsRail` is dissolved. Its working flags become a compact dock and
+  retain native semantics, persistence, effects policy, and candid humor.
+- The CaptainRipley robot is retired. The replacement is an abstract
+  hooded/helmeted metaverse field agent—not a likeness—with a large graphic
+  head, opaque graphite visor, porcelain shell, release-blue underlayer, and
+  fitted coral milestone hardware. No floating or runtime-grafted props.
+- The guide is purposeful: wave once, restrained fine-pointer look, idle work
+  glance, drag-watch, pager check, ship celebration, and resolution settle.
+  Existing reaction priority, expiry, queueing, and incident persistence remain
+  authoritative.
+- One persistent, pointer-transparent R3F canvas provides continuity while the
+  DOM remains the complete interface and sole navigation authority. No
+  scroll-jacking, mandatory scrub, parallax wallpaper, or content gating.
+- Section progress drives critically damped camera/character transitions.
+  Re-entry and interruption continue from presentation state. Reduced motion
+  materializes equivalent state rather than removing meaning.
+- Work precedes the session funnel. Case routes begin with a real or
+  verified-fact artifact, value sentence, and factual signals, then settle into
+  the existing 68ch reading measure.
+- At 1440×900, the approved hero sentence uses no more than two lines and the
+  guide retains a meaningful 40–50% crop. Its final size/measure/tracking must
+  pass a new optical validation; the old tracking values are candidates, not an
+  automatic lock for the changed layout.
+- At 390×844, both 56px-minimum CTAs remain in the first viewport and the board
+  follows immediately. At 320/390/430px the board exposes labelled column tabs,
+  `1 of 3`, previous/next controls, and a next-column peek; every project is
+  reachable without drag or invisible horizontal-scroll discovery.
+
+### Binding production constraints
+
+- Authority order is `DESIGN.md` + `PRD.md`, then the approved immersive spec
+  at `docs/superpowers/specs/2026-08-17-immersive-product-world-design.md`, then
+  the implementation plan. Any remaining older conflict is resolved by this
+  amendment.
+- The recoverable baseline is annotated tag
+  `checkpoint/pre-sougen-rebuild-2026-08-17` at commit `f8b91fe`.
+- No new runtime dependency or `package.json` change is allowed without
+  Garvit's approval. Use the installed R3F/Drei/Three/Motion/Radix stack.
+- Hard stop order: candidate contact sheet passes → isolated Scene 1 static
+  composition passes → interactive Scene 1 Apple/Taste audit passes → only
+  then homepage or case-route migration begins.
+- Codex owns art direction, world architecture, composition, motion tuning,
+  performance tradeoffs, and visual acceptance. Claude owns candidate
+  acquisition/inspection, contact sheets, repetitive migrations,
+  interface-locked test migrations, capture matrices, gate execution, and
+  mechanical regression fixes. Codex reviews every delegated render.
+- Existing board, flags, funnel, case content, 404, and OG behavior may be
+  rebuilt when the new visual system warrants it, but working semantics,
+  verified facts, accessibility, privacy, and analytics may not regress.
+- The session-local journey stream stays in `sessionStorage` and never feeds
+  PostHog. PostHog retains pageviews/autocapture plus only `resume_download`,
+  `contact_click`, `case_open`, and `full_case_read`; no scene, guide,
+  board-position, or funnel-stage custom capture may be added.
+- The exact disclosure is `this funnel is computed in your browser. PostHog
+  sees the rest. I check it obsessively.`
+- If Muko is selected, preserve its exact license, creator, source URL,
+  revision, and modification record in the repository; visible site credit is
+  not required by Garvit's product decision. Select Muko or Quaternius on
+  rendered and technical merit at the contact-sheet gate.
+- Asset ceilings are one local GLB, ≤25k triangles, ≤30 draw calls measured in
+  the production R3F renderer, ≤1.8 MB transferred, and 512–1024px textures.
+  One atlas means one UV/material set with permitted base-color, normal, and
+  ORM maps. No runtime CDN, ambiguous third-party texture, or trademarked
+  patch.
+- The canvas renders on demand when idle, runs continuously only during
+  look/reaction/transition, pauses when hidden or after the active region, and
+  falls back to camera-matched light/dark posters for reduced motion,
+  Save-Data, low capability, performance kill, or renderer failure.
+- The poster ceiling is ≤90KB for the one theme-selected hero fallback. Initial
+  homepage JS remains ≤170KB gzip, lazy Three vendor ≤235KB gzip, world scene
+  module ≤25KB gzip, and fonts ≤100KB.
+- Apple gate: ≥34/40, no dimension below 4, no input lockout, and no
+  unmotivated motion. Taste gate: ≥22/25, no dimension below 4, and every
+  applicable pre-flight item passes.
+- Every visual gate stores light/dark 1440×900 and 390×844 captures, normal and
+  slowed interaction recordings when motion exists, reduced-motion and
+  poster/WebGL-failure captures, scorecards, and bundle/asset/console/axe/Core
+  Web Vitals evidence under `docs/qa/immersive/`.
+- Preserve factual content. Never invent metrics, product screenshots, shipped
+  status, or case claims. A missing artifact becomes an authored diagram made
+  only from verified facts.

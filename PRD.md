@@ -1,8 +1,8 @@
 # garvit.app — Production Product Requirements Document
 
-**Status:** Draft for Claude review  
+**Status:** Approved · immersive amendment locked 17 August 2026
 **Task:** 2 · Production PRD  
-**Version:** 1.0 · 15 August 2026  
+**Version:** 1.1 · 17 August 2026
 **Product owner / interaction craft:** Codex  
 **Build orchestrator / mechanical lane:** Claude  
 **Locked design source:** `DESIGN.md`, approved 15 August 2026
@@ -76,10 +76,10 @@ The founder-level outcome is voluntary sharing or screensharing, not completion 
 | Student title | `SSMS President` is correct; `SAC President` is prohibited |
 | Product brand | `garvit.app` is a placeholder until a domain is purchased; all appearances consume one config module |
 | Version | Launch at `v2.4.1`; bump on material content/feature releases with a candid release note |
-| Analytics | No transport in v1; visitor-visible journey remains current-tab local |
-| Mascot | Sourced CC0 rigged session analyst with same-crop light/dark fallback posters |
+| Analytics | Session funnel stays current-tab local; PostHog pageviews/autocapture plus four whitelisted custom events only |
+| Guide | Contact-sheet-selected Muko CC-BY or Quaternius CC0 metaverse field agent with same-camera light/dark fallback posters |
 | Stay Portal media | Six cleared demo screenshots only; never production data |
-| OG tagline | “Garvit Sukhija — Product Manager who builds” remains provisional until Garvit approves it during Task 8A |
+| OG card | Large `Garvit Sukhija` headline with approved hero sentence beneath; role-first variants prohibited |
 
 `SSMS President` may appear only in supporting biography or a relevant case annotation. It must not become a homepage résumé block. Associated scale/budget claims require resume/source verification before publication.
 
@@ -112,9 +112,10 @@ There is no `/changelog`, `/about`, `/resume`, `/contact`, `/blog`, or dynamic c
 1. Sticky product chrome.
 2. Dismissible experiment strip.
 3. Spacious hero with copy and exactly two primary CTAs.
-4. On-call PM and feature flags in the hero operations rail.
-5. Sprint-board portfolio.
-6. Compact build/contact footer.
+4. Compact functional feature-flag dock within the immersive hero composition.
+5. Sprint-board portfolio overlapping the hero's lower boundary.
+6. `Your session, instrumented.` local funnel.
+7. Compact build/contact footer.
 
 Do not insert résumé chronology, logo rows, testimonials, metric bands, newsletter capture, or a second marketing CTA section into this order.
 
@@ -545,7 +546,7 @@ Do not imply employment at or inside knowledge of Apple.
 
 ---
 
-## 9. Sourced Session Analyst
+## 9. Sourced Session Analyst — superseded by §19
 
 ### Functional role
 
@@ -580,17 +581,20 @@ Priority: shipped → flag-check → notice → idle. Drag-watch owns the figure
 
 ### Rendering
 
-- One locally hosted, CC0, rigged stylized-robot GLB; no realistic human base,
-  likeness, remote model request, environment map, or post-processing.
-- Runtime re-skin and fitted primitive props use the approved semantic
-  materials and light limits from `DESIGN.md`.
+- One locally hosted, contact-sheet-selected abstract field-agent GLB; no
+  likeness, remote model request, environment-map spectacle, or
+  post-processing dependency.
+- Re-skinning and fitted props are authored into the source asset rather than
+  attached as runtime primitives; materials and light limits come from
+  `DESIGN.md`.
 - Immediate light/dark WebP posters use the same crop, silhouette, and palette.
 - Lazy WebGL begins after first paint when visible/idle, with a 1.5-second maximum delay.
 - Crossfade only after the first successful WebGL frame.
 - DPR cap `1.5`; pause offscreen and document-hidden.
 - Use static poster under reduced motion, Save-Data, low-memory detection, renderer failure, or runtime kill switch.
 - Mascot scene module ≤25KB gzip excluding shared R3F/Three vendor chunk.
-- Lazy R3F/Three vendor chunk ≤230KB gzip; poster ≤35KB.
+- Lazy R3F/Three vendor chunk ≤235KB gzip; the single downloaded theme poster
+  is ≤90KB.
 
 Keyboard outcomes are fully communicated through focus/dialog/live-region behavior. A keyboard action does not require an animated mascot response.
 
@@ -608,11 +612,10 @@ Task 8A is Codex-owned taste work. The image must follow `DESIGN.md` §5.12 and 
 - No phone number, private data, unverified metric, mascot, or provisional domain hardcode.
 - Use real work labels from `WorkItem`.
 
-Before Task 8A implementation, Garvit must answer yes/no on:
-
-`Garvit Sukhija — Product Manager who builds.`
-
-If approval is unavailable when the task begins, use the factual fallback `Garvit Sukhija — Product Manager` for the reviewed preview. Do not block the rest of the build or silently ship the provisional phrase.
+The OG direction is locked: large name-first headline `Garvit Sukhija`, with
+the approved hero sentence `I turn fuzzy product ideas into things people can
+use` beneath it. Do not use `Product Manager who builds` or a role-first
+fallback.
 
 ### Metadata
 
@@ -664,11 +667,10 @@ Requirements:
 
 ### Analytics
 
-Launch with no analytics transport. The visitor-visible session funnel is
-computed from a `garvit-journey:v1` event array in `sessionStorage`; nothing in
-that stream is sent to Garvit, Vercel Analytics, PostHog, or another party.
-
-Define but do not enable:
+The visitor-visible session funnel is computed from a `garvit-journey:v1`
+event array in `sessionStorage`. That event array never feeds PostHog or any
+other transport. Separately, configured production uses PostHog
+pageviews/autocapture plus exactly four custom events:
 
 ```ts
 type PublicAnalyticsEvent =
@@ -678,16 +680,26 @@ type PublicAnalyticsEvent =
   | "full_case_read";
 
 interface AnalyticsAdapter {
-  track(event: PublicAnalyticsEvent): void;
+  track(
+    event: PublicAnalyticsEvent,
+    properties?: { case_slug: string } | { ticket_id: string },
+  ): void;
 }
 ```
 
-The v1 adapter is a no-op. No properties, identity, URL query persistence, cursor coordinates, ticket paths, flag state, phone reveal, mascot state, replay, heatmap, or fake `banner_dismissed` event may be sent.
+Without public PostHog configuration the adapter is a no-op. With configuration
+it may capture only the four names above and their already-approved case/ticket
+properties. No scene transition, guide reaction, funnel stage, board position,
+cursor coordinate/path, flag state, phone reveal, identity, URL-query
+persistence, replay, heatmap, or fake `banner_dismissed` custom event may be
+sent. Provider-managed pageviews/autocapture are distinct from this custom
+event whitelist.
 
 The local event stream may contain only the coarse authored stages and action
 kinds required to render `Landed → Scrolled → Played → Read work → Converted`.
 It is capped, schema-validated, current-tab only, and candidly disclosed on the
-page as `computed in your browser. I never see it.`
+page as `this funnel is computed in your browser. PostHog sees the rest. I check
+it obsessively.`
 
 ### Public contact privacy
 
@@ -748,9 +760,9 @@ Global requirements:
 | Budget | Limit |
 |---|---:|
 | Initial homepage JS excluding lazy R3F | ≤170KB gzip |
-| Lazy R3F/Three vendor chunk | ≤230KB gzip |
-| Mascot scene module | ≤25KB gzip |
-| Mascot poster | ≤35KB |
+| Lazy R3F/Three vendor chunk | ≤235KB gzip |
+| World scene module | ≤25KB gzip |
+| Active theme guide poster | ≤90KB |
 | LCP | ≤2.5s on agreed mobile profile |
 | CLS | ≤0.05 |
 | INP | ≤200ms |
@@ -790,25 +802,24 @@ The terra lane is dissolved. Claude owns mechanical work through its subagent la
 | 11. Content QA | Claude | Source, resume, title, demo-media, claims, link, and PII pass |
 | 12. Release | Claude | Claude deploys; Codex signs off final visual output only |
 
-### Module ownership
+### Module ownership — superseded by §19 and the immersive implementation plan
 
-Proposed boundaries:
-
-- Claude Tasks 3–5: application scaffold, route shells, approved token transcription, structural components, content data/MDX, metadata plumbing, static assets.
-- Codex Task 6: `src/features/flags/**` and flag-effect integration contract.
-- Codex Task 7: `src/features/board/**` and board-to-preview/mascot signals.
-- Codex Task 8: `src/features/mascot/**` and poster.
-- Codex Task 8A: `app/opengraph-image.tsx` plus its visual tests.
-- Claude Task 9: CI, E2E/a11y/performance harnesses, deployment configuration.
-
-Claude may choose equivalent scaffold paths during Task 3, but must record them before parallel work begins. Once recorded, ownership paths are frozen. No two workers edit the same module concurrently.
+The numbered ownership map below was completed by the prior RC and is no
+longer executable. Current ownership is the Task 0–9 split in
+`docs/superpowers/plans/2026-08-17-immersive-product-world.md`: Codex owns
+world/art/composition judgment; Claude owns acquisition, mechanical
+migrations, immediate test migrations, captures, and gates. Both use the same
+checkout and do not edit the same module concurrently.
 
 ### Review-lattice constraints
 
-- Claude self-polices config and plumbing; Codex does not spend review budget there.
-- Codex’s Task 4 gate is limited to token diff and two shell screenshots.
-- Claude judges all Codex taste work.
-- Codex’s Task 12 gate is final visual fidelity only.
+- Codex freezes interfaces and art direction before Claude begins mechanical work.
+- Claude migrates tests immediately after each interface lock and prepares raw
+  capture, browser, accessibility, performance, and bundle evidence.
+- Codex judges every rendered composition, Apple scorecard, Taste scorecard,
+  model selection, material/motion decision, and delegated visual result.
+- Claude performs task-scoped contradiction/regression review; Garvit performs
+  the final live visual play-through.
 - Any subagent consumes the locked `DESIGN.md` and this PRD and may not invent missing behavior.
 
 ---
@@ -905,7 +916,7 @@ The release candidate passes only when:
 6. Hero copy and tracking match the approved/validated values.
 7. Feature flags visibly change the product and obey kill switches.
 8. Ticket drag passes low-sample and mid-settle tests on real browsers/touch hardware.
-9. The sourced CC0 session-analyst mascot visibly reacts to the same local journey stream without blocking first paint or fallback access.
+9. The selected metaverse guide visibly reacts to the derived local journey state without blocking first paint or fallback access.
 10. The OG card passes Claude’s judged off-site founder-screenshot test.
 11. Email and the lightly obfuscated phone path work; the hero still has only two CTAs.
 12. No real guest PII, recovered financial media, forbidden title, stronger-than-resume claim, surveillance behavior, or banned AI-template signature ships.
@@ -922,8 +933,96 @@ These do not block Tasks 3–8 but have explicit fallbacks:
 | Decision | Owner / deadline | Default if unresolved |
 |---|---|---|
 | Final domain/product brand | Garvit before Task 12 | Keep visible `garvit.app` placeholder and use the stable production `vercel.app` URL as `siteOrigin`; attach/swap the purchased domain later without delaying launch |
-| OG tagline approval | Garvit during Task 8A | Use `Garvit Sukhija — Product Manager` |
 | Updated resume PDF | Garvit before Task 11 closes | Use current Downloads PDF and ensure site claims remain no stronger |
 | Availability line still accurate | Garvit before RC | Remove `available for the right problem` rather than publish stale availability |
 
 All other product decisions in this PRD are ready for implementation after Claude’s approval.
+
+---
+
+## 19. Immersive Product World Amendment — 2026-08-17
+
+**Status:** Approved by Garvit. This section supersedes conflicting
+operations-rail, robot/session-analyst, homepage-order, analytics, and asset
+budget requirements elsewhere in this PRD. Unaffected content, board physics,
+storage, feature-flag, phone, route, accessibility, and case evidence contracts
+remain binding.
+
+### Product and interface contract
+
+- The homepage is one continuous product world with named `hero`, `board`, and
+  `journey` DOM anchors and one lazy persistent R3F canvas.
+- DOM sections remain the complete accessible interface. The canvas is
+  `pointer-events: none`, never owns navigation, never blocks controls, and is
+  never the only carrier of information.
+- Public order is ProductChrome, ExperimentStrip, immersive Hero, the real
+  InteractiveBoardSection, SessionJourneySection, and SiteFooter.
+- The board overlaps upward into the hero so one real ticket enters the first
+  composition. The hero does not render a copied/fake ticket.
+- `OperationsRail` is removed. The existing functional flags move into a
+  compact dock with unchanged native checkbox semantics, row order, storage,
+  effects policy, signals, and journey events.
+- The guide is a contact-sheet-selected, abstract metaverse field agent rather
+  than a likeness or the existing robot. Muko CC-BY and Quaternius CC0 are the
+  candidates; if Muko wins, attribution/license/source/modification records are
+  repository-only by Garvit's decision.
+- The existing signal and reaction reducer remain authoritative for priority,
+  expiry, queueing, drag ownership, incident persistence, and return to idle.
+  The world consumes derived reaction state, not only the last raw event.
+- Board pointer physics, keyboard movement, `garvit-board:v1`, Reset, preview
+  focus restoration, announcements, and no-JS links may be visually rebuilt
+  but may not regress.
+- The local `garvit-journey:v1` event array remains the sole funnel source and
+  never enters PostHog. The exact disclosure is `this funnel is computed in
+  your browser. PostHog sees the rest. I check it obsessively.`
+- PostHog pageviews/autocapture remain configured separately. The only custom
+  events are `resume_download`, `contact_click`, `case_open`, and
+  `full_case_read`; scenes, guide reactions, board positions, and journey
+  stages never become custom captures.
+- Case routes open with kind/title, one-sentence value, two or three verified
+  facts, one real or verified-fact artifact, and back-to-board navigation,
+  followed by the existing 68ch reading measure and distinct
+  decision/constraint/outcome treatments. Claims and shipped status are never
+  invented.
+
+### Delivery and acceptance contract
+
+- Shared execution checkout is
+  `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July` on `main` for
+  Codex, Claude, and Garvit's local play-through. Do not create a split
+  checkout.
+- Recoverable baseline remains tag
+  `checkpoint/pre-sougen-rebuild-2026-08-17` at `f8b91fe`.
+- No new runtime dependency or `package.json` change is permitted without
+  Garvit's approval.
+- Hard gate order is model contact sheet → isolated static Scene 1 → isolated
+  interactive Scene 1 Apple/Taste pass → homepage/case migration.
+- Codex owns art direction, world architecture, composition, motion,
+  performance tradeoffs, and visual acceptance. Claude owns acquisition and
+  inspection, contact sheets, repetitive migrations, immediate test migration
+  after interface locks, capture matrices, mechanical gates, and regressions.
+- Model ceilings: one local GLB, ≤25k triangles, ≤30 production-renderer draw
+  calls, ≤1.8MB transferred, 512–1024px textures, one UV/material set with
+  permitted base-color/normal/ORM maps, no runtime CDN or ambiguous/trademarked
+  assets.
+- Canvas policy: lazy-only; demand render while idle; continuous frames only
+  for look/reaction/transition; pause outside the active region and while the
+  document is hidden; camera-matched light/dark poster for reduced motion,
+  Save-Data, low capability, performance kill, or renderer failure.
+- Budgets: initial homepage JS ≤170KB gzip; lazy Three vendor ≤235KB gzip;
+  world scene module ≤25KB gzip; selected GLB ≤1.8MB; the single downloaded
+  theme poster ≤90KB; fonts ≤100KB.
+- 1440×900: no more than two hero lines, meaningful 40–50% guide crop, obvious
+  CTAs, and real work at the lower boundary. The changed type size/measure must
+  receive optical revalidation.
+- 390×844: both primary CTAs remain in the first viewport and work follows
+  immediately. At 320/390/430px labelled column tabs, `1 of 3`, previous/next,
+  and a next-column peek make every project reachable without dragging.
+- No scroll-jacking, mandatory scrub, ornamental parallax, content hidden by
+  animation, invented evidence, horizontal page overflow, console errors, or
+  serious/critical axe violations.
+- Apple audit threshold: ≥34/40 and no dimension below 4. Taste audit threshold:
+  ≥22/25 and no dimension below 4. Each gate stores both themes at 1440×900 and
+  390×844, normal/slowed interaction evidence, reduced-motion and poster/WebGL
+  failure captures, scorecards, and bundle/asset/console/axe/Core Web Vitals
+  evidence under `docs/qa/immersive/`.

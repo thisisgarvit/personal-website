@@ -1,10 +1,23 @@
 import posthog from "posthog-js";
 
-export type PublicAnalyticsEvent =
-  | "resume_download"
-  | "contact_click"
-  | "case_open"
-  | "full_case_read";
+export const allowedAnalyticsEvents = [
+  "resume_download",
+  "contact_click",
+  "case_open",
+  "full_case_read",
+] as const;
+
+export type PublicAnalyticsEvent = (typeof allowedAnalyticsEvents)[number];
+
+const allowedAnalyticsEventSet: ReadonlySet<string> = new Set(
+  allowedAnalyticsEvents,
+);
+
+export function isAllowedAnalyticsEvent(
+  event: string,
+): event is PublicAnalyticsEvent {
+  return allowedAnalyticsEventSet.has(event);
+}
 
 export interface AnalyticsAdapter {
   track(

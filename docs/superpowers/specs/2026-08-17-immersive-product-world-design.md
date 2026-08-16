@@ -1,6 +1,6 @@
 # Immersive Product World — Design Specification
 
-**Status:** proposed production direction for Garvit review  
+**Status:** approved production direction
 **Date:** 17 August 2026  
 **Safety checkpoint:** `checkpoint/pre-sougen-rebuild-2026-08-17` at `f8b91fe`
 
@@ -56,7 +56,7 @@ The homepage has three connected scenes, not a stack of rounded panels.
 
 - The existing live funnel stays because it is the strongest screenshare mechanic.
 - It appears after work, where its events now have meaningful visitor history.
-- The guide settles alongside the funnel and gestures to the latest reached stage. The disclosure “computed in your browser. I never see it.” remains prominent.
+- The guide settles alongside the funnel and gestures to the latest reached stage. The disclosure “this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.” remains prominent.
 - Metrics are display-only. No scoring, quiz, conversion shame, or interaction prerequisite is introduced.
 
 The footer remains compact. The page does not add a resume timeline, testimonials, skill clouds, or a generic About section.
@@ -75,6 +75,11 @@ The new guide is an abstract metaverse field agent, not a likeness of Garvit. It
 
 The selected source must pass a rendered contact-sheet gate before integration: front three-quarter, profile, hero crop, mobile crop, light scene, and dark scene.
 
+Garvit approved repository-only attribution if Muko wins: preserve the exact
+CC-BY license, creator, source URL, revision, original hash, and modification
+record in the repository; no visible site credit is required. The contact-sheet
+gate selects between Muko and Quaternius on rendered and technical merit.
+
 ### Art direction
 
 - Porcelain/light-gray outer shell, graphite visor, release-blue soft technical underlayer.
@@ -88,8 +93,11 @@ The selected source must pass a rendered contact-sheet gate before integration: 
 ### Delivery budget
 
 - One locally hosted GLB; no runtime CDN.
-- Target 15–25k triangles, no more than 30 draw calls, and 0.7–1.8 MB transferred asset size.
-- Texture atlas is 512–1024px and compressed for web delivery.
+- Hard ceilings are 25k triangles, 30 draw calls measured in the production
+  R3F renderer, and 1.8 MB transferred. A visually superior smaller asset is
+  not rejected for falling below a quality lower bound.
+- Textures are 512–1024px and compressed for web delivery. One atlas means one
+  UV/material set with permitted base-color, normal, and ORM maps.
 - Existing R3F, Drei, and Three dependencies remain the runtime stack.
 - The poster is derived from the same camera and model in light and dark states.
 - The canvas pauses when hidden or out of its active region, respects reduced motion/data and the performance kill switch, and never blocks pointer interaction.
@@ -102,9 +110,13 @@ Exact Sougen asset fidelity would require a dedicated 3D artist. This plan reach
 
 - Create `src/features/world/ExperienceWorld.tsx` to own the single persistent canvas, scene state, and capability fallback.
 - Create `src/features/world/WorldAnchor.tsx` to publish named DOM targets: `hero`, `board`, and `journey`.
-- Create a small world director/store with an explicit state shape: active scene, progress within that scene, active work slug, and last mascot signal.
+- Create a small world director/store with an explicit state shape: active
+  scene, active-region/document visibility, active work slug, drag state, and
+  the existing derived `MascotReactionState`. Continuous section progress
+  stays in mutable anchor metrics and never becomes per-frame React state.
 - Keep DOM sections authoritative. The canvas has `pointer-events: none`, cannot be the only source of information, and never owns navigation.
-- Refactor `MascotExperience` so scene lifetime is not tied to the old rail card.
+- Replace `MascotExperience` with the world-owned experience boundary after the
+  isolated prototype passes; do not extend the retired rail-card lifetime.
 - Replace the current robot-specific skeleton resolver with an adapter for the selected rig. Preserve the reaction state machine and signal contracts.
 
 ### Homepage composition
@@ -178,6 +190,40 @@ Mobile must remain dramatic and must make every project obvious.
 - Run unit, integration, E2E, accessibility, type, lint, build, and bundle-budget gates; return exact failures for Codex judgment.
 
 No delegated output ships without Codex reviewing the rendered result.
+
+Garvit removed the earlier “relocate, never rebuild” restriction. Passed
+surfaces may be rebuilt when the redesign warrants it, but their verified
+facts, functional semantics, accessibility, privacy, and analytics contracts
+may not regress. Claude migrates affected tests immediately after each
+interface lock rather than batching test work at the end.
+
+## Approved execution constraints
+
+- Shared execution checkout:
+  `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July` on `main` for
+  Codex, Claude, and Garvit's play-through; no split checkout.
+- No new runtime dependency or `package.json` change without Garvit's approval.
+- Hard stop order: model contact sheet → isolated static Scene 1 composition →
+  isolated interactive Scene 1 Apple/Taste pass → public-page migration.
+- The session-local journey stream never feeds PostHog. PostHog keeps
+  pageviews/autocapture and only `resume_download`, `contact_click`,
+  `case_open`, and `full_case_read` as custom events.
+- The board itself overlaps the hero; no duplicate hero ticket exists.
+- DOM content is authoritative; the one canvas is pointer-transparent, lazy,
+  demand-rendered when idle, paused outside the active region/hidden document,
+  and never owns navigation.
+- Fallback posters use the locked production camera and only the active theme
+  downloads. Poster ceiling is 90KB; initial homepage JS stays ≤170KB gzip,
+  lazy Three vendor ≤235KB gzip, world scene ≤25KB gzip, GLB ≤1.8MB, and fonts
+  ≤100KB.
+- The changed hero size/measure receives a new optical validation; old tracking
+  values are candidates rather than an automatic lock.
+- Mobile exposes column tabs, `1 of 3`, previous/next controls, and a next peek
+  at 320/390/430px. All projects remain accessible without dragging.
+- Apple audits require ≥34/40 with no dimension below 4. Taste audits require
+  ≥22/25 with no dimension below 4. Evidence includes both themes at 1440×900
+  and 390×844 plus interaction, reduced-motion, poster/failure, bundle, asset,
+  console, axe, and Core Web Vitals records.
 
 ## Binding design audits
 

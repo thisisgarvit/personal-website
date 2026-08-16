@@ -1010,7 +1010,7 @@ In `gate-f-rc.md`, include final commit, all command results, Apple/Taste scorec
 
 ## Execution Discipline
 
-1. Use an isolated worktree at execution time via `superpowers:using-git-worktrees`; keep the checkpoint tag untouched.
+1. Use the shared checkout `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July` on `main` for Codex, Claude, and Garvit's play-through; do not create a split checkout, and keep the checkpoint tag untouched.
 2. Execute one numbered task at a time with `superpowers:subagent-driven-development`.
 3. Within each task, Codex freezes interfaces/art direction before assigning Claude mechanical work.
 4. Claude migrates affected tests immediately after each interface lock and reports exact failures; it does not batch test migration at the end.
