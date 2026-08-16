@@ -817,7 +817,7 @@ create or serve a split worktree during this implementation.
   verified facts, accessibility, privacy, and analytics may not regress.
 - The session-local journey stream stays in `sessionStorage` and never feeds
   PostHog. PostHog retains pageviews/autocapture plus only `resume_download`,
-  `contact_click`, `case_open`, and `full_case_read`; no scene, guide,
+  `contact_click`, `case_open`, `full_case_read`, and `persona_selected`; no scene, guide,
   board-position, or funnel-stage custom capture may be added.
 - The exact disclosure is `this funnel is computed in your browser. PostHog
   sees the rest. I check it obsessively.`
@@ -869,3 +869,24 @@ create or serve a split worktree during this implementation.
   hash live in `muko.json`. Repository attribution remains the approved policy.
 - The scored rationale and rendered evidence index are authoritative in
   `docs/qa/immersive/gate-a-model.md`.
+
+### Approved Scene 1 product-story amendment — 2026-08-17
+
+- The hero resolves through pencil/white-sheet ambiguity (MVP), structured
+  digital type (beta), and the release-blue composition (GA). This is never a
+  loader: the semantic headline and both CTAs exist immediately; no-JS and
+  reduced-motion clients receive GA. Gate B locks GA; Gate C owns replayable
+  animation.
+- A modeless onboarding-satire tray attaches to the hero without gating it. It
+  is skippable and asks only `Founder`, `Recruiter`, `Product lead`, or
+  `Just browsing`; there is no free text.
+- Any choice reveals `Noted. This changes nothing. It never does.` and stores
+  the UI state for the current tab. It also emits allowlisted PostHog event
+  `persona_selected` with `persona`, `surface: "hero_onboarding"`, and `$set:
+  { visitor_persona: persona }`, making the answer available as both an event
+  breakdown and person property. The tray discloses this before input. Skip
+  emits nothing, and the answer never personalizes or reorders content.
+- The guide acknowledges selection with one restrained pager reaction.
+- Career chronology is deferred. If revisited, use product release history;
+  Mirogian and Languify appear only as source-verified facts with no invented
+  outcomes.

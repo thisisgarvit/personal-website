@@ -18,7 +18,7 @@ vi.mock("posthog-js", () => ({
 
 /**
  * Conditional PostHog contract: without public configuration the adapter is
- * a no-op; with configuration it may capture only the four custom events
+ * a no-op; with configuration it may capture only the five custom events
  * below. PostHog pageviews/autocapture belong to the provider, not this
  * custom-event adapter. The visible journey remains session-local.
  */
@@ -33,12 +33,13 @@ describe("analytics custom-event boundary", () => {
     vi.unstubAllEnvs();
   });
 
-  it("exposes exactly the four approved custom events", () => {
+  it("exposes exactly the five approved custom events", () => {
     expect(allowedAnalyticsEvents).toEqual([
       "resume_download",
       "contact_click",
       "case_open",
       "full_case_read",
+      "persona_selected",
     ]);
 
     for (const event of allowedAnalyticsEvents) {
@@ -71,6 +72,54 @@ describe("analytics custom-event boundary", () => {
       case_slug: "stay-portal",
     });
   });
+
+  it.each([
+    "founder",
+    "recruiter",
+    "product_lead",
+    "just_browsing",
+  ] as const)("captures the locked persona payload for %s", (persona) => {
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN", "phc_test");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_HOST", "https://eu.i.posthog.com");
+
+    analytics.track("persona_selected", {
+      persona,
+      surface: "hero_onboarding",
+      $set: { visitor_persona: persona },
+    });
+
+    expect(capture).toHaveBeenCalledOnce();
+    expect(capture).toHaveBeenCalledWith("persona_selected", {
+      persona,
+      surface: "hero_onboarding",
+      $set: { visitor_persona: persona },
+    });
+  });
+
+  it("drops an event outside the whitelist when JavaScript bypasses the type", () => {
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN", "phc_test");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_HOST", "https://eu.i.posthog.com");
+
+    const unsafeTrack = analytics.track as unknown as (
+      event: string,
+      properties?: Record<string, unknown>,
+    ) => void;
+    unsafeTrack("world_scene");
+
+    expect(capture).not.toHaveBeenCalled();
+  });
+
+  if (false) {
+    // @ts-expect-error events outside the five-name contract are rejected.
+    analytics.track("persona_viewed");
+    analytics.track("persona_selected", {
+      // @ts-expect-error fixed-choice persona values cannot drift.
+      persona: "hr",
+      surface: "hero_onboarding",
+      // @ts-expect-error person-property values use the same fixed enum.
+      $set: { visitor_persona: "hr" },
+    });
+  }
 
   it("keeps session journey events out of the custom PostHog adapter", () => {
     vi.stubEnv("NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN", "phc_test");

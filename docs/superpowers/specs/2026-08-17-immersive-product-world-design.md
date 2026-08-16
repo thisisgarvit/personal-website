@@ -39,6 +39,15 @@ The homepage has three connected scenes, not a stack of rounded panels.
 - Sticky product chrome remains dense and immediately identifies `garvit.app`.
 - The hero becomes a broad, mostly borderless release field rather than a card inside a grid.
 - Garvit's approved sentence and the resume/contact CTAs remain dominant and legible.
+- A replayable pencil/white-sheet → structured digital → release-color sequence
+  expresses MVP → beta → GA without acting as a loader. Copy and CTAs are
+  immediate; reduced-motion and no-JS use GA.
+- A modeless, skippable onboarding-satire tray asks only `Founder`, `Recruiter`,
+  `Product lead`, or `Just browsing`, then admits `Noted. This changes nothing.
+  It never does.` It never gates or personalizes. Its UI state is tab-local,
+  while selection sends `persona_selected` to PostHog with `persona`,
+  `surface: "hero_onboarding"`, and `$set.visitor_persona`; the tray discloses
+  this before input. Skip emits nothing.
 - The metaverse guide occupies roughly 40–50% of the desktop viewport and is deliberately cropped at an edge. It is a spatial anchor, not an illustration in a widget.
 - One real work ticket rises into the bottom of the composition. It is an entry to the board, not duplicated fake content.
 - The guide waves once, tracks a fine pointer with restrained head/torso motion, and glances toward the work ticket after idle. Touch users get an authored idle composition.
@@ -207,7 +216,7 @@ interface lock rather than batching test work at the end.
   isolated interactive Scene 1 Apple/Taste pass → public-page migration.
 - The session-local journey stream never feeds PostHog. PostHog keeps
   pageviews/autocapture and only `resume_download`, `contact_click`,
-  `case_open`, and `full_case_read` as custom events.
+  `case_open`, `full_case_read`, and `persona_selected` as custom events.
 - The board itself overlaps the hero; no duplicate hero ticket exists.
 - DOM content is authoritative; the one canvas is pointer-transparent, lazy,
   demand-rendered when idle, paused outside the active region/hidden document,

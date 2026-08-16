@@ -76,7 +76,7 @@ The founder-level outcome is voluntary sharing or screensharing, not completion 
 | Student title | `SSMS President` is correct; `SAC President` is prohibited |
 | Product brand | `garvit.app` is a placeholder until a domain is purchased; all appearances consume one config module |
 | Version | Launch at `v2.4.1`; bump on material content/feature releases with a candid release note |
-| Analytics | Session funnel stays current-tab local; PostHog pageviews/autocapture plus four whitelisted custom events only |
+| Analytics | Session funnel stays current-tab local; PostHog pageviews/autocapture plus five whitelisted custom events only |
 | Guide | Contact-sheet-selected Muko CC-BY or Quaternius CC0 metaverse field agent with same-camera light/dark fallback posters |
 | Stay Portal media | Six cleared demo screenshots only; never production data |
 | OG card | Large `Garvit Sukhija` headline with approved hero sentence beneath; role-first variants prohibited |
@@ -670,26 +670,34 @@ Requirements:
 The visitor-visible session funnel is computed from a `garvit-journey:v1`
 event array in `sessionStorage`. That event array never feeds PostHog or any
 other transport. Separately, configured production uses PostHog
-pageviews/autocapture plus exactly four custom events:
+pageviews/autocapture plus exactly five custom events:
 
 ```ts
 type PublicAnalyticsEvent =
   | "resume_download"
   | "contact_click"
   | "case_open"
-  | "full_case_read";
+  | "full_case_read"
+  | "persona_selected";
 
 interface AnalyticsAdapter {
   track(
     event: PublicAnalyticsEvent,
-    properties?: { case_slug: string } | { ticket_id: string },
+    properties?:
+      | { case_slug: string }
+      | { ticket_id: string }
+      | {
+          persona: "founder" | "recruiter" | "product_lead" | "just_browsing";
+          surface: "hero_onboarding";
+          $set: { visitor_persona: "founder" | "recruiter" | "product_lead" | "just_browsing" };
+        },
   ): void;
 }
 ```
 
 Without public PostHog configuration the adapter is a no-op. With configuration
-it may capture only the four names above and their already-approved case/ticket
-properties. No scene transition, guide reaction, funnel stage, board position,
+it may capture only the five names above and their approved properties. No
+scene transition, guide reaction, funnel stage, board position,
 cursor coordinate/path, flag state, phone reveal, identity, URL-query
 persistence, replay, heatmap, or fake `banner_dismissed` custom event may be
 sent. Provider-managed pageviews/autocapture are distinct from this custom
@@ -976,9 +984,18 @@ remain binding.
   never enters PostHog. The exact disclosure is `this funnel is computed in
   your browser. PostHog sees the rest. I check it obsessively.`
 - PostHog pageviews/autocapture remain configured separately. The only custom
-  events are `resume_download`, `contact_click`, `case_open`, and
-  `full_case_read`; scenes, guide reactions, board positions, and journey
+  events are `resume_download`, `contact_click`, `case_open`, `full_case_read`,
+  and `persona_selected`; scenes, guide reactions, board positions, and journey
   stages never become custom captures.
+- Scene 1 includes an optional modeless onboarding satire tray with fixed roles
+  `founder`, `recruiter`, `product_lead`, and `just_browsing`, plus Skip and no
+  free text. Selection reveals `Noted. This changes nothing. It never does.`,
+  stores UI state for the tab, and captures `persona_selected` with `persona`,
+  `surface: "hero_onboarding"`, and `$set.visitor_persona`. The UI discloses
+  PostHog capture before input; Skip sends no event. The answer changes no page
+  content.
+- The hero's pencil → digital → color evolution communicates MVP → beta → GA
+  without delaying the headline or CTAs. Reduced-motion/no-JS output is GA.
 - Case routes open with kind/title, one-sentence value, two or three verified
   facts, one real or verified-fact artifact, and back-to-board navigation,
   followed by the existing 68ch reading measure and distinct

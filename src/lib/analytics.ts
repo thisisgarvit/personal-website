@@ -5,9 +5,27 @@ export const allowedAnalyticsEvents = [
   "contact_click",
   "case_open",
   "full_case_read",
+  "persona_selected",
 ] as const;
 
 export type PublicAnalyticsEvent = (typeof allowedAnalyticsEvents)[number];
+export type VisitorPersona =
+  | "founder"
+  | "recruiter"
+  | "product_lead"
+  | "just_browsing";
+
+type AnalyticsEventProperties = {
+  resume_download: undefined;
+  contact_click: undefined;
+  case_open: { case_slug: string };
+  full_case_read: { ticket_id: string };
+  persona_selected: {
+    persona: VisitorPersona;
+    surface: "hero_onboarding";
+    $set: { visitor_persona: VisitorPersona };
+  };
+};
 
 const allowedAnalyticsEventSet: ReadonlySet<string> = new Set(
   allowedAnalyticsEvents,
@@ -20,19 +38,23 @@ export function isAllowedAnalyticsEvent(
 }
 
 export interface AnalyticsAdapter {
-  track(
-    event: PublicAnalyticsEvent,
-    properties?: { case_slug: string } | { ticket_id: string },
+  track<Event extends PublicAnalyticsEvent>(
+    event: Event,
+    ...properties: AnalyticsEventProperties[Event] extends undefined
+      ? [properties?: undefined]
+      : [properties: AnalyticsEventProperties[Event]]
   ): void;
 }
 
 export const analytics: AnalyticsAdapter = {
-  track(event, properties): void {
+  track(event, ...propertyArgs): void {
+    if (!isAllowedAnalyticsEvent(event)) return;
+
     if (
       process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
       process.env.NEXT_PUBLIC_POSTHOG_HOST
     ) {
-      posthog.capture(event, properties);
+      posthog.capture(event, propertyArgs[0]);
     }
   },
 };

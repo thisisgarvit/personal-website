@@ -16,7 +16,7 @@
 - Hard stop order: candidate contact sheet passes → isolated Scene 1 static composition passes → interactive Scene 1 Apple/Taste audit passes → only then homepage or case-route migration begins.
 - Codex owns art direction, world architecture, composition, motion tuning, performance tradeoffs, and every visual acceptance decision. Claude owns candidate acquisition/inspection, contact sheets, repetitive migrations, interface-locked test migrations, capture matrices, gate execution, and mechanical regression fixes. Nothing delegated ships without Codex reviewing the render.
 - Garvit has removed the “relocate, never rebuild” restriction. Existing board, flags, funnel, case content, 404, and OG behavior may be rebuilt when the new visual system warrants it, but their working semantics, verified facts, accessibility, privacy, and analytics contracts may not regress.
-- The session-local journey event stream remains in `sessionStorage` and never feeds PostHog. PostHog retains pageviews/autocapture plus only `resume_download`, `contact_click`, `case_open`, and `full_case_read`; no scene, guide, board-position, or funnel-stage custom capture may be added.
+- The session-local journey event stream remains in `sessionStorage` and never feeds PostHog. PostHog retains pageviews/autocapture plus only `resume_download`, `contact_click`, `case_open`, `full_case_read`, and `persona_selected`; no scene, guide, board-position, or funnel-stage custom capture may be added.
 - The exact session disclosure is: “this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.”
 - If Muko is selected, Garvit has approved repository-only attribution: preserve its exact license, creator, source URL, revision, and modification record in the repository; do not add visible site credit. Select Muko or Quaternius on rendered and technical merit at the contact-sheet gate.
 - The guide remains abstract, never a likeness. Target: smooth hooded/helmeted metaverse field agent, large graphic head, opaque graphite visor, porcelain shell, release-blue underlayer, fitted coral milestone hardware, and no floating/grafted props.
@@ -103,7 +103,7 @@
 - Test: `src/lib/analytics.test.ts`
 
 **Interfaces:**
-- Consumes: `WorkSlug` from `src/data/work.ts`; `MascotSignal` from `src/features/mascot/signals.ts`; the existing four-name analytics union from `src/lib/analytics.ts`.
+- Consumes: `WorkSlug` from `src/data/work.ts`; `MascotSignal` from `src/features/mascot/signals.ts`; the five-name analytics union from `src/lib/analytics.ts`.
 - Produces:
 
 ```ts
@@ -144,7 +144,7 @@ export interface WorldDirector {
 
 - [ ] **Step 1: Write the failing analytics-boundary test**
 
-Replace the stale adapter tests with configured and unconfigured cases. Mock `posthog.capture`, set the two public PostHog environment variables for the configured case, accept exactly the four approved custom event names, reject `world_scene`, `guide_reaction`, `journey_stage`, and `board_position`, and assert the journey store neither imports nor invokes the analytics adapter.
+Replace the stale adapter tests with configured and unconfigured cases. Mock `posthog.capture`, set the two public PostHog environment variables for the configured case, accept exactly the five approved custom event names, validate the fixed `persona_selected` payload, reject `world_scene`, `guide_reaction`, `journey_stage`, and `board_position`, and assert the journey store neither imports nor invokes the analytics adapter.
 
 ```ts
 expect(allowedAnalyticsEvents).toEqual([
@@ -152,6 +152,7 @@ expect(allowedAnalyticsEvents).toEqual([
   "contact_click",
   "case_open",
   "full_case_read",
+  "persona_selected",
 ]);
 expect(isAllowedAnalyticsEvent("world_scene")).toBe(false);
 ```
@@ -166,7 +167,7 @@ Expected: FAIL because the exact exported whitelist helper is not yet present or
 
 - [ ] **Step 3: Freeze the analytics boundary without adding captures**
 
-Export the existing four-name constant and a type guard from `src/lib/analytics.ts`; keep every existing call site unchanged. The local journey store continues to dispatch `garvit:mascot-signal` and write only `garvit-journey:v1` session storage.
+Export the five-name constant, fixed persona enum/property contract, and type guard from `src/lib/analytics.ts`; keep existing call sites unchanged. The local journey store continues to dispatch `garvit:mascot-signal` and write only `garvit-journey:v1` session storage.
 
 - [ ] **Step 4: Amend the three authority documents**
 
@@ -186,7 +187,7 @@ pnpm test src/lib/analytics.test.ts
 pnpm typecheck
 ```
 
-Expected: one consistent disclosure, board-before-journey ordering, no public-credit requirement, exactly four PostHog events, and all checks PASS.
+Expected: one consistent disclosure, board-before-journey ordering, no public-credit requirement, exactly five PostHog events, and all checks PASS.
 
 - [ ] **Step 7: Claude contradiction review and immediate correction**
 
@@ -296,11 +297,11 @@ git commit -m "assets: select immersive guide model"
 
 **Interfaces:**
 - Consumes: approved hero copy and CTA data from `src/data/site.ts`; real work item from `src/data/work.ts`; selected model contact-sheet render from Task 1; existing stateful `FeatureFlagsPanel` behavior.
-- Produces: a static, poster-only Scene 1 composition contract with DOM hooks `data-world-prototype`, `data-world-copy`, `data-world-guide`, `data-world-dock`, and `data-board-entry`; plus `FeatureFlagsPanel({ variant?: "panel" | "dock" })`, where `panel` preserves the current default and `dock` changes presentation only. No public homepage files change.
+- Produces: a static, poster-only Scene 1 contract with DOM hooks `data-world-prototype`, `data-world-copy`, `data-world-guide`, `data-world-dock`, `data-board-entry`, `data-hero-evolution`, and `data-persona-satire`; plus `FeatureFlagsPanel({ variant?: "panel" | "dock" })`. The persona tray is modeless, skippable, four-choice, disclosed, and never personalizes. No public homepage files change.
 
 - [ ] **Step 1: Write the failing composition contract test**
 
-Assert the prototype renders one `h1`, exactly two primary CTA links, one real `workItems[0]` ticket/link, one feature flag dock, one decorative guide poster (`alt=""`, `aria-hidden="true"`) whose meaning is already carried by DOM copy, and no `Canvas` or dynamically imported Three module.
+Assert one `h1`, two primary CTAs, one real work ticket/link, one flag dock, one decorative guide poster, a final-GA evolution hook, and a skippable persona tray with four choices, disclosure, exact payoff, and no free text. Assert no `Canvas` or dynamically imported Three module.
 
 - [ ] **Step 2: Run the focused test and observe failure**
 
@@ -310,11 +311,11 @@ Expected: FAIL because the isolated prototype does not exist.
 
 - [ ] **Step 3: Build only the static dev-route composition**
 
-Copy the chosen contact-sheet render to temporary public path `/images/world/prototype-guide.webp` and use it as a decorative `<picture>` source. Build a broad release field with copy on the left, cropped guide on the right, compact flag dock at a subordinate edge, and the actual first work item entering from the bottom. Do not import `InteractiveBoardSection`; the isolated gate renders the same ticket data but makes no homepage migration claim. Task 4 deletes the temporary poster after final camera-matched posters exist.
+Copy the chosen contact-sheet render to `/images/world/prototype-guide.webp`. Build a broad release field with left copy, right cropped guide, subordinate flag dock, optional persona tray on the hero edge, and the real first work item entering below. Gate B shows GA and locks the evolution hook without motion. Do not import `InteractiveBoardSection`. Task 4 removes the temporary poster after final poster export.
 
 - [ ] **Step 4: Claude locks the dock presentation interface immediately**
 
-After Codex freezes the compact shell, add `variant: "panel" | "dock"` to the existing stateful `FeatureFlagsPanel`, default it to `panel`, share the same flag rows/store/effects, and use `dock` in the prototype. Migrate `FeatureFlagsPanel.test.tsx` and `FeatureFlagDock.test.tsx` now; both variants must preserve native checkboxes, disabled Comic Sans, row order, storage, signals, and journey events.
+After Codex freezes the shell, add `variant: "panel" | "dock"` to `FeatureFlagsPanel` and use `dock` here. Wire persona choice/dismiss state and add `persona_selected` to the typed adapter with only the locked properties; Skip emits nothing. Migrate affected tests now. Preserve all existing flag semantics and effects.
 
 - [ ] **Step 5: Tune headline optics at 1440**
 
@@ -326,7 +327,7 @@ Keep both 56px-minimum CTAs fully visible, retain a meaningful upper/right guide
 
 - [ ] **Step 7: Claude migrates the prototype test immediately after markup lock**
 
-Claude updates only the new test/selectors and adds Playwright capture coverage for `/dev/world`; no public homepage E2E selector changes yet.
+Claude updates new selectors, the five-event analytics/property tests, persona session/dismiss tests, and Playwright capture coverage for `/dev/world`; no public homepage E2E selector changes yet. Suppress tray autocapture so the explicit event is the sole selection signal.
 
 - [ ] **Step 8: Capture and score Gate B**
 
@@ -974,7 +975,7 @@ Claude prepares the four core captures, normal/slow recordings, failure captures
 
 - [ ] **Step 6: Validate analytics separation in a real session**
 
-Exercise scroll, flags, guide reactions, board drag, funnel milestones, case preview, full case read, resume, and contact. Confirm the session funnel events remain only in `garvit-journey:v1`; PostHog receives pageviews/autocapture and only the four approved custom events; no scene/guide/funnel-stage custom event appears.
+Exercise scroll, flags, persona selection, guide reactions, board drag, funnel milestones, case preview, full case read, resume, and contact. Confirm funnel events remain only in `garvit-journey:v1`; PostHog receives pageviews/autocapture and only the five approved custom events; no scene/guide/funnel-stage custom event appears.
 
 - [ ] **Step 7: Update architecture and authority status**
 
