@@ -847,3 +847,25 @@ create or serve a split worktree during this implementation.
 - Preserve factual content. Never invent metrics, product screenshots, shipped
   status, or case claims. A missing artifact becomes an authored diagram made
   only from verified facts.
+
+### Gate A source selection — PASS (2026-08-17)
+
+- **Selected:** Muko_Art's *Astronaut character stylized rigged free model*
+  (CC-BY-4.0), scored 36/40 against the eight Gate A criteria. Its helmeted
+  graphic silhouette, opaque visor, crop strength, existing suit topology,
+  fitted chest architecture, complete Mixamo semantics, and asset headroom make
+  it the lowest-risk base for the authored metaverse guide.
+- **Rejected:** the free Quaternius Superhero Male fallback, scored 20/40. The
+  advertised Regular/Teen source is not in the free archive; the available
+  realistic-faced, minimally clothed body triggers the uncanny game-NPC and
+  grafted-accessory rejection conditions despite a usable rig and raw budget.
+- This is a source-selection decision, not final-art approval. Task 4 must
+  normalize Muko's baked scale, resolve the extreme-profile visor seam, author
+  every gesture procedurally, fit the headset and coral milestone hardware into
+  the suit, tune light/dark materials and final crops, and prove the production
+  GLB against renderer and transfer ceilings.
+- The exact source notice lives at
+  `docs/qa/immersive/source-manifests/muko-LICENSE.txt`; the source metadata and
+  hash live in `muko.json`. Repository attribution remains the approved policy.
+- The scored rationale and rendered evidence index are authoritative in
+  `docs/qa/immersive/gate-a-model.md`.

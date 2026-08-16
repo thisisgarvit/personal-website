@@ -1,6 +1,6 @@
 # Gate A candidate inspection
 
-Status: technical evidence complete; visual selection is intentionally pending Codex.
+Status: technical evidence complete; Codex selected Muko and released Gate A.
 
 ## Toolchain
 
