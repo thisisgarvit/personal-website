@@ -20,25 +20,56 @@
     "count": 58,
     "root": "_rootJoint",
     "hips": "mixamorig:Hips_01",
-    "spine": ["mixamorig:Spine_02", "mixamorig:Spine1_03", "mixamorig:Spine2_04"],
+    "spine": [
+      "mixamorig:Spine_02",
+      "mixamorig:Spine1_03",
+      "mixamorig:Spine2_04"
+    ],
     "neck": "mixamorig:Neck_00",
     "head": "mixamorig:Head_05",
-    "leftArm": ["mixamorig:LeftArm_08", "mixamorig:LeftForeArm_09", "mixamorig:LeftHand_010"],
-    "rightArm": ["mixamorig:RightArm_028", "mixamorig:RightForeArm_029", "mixamorig:RightHand_030"]
+    "leftArm": [
+      "mixamorig:LeftArm_08",
+      "mixamorig:LeftForeArm_09",
+      "mixamorig:LeftHand_010"
+    ],
+    "rightArm": [
+      "mixamorig:RightArm_028",
+      "mixamorig:RightForeArm_029",
+      "mixamorig:RightHand_030"
+    ]
   },
   "sourceTriangles": 11458,
   "sourceMeshes": 1,
-  "sourceMaterials": ["NPC_Mat"],
+  "sourceMaterials": [
+    "NPC_Mat"
+  ],
   "sourcePrimitiveDrawCalls": 1,
   "textureDimensions": [
-    {"name": "NPC_Mat_baseColor.jpeg", "size": "2048x2048", "colorSpace": "sRGB"},
-    {"name": "NPC_Mat_metallicRoughness.png", "size": "2048x2048", "colorSpace": "non-color"},
-    {"name": "NPC_Mat_normal.png", "size": "2048x2048", "colorSpace": "non-color"}
+    {
+      "name": "NPC_Mat_baseColor.jpeg",
+      "size": "2048x2048",
+      "colorSpace": "sRGB"
+    },
+    {
+      "name": "NPC_Mat_metallicRoughness.png",
+      "size": "2048x2048",
+      "colorSpace": "non-color"
+    },
+    {
+      "name": "NPC_Mat_normal.png",
+      "size": "2048x2048",
+      "colorSpace": "non-color"
+    }
   ],
   "animations": [
-    {"name": "mixamo.com", "channels": 41, "durationSeconds": 0, "note": "single bind-pose keyframe; procedural posing required"}
+    {
+      "name": "mixamo.com",
+      "channels": 41,
+      "durationSeconds": 0,
+      "note": "single bind-pose keyframe; procedural posing required"
+    }
   ],
-  "rootScale": "Sketchfab FBX import hierarchy resolves through a 0.01 armature world scale; evidence renderer normalizes to 1.8m non-destructively",
+  "rootScale": "glTF bakes a 0.01 FBX conversion matrix above the armature; resulting world bounds are ~6.40m tall, so production integration must rescale to scene units",
   "previewOnly": {
     "glbBytes": 287236,
     "glbSha256": "c8ae088cd51f71f6a6aeaff37211f532596dd96fb68875b2d9d069a2484b0908",
