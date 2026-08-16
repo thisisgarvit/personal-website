@@ -8,7 +8,11 @@ test("the disclosed session funnel and mascot share one tab-local event stream",
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Your session, instrumented." })).toBeVisible();
-  await expect(page.getByText("computed in your browser. I never see it.")).toBeVisible();
+  await expect(
+    page.getByText(
+      "this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.",
+    ),
+  ).toBeVisible();
 
   await page.getByRole("checkbox", { name: "Toggle dark mode" }).click();
   await page.getByRole("link", { name: /Stay Portal/ }).click();
