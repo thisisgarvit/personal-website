@@ -132,9 +132,11 @@
   .headline {
     font-size: clamp(4rem, 6.4vw, 4.75rem);
   }
-}
 
-@media (max-width: 879.98px) {
+  /* Gate D3 correction 1: below 1180px the headline lines wrap inside
+     the reserved copy measure instead of running under the flag dock.
+     (≥1180px keeps the authored two-line nowrap composition — the copy
+     column clears the dock rectangle at those widths.) */
   .headlineLine {
     white-space: normal;
   }

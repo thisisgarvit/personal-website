@@ -55,10 +55,22 @@
   }
 }
 
+/* Gate D3 correction 1 (620–879px): the expanded dock leaves the hero's
+   overlay plane and recomposes in flow, right-aligned below the hero —
+   copy, CTAs, and persona can never sit under it. The board's deep
+   first-fold overlap steps back to a plain gap so the anchor above it
+   (z4) does not cover the dock. */
 @media (max-width: 879.98px) {
   .dock {
-    right: var(--space-4);
-    bottom: 8.5rem;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 18.5rem;
+    margin: var(--space-4) 0 0 auto;
+  }
+
+  .boardAnchor {
+    margin-top: var(--space-4);
   }
 }
 

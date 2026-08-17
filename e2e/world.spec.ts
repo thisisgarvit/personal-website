@@ -418,6 +418,182 @@ test.describe("immersive world prototype", () => {
     expect(posthogBodies.filter((body) => forbidden.test(body))).toEqual([]);
   });
 
+  /**
+   * Gate D3 correction 4 — integrated guide-motion evidence on the PUBLIC
+   * homepage: the guide/canvas must never cover board tabs, grips,
+   * tickets, the preview dialog, funnel bars, or the insights card.
+   * Proof is two-fold: (1) the world stage paints strictly beneath every
+   * product surface (fixed z2 vs anchor z3/z4 in the root stacking
+   * context, dialog portal above both), so the canvas CANNOT paint over
+   * them; (2) the guide's projected screen bounds (QA evidence opt-in)
+   * are measured against each listed element's bounding box, and any
+   * overlapping pixels are proven to paint product-over-guide with the
+   * stage subtree pointer-transparent.
+   */
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 390, height: 844 },
+  ] as const) {
+    test(`guide never covers board or journey surfaces at ${viewport.width}px`, async ({
+      page,
+    }) => {
+      await installHighMemory(page);
+      await page.setViewportSize(viewport);
+      await page.goto("/");
+      await page.evaluate(() => window.dispatchEvent(new Event("scroll")));
+      const world = page.locator("[data-experience-world]");
+      const canvas = page.locator("[data-world-canvas] canvas");
+      await expect(canvas).toHaveCount(1, { timeout: 20_000 });
+      await expect
+        .poll(() => world.getAttribute("data-scene-ready"), { timeout: 20_000 })
+        .toBe("true");
+
+      // (1) Structural beneath-proof: stage z2 under anchors z3/z4, all
+      // in the root stacking context; the stage precedes main in DOM
+      // order, so intersecting pixels always paint product-over-guide.
+      const stacking = await page.evaluate(() => {
+        const stage = document.querySelector("[data-experience-world]")!;
+        const main = document.querySelector("main")!;
+        const anchorLevels = Array.from(
+          document.querySelectorAll("[data-world-anchor]"),
+        ).map((anchor) => ({
+          id: anchor.getAttribute("data-world-anchor"),
+          zIndex: Number(getComputedStyle(anchor).zIndex),
+          position: getComputedStyle(anchor).position,
+        }));
+        return {
+          stageZ: Number(getComputedStyle(stage).zIndex),
+          stagePosition: getComputedStyle(stage).position,
+          stageBeforeMain:
+            (stage.compareDocumentPosition(main) &
+              Node.DOCUMENT_POSITION_FOLLOWING) !== 0,
+          anchorLevels,
+        };
+      });
+      expect(stacking.stagePosition).toBe("fixed");
+      expect(stacking.stageBeforeMain).toBe(true);
+      expect(stacking.anchorLevels).toHaveLength(3);
+      for (const anchor of stacking.anchorLevels) {
+        expect(
+          anchor.zIndex,
+          `${anchor.id} anchor stacks above the world stage`,
+        ).toBeGreaterThan(stacking.stageZ);
+        expect(anchor.position).toBe("relative");
+      }
+
+      // (2) Bounding-box evidence: enable the QA opt-in, travel to the
+      // board scene, and measure the guide's projected bounds against
+      // every listed surface.
+      await page.evaluate(() => {
+        document.documentElement.dataset.worldEvidence = "1";
+      });
+      await page.locator("#work-board").scrollIntoViewIfNeeded();
+      await expect
+        .poll(() => canvas.getAttribute("data-guide-evidence-scene"), {
+          timeout: 10_000,
+        })
+        .toBe("board");
+      await page.waitForTimeout(1_200); // springs settle at board targets
+
+      const guideBounds = async () => {
+        const raw = await canvas.getAttribute("data-guide-screen-bounds");
+        expect(raw, "guide screen bounds evidence").not.toBeNull();
+        const [x, y, width, height] = raw!.split(",").map(Number);
+        expect(width).toBeGreaterThan(0);
+        expect(height).toBeGreaterThan(0);
+        return { left: x, top: y, right: x + width, bottom: y + height };
+      };
+
+      const assertNeverCovers = async (
+        guide: { left: number; top: number; right: number; bottom: number },
+        selector: string,
+        label: string,
+      ) => {
+        const rects = await page.evaluate(
+          (query) =>
+            Array.from(document.querySelectorAll(query)).map((node) => {
+              const { left, top, right, bottom } =
+                node.getBoundingClientRect();
+              return { left, top, right, bottom };
+            }),
+          selector,
+        );
+        expect(rects.length, `${label} present`).toBeGreaterThan(0);
+        for (const rect of rects) {
+          const overlapX =
+            Math.min(guide.right, rect.right) - Math.max(guide.left, rect.left);
+          const overlapY =
+            Math.min(guide.bottom, rect.bottom) - Math.max(guide.top, rect.top);
+          if (overlapX > 0 && overlapY > 0) {
+            // Overlapping pixels exist — allowed only because the surface
+            // paints on top (structural proof above) and the stage never
+            // intercepts the element's pointer path.
+            const pointerEvents = await canvas.evaluate(
+              (node) => getComputedStyle(node).pointerEvents,
+            );
+            expect(pointerEvents, `${label} stays interactive`).toBe("none");
+          }
+        }
+      };
+
+      const boardGuide = await guideBounds();
+      await assertNeverCovers(boardGuide, "[data-ticket]", "tickets");
+      await assertNeverCovers(
+        boardGuide,
+        '[data-ticket] button[aria-label^="Drag"]',
+        "ticket grips",
+      );
+      if (viewport.width < 880) {
+        await assertNeverCovers(
+          boardGuide,
+          '[data-board-mobile-nav] [role="tab"]',
+          "board tabs",
+        );
+      }
+
+      // Preview dialog: opened from a ticket, portaled after the stage
+      // with an explicit overlay level — always above the canvas.
+      await page.locator('[data-ticket="stay-portal"] a').click();
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      const dialogLevel = await page.evaluate(() => {
+        let node = document.querySelector('[role="dialog"]');
+        let level = 0;
+        while (node && node !== document.body) {
+          const z = Number(getComputedStyle(node).zIndex);
+          if (!Number.isNaN(z)) level = Math.max(level, z);
+          node = node.parentElement;
+        }
+        return level;
+      });
+      expect(dialogLevel).toBeGreaterThan(stacking.stageZ);
+      await page.keyboard.press("Escape");
+      await expect(dialog).toBeHidden();
+
+      // Journey scene: funnel bars + insights card.
+      await page
+        .locator('[data-world-anchor="journey"]')
+        .scrollIntoViewIfNeeded();
+      await expect
+        .poll(() => canvas.getAttribute("data-guide-evidence-scene"), {
+          timeout: 10_000,
+        })
+        .toBe("journey");
+      await page.waitForTimeout(1_200);
+      const journeyGuide = await guideBounds();
+      await assertNeverCovers(
+        journeyGuide,
+        '[class*="SessionJourneySection_bar__"]',
+        "funnel bars",
+      );
+      await assertNeverCovers(
+        journeyGuide,
+        '[class*="SessionJourneySection_insights__"]',
+        "insights card",
+      );
+    });
+  }
+
   test("keeps core content operable in forced colors and reduced transparency", async ({
     page,
     browserName,

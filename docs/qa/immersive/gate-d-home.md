@@ -242,3 +242,175 @@ entry in the long-running `next start` process (curl-reproducible,
 cleared by server restart, not reproducible after). Not a code defect;
 noted for Gate F server hygiene (restart the server before the release
 matrix).
+
+---
+
+## 9. D3 CORRECTION round (design lead scored STOP → corrections applied)
+
+Date: 2026-08-17 · Base: `8370c80` · Build dir: `.next-d3c` (fresh
+isolated production build, `NEXT_PUBLIC_WORLD_PROTOTYPE=1`) · Server:
+`next start` port 3131, freshly restarted (the AVIF/stale-manifest
+server-reuse trap reproduced once mid-round when an old `next-server`
+process survived a rebuild — killed, restarted, all evidence below is
+from the fresh server against the fresh build).
+
+### 9.1 Failed score being corrected
+
+Apple **31/40** — Purpose 5, Agency 3, Responsibility 5, Familiarity 4,
+Flexibility 3, Simplicity 3, Craft 3, Delight 5.
+Taste **18/25** — composition 3, hierarchy 3, authorship 5,
+asset/material 4, responsive craft 3. Verdict: STOP, four binding
+corrections.
+
+### 9.2 Correction 1 — dock/hero obstruction (automatic-stop) — FIXED
+
+The feature-flag dock painted over hero headline/intro/CTA space at
+768×1024 and 1024×768 (old matrix captures).
+
+- **880–1179px** — headline lines now wrap (`HeroEvolution.module.css`:
+  the `white-space: normal` breakpoint moved from ≤879.98 to ≤1179.98;
+  ≥1180 keeps the authored two-line nowrap composition, which clears the
+  dock at those widths). Safe copy measure established
+  (`Hero.module.css`): `.copy { width: min(calc(100% - 21.5rem), 58rem) }`
+  — 18.5rem dock + 1.5rem right offset + 1.5rem clearance — so headline,
+  intro, and CTA group can never enter the dock's rectangle at ANY
+  viewport height (the reservation is horizontal, the dock is
+  bottom-anchored). The persona tray honors the same reservation
+  (`PersonaSatire.module.css`), and the copy block reserves the tray's
+  overlay band (`padding-top: 16rem`) because the wrapped headline is
+  taller and otherwise rose beneath the tray.
+- **620–879px** — the expanded dock recomposes IN FLOW below the hero
+  (`page.module.css`: `.dock { position: relative; width: 18.5rem;
+  margin: var(--space-4) 0 0 auto }`), right-aligned below the hero
+  panel; `.boardAnchor` steps back from its deep negative overlap to a
+  plain `var(--space-4)` gap in this range so the z4 board anchor cannot
+  cover the dock. Copy keeps its 76% measure and type/target sizes
+  exactly (no shrink); CTAs unchanged. `<620px` (in-flow full-width
+  dock) untouched.
+- **E2E (new, `e2e/responsive.spec.ts`)** — "feature-flag dock never
+  intersects hero copy" at 768×1024 AND 1024×768:
+  `getBoundingClientRect` intersection assertions for dock vs H1, dock
+  vs intro, dock vs CTA group, dock vs persona tray, plus persona-tray
+  vs headline/intro/CTA (the tray is the hero's other overlay). All
+  observed failing against the pre-correction layout, passing after.
+- Captures refreshed: `matrix/home-768x1024-{light,dark}.png`,
+  `matrix/home-1024x768-{light,dark}.png` (plus the full sweep, §9.6).
+
+### 9.3 Correction 2 — gradient ban (DESIGN.md) — REMOVED
+
+`SessionJourneySection.module.css`:
+
+- `.section` radial `--color-context` wash removed → solid
+  `var(--material-panel)`.
+- `.sessionBar` linear-gradient fill removed → solid
+  `var(--color-release)`; the typical-visitor bar was already solid.
+- Current/active stage is now expressed by the design lead's listed
+  **small semantic endpoint marker** option (chosen over outline/label
+  because it reuses the existing `.liveState` merge-dot vocabulary as a
+  "live playhead" at the session bar's leading edge — no new visual
+  language): `.stage[data-current="true"] .sessionBar::after`, solid
+  `var(--color-merge)` 5px dot with the same soft ring treatment as the
+  live pill.
+- The approved solid question-tint on `.insights` is KEPT unchanged.
+- Evidence: `motion/scene-journey-{1440,390}-{light,dark}.png` (solid
+  panel, solid bars, endpoint marker on the current stage).
+
+### 9.4 Correction 3 — 320px @ 200% board measure — FIXED
+
+The next-column peek ate the active column's width at 320px/200% text.
+Fix is a container query on EFFECTIVE size (`board.module.css`):
+`.section` becomes an inline-size container, and at
+`@container (max-width: 13rem)` the column plan switches to
+`repeat(3, 100cqw)` — the active column takes the full scroll port and
+the peek yields to 0. Container-query `rem` resolves against the real
+root font size, so the rule engages exactly when text enlargement makes
+the authored `82vw - 3rem` column inadequate (< ~11rem effective) and
+NEVER at authored sizes at matrix widths (320px normal-text container is
+15.9rem → the approved Gate D2 peek is preserved, proven by the
+unchanged "explicit mobile board discovery" suite). No type or target
+was reduced; tabs, "n of 3" position, and previous/next controls remain.
+
+- **E2E (new, `e2e/responsive.spec.ts`)** — "200% text keeps a readable
+  active board column" at 320/390/430: asserts the active column's
+  content width ≥ 176px AND ≥ (scroll port − 2px), and that tabs +
+  pager stay present and functional (next/previous walk the position
+  text).
+- Captures refreshed: `matrix/board-320-200pct-light.png` (active
+  column at full port width, readable), `matrix/home-320-200pct-light.png`,
+  plus the 1440 200% pair.
+
+### 9.5 Correction 4 — integrated guide-motion evidence — ADDED
+
+New harness `scripts/capture-motion-gate-d3c.mjs` against the PUBLIC
+homepage production build, output `docs/qa/immersive/gate-d/motion/`:
+
+- **Stills** (8): `scene-board-{1440,390}-{light,dark}.png`,
+  `scene-journey-{1440,390}-{light,dark}.png` — guide settled at its
+  scene positions.
+- **Video**: `hero-board-journey-normal.webm` (16.9s) — full
+  hero→board→journey scroll transition including ONE board interaction
+  (a real grip drag of "AI Browser — Maxie", drag-watch reaction) — and
+  `hero-board-journey-0.25x.webm` (67.6s, ffmpeg `setpts=4*PTS`, same
+  Gate C recipe).
+- **Bounding-box proof** (`motion-facts.json` + new e2e in
+  `world.spec.ts`, "guide never covers board or journey surfaces" at
+  1440 and 390): the guide's projected screen bounds are published via a
+  QA-only opt-in (`<html data-world-evidence="1">` → GuideScene writes
+  `data-guide-screen-bounds` on the canvas; a single string check per
+  frame when off, zero cost to visitors, no tuning value touched) and
+  measured against board tabs, grips, tickets, the preview dialog,
+  funnel bars, and the insights card. Non-coverage holds two ways:
+  (1) structurally, the world stage is fixed z2 beneath the z3/z4
+  anchors in the root stacking context and precedes `main` in DOM order
+  — asserted — so the canvas CANNOT paint over any listed surface, and
+  the preview dialog portal stacks at 141, above both; (2) per-element:
+  grips (390), board tabs, and the insights card never even intersect
+  the guide's rectangle; ticket/funnel-bar rectangle intersections are
+  the authored behind-the-frosted-panel composition (visible in the
+  stills — the guide reads as veiled BEHIND the panel, never over
+  content) with the stage subtree pointer-transparent (asserted).
+
+### 9.6 Fresh gates (this correction round, in order)
+
+| Gate | Result |
+|---|---|
+| `pnpm typecheck` | PASS |
+| `pnpm lint` | PASS |
+| `pnpm test` (47 files / 185 tests) | PASS |
+| `NEXT_DIST_DIR=.next-d3c NEXT_PUBLIC_WORLD_PROTOTYPE=1 pnpm build` (fresh dist) | PASS |
+| `NEXT_DIST_DIR=.next-d3c pnpm check:budgets` | PASS (all, no SKIP) |
+| Full e2e, chromium (port 3131, fresh production server) | 122/122 PASS (115 prior + 7 new: 2 dock non-intersection, 3 200%-measure, 2 guide-coverage) |
+| Full e2e, webkit | 116 PASS + 6 documented engine skips (unchanged set) |
+| Matrix re-capture (`capture-matrix-gate-d3.mjs`, all 21 fact rows) | 0 console errors / 0 serious+critical axe / no horizontal overflow / 2 CTAs everywhere |
+| Motion evidence (`capture-motion-gate-d3c.mjs`) | 8 stills + 2 videos + facts, 0 coverage violations |
+| Web vitals (mobile emulation, fresh run) | LCP 40ms (local), CLS 0.0001 — within ceilings |
+
+Approved items preserved: theme-scoped CSS poster loading unchanged;
+forced-colors axe artifact remains a documented nonblocking exception
+(real HCM pass at Gate F). Scene tuning values (`scene-motion.ts`
+targets/springs) untouched — design-owned.
+
+### 9.7 Fresh rescore (for the design lead)
+
+| Apple criterion | Score (/5) | Notes |
+|---|---|---|
+| Purpose | — | |
+| Agency | — | |
+| Responsibility | — | |
+| Familiarity | — | |
+| Flexibility | — | |
+| Simplicity | — | |
+| Craft | — | |
+| Delight | — | |
+| **Apple total** | **— /40** | |
+
+| Taste criterion | Score (/5) | Notes |
+|---|---|---|
+| Composition | — | |
+| Hierarchy | — | |
+| Authorship | — | |
+| Asset/material | — | |
+| Responsive craft | — | |
+| **Taste total** | **— /25** | |
+
+Verdict: —

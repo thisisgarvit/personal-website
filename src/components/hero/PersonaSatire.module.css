@@ -79,6 +79,23 @@
   color: var(--color-on-release);
 }
 
+/* Gate D3 correction 1 (880–1179px): the tray honors the same 21.5rem
+   dock reservation as the hero copy (plus its own left offset), so the
+   persona strip can never enter the dock rectangle when a short viewport
+   raises the bottom-anchored dock. Buttons keep their 44px targets and
+   type size; labels wrap inside their cells when the tray narrows. */
+@media (max-width: 1179.98px) and (min-width: 880px) {
+  .tray {
+    width: min(44rem, calc(100% - 21.5rem - clamp(2.5rem, 5vw, 5rem)));
+  }
+
+  .choices button {
+    padding-inline: var(--space-2);
+    white-space: normal;
+    line-height: 1.12;
+  }
+}
+
 @media (max-width: 619.98px) {
   .tray {
     top: var(--space-3);

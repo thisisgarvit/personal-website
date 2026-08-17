@@ -330,9 +330,9 @@
     "errors": []
   },
   "vitals": {
-    "lcpMs": 68,
+    "lcpMs": 40,
     "cls": 0.0001,
-    "inpMsWorst": 104,
+    "inpMsWorst": 96,
     "interactionCount": 5,
     "ceilings": {
       "lcpMs": 2500,

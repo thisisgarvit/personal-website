@@ -106,15 +106,37 @@
   color: var(--color-canvas);
 }
 
+/* Gate D3 correction 1 (880–1179px): the copy column reserves the dock's
+   rectangle — 18.5rem dock + 1.5rem right offset + 1.5rem clearance — so
+   headline, intro, and the CTA group can never share pixels with the
+   expanded feature-flag dock at any viewport height. */
+@media (max-width: 1179.98px) and (min-width: 880px) {
+  .copy {
+    width: min(calc(100% - 21.5rem), 58rem);
+    /* The wrapped headline occupies more height — reserve the persona
+       tray's overlay band so the copy block can never rise beneath it. */
+    padding-top: 16rem;
+    padding-bottom: 8rem;
+  }
+}
+
 @media (max-width: 879.98px) {
   .hero {
     min-height: 46rem;
   }
 
+  /* Gate D3 correction 1 (620–879px): the dock recomposes in flow below
+     the hero (page shell), so the copy no longer reserves 12rem of
+     bottom padding for a floating panel. Type and target sizes are
+     untouched. */
   .copy {
     width: 76%;
     padding-inline: var(--space-8);
-    padding-bottom: 12rem;
+    /* Reserve the persona tray's overlay band above the copy (the
+       centered block otherwise rises beneath the tray) and keep a
+       moderate bottom margin now that the dock lives below the hero. */
+    padding-top: 16rem;
+    padding-bottom: 6rem;
   }
 }
 

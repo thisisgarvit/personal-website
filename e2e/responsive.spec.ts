@@ -163,6 +163,126 @@ for (const viewport of mobileViewports) {
 }
 
 /**
+ * Gate D3 correction 1 — the feature-flag dock must NEVER intersect the
+ * hero headline, intro, CTA group, or the persona tray. 880–1179px
+ * reserves the dock's column for the copy measure; 620–879px recomposes
+ * the dock in flow below the hero. Bounding-box (getBoundingClientRect)
+ * non-intersection assertions at both failing matrix widths.
+ */
+for (const viewport of [
+  { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
+] as const) {
+  test(`feature-flag dock never intersects hero copy at ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await expect(page.locator("[data-persona-satire]")).toBeVisible();
+
+    const rects = await page.evaluate(() => {
+      const measure = (selector: string) => {
+        const element = document.querySelector(selector);
+        if (!element) return null;
+        const { left, top, right, bottom } = element.getBoundingClientRect();
+        return { left, top, right, bottom };
+      };
+      return {
+        dock: measure("[data-world-dock]"),
+        headline: measure("#hero-title"),
+        intro: measure('[class*="Hero_intro__"], [class*="Hero_intro"]'),
+        ctaGroup: measure('[class*="Hero_actions__"], [class*="Hero_actions"]'),
+        persona: measure("[data-persona-satire]"),
+      };
+    });
+
+    expect(rects.dock, "dock rect").not.toBeNull();
+    for (const [label, rect] of [
+      ["hero headline", rects.headline],
+      ["hero intro", rects.intro],
+      ["hero CTA group", rects.ctaGroup],
+      ["persona tray", rects.persona],
+    ] as const) {
+      expect(rect, label).not.toBeNull();
+      const overlapX =
+        Math.min(rects.dock!.right, rect!.right) -
+        Math.max(rects.dock!.left, rect!.left);
+      const overlapY =
+        Math.min(rects.dock!.bottom, rect!.bottom) -
+        Math.max(rects.dock!.top, rect!.top);
+      const intersects = overlapX > 0 && overlapY > 0;
+      expect(
+        intersects,
+        `${label} must not enter the dock rectangle (overlap ${overlapX.toFixed(
+          1,
+        )}x${overlapY.toFixed(1)})`,
+      ).toBe(false);
+    }
+
+    // The persona tray is the hero's other overlay — the recomposed copy
+    // must clear it too (the wrapped headline used to rise beneath it).
+    for (const [label, rect] of [
+      ["hero headline", rects.headline],
+      ["hero intro", rects.intro],
+      ["hero CTA group", rects.ctaGroup],
+    ] as const) {
+      const overlapX =
+        Math.min(rects.persona!.right, rect!.right) -
+        Math.max(rects.persona!.left, rect!.left);
+      const overlapY =
+        Math.min(rects.persona!.bottom, rect!.bottom) -
+        Math.max(rects.persona!.top, rect!.top);
+      expect(
+        overlapX > 0 && overlapY > 0,
+        `${label} must not sit beneath the persona tray`,
+      ).toBe(false);
+    }
+  });
+}
+
+/**
+ * Gate D3 correction 3 — at 200% text the next-column peek must yield so
+ * the active board column keeps a readable measure (no type or target
+ * reduction). Tabs and previous/next controls remain the discovery
+ * affordance and stay functional.
+ */
+for (const viewport of mobileViewports) {
+  test(`200% text keeps a readable active board column at ${viewport.width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await page.addStyleTag({ content: "html { font-size: 32px !important; }" });
+    await page.locator("#work-board").scrollIntoViewIfNeeded();
+
+    const measure = await page.evaluate(() => {
+      const board = document.querySelector("[data-board]")!;
+      const column = board.querySelector("[data-column]")!;
+      return {
+        port: board.clientWidth,
+        column: column.getBoundingClientRect().width,
+      };
+    });
+    // Adequate readable measure: the active column takes (at least) the
+    // full scroll port — the peek is suppressed to ≤2px — and never
+    // becomes a narrow strip.
+    expect(measure.column).toBeGreaterThanOrEqual(176);
+    expect(measure.column).toBeGreaterThanOrEqual(measure.port - 2);
+
+    // Explicit discovery controls are preserved and functional.
+    await expect(
+      page.getByRole("tablist", { name: "Board columns" }),
+    ).toBeVisible();
+    const position = page.locator("[data-board-position]");
+    await expect(position).toHaveText("1 of 3");
+    await page.getByRole("button", { name: "Next column" }).click();
+    await expect(position).toHaveText("2 of 3");
+    await page.getByRole("button", { name: "Previous column" }).click();
+    await expect(position).toHaveText("1 of 3");
+  });
+}
+
+/**
  * Gate D3 — entering /#work-board must land "Things I've built" below
  * the sticky product chrome at every matrix width (mobile regression:
  * the heading used to sit beneath the chrome).

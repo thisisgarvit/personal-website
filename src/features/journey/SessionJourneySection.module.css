@@ -4,9 +4,9 @@
   margin-bottom: clamp(3rem, 6vw, 5rem);
   padding: clamp(2rem, 4vw, 3rem);
   color: var(--color-ink);
-  background:
-    radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--color-context) 16%, transparent), transparent 34%),
-    var(--material-panel);
+  /* Gate D3 correction 2: the radial context wash violated the DESIGN.md
+     no-gradient rule — the section sits on the solid panel material. */
+  background: var(--material-panel);
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-panel, var(--shadow-lift));
 }
@@ -206,13 +206,27 @@
 .sessionBar {
   bottom: 0;
   height: 9px;
-  background: linear-gradient(90deg, var(--color-release), color-mix(in srgb, var(--color-release) 70%, var(--color-merge)));
+  /* Gate D3 correction 2: solid semantic release fill — the gradient bar
+     fills violated the DESIGN.md no-gradient rule. */
+  background: var(--color-release);
   box-shadow: 0 -3px 12px color-mix(in srgb, var(--color-release) 20%, transparent);
   transition: width 520ms cubic-bezier(0.2, 0.9, 0.24, 1.08);
 }
 
-.stage[data-current="true"] .sessionBar {
-  background: linear-gradient(90deg, var(--color-release), var(--color-merge));
+/* Current stage: a small semantic endpoint marker (the design lead's
+   listed option chosen for consistency — it reuses the .liveState merge
+   dot vocabulary as a "live playhead" at the bar's leading edge). */
+.stage[data-current="true"] .sessionBar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--color-merge);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-merge) 28%, transparent);
 }
 
 .benchmark {

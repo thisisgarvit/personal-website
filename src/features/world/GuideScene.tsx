@@ -10,8 +10,10 @@ import {
 } from "@react-three/fiber";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
 import {
+  Box3,
   Euler,
   Group,
+  Matrix4,
   Mesh,
   Quaternion,
   Vector3,
@@ -313,6 +315,7 @@ function Character({
   });
   const idleTimer = useRef<number | null>(null);
   const diagnosticFrame = useRef(0);
+  const evidenceLocalBounds = useRef<Box3 | null>(null);
   const { camera, gl, invalidate } = useThree();
   const diagnosticCanvas = useRef(gl.domElement);
   const diagnosticInfo = useRef(gl.info);
@@ -568,6 +571,51 @@ function Character({
       ]
         .map((value) => value.toFixed(4))
         .join(",");
+    }
+
+    /* Gate D3 correction 4 — QA evidence opt-in. Inert on every normal
+       visit (a single dataset string check per frame); when the capture
+       or e2e harness sets `<html data-world-evidence="1">`, the guide's
+       projected screen bounds are published on the canvas so bounding-box
+       non-coverage assertions can run against the PUBLIC production
+       homepage. No tuning value is read or written here. */
+    if (document.documentElement.dataset.worldEvidence === "1" && group) {
+      if (evidenceLocalBounds.current === null) {
+        group.updateWorldMatrix(true, true);
+        const worldBounds = new Box3().setFromObject(figure);
+        evidenceLocalBounds.current = worldBounds.applyMatrix4(
+          new Matrix4().copy(group.matrixWorld).invert(),
+        );
+      }
+      group.updateWorldMatrix(true, false);
+      const local = evidenceLocalBounds.current;
+      let minX = Number.POSITIVE_INFINITY;
+      let minY = Number.POSITIVE_INFINITY;
+      let maxX = Number.NEGATIVE_INFINITY;
+      let maxY = Number.NEGATIVE_INFINITY;
+      const corner = new Vector3();
+      for (let index = 0; index < 8; index += 1) {
+        corner
+          .set(
+            index & 1 ? local.max.x : local.min.x,
+            index & 2 ? local.max.y : local.min.y,
+            index & 4 ? local.max.z : local.min.z,
+          )
+          .applyMatrix4(group.matrixWorld)
+          .project(camera);
+        const x = ((corner.x + 1) / 2) * state.size.width;
+        const y = ((1 - corner.y) / 2) * state.size.height;
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      }
+      const canvas = diagnosticCanvas.current;
+      canvas.dataset.guideScreenBounds = [minX, minY, maxX - minX, maxY - minY]
+        .map((value) => value.toFixed(1))
+        .join(",");
+      canvas.dataset.guideEvidenceScene = snapshot.activeScene;
+      canvas.dataset.guideEvidenceGesture = gesture;
     }
 
     if (!firstFrameSent.current) {
