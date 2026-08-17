@@ -24,15 +24,23 @@ async function loadPostHog(): Promise<PostHogClient | null> {
   const config = readConfig();
   if (!config) return null;
   if (clientPromise === null) {
-    clientPromise = import("posthog-js").then(({ default: posthog }) => {
-      posthog.init(config.token, {
-        api_host: config.host,
-        defaults: "2026-01-30",
-        capture_exceptions: true,
-        debug: process.env.NODE_ENV === "development",
+    clientPromise = import("posthog-js")
+      .then(({ default: posthog }) => {
+        posthog.init(config.token, {
+          api_host: config.host,
+          defaults: "2026-01-30",
+          capture_exceptions: true,
+          debug: process.env.NODE_ENV === "development",
+        });
+        return posthog;
+      })
+      .catch(() => {
+        // A navigation can abort the in-flight lazy chunk fetch. Analytics
+        // must never fail the page: swallow the rejection and drop the
+        // cached promise so a later call retries the import.
+        clientPromise = null;
+        return null;
       });
-      return posthog;
-    });
   }
   return clientPromise;
 }

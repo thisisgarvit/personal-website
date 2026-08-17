@@ -201,7 +201,47 @@ horizontal overflow, both CTAs + all four case links present in every capture.
 
 ## 7. Unresolved observations (non-blocking, for the design lead / codex)
 
-### 7.1 Firefox: unhandled rejection when navigation aborts the lazy PostHog chunk
+### 7.1 Firefox: unhandled rejection when navigation aborts the lazy PostHog chunk — RESOLVED
+
+**Resolution (2026-08-17, authorized Gate F preparation fix; design lead
+accepted the root cause below):** fixed in
+`fix: make lazy posthog chunk load non-fatal and retryable`.
+
+- **Root cause:** `src/lib/posthog-client.ts` cached
+  `import("posthog-js").then(...)` with no rejection handler. A client
+  navigation can abort the in-flight lazy chunk fetch; the rejected import
+  then escaped as an unhandled promise rejection from BOTH fire-and-forget
+  callers (`initializePostHog`'s `void loadPostHog()` and `capturePostHog`'s
+  `void loadPostHog().then(...)`) — surfaced by Firefox as
+  `pageerror: Loading chunk 340 failed`. The rejected promise also stayed
+  cached, so every later capture in the session silently chained onto it.
+- **Fix (smallest root-cause hardening, single site covering both paths):**
+  a `.catch` on the cached promise in `loadPostHog` that resolves to `null`
+  (captures no-op via the existing `posthog?.capture` guard) and resets
+  `clientPromise` to `null` so a later call retries the import. No new
+  captures, no whitelist change, no event-behavior change.
+- **TDD record:** two regression tests added to
+  `src/lib/posthog-client.test.ts` ("treats an aborted lazy chunk load as
+  non-fatal on both paths" — asserts zero `unhandledRejection` events with
+  both paths racing a rejecting import; "retries the lazy import after a
+  failed chunk load" — import rejects once then succeeds, second capture
+  must init and capture). At `682f320` both FAIL exactly as diagnosed
+  (2 unhandled `Loading chunk 340 failed.` rejections; retry times out,
+  capture never fires). Post-fix: 4/4 file, full suite 164/164 (was 162 + 2
+  new), typecheck and lint clean.
+- **Firefox re-run (fresh `.next-rc` prod build on :3199):** focused
+  harness mirroring the §3.1 firefox 390×844 matrix cell plus a
+  deterministic variant that stalls the lazy posthog chunk so the case
+  navigation is guaranteed to abort it mid-flight. Pre-fix build: 4×
+  `pageerror: Loading chunk 340 failed` (exact §7.1 error). Post-fix
+  build: **zero pageerrors in both variants** (chunk confirmed requested
+  and aborted), round trips OK. Full `--project=firefox` e2e: 120 passed /
+  3 skipped (the §2.1 engine skips) / 0 failed; `--project=chromium`:
+  123 passed / 0 failed. `check:budgets`: 11/11 PASS on the rebuilt dist
+  (homepage JS unchanged at 159.4KB gzip). `tsconfig.json` re-normalized
+  after the isolated build per §1.4.
+
+Original observation (for the record):
 
 Reproduced on Playwright Firefox at 390×844: clicking through to a case route
 while the lazy `posthog-js` chunk (webpack chunk 340) is in flight aborts the
