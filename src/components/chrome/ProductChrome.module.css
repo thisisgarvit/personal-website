@@ -24,9 +24,14 @@
 
 .productId {
   display: flex;
+  /* Gate D3 reflow: at 200% text on 320px the version affordance wraps
+     under the wordmark instead of pushing past the viewport. Each item
+     keeps its own single line via the inherited nowrap. */
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
   white-space: nowrap;
+  min-width: 0;
 }
 
 /* Build dot: merge = healthy build (DESIGN.md §3.1 --color-merge role). */

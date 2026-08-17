@@ -88,6 +88,9 @@
   min-height: 44px;
   margin-bottom: var(--space-2);
   display: flex;
+  /* Gate D3 reflow: at 200% text on 320px the replay affordance wraps
+     below the phase labels instead of extending past the viewport. */
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1);
   color: var(--color-muted);

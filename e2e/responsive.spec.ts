@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { siteConfig } from "./support";
 
 const viewports = [
   { width: 320, height: 720 },
@@ -9,15 +10,11 @@ const viewports = [
 ] as const;
 
 /**
- * 200% text-size reflow keeps its pre-D2 matrix: 320/430 at 200% expose
- * pre-existing chrome/journey overflows outside the board lane (reported
- * to the design lead; not a Gate D2 regression).
+ * Gate D3: 200% text size must reflow without horizontal overflow at the
+ * FULL width matrix — the pre-D2 320/430 exclusions are retired now that
+ * the chrome/strip/board-head/journey offenders wrap instead of clipping.
  */
-const reflowViewports = [
-  { width: 390, height: 844 },
-  { width: 768, height: 1024 },
-  { width: 1440, height: 900 },
-] as const;
+const reflowViewports = viewports;
 
 const mobileViewports = [
   { width: 320, height: 720 },
@@ -77,6 +74,138 @@ for (const viewport of reflowViewports) {
     expect(widths.scroll).toBeLessThanOrEqual(widths.client + 1);
   });
 }
+
+/**
+ * Gate D3 — the five 320px/200% overflow offenders must never regress:
+ * product-chrome id row, version affordance, experiment-strip copy,
+ * board head actions, and the journey title/live state. Per DESIGN.md §4
+ * the fix is reflow (wrapping) — locked type and target sizes stay.
+ */
+for (const viewport of mobileViewports) {
+  test(`chrome, strip, board head, and journey reflow at 200% text size at ${viewport.width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await page.addStyleTag({ content: "html { font-size: 32px !important; }" });
+
+    const width = await page.evaluate(
+      () => document.documentElement.clientWidth,
+    );
+    const inViewport = async (
+      locator: ReturnType<typeof page.locator>,
+      label: string,
+    ) => {
+      const box = await locator.boundingBox();
+      expect(box, label).not.toBeNull();
+      expect(box!.x, `${label} left edge`).toBeGreaterThanOrEqual(-1);
+      expect(box!.x + box!.width, `${label} right edge`).toBeLessThanOrEqual(
+        width + 1,
+      );
+    };
+
+    await inViewport(
+      page.locator('[class*="ProductChrome_productId"]'),
+      "product chrome id",
+    );
+    await inViewport(
+      page.getByRole("button", { name: `v${siteConfig.version}` }),
+      "version affordance",
+    );
+    await inViewport(
+      page.locator('[class*="ExperimentStrip_copy__"]'),
+      "experiment strip copy",
+    );
+    await inViewport(
+      page.locator('#work-board [class*="board_actions"]'),
+      "board head actions",
+    );
+
+    // The hero evolution replay affordance is in-flow hero content.
+    const replay = page.getByRole("button", { name: /Replay/ });
+    if ((await replay.count()) > 0 && (await replay.first().isVisible())) {
+      await inViewport(replay.first(), "hero evolution replay");
+    }
+
+    // Journey title and live state reflow inside their clipping section
+    // (the section hides overflow, so a plain scrollWidth check would
+    // miss a truncated heading).
+    const journeySection = page
+      .locator('[data-world-anchor="journey"] section')
+      .first();
+    const sectionBox = (await journeySection.boundingBox())!;
+    for (const [selector, label] of [
+      ['[class*="SessionJourneySection_title"]', "journey title"],
+      ['[class*="SessionJourneySection_liveState"]', "journey live state"],
+    ] as const) {
+      const box = await page.locator(selector).boundingBox();
+      expect(box, label).not.toBeNull();
+      expect(
+        box!.x + box!.width,
+        `${label} stays inside its section`,
+      ).toBeLessThanOrEqual(sectionBox.x + sectionBox.width + 1);
+    }
+
+    // The version popover itself must also reflow when opened.
+    await page.getByRole("button", { name: `v${siteConfig.version}` }).click();
+    const dialog = page.getByRole("dialog", { name: "Release notes" });
+    await expect(dialog).toBeVisible();
+    const dialogBox = (await dialog.boundingBox())!;
+    expect(dialogBox.x).toBeGreaterThanOrEqual(-1);
+    expect(dialogBox.x + dialogBox.width).toBeLessThanOrEqual(width + 1);
+
+    const widths = await page.evaluate(() => ({
+      client: document.documentElement.clientWidth,
+      scroll: document.documentElement.scrollWidth,
+    }));
+    expect(widths.scroll).toBeLessThanOrEqual(widths.client + 1);
+  });
+}
+
+/**
+ * Gate D3 — entering /#work-board must land "Things I've built" below
+ * the sticky product chrome at every matrix width (mobile regression:
+ * the heading used to sit beneath the chrome).
+ */
+for (const viewport of viewports) {
+  test(`#work-board anchor clears the sticky chrome at ${viewport.width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/#work-board");
+    await expect(page.locator("#board-title")).toBeVisible();
+    const gap = await page.evaluate(() => {
+      const chrome = document
+        .querySelector("body header")!
+        .getBoundingClientRect();
+      const title = document
+        .querySelector("#board-title")!
+        .getBoundingClientRect();
+      return title.top - chrome.bottom;
+    });
+    expect(gap).toBeGreaterThanOrEqual(8);
+  });
+}
+
+test("back-to-board navigation from a case route clears the chrome", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/work/stay-portal");
+  await page.getByRole("link", { name: "Back to board" }).click();
+  await expect(page).toHaveURL(/\/#work-board$/);
+  await expect(page.locator("#board-title")).toBeVisible();
+  const gap = await page.evaluate(() => {
+    const chrome = document
+      .querySelector("body header")!
+      .getBoundingClientRect();
+    const title = document
+      .querySelector("#board-title")!
+      .getBoundingClientRect();
+    return title.top - chrome.bottom;
+  });
+  expect(gap).toBeGreaterThanOrEqual(8);
+});
 
 test("primary homepage controls provide a 44px pointer target", async ({
   page,

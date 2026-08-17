@@ -21,7 +21,15 @@ import { tabUntil } from "./support";
 test.describe("case keyboard flow", () => {
   test("back-to-board is an early tab stop and works by keyboard", async ({
     page,
+    browserName,
   }) => {
+    // Same engine boundary as keyboard.spec.ts: Safari/WebKit Tab skips
+    // <a> elements by design (Option+Tab visits them). Link activation
+    // is covered on WebKit by the pointer traversal test below.
+    test.skip(
+      browserName === "webkit",
+      "Safari/WebKit Tab traversal skips links by design",
+    );
     await page.goto("/work/stay-portal");
     const back = page.getByRole("link", { name: /back to board/i });
     // Product chrome (version affordance) may precede it; keep the bound
@@ -34,7 +42,12 @@ test.describe("case keyboard flow", () => {
 
   test("focus order runs opening → prose → case navigation", async ({
     page,
+    browserName,
   }) => {
+    test.skip(
+      browserName === "webkit",
+      "Safari/WebKit Tab traversal skips links by design",
+    );
     await page.goto("/work/agentic-calendar");
     const back = page.getByRole("link", { name: /back to board/i });
     await tabUntil(page, back, 4, "Back to board");

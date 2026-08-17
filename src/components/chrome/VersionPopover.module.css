@@ -43,6 +43,9 @@
   left: 0;
   width: 320px;
   max-width: calc(100vw - 32px);
+  /* Gate D3: the trigger row is nowrap (product chrome); the panel body
+     must wrap normally or 200% text pushes notes past the viewport. */
+  white-space: normal;
   background: var(--material-overlay);
   border: 1px solid color-mix(in srgb, var(--color-rule) 72%, transparent);
   border-radius: var(--radius-panel);
@@ -101,6 +104,7 @@
 
 .head {
   display: flex;
+  flex-wrap: wrap; /* Gate D3: reflow at 200% text inside narrow panels */
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-3);
@@ -130,14 +134,27 @@
 
 .list li {
   display: grid;
+  /* Gate D3: minmax(0, 1fr) pins the note track to the panel width so
+     200% text wraps inside it instead of pushing past the viewport
+     (an auto track would hold the row's single-line min-content). */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-1);
+  min-width: 0;
 }
 
 .noteMeta {
   display: flex;
+  flex-wrap: wrap; /* Gate D3: reflow at 200% text inside narrow panels */
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-2);
+  /* Chromium computes a wrap-container's min-content single-line; keep
+     the note row from propagating that width into the panel track. */
+  min-width: 0;
+}
+
+.noteMeta > * {
+  min-width: 0;
 }
 
 /* Version/date in mono, candid sentence in Archivo (DESIGN.md §5.2). */

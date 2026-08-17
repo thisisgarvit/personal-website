@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { liveRegion, mascotIslandPresent } from "./support";
+import { liveRegion } from "./support";
 
 /**
  * Reduced-motion smoke (PRD §13 fallback matrix, §16).
@@ -91,15 +91,58 @@ test.describe("reduced motion", () => {
     await expect(dialog).toBeHidden();
   });
 
-  test("mascot falls back to a static poster", async ({ page }) => {
+  test("world falls back to one theme poster without scene requests", async ({
+    page,
+  }) => {
+    // Gate D3 (plan Task 8 Step 1): reduced motion must serve the
+    // camera-matched poster — no canvas, no Three scene chunk, no GLB,
+    // and exactly ONE theme poster transferred (single-theme parity).
+    const requests: string[] = [];
+    page.on("request", (request) => requests.push(request.url()));
+
     await page.goto("/");
-    test.skip(
-      !(await mascotIslandPresent(page)),
-      "mascot island (Task 8) not landed yet — poster fallback asserted once it ships",
+    await page.waitForLoadState("networkidle");
+    await page.mouse.wheel(0, 4000);
+    await page.waitForTimeout(600);
+
+    const world = page.locator("[data-experience-world]");
+    await expect(world).toHaveAttribute("data-world-fallback", "reduced-motion");
+    await expect(world.locator("[data-world-canvas]")).toHaveCount(0);
+    await expect(world.locator("canvas")).toHaveCount(0);
+    await expect(world.locator("[data-world-poster]")).toHaveCSS("opacity", "1");
+
+    expect(
+      requests.filter((url) => /\/models\/guide\/guide\.glb/i.test(url)),
+    ).toEqual([]);
+    const posterRequests = requests.filter((url) =>
+      /\/images\/world\/guide-(light|dark)\.webp/i.test(url),
     );
-    // Reduced motion must not render a live WebGL canvas (PRD §13).
-    await expect(
-      page.locator("[data-mascot-slot] canvas"),
-    ).toHaveCount(0);
+    expect(posterRequests).toHaveLength(1);
+    expect(posterRequests[0]).toContain("guide-light");
+
+    // Paint parity: the fixed world stage must sit BENEATH every
+    // foreground surface — the poster used to veil the experiment strip
+    // and footer (Gate D3 regression fix).
+    const layers = await page.evaluate(() => {
+      const stackLevel = (element: Element | null) => {
+        if (!element) return null;
+        const style = getComputedStyle(element);
+        return style.position === "static"
+          ? -1
+          : Number(style.zIndex) || 0;
+      };
+      return {
+        stage: stackLevel(
+          document.querySelector("[data-experience-world]"),
+        ),
+        strip: stackLevel(
+          document.querySelector('[aria-label="Experiment status"]'),
+        ),
+        footer: stackLevel(document.querySelector("footer")),
+      };
+    });
+    expect(layers.stage).not.toBeNull();
+    expect(layers.strip!).toBeGreaterThan(layers.stage!);
+    expect(layers.footer!).toBeGreaterThan(layers.stage!);
   });
 });

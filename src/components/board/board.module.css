@@ -8,10 +8,18 @@
   border-radius: var(--radius-panel);
   padding: clamp(2rem, 4vw, 3rem); /* 32–48px (§5.7) */
   box-shadow: var(--shadow-panel), inset 0 1px 0 var(--material-highlight);
+  /* Gate D3: /#work-board must land "Things I've built" below the sticky
+     chrome (52–56px tall, taller when its rows wrap at 200% text size).
+     rem-based so the offset grows with text size, as the chrome does. */
+  scroll-margin-top: 4.5rem;
 }
 
 .head {
   display: flex;
+  /* Gate D3 reflow: at 200% text on 320px the actions row wraps below
+     the title instead of clipping past the panel edge (DESIGN.md §4
+     "reflow first"). No wrap occurs at authored sizes. */
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-4);

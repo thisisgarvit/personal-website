@@ -320,7 +320,14 @@ test.describe("immersive world prototype", () => {
 
   test("remains usable with keyboard-only navigation at 200% page scale", async ({
     page,
+    browserName,
   }) => {
+    // Page-scale emulation is a CDP capability; WebKit link traversal is
+    // additionally Option+Tab by design (see keyboard.spec.ts).
+    test.skip(
+      browserName !== "chromium",
+      "CDP page-scale emulation is chromium-only",
+    );
     await openLiveWorld(page);
     const session = await page.context().newCDPSession(page);
     await session.send("Emulation.setPageScaleFactor", { pageScaleFactor: 2 });
@@ -353,6 +360,14 @@ test.describe("immersive world prototype", () => {
     page.on("console", (message) => {
       if (message.type() === "error") errors.push(`console: ${message.text()}`);
     });
+    const requests: string[] = [];
+    const posthogBodies: string[] = [];
+    page.on("request", (request) => {
+      requests.push(request.url());
+      if (/posthog/i.test(request.url())) {
+        posthogBodies.push(request.postData() ?? "");
+      }
+    });
     await installHighMemory(page);
     await page.goto("/");
     await page.evaluate(() => window.dispatchEvent(new Event("scroll")));
@@ -363,6 +378,10 @@ test.describe("immersive world prototype", () => {
       .poll(() => world.getAttribute("data-scene-ready"), { timeout: 20_000 })
       .toBe("true");
     await expect(canvas).toHaveCSS("pointer-events", "none");
+    // Capable client: exactly ONE GLB transfer (plan Task 8 Step 1).
+    expect(
+      requests.filter((url) => MODEL_REQUEST.test(url)),
+    ).toHaveLength(1);
 
     // Maxie stays in its own column: pure drag lifecycle, no incident or
     // shipped side-effect.
@@ -390,11 +409,23 @@ test.describe("immersive world prototype", () => {
     );
     await expect(page.locator("[data-world-canvas] canvas")).toHaveCount(1);
     expect(errors).toEqual([]);
+
+    // World/guide/board/funnel activity must never become PostHog custom
+    // events (plan Task 8 Step 1; analytics whitelist is the unit-level
+    // authority — this asserts the wire): no world-shaped event name in
+    // any readable PostHog payload from this full scroll + drag session.
+    const forbidden = /world_scene|guide_reaction|journey_stage|board_position/;
+    expect(posthogBodies.filter((body) => forbidden.test(body))).toEqual([]);
   });
 
   test("keeps core content operable in forced colors and reduced transparency", async ({
     page,
+    browserName,
   }) => {
+    test.skip(
+      browserName !== "chromium",
+      "CDP media-feature emulation is chromium-only",
+    );
     await installHighMemory(page);
     const session = await page.context().newCDPSession(page);
     await session.send("Emulation.setEmulatedMedia", {

@@ -4,6 +4,10 @@
   border-top: var(--rule);
   background: var(--material-panel-soft);
   margin-top: clamp(4rem, 8vw, 6rem); /* hero/board rhythm band (§3.3/§4) */
+  /* Gate D3: foreground DOM sits above the fixed world stage (z 2) —
+     without this the fallback poster paints over the footer. */
+  position: relative;
+  z-index: 3;
 }
 
 .links a,

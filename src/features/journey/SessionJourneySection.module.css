@@ -29,12 +29,22 @@
   margin-bottom: var(--space-8);
 }
 
+/* Gate D3 reflow: without min-width:0 the title block holds its
+   min-content width ("instrumented." ≈ 13ch) and the section's hidden
+   overflow truncates it at 200% text on 320–430px. */
+.header > div {
+  min-width: 0;
+}
+
 .title {
   max-width: 12ch;
   scroll-margin-top: 76px;
   margin: 0;
   font: 700 var(--type-section) var(--font-archivo), system-ui, sans-serif;
   letter-spacing: var(--track-section);
+  /* Breaks only when a word exceeds the shrunken 200%-text container;
+     never triggers at authored sizes (the word fits 12ch). */
+  overflow-wrap: break-word;
 }
 
 .disclosure {
@@ -56,7 +66,9 @@
   color: var(--color-canvas);
   font: 500 var(--type-product) var(--font-plex-mono), monospace;
   letter-spacing: var(--track-product);
-  white-space: nowrap;
+  /* Gate D3: single line at authored sizes; wraps instead of clipping
+     against the section's hidden overflow at 200% text on 320px. */
+  min-width: 0;
 }
 
 .liveState i {
@@ -122,6 +134,7 @@
 
 .stageMeta {
   display: flex;
+  flex-wrap: wrap; /* Gate D3: percentages reflow under labels at 200% */
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-4);
@@ -130,8 +143,10 @@
 
 .stageMeta > span {
   display: flex;
+  flex-wrap: wrap; /* Gate D3: long stage labels reflow at 200% text */
   align-items: baseline;
   gap: var(--space-3);
+  min-width: 0;
 }
 
 .stageMeta i,
@@ -151,11 +166,14 @@
 .stageMeta b {
   font-size: 1rem;
   letter-spacing: var(--track-lead);
+  min-width: 0;
+  overflow-wrap: anywhere; /* Gate D3: only breaks in 200%-text shells */
 }
 
 .stageMeta strong {
   color: var(--color-ink);
-  white-space: nowrap;
+  /* Gate D3: nowrap removed — "100% step-over-step" clipped against the
+     section's hidden overflow at 200% text; it wraps only when needed. */
 }
 
 .stageMeta strong small {
@@ -233,6 +251,7 @@
   color: var(--color-muted);
   font: 500 var(--type-product) var(--font-plex-mono), monospace;
   letter-spacing: var(--track-product);
+  overflow-wrap: anywhere; /* Gate D3: only breaks in 200%-text shells */
 }
 
 .readout dd {

@@ -11,8 +11,9 @@
  *    them) and excluding any lazy chunk (lazy chunks are not referenced
  *    from the HTML at all, so exclusion is structural).
  *  - Lazy R3F/Three vendor chunk = chunks carrying three.js signatures
- *    that are NOT referenced by any route HTML. SKIPPED while Task 8
- *    (mascot) has not landed. If a three chunk ever appears in initial
+ *    that are NOT referenced by any route HTML. Gate D3: world assets are
+ *    fully enforced — an absent three chunk, scene module, poster, or GLB
+ *    is a FAIL, never a SKIP. If a three chunk ever appears in initial
  *    HTML, that is an immediate failure (R3F must be lazy, PRD §14).
  *  - Guide posters ≤90KB each and production GLB ≤1.8MB.
  *  - Guide scene module ≤25KB gzip, located by its stable model URL.

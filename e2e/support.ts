@@ -49,14 +49,3 @@ export async function tabUntil(
     `Tab order: "${label}" was not reached within ${maxTabs} tab presses`,
   );
 }
-
-/**
- * True when the Task 8 mascot island has landed inside the reserved
- * stage. Mascot-dependent assertions must skip (not fail) while another
- * builder is still working in src/features/mascot/** (Task 9 brief).
- */
-export async function mascotIslandPresent(page: Page): Promise<boolean> {
-  const stage = page.locator("[data-mascot-slot]");
-  if ((await stage.count()) === 0) return false;
-  return (await stage.locator("canvas, svg, img").count()) > 0;
-}
