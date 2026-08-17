@@ -1,16 +1,27 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { cleanup, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { workItems } from "@/data/work";
 import { WorldPrototype } from "./WorldPrototype";
 
 describe("WorldPrototype", () => {
+  let reducedMotion = false;
+
   beforeEach(() => {
+    reducedMotion = false;
     Object.defineProperty(window, "matchMedia", {
       configurable: true,
       value: vi.fn((query: string) => ({
-        matches: false,
+        matches: query.includes("prefers-reduced-motion")
+          ? reducedMotion
+          : false,
         media: query,
         onchange: null,
         addEventListener: vi.fn(),
@@ -24,15 +35,34 @@ describe("WorldPrototype", () => {
 
   afterEach(() => cleanup());
 
-  it("locks the static Scene 1 composition contract", () => {
+  it("locks the world stage, semantic anchors, and real portfolio controls", () => {
     const { container } = render(<WorldPrototype />);
     const prototype = container.querySelector("[data-world-prototype]");
 
     expect(prototype).not.toBeNull();
     expect(prototype?.querySelector("[data-world-copy]")).not.toBeNull();
-    expect(prototype?.querySelector("[data-world-guide]")).not.toBeNull();
+    expect(
+      prototype?.querySelectorAll("[data-experience-world]"),
+    ).toHaveLength(1);
     expect(prototype?.querySelector("[data-world-dock]")).not.toBeNull();
     expect(prototype?.querySelector("[data-board-entry]")).not.toBeNull();
+
+    const world = prototype?.querySelector(
+      "[data-experience-world]",
+    ) as HTMLElement;
+    expect(world.getAttribute("aria-hidden")).toBe("true");
+    expect(world.dataset.sceneReady).toBe("false");
+    expect(world.dataset.worldFallback).toBe("none");
+    expect(world.querySelector("[data-world-poster]")).not.toBeNull();
+
+    const anchors = Array.from(
+      prototype?.querySelectorAll<HTMLElement>("[data-world-anchor]") ?? [],
+      (anchor) => anchor.dataset.worldAnchor,
+    );
+    expect(anchors).toEqual(["hero", "board", "journey"]);
+
+    const main = screen.getByRole("main");
+    expect(main.querySelectorAll("section section")).toHaveLength(0);
 
     const board = prototype?.querySelector("[data-board-entry]");
     const dock = prototype?.querySelector("[data-world-dock]");
@@ -54,25 +84,63 @@ describe("WorldPrototype", () => {
     });
     expect(workLink.getAttribute("href")).toBe(workItems[0].route);
 
-    const poster = container.querySelector(
-      '[data-world-guide] img[alt=""][aria-hidden="true"]',
-    );
+    const poster = world.querySelector('img[alt=""]');
     expect(poster?.getAttribute("src")).toContain(
-      "/images/world/prototype-guide.webp",
+      "/images/world/guide-light.webp",
     );
 
-    expect(container.querySelector("canvas")).toBeNull();
+    const boardControls = screen.getByLabelText("Board scene test controls");
+    const journeyControls = screen.getByLabelText(
+      "Journey scene test controls",
+    );
+    expect(boardControls.querySelectorAll("button")).toHaveLength(4);
+    expect(journeyControls.querySelectorAll("button")).toHaveLength(2);
+
+    for (const name of [
+      "Start ticket drag",
+      "End ticket drag",
+      "Trigger incident",
+      "Resolve incident",
+      "Reach journey milestone",
+      "Ship ticket",
+    ]) {
+      fireEvent.click(screen.getByRole("button", { name }));
+    }
+    expect(container.querySelectorAll("[data-experience-world]")).toHaveLength(
+      1,
+    );
   });
 
-  it("keeps the isolated static prototype free of Three and dynamic imports", () => {
-    const source = readFileSync(
-      resolve(process.cwd(), "src/app/dev/world/WorldPrototype.tsx"),
+  it("keeps the matching poster for fallback and the canvas input-transparent", async () => {
+    reducedMotion = true;
+    const { container } = render(<WorldPrototype />);
+    const world = container.querySelector(
+      "[data-experience-world]",
+    ) as HTMLElement;
+
+    await waitFor(() =>
+      expect(world.dataset.worldFallback).toBe("reduced-motion"),
+    );
+    expect(world.dataset.sceneReady).toBe("false");
+    expect(world.querySelector("[data-world-poster]")).not.toBeNull();
+    expect(world.querySelector("canvas")).toBeNull();
+
+    const canvasSource = readFileSync(
+      resolve(process.cwd(), "src/features/world/WorldCanvas.tsx"),
+      "utf8",
+    );
+    const worldCss = readFileSync(
+      resolve(process.cwd(), "src/features/world/world.module.css"),
       "utf8",
     );
 
-    expect(source).not.toMatch(/@react-three\/fiber|three|next\/dynamic/);
-    expect(source).not.toContain("<Canvas");
-    expect(source).toContain("siteConfig.hero");
+    expect(canvasSource).toMatch(
+      /<Canvas[\s\S]*?data-world-canvas[\s\S]*?aria-hidden="true"/,
+    );
+    expect(worldCss).toMatch(/\.stage\s*\{[\s\S]*?pointer-events:\s*none/);
+    expect(worldCss).toMatch(
+      /\.poster,\s*\n\.canvasLayer\s*\{[\s\S]*?pointer-events:\s*none/,
+    );
   });
 
   it("keeps every persona choice inside the narrow-screen tray", () => {
@@ -82,7 +150,7 @@ describe("WorldPrototype", () => {
     );
 
     expect(css).toMatch(
-      /@media \(max-width: 619\.98px\)[\s\S]*?\.personaChoices\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+      /@media \(max-width: 619\.98px\)[\s\S]*?\.personaChoices\s*\{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/,
     );
     expect(css).toMatch(
       /@media \(max-width: 619\.98px\)[\s\S]*?\.personaSatire\s*\{[\s\S]*?right:\s*var\(--space-3\)[\s\S]*?width:\s*auto/,
