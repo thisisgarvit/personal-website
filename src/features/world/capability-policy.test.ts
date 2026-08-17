@@ -45,4 +45,16 @@ describe("persistent world capability policy", () => {
       }),
     ).toBe("reduced-motion");
   });
+
+  it("treats WebGL context-creation impossibility as renderer failure", () => {
+    // Gate C finding: --disable-webgl left a dead canvas mounted and still
+    // downloaded the GLB because creation failure was invisible to policy.
+    expect(getWorldFallback({ ...capable, webglUnavailable: true })).toBe(
+      "renderer-failure",
+    );
+  });
+
+  it("does not fall back when the WebGL probe succeeds", () => {
+    expect(getWorldFallback({ ...capable, webglUnavailable: false })).toBeNull();
+  });
 });

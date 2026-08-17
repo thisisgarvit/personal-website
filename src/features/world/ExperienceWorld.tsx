@@ -13,7 +13,11 @@ import {
   EFFECTS_DISABLED_DATASET_VALUE,
   EFFECTS_POLICY_EVENT,
 } from "@/features/flags/effects-policy";
-import { getWorldFallback, type WorldFallbackReason } from "./capability-policy";
+import {
+  getWorldFallback,
+  probeWebGlSupport,
+  type WorldFallbackReason,
+} from "./capability-policy";
 import type { WorldCanvasProps } from "./WorldCanvas";
 import { useWorldDirector, useWorldSnapshot } from "./WorldProvider";
 import styles from "./world.module.css";
@@ -61,6 +65,7 @@ function useWorldCapability(rendererFailed: boolean) {
           document.documentElement.dataset.effectsDisabled ===
           EFFECTS_DISABLED_DATASET_VALUE,
         rendererFailed,
+        webglUnavailable: !probeWebGlSupport(),
       });
       setPolicy((current) =>
         current.checked && current.fallback === fallback
