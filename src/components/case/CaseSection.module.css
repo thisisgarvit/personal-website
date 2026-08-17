@@ -1,0 +1,80 @@
+/* Decision / constraint / outcome reading treatments (Gate E).
+   Rules, type, and restrained accent color only — no backgrounds, no
+   radius, no repeated rounded-card stack (DESIGN.md §5.10). The three
+   treatments must read differently at a glance:
+
+   decision   — a committed call: strong release-blue left rule.
+   constraint — an operating boundary: hairline top+bottom rules, muted.
+   outcome    — what actually resulted: heavy ink top rule, merge tick. */
+
+.section {
+  margin: var(--space-24) 0 var(--space-12);
+}
+
+.section .eyebrow {
+  margin: 0 0 var(--space-2);
+  font: 600 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+}
+
+/* Specificity bump over `.body h2` in CaseShell.module.css — the section
+   owns its own heading rhythm. */
+.section .heading {
+  margin: 0 0 var(--space-4);
+  font: 700 var(--type-card-title) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-card-title);
+}
+
+.section > :last-child {
+  margin-bottom: 0;
+}
+
+/* decision — committed call */
+.decision {
+  border-left: 3px solid var(--color-release);
+  padding-left: var(--space-6);
+}
+
+.decision .eyebrow {
+  color: var(--color-release);
+}
+
+/* constraint — operating boundary */
+.constraint {
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+  padding: var(--space-6) 0;
+}
+
+.constraint .eyebrow {
+  color: var(--color-muted);
+}
+
+.constraint .eyebrow::before {
+  content: "[ ";
+}
+
+.constraint .eyebrow::after {
+  content: " ]";
+}
+
+/* outcome — measured result */
+.outcome {
+  border-top: 3px solid var(--color-ink);
+  padding-top: var(--space-6);
+}
+
+.outcome .eyebrow {
+  color: var(--color-ink);
+}
+
+.outcome .eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  margin-right: var(--space-2);
+  background: var(--color-merge);
+  border: 1px solid var(--color-ink);
+}

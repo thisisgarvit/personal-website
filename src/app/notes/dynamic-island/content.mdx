@@ -1,7 +1,11 @@
 {/* Source of truth: content-source/one-delightful-product-experience.md
     (faithful Notion conversion). Every claim below traces to that file.
     Per PRD §8: no implication of employment at or inside knowledge of
-    Apple — this is explicitly an outside read. */}
+    Apple — this is explicitly an outside read.
+    Gate E: decision/constraint/outcome sections use CaseSection
+    treatments; the authored continuity diagram lives in page.tsx. */}
+
+import { CaseSection } from "@/components/case/CaseSection";
 
 What made Dynamic Island genuinely delightful — a teardown of the
 interaction, the trade-offs that likely produced it, and the organizational
@@ -37,7 +41,7 @@ sophisticated. Unlike a notification shade or status bar that reads as a UI
 overlay, it feels like a living part of the hardware itself. It
 communicates in tasteful motion, without shouting.
 
-## The bet, read from outside
+<CaseSection treatment="decision" title="The bet, read from outside">
 
 The philosophy looks like seamless continuity of information and control: a
 surface that is more than a notification but less than a multitasking
@@ -51,7 +55,9 @@ bezels and building under-display cameras to market the fully immersive
 screen, Apple deliberately sacrificed that screen area — the very thing
 everyone else was selling — to buy continuity and status feedback instead.
 
-## User impact
+</CaseSection>
+
+<CaseSection treatment="outcome" title="User impact">
 
 The functions existed before, but they were never a *feature* until Apple
 made them one. Users got solutions to problems they had never named — the
@@ -60,7 +66,9 @@ experience that reads as premium. That is the kind of move that turns a
 constraint into a signature and rents space in people's affection for the
 brand.
 
-## Execution challenge
+</CaseSection>
+
+<CaseSection treatment="constraint" title="Execution challenge">
 
 The technical trap is scope: without discipline, the island decays into
 just another multitasking window — useful, but no longer delightful. That
@@ -72,3 +80,5 @@ notch look pretty." The real complexity isn't technical. It takes
 leadership willing to take that bet, and a team culture that obsesses over
 animation details most users will never consciously notice — but will
 absolutely feel.
+
+</CaseSection>

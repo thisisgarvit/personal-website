@@ -1,18 +1,19 @@
 {/* Source of truth: content-source/ai-browser-maxie.md (faithful Notion
     conversion). Every factual claim below traces to that file. Per PRD §8:
     this is Garvit's concept, not protected IP — the source's stronger
-    ownership phrasing is deliberately not reproduced. */}
+    ownership phrasing is deliberately not reproduced.
+    Gate E: the prototype figure moved to page.tsx (CaseOpening);
+    decision/constraint sections use CaseSection treatments. */}
 
-import { CaseFigure } from "@/components/case/CaseFigure";
+import { CaseSection } from "@/components/case/CaseSection";
 import styles from "@/components/case/CaseShell.module.css";
-import prototype from "./maxie-prototype.png";
 
 Maxie is a 0→1 concept for an AI browser built for active knowledge work —
 contextual memory, trainable agents, and an agent marketplace — rather than
 another chat sidebar. It exists as a full product spec and a clickable
 prototype; it was never built.
 
-## Problem
+<CaseSection treatment="constraint" title="Problem">
 
 Knowledge workers spend most of their working hours in a browser, yet the
 browser is still designed for passive consumption. Even the new AI browsers
@@ -31,13 +32,17 @@ surface. Three problems stay unsolved:
    people repeat daily — checking dashboards, updating spreadsheets,
    monitoring competitor pricing, generating reports.
 
-## The bet
+</CaseSection>
+
+<CaseSection treatment="decision" title="The bet">
 
 Treat the browser as a partner with the human in control: it remembers what
 you have learned, organizes information contextually, and automates
 repetitive workflows under your oversight. The sharper claim underneath:
 **agents will replace browser extensions.** Whoever owns the surface where
 agents are built, trained, and traded owns the next browser platform.
+
+</CaseSection>
 
 ## Assumptions
 
@@ -75,14 +80,7 @@ Three systems carry the concept:
    already visited. Agents can be linked: a summarizer chained to a mail
    agent sends a work summary to the right recipients when triggered.
 
-<CaseFigure
-  image={prototype}
-  alt="Maxie prototype: a browser window with a projects bar of research workspaces across the top, agent icons in a left sidebar, a start screen of project cards in the center, and a Daily Assistant chat panel on the right with proactive suggestions."
-  caption="The prototype: projects bar across the top, recruited agents on the left, main viewport in the center, assistant / browsing-tree panel on the right."
-  sizes="(max-width: 720px) 92vw, 640px"
-/>
-
-The clickable prototype is
+The clickable prototype — the screenshot this case opens on — is
 [available here](https://claude.ai/public/artifacts/8dab7fe9-602d-4307-b116-0b805c664b13).
 
 ## Provenance and human control

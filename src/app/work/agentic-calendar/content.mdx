@@ -1,5 +1,9 @@
 {/* Source of truth: content-source/agentic-calendar.md (faithful Notion
-    conversion). Every factual claim below traces to that file. */}
+    conversion). Every factual claim below traces to that file.
+    Gate E: decision/constraint sections use CaseSection treatments; the
+    opening artifact (authored system diagram) lives in page.tsx. */}
+
+import { CaseSection } from "@/components/case/CaseSection";
 
 A concept for an agentic layer that sits on top of the calendar tools you
 already use — one that understands your priorities, schedules proactively,
@@ -17,7 +21,7 @@ grid by hand. The scan of current players (Reclaim, FlowSavvy, Clockwise,
 Todoist, Motion, Toki, Codot, SkedPal, Notion Calendar) plus user-needs
 mining on Reddit and blogs shaped where an agent could genuinely differ.
 
-## The bet
+<CaseSection treatment="decision" title="The bet">
 
 Don't build another feature-heavy calendar app. Build an intelligent
 agentic layer that works with the tools people already run — Google
@@ -27,6 +31,8 @@ close-to-autonomous decision-making.
 There is a second, colder reason to ship a layer instead of an app: it
 collects real data on user behavior and problems first, so build effort
 stays pointed at things that will never go to waste.
+
+</CaseSection>
 
 ## The system
 
@@ -67,7 +73,7 @@ On that context, four capabilities:
    improvements based on your observed patterns — and autonomy never means
    losing the wheel.
 
-## Approval boundaries
+<CaseSection treatment="constraint" title="Approval boundaries">
 
 The line between "do it" and "ask me" is itself priority-aware: the agent
 is expected to know when an action needs approval and when it does not. The
@@ -75,6 +81,8 @@ prototype makes that boundary a first-class surface — an Actions tab
 listing every agent decision that needs sign-off, each with clear context
 and simple approve/decline buttons, keeping a deliberate balance between
 automation and user control.
+
+</CaseSection>
 
 ## Prototype walkthrough
 

@@ -1,10 +1,12 @@
 {/* Source of truth: airbnb-portal-case-study-raw.md (2026-07-17 codebase
     evaluation). Every factual claim below traces to that file. Screenshots
     are the PII-cleared demo set (open-questions-answers.md §6) — synthetic
-    guests and sequential fake mobile numbers, never production data. */}
+    guests and sequential fake mobile numbers, never production data.
+    Gate E: the day-view opening figure moved to page.tsx (CaseOpening);
+    decision/constraint/outcome sections use CaseSection treatments. */}
 
 import { CaseFigure, CaseFigureGrid } from "@/components/case/CaseFigure";
-import dayView from "./day-view.png";
+import { CaseSection } from "@/components/case/CaseSection";
 import bookingOverlap from "./booking-overlap.png";
 import availability from "./availability.png";
 import pending from "./pending.png";
@@ -15,7 +17,7 @@ Five apartments, rented by the full day, the half day, or the hour, run
 entirely from a phone. Stay Portal is the booking system that replaced the
 spreadsheet holding that operation together.
 
-## Situation
+<CaseSection treatment="constraint" title="Situation">
 
 The operation ran on a Google Sheets workbook — one tab per room, edited by
 hand. Bookings arrive from Airbnb, offline walk-ins, and referrals, and they
@@ -28,7 +30,9 @@ no at-a-glance view of what is happening today, pending payments nobody
 chased because nothing tracked them, and zero analytics. The people running
 it are non-technical and work from their phones.
 
-## The bet
+</CaseSection>
+
+<CaseSection treatment="decision" title="The bet">
 
 Build the smallest product that fixes those four failures, and make the
 expensive one — double-booking — structurally impossible rather than merely
@@ -37,15 +41,9 @@ where the operators already work. And do not ask anyone to abandon the
 spreadsheet: mirror the product's data back into a familiar workbook every
 night, so trusting the new system never requires giving up the old one.
 
-## The product
+</CaseSection>
 
-<CaseFigure
-  image={dayView}
-  alt="Stay Portal day view on a phone: each apartment listed with a 24-hour timeline bar and its bookings for Friday 17 July — guest name, hours, booking channel, amount, and payment due. All guests and numbers are synthetic demo data."
-  caption="Day view, the home screen: every room as a 24-hour timeline for any date, bookings color-coded by payment state, check-out and add-booking in place."
-  sizes="(max-width: 720px) 92vw, 640px"
-  priority
-/>
+## The product
 
 Day view is the signature screen because it answers the operator's actual
 question — what is happening today, across every room, right now — and it is
@@ -91,7 +89,7 @@ the one place the hourly-stay model becomes visible.
 The [live demo](https://airbnb-portal-demo.vercel.app) is a fully isolated
 deployment seeded with synthetic data — fictional guests, fake numbers.
 
-## Decisions and exclusions
+<CaseSection treatment="decision" title="Decisions and exclusions">
 
 - **Overlap prevention is layered, and the strongest layer is the deepest.**
   The database enforces an exclusion constraint on room + time range, so two
@@ -112,7 +110,9 @@ deployment seeded with synthetic data — fictional guests, fake numbers.
   every screenshot on this page use synthetic data instead. Showing the real
   thing was never on the table.
 
-## Evidence
+</CaseSection>
+
+<CaseSection treatment="outcome" title="Evidence">
 
 - 484 historical bookings imported from the old workbook across the five
   apartments — the product started with the operation's full history, not an
@@ -120,3 +120,5 @@ deployment seeded with synthetic data — fictional guests, fake numbers.
 - ₹0 per month in infrastructure to run.
 - The nightly Sheets mirror has a second job: it is the operation's daily
   backup.
+
+</CaseSection>

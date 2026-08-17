@@ -1,5 +1,6 @@
-/* Long-form case routes (DESIGN.md §5.10): 68ch reading column, major
-   spacing 96–160px, no generic rounded prose cards. */
+/* Long-form case routes (DESIGN.md §5.10): artifact-led opening (Gate E,
+   CaseOpening.module.css) → calm 68ch reading column, major spacing
+   96–160px, no generic rounded prose cards. */
 
 .main {
   padding: clamp(6rem, 10vw, 10rem) var(--space-4); /* 96–160px (§5.10) */
@@ -10,23 +11,8 @@
   margin-inline: auto;
 }
 
-/* Concept/Research/Shipped label stays visible near the title (§5.10). */
-.kind {
-  margin: 0 0 var(--space-3);
-  font: 500 var(--type-product) var(--font-plex-mono), monospace;
-  letter-spacing: var(--track-product);
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.title {
-  margin: 0;
-  font: 700 var(--type-section) var(--font-archivo), system-ui, sans-serif;
-  letter-spacing: var(--track-section);
-}
-
 .body {
-  margin-top: var(--space-8);
+  margin-top: var(--space-16);
   font: 400 var(--type-body) var(--font-archivo), system-ui, sans-serif;
   letter-spacing: var(--track-body);
 }
@@ -123,4 +109,62 @@
   border: var(--rule);
   vertical-align: top;
   min-width: 9rem;
+}
+
+/* Linear previous/next case navigation (Gate E) — null-ended, never
+   wraps. Hard top rule, mono directions, article-title emphasis. */
+.caseNav {
+  max-width: 68rem;
+  margin: var(--space-24) auto 0;
+  padding-top: var(--space-6);
+  border-top: var(--rule);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 24rem;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.navLink:hover .navTitle {
+  color: var(--color-release);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-control);
+}
+
+.navDirection {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.navTitle {
+  font: 600 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+}
+
+.navRight {
+  text-align: right;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+/* Null end of the line: a marker, not a wrapped link. */
+.navEnd {
+  align-self: center;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
 }

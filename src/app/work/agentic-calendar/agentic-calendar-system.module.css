@@ -1,0 +1,118 @@
+/* Agentic Calendar authored product-system diagram (Gate E).
+   Product rule/radius frame like CaseFigure; hard internal rules, mono
+   band labels, one release-blue accent for the single agentic layer. */
+
+.figure {
+  margin: 0;
+}
+
+.frame {
+  overflow: hidden;
+  border: var(--rule);
+  border-radius: var(--radius-panel);
+  background: var(--color-panel);
+}
+
+.bandLabel {
+  margin: 0;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.bandLabel b {
+  font-weight: 600;
+  color: inherit;
+}
+
+/* Band 1 — the one agentic layer (the concept's single accent). */
+.layer {
+  padding: var(--space-6);
+  background: var(--color-release);
+}
+
+.layer .bandLabel,
+.layer .bandLabel b {
+  color: var(--color-on-release);
+}
+
+.layerCopy {
+  margin: var(--space-2) 0 0;
+  max-width: 44ch;
+  font: 600 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+  color: var(--color-on-release);
+}
+
+/* Band 2 — four capabilities. */
+.capabilities {
+  padding: var(--space-6);
+  border-top: var(--rule);
+}
+
+.capabilityList {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--color-rule);
+  border: var(--rule);
+}
+
+.capabilityList li {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  background: var(--color-panel);
+  font: 500 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+}
+
+.index {
+  flex: none;
+  font: 600 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  color: var(--color-release);
+}
+
+/* Band 3 — five surfaces (the prototype's five tabs). */
+.surfaces {
+  padding: var(--space-6);
+  border-top: var(--rule);
+  background: var(--color-panel-2);
+}
+
+.surfaceList {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.surfaceList li {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-control);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+}
+
+.caption {
+  margin-top: var(--space-3);
+  font: 400 var(--type-small) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-small);
+  color: var(--color-muted);
+}
+
+@media (max-width: 559px) {
+  .capabilityList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

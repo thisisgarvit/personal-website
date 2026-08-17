@@ -1,0 +1,131 @@
+/* Artifact-led case opening (Gate E). A designed product surface — hard
+   rules, mono product metadata, solid palette — wider than the 68ch prose
+   measure (DESIGN.md §5.10 permits the wider artifact breakout), never a
+   rounded prose card. */
+
+.opening {
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.topRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule);
+}
+
+.back {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--color-release);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-control);
+}
+
+.kind {
+  margin: 0;
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.title {
+  margin: var(--space-8) 0 0;
+  font: 700 var(--type-section) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-section);
+  text-wrap: balance;
+}
+
+.value {
+  margin: var(--space-4) 0 0;
+  max-width: 44ch;
+  font: 400 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+  color: var(--color-muted);
+}
+
+/* Three verified signals in one hard-ruled strip — mono numerals, no
+   chips, no cards. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin: var(--space-8) 0 0;
+  padding: var(--space-4) 0;
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+}
+
+/* dt (label) precedes dd (value) in the DOM for correct definition-list
+   semantics; column-reverse puts the big numeral on top visually. */
+.fact {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+}
+
+.factValue {
+  margin: 0;
+  font: 600 var(--type-card-title) var(--font-plex-mono), monospace;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.factLabel {
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* The one large real artifact. Media/diagram components inside bring
+   their own frame; this sets scale and rhythm only. Portrait screenshots
+   (phone-first products) are height-capped and centered rather than
+   stretched to the opening measure. */
+.artifact {
+  margin-top: var(--space-8);
+}
+
+.artifact > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.artifact figure > span {
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.artifact img {
+  width: auto;
+  max-width: 100%;
+  max-height: min(75vh, 42rem);
+}
+
+.artifact figcaption {
+  text-align: center;
+}
+
+@media (max-width: 559px) {
+  .facts {
+    gap: var(--space-4);
+  }
+
+  .topRow {
+    flex-wrap: wrap;
+  }
+}

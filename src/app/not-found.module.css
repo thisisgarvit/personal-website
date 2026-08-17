@@ -1,3 +1,52 @@
+/* Calm reading layout (formerly inherited from the pre-Gate-E CaseShell):
+   68ch column, mono incident label near the title (DESIGN.md §5.10). */
+.main {
+  padding: clamp(6rem, 10vw, 10rem) var(--space-4);
+}
+
+.column {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+
+.kind {
+  margin: 0 0 var(--space-3);
+  font: 500 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.title {
+  margin: 0;
+  font: 700 var(--type-section) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-section);
+}
+
+.body {
+  margin-top: var(--space-8);
+  font: 400 var(--type-body) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-body);
+}
+
+.body p {
+  margin: 0;
+  font: 400 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: var(--track-lead);
+}
+
+.body a {
+  color: var(--color-release);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.body a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-control);
+}
+
 .postmortem {
   margin: var(--space-8) 0 0;
   border-top: var(--rule);
