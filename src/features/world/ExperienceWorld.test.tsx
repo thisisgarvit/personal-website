@@ -20,6 +20,7 @@ vi.mock("./WorldCanvas", () => ({
 }));
 
 import { ExperienceWorld } from "./ExperienceWorld";
+import { resetWebGlProbeForTests } from "./capability-policy";
 import { WorldAnchor } from "./WorldAnchor";
 import { WorldProvider } from "./WorldProvider";
 
@@ -107,6 +108,13 @@ describe("ExperienceWorld lifecycle", () => {
     delete document.documentElement.dataset.effectsDisabled;
     delete document.documentElement.dataset.theme;
     installCapabilities();
+    // jsdom has no WebGL; the creation probe would force renderer-failure
+    // in every lifecycle test. Pretend the probe succeeded, then reset so
+    // probe-specific tests can override.
+    resetWebGlProbeForTests();
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue({
+      getExtension: () => null,
+    } as unknown as RenderingContext);
   });
 
   afterEach(() => {
