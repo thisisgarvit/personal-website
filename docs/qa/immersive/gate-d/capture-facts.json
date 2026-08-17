@@ -1,0 +1,50 @@
+[
+  {
+    "name": "home-1440x900-light.png",
+    "width": 1440,
+    "height": 900,
+    "colorScheme": "light",
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "delhiCount": 1
+  },
+  {
+    "name": "home-1440x900-dark.png",
+    "width": 1440,
+    "height": 900,
+    "colorScheme": "dark",
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "delhiCount": 1
+  },
+  {
+    "name": "home-390x844-light.png",
+    "width": 390,
+    "height": 844,
+    "colorScheme": "light",
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "delhiCount": 0
+  },
+  {
+    "name": "home-390x844-dark.png",
+    "width": 390,
+    "height": 844,
+    "colorScheme": "dark",
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "delhiCount": 0
+  }
+]

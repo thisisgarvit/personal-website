@@ -9,6 +9,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { workItems } from "@/data/work";
+import { resetWebGlProbeForTests } from "@/features/world/capability-policy";
 import { WorldPrototype } from "./WorldPrototype";
 
 describe("WorldPrototype", () => {
@@ -31,9 +32,18 @@ describe("WorldPrototype", () => {
         dispatchEvent: vi.fn(),
       })),
     });
+    // jsdom has no WebGL; the creation probe would force renderer-failure
+    // in every prototype test (same stub as ExperienceWorld.test.tsx).
+    resetWebGlProbeForTests();
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue({
+      getExtension: () => null,
+    } as unknown as RenderingContext);
   });
 
-  afterEach(() => cleanup());
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+  });
 
   it("locks the world stage, semantic anchors, and real portfolio controls", () => {
     const { container } = render(<WorldPrototype />);

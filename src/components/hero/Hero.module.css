@@ -1,184 +1,175 @@
-/* Hero (DESIGN.md §5.4): release-blue solid field, 12px panel radius,
-   visible ink rule, 48–80px desktop inset / 24–32px mobile, minimum
-   desktop height ~560px (never forced 100vh). */
-
 .hero {
   position: relative;
-  isolation: isolate;
+  min-height: clamp(38rem, calc(100dvh - 8rem), 47rem);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.15), transparent 32%),
-    radial-gradient(circle at 14% 88%, rgba(23, 25, 35, 0.13), transparent 34%),
-    var(--color-release);
-  color: var(--color-on-release);
-  border: 1px solid var(--color-ink);
-  border-radius: var(--radius-panel);
-  padding: clamp(3rem, 5vw, 5rem); /* 48–80px (§5.4) */
-  min-height: 560px;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: var(--space-6);
+  border-radius: var(--radius-dialog);
+  background: color-mix(in srgb, var(--color-panel-2) 76%, transparent);
   box-shadow:
-    0 30px 70px color-mix(in srgb, var(--color-release) 22%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.26),
-    inset 0 -1px 0 rgba(23, 25, 35, 0.2);
+    0 28px 80px color-mix(in srgb, var(--color-ink) 11%, transparent),
+    inset 0 1px 0 var(--material-highlight);
 }
 
 .hero::after {
-  content: "RELEASE / DELHI / 02:17";
+  content: "";
   position: absolute;
-  right: -1.25rem;
-  bottom: 3rem;
-  z-index: -1;
-  color: color-mix(in srgb, var(--color-on-release) 11%, transparent);
-  font: 700 clamp(2rem, 3.6vw, 4.5rem) / 1 var(--font-plex-mono), monospace;
-  letter-spacing: 0.055em;
-  transform: rotate(-90deg) translateX(100%);
-  transform-origin: bottom right;
-  white-space: nowrap;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-canvas) 98%, transparent) 0%,
+      color-mix(in srgb, var(--color-canvas) 94%, transparent) 38%,
+      color-mix(in srgb, var(--color-canvas) 58%, transparent) 58%,
+      transparent 76%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-canvas) 34%, transparent),
+      transparent 34%
+    );
 }
 
-/* Top metadata (§5.4): availability line + DELHI / IST, product mono. */
-.meta {
+.copy {
+  position: relative;
+  z-index: 3;
+  width: min(64%, 58rem);
+  min-height: inherit;
+  padding: clamp(3rem, 5vw, 5rem) clamp(2.5rem, 5vw, 5rem) 10.5rem;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  font: 500 var(--type-product) var(--font-plex-mono), monospace;
-  letter-spacing: var(--track-product);
-  text-transform: uppercase;
-}
-
-.availability {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-/* Merge dot = healthy/available status companion (§3.1 merge role;
-   status color always paired with text per §9). */
-.availabilityDot {
-  width: 7px;
-  height: 7px;
-  border-radius: var(--radius-pill);
-  background: var(--color-merge);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-merge) 18%, transparent);
-}
-
-.main {
-  align-self: center;
-}
-
-/* One positioning sentence at --type-hero with the locked tracking
-   (§3.2 validated table via --track-hero region tokens). */
-.headline {
-  margin: 0;
-  font: 800 var(--type-hero) var(--font-archivo), system-ui, sans-serif;
-  letter-spacing: var(--track-hero);
-  max-width: 920px;
-  overflow-wrap: anywhere;
-}
-
-/* Task 10 density refinement: the global ramp still owns small/medium
-   regions, while wide two-column layouts use a calmer in-ramp size so the
-   approved sentence reads in three beats and the portfolio board enters the
-   first-scroll context. Locked optical tracking remains untouched. */
-@media (min-width: 1180px) {
-  .headline {
-    font-size: clamp(5.25rem, 6vw, 5.75rem);
-  }
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .intro {
-  margin: var(--space-6) 0 0;
-  font: 400 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
+  max-width: 43rem;
+  margin: var(--space-8) 0 0;
+  color: var(--color-muted);
+  font: 500 var(--type-lead) var(--font-archivo), system-ui, sans-serif;
   letter-spacing: var(--track-lead);
-  max-width: 700px;
 }
 
-/* Primary CTAs (§5.5): 56px min height, 8px radius, ≥16px horizontal
-   inset, visible focus ring separated by 3px (global focus-visible). */
-.ctas {
+.actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+  margin-top: var(--space-8);
 }
 
-.cta {
+.action {
   min-height: 56px;
+  min-width: 12rem;
+  padding: 0 var(--space-6);
   border-radius: var(--radius-button);
-  padding: 0 var(--space-4);
   display: inline-flex;
   align-items: center;
-  gap: var(--space-6);
-  justify-content: space-between;
+  justify-content: center;
+  color: inherit;
   text-decoration: none;
-  font-weight: 700;
-  letter-spacing: var(--track-lead);
-  box-shadow: var(--shadow-control), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  white-space: nowrap;
+  font-weight: 750;
+  letter-spacing: -0.012em;
+  box-shadow: var(--shadow-control), inset 0 1px 0 var(--material-highlight);
   transition:
     transform var(--duration-feedback) var(--ease-out),
-    box-shadow var(--duration-feedback) var(--ease-out),
-    filter var(--duration-feedback) var(--ease-out);
+    box-shadow var(--duration-feedback) var(--ease-out);
 }
 
-.cta:hover {
+.action:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-control-hover), inset 0 1px 0 rgba(255, 255, 255, 0.32);
-  filter: saturate(1.05);
+  box-shadow: var(--shadow-control-hover), inset 0 1px 0 var(--material-highlight);
 }
 
-/* §7.3 primary CTA row: immediate scale(.98) on press. */
-.cta:active {
+.action:active {
   transform: translateY(1px) scale(0.98);
   box-shadow: var(--shadow-press);
 }
 
-.cta svg {
-  width: 19px;
-  height: 19px;
-}
-
-/* Resume: merge fill + ink text (§5.5). Text is the constant dark ink
-   value in both themes — lime stays bright in dark mode, so the §3.1
-   selection-text constant (#171923) applies, not the flipped ink token. */
-.ctaResume {
+.resumeAction {
   background: var(--color-merge);
   color: #171923;
 }
 
-/* Contact: ink fill with canvas text; the same tokens flip to the tuned
-   high-contrast equivalent in dark mode (§5.5). */
-.ctaContact {
+.contactAction {
   background: var(--color-ink);
   color: var(--color-canvas);
 }
 
-@media (max-width: 619.98px) {
+@media (max-width: 879.98px) {
   .hero {
-    padding: clamp(1.5rem, 6vw, 2rem); /* 24–32px mobile inset (§5.4) */
-    min-height: 0;
+    min-height: 46rem;
   }
-  /* §4 <620px: full-width CTAs. */
-  .ctas {
-    display: grid;
-  }
-  .cta {
-    width: 100%;
+
+  .copy {
+    width: 76%;
+    padding-inline: var(--space-8);
+    padding-bottom: 12rem;
   }
 }
 
-/* Forced colors (§7.7): decorative accents drop; structure (borders,
-   labels, focus) survives via system colors. */
-@media (forced-colors: active) {
+@media (max-width: 619.98px) {
   .hero {
+    min-height: calc(100dvh - 5.75rem);
+    border-radius: 0 0 var(--radius-dialog) var(--radius-dialog);
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 31%,
+        color-mix(in srgb, var(--color-canvas) 78%, transparent) 52%,
+        var(--color-canvas) 72%
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-canvas) 94%, transparent) 0%,
+        color-mix(in srgb, var(--color-canvas) 58%, transparent) 58%,
+        transparent 100%
+      );
+  }
+
+  .copy {
+    width: 100%;
+    min-height: inherit;
+    padding: 9.5rem var(--space-4) 5.5rem;
+    justify-content: flex-end;
+  }
+
+  .intro {
+    max-width: 35ch;
+    margin-top: var(--space-4);
+    line-height: 1.42;
+  }
+
+  .actions {
+    width: 100%;
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .action {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hero {
+    background: var(--color-panel);
+  }
+}
+
+@media (forced-colors: active) {
+  .hero,
+  .action {
     border: 1px solid CanvasText;
   }
-  .cta {
-    border: 1px solid LinkText;
-  }
-  .availabilityDot {
-    outline: 1px solid CanvasText;
+
+  .hero::after {
+    display: none;
   }
 }

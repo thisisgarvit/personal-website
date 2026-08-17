@@ -1,46 +1,94 @@
-/* Homepage frame (DESIGN.md §4 global frame + breakpoints). */
-
-/* Application shell: min(100% - 2rem, 100rem), 16–32px gutters. */
 .shell {
-  width: min(100% - 2rem, 100rem);
+  position: relative;
+  width: min(calc(100% - 2rem), 100rem);
   margin-inline: auto;
-  padding-top: var(--space-4);
+  padding: var(--space-4) 0 clamp(5rem, 8vw, 8rem);
 }
 
-/* Hero grid (§5.4): primary content + 340–380px operations rail, 24px
-   gap at ≥1180px. */
-.heroGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
-  gap: var(--space-6);
-  align-items: stretch;
-  /* Hero-to-board rhythm: 64–96px (§4). */
-  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+.heroAnchor,
+.boardAnchor,
+.journeyAnchor {
+  position: relative;
 }
 
-/* Grid children must be allowed below their min-content width so 200% text
-   reflows inside the shell instead of widening the document (PRD §12). */
-.heroGrid > * {
-  min-width: 0;
+.heroAnchor {
+  z-index: 3;
 }
 
-/* §4: 880–1179px the hero rail narrows. */
+.boardAnchor,
+.journeyAnchor {
+  z-index: 4;
+}
+
+.boardAnchor {
+  margin-top: clamp(-4.5rem, -4vw, -3rem);
+}
+
+.journeyAnchor {
+  margin-top: clamp(4rem, 7vw, 7rem);
+}
+
+.dock {
+  position: absolute;
+  right: clamp(1.25rem, 3vw, 3rem);
+  bottom: clamp(7.5rem, 10vw, 10rem);
+  z-index: 5;
+  width: min(20rem, 27vw);
+  min-width: 18rem;
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(22px) saturate(135%);
+}
+
+.dock > section,
+.dock > div > section {
+  box-shadow:
+    0 20px 48px color-mix(in srgb, var(--color-ink) 20%, transparent),
+    inset 0 1px 0 var(--material-highlight);
+}
+
 @media (max-width: 1179.98px) {
-  .heroGrid {
-    grid-template-columns: minmax(0, 1fr) 320px;
+  .dock {
+    width: 18.5rem;
+    right: var(--space-6);
   }
 }
 
-/* §4: 620–879px hero and operations rail stack. */
 @media (max-width: 879.98px) {
-  .heroGrid {
-    grid-template-columns: 1fr;
+  .dock {
+    right: var(--space-4);
+    bottom: 7rem;
   }
 }
 
-/* §4: <620px one-column shell with 16px gutters. */
 @media (max-width: 619.98px) {
   .shell {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .dock {
+    position: relative;
+    right: auto;
+    bottom: auto;
     width: calc(100% - 2rem);
+    min-width: 0;
+    margin: var(--space-4) var(--space-4) 0;
+  }
+
+  .boardAnchor {
+    margin-top: var(--space-4);
+    padding-inline: var(--space-4);
+  }
+
+  .journeyAnchor {
+    margin-top: var(--space-8);
+    padding-inline: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .dock {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
