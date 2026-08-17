@@ -199,7 +199,7 @@ horizontal overflow, both CTAs + all four case links present in every capture.
 
 ---
 
-## 7. Observations record (7.1 resolved; 7.2 pending Garvit's decision)
+## 7. Observations record (7.1 resolved; 7.2 waived by Garvit — Windows HCM is the first post-RC task)
 
 ### 7.1 Firefox: unhandled rejection when navigation aborts the lazy PostHog chunk — RESOLVED
 
@@ -256,17 +256,21 @@ post-audit call): add a `.catch` in `capturePostHog` (and reset
 `clientPromise` on rejection if retry is wanted). Codex to judge whether to
 fix before RC or accept as known-benign.
 
-### 7.2 Forced colors: real Windows High-Contrast pass unavailable — FLAG for Garvit
+### 7.2 Forced colors: Windows High-Contrast — WAIVER APPROVED BY GARVIT (2026-08-18)
 
 The forced-colors matrix cell ran under Chromium CDP emulation only (macOS
 hardware). Under emulation: core content operable, canvas non-blocking,
 switch tracks use `forced-color-adjust: auto`; the pre-existing axe
 `color-contrast (serious)` exception remains recorded because axe computes
 contrast from authored custom properties while rendering is UA-forced (see
-`gate-d-home.md` and the D3 matrix note). **Real Windows HCM evidence cannot
-be produced on this hardware — the axe exception is NOT retired. Needs a
-Windows machine pass or an explicit waiver from Garvit.** Nothing was
-fabricated.
+`gate-d-home.md` and the D3 matrix note). Real Windows HCM evidence cannot
+be produced on this hardware; nothing was fabricated.
+
+**DECISION (Garvit, 2026-08-18): HCM waiver APPROVED for this RC.** The axe
+exception stays recorded, not retired. **A real Windows High-Contrast pass
+is retained as the FIRST post-RC accessibility task** — run it on a Windows
+machine (or equivalent genuine HCM environment), retire or act on the axe
+exception based on what it shows, and append the result here.
 
 ### 7.3 PostHog on localhost (informational, not a defect)
 
@@ -311,11 +315,12 @@ Do not deploy any state without Garvit's separate authorization.
    visual/design PASS** (no dimension below 4). The §7.1 Firefox fix
    (`d323071`) is independently verified by codex; nothing remains for
    design judgment.
-2. Garvit: (a) §7.2 decision — Windows HCM waiver (codex + Claude recommend
-   waiver, real Windows check post-RC) or a Windows pass; (b) live
+2. Garvit: (a) §7.2 HCM waiver — **APPROVED 2026-08-18** (real Windows HCM
+   pass retained as the first post-RC accessibility task); (b) live
    play-through of the production build (10-second founder read, guide
    quality, mobile discovery, case openings) — the screenshare-worthy
-   reaction is the acceptance criterion.
+   reaction is the acceptance criterion. **THE PLAY-THROUGH IS NOW THE SOLE
+   REMAINING GATE-F CONDITION.**
 3. Only then: `feat: complete immersive portfolio rebuild` RC commit and the
    Step 10 final handoff record (final commit hash + scorecards appended
    here). No deploy without Garvit's separate authorization.
