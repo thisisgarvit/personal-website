@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import opsStyles from "@/components/ops/ops.module.css";
 import { ConfettiScrollEffects } from "./ConfettiScrollEffects";
 import {
@@ -22,6 +23,7 @@ interface FlagRowProps {
   checked: boolean;
   onCheckedChange: (next: boolean) => void;
   describedBy?: string;
+  disabledDescriptionId: string;
 }
 
 function FlagRow({
@@ -29,9 +31,10 @@ function FlagRow({
   checked,
   onCheckedChange,
   describedBy,
+  disabledDescriptionId,
 }: FlagRowProps) {
   const inputDescription = definition.disabled
-    ? "comic-sans-note"
+    ? disabledDescriptionId
     : describedBy;
   const control = (
     <label className={opsStyles.switch}>
@@ -59,7 +62,7 @@ function FlagRow({
           data-tooltip="disabled in prod for a reason"
         >
           {control}
-          <span id="comic-sans-note" className="sr-only">
+          <span id={disabledDescriptionId} className="sr-only">
             disabled in prod for a reason
           </span>
         </span>
@@ -78,6 +81,10 @@ export interface FeatureFlagsPanelProps {
 export function FeatureFlagsPanel({
   variant = "panel",
 }: FeatureFlagsPanelProps) {
+  const instanceId = useId();
+  const headingId = `${instanceId}-flags-title`;
+  const comicSansDescriptionId = `${instanceId}-comic-sans-note`;
+  const suppressionId = `${instanceId}-confetti-suppression`;
   const { flags, setFlag } = useFeatureFlags();
   const confettiSuppression = useEffectSuppression(
     flags.confetti_on_scroll,
@@ -91,11 +98,11 @@ export function FeatureFlagsPanel({
     <>
       <section
         className={opsStyles.panel}
-        aria-labelledby="flags-title"
+        aria-labelledby={headingId}
         data-flag-panel-variant={variant}
       >
         <header className={opsStyles.panelTitle}>
-          <span id="flags-title">Feature flags</span>
+          <span id={headingId}>Feature flags</span>
           <span className={opsStyles.flagCount}>3 / 4 live</span>
         </header>
         <div className={opsStyles.flagsBody}>
@@ -105,16 +112,17 @@ export function FeatureFlagsPanel({
               definition={definition}
               checked={flags[definition.key]}
               onCheckedChange={(next) => setFlag(definition.key, next)}
+              disabledDescriptionId={comicSansDescriptionId}
               describedBy={
                 definition.key === "confetti_on_scroll" && visibleSuppression
-                  ? "confetti-suppression"
+                  ? suppressionId
                   : undefined
               }
             />
           ))}
         </div>
         {visibleSuppression ? (
-          <p id="confetti-suppression" className={styles.effectNote}>
+          <p id={suppressionId} className={styles.effectNote}>
             {suppressionLabels[visibleSuppression]}
           </p>
         ) : null}

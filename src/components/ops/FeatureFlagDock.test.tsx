@@ -1,5 +1,10 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { THEME_STORAGE_KEY } from "@/data/storage";
+import {
+  getJourneySnapshot,
+  resetJourneyForTests,
+} from "@/features/journey/journey-store";
 import { FeatureFlagDock } from "./FeatureFlagDock";
 
 function installMatchMedia() {
@@ -22,6 +27,8 @@ describe("FeatureFlagDock", () => {
   beforeEach(() => {
     sessionStorage.clear();
     localStorage.clear();
+    resetJourneyForTests();
+    delete document.documentElement.dataset.theme;
     installMatchMedia();
   });
 
@@ -39,5 +46,19 @@ describe("FeatureFlagDock", () => {
       container.querySelector('[data-flag-panel-variant="dock"]'),
     ).not.toBeNull();
     expect(screen.getAllByRole("checkbox")).toHaveLength(4);
+  });
+
+  it("keeps the dock wired to the live flag and journey behavior", () => {
+    render(<FeatureFlagDock />);
+
+    fireEvent.click(screen.getByLabelText("Toggle dark mode"));
+
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe("dark");
+    expect(
+      getJourneySnapshot().events.some(
+        (event) => event.type === "played" && event.kind === "dark_mode",
+      ),
+    ).toBe(true);
   });
 });

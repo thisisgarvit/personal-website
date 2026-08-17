@@ -10,8 +10,11 @@ import {
   subscribeMascotSignals,
   type MascotSignal,
 } from "@/features/mascot/signals";
+import {
+  getJourneySnapshot,
+  resetJourneyForTests,
+} from "@/features/journey/journey-store";
 import { FeatureFlagsPanel } from "./FeatureFlagsPanel";
-import { resetJourneyForTests } from "@/features/journey/journey-store";
 
 function installMatchMedia({ dark = false, reducedMotion = false } = {}) {
   Object.defineProperty(window, "matchMedia", {
@@ -58,6 +61,21 @@ describe("FeatureFlagsPanel", () => {
     expect(screen.getByText("3 / 4 live")).toBeTruthy();
     expect(screen.getByText("field notes")).toBeTruthy();
     expect(screen.queryByText("CODEX LAB")).toBeNull();
+    expect(
+      Array.from(container.querySelectorAll("code"), (node) =>
+        node.textContent?.trim(),
+      ),
+    ).toEqual([
+      "dark_mode",
+      "confetti_on_scroll",
+      "candid_mode",
+      "comic_sans",
+    ]);
+    expect(
+      Array.from(container.querySelectorAll("small"), (node) =>
+        node.textContent?.trim(),
+      ),
+    ).toEqual(["theme", "ship signal", "field notes", "prod locked"]);
     expect(screen.getAllByRole("checkbox")).toHaveLength(4);
     expect(
       (screen.getByLabelText("Toggle confetti while scrolling") as HTMLInputElement)
@@ -71,10 +89,17 @@ describe("FeatureFlagsPanel", () => {
       "Comic Sans disabled",
     ) as HTMLInputElement;
     expect(comicSans.disabled).toBe(true);
-    expect(comicSans.getAttribute("aria-describedby")).toBe(
-      "comic-sans-note",
+    const comicSansDescription = document.getElementById(
+      comicSans.getAttribute("aria-describedby")!,
     );
-    expect(screen.getByText("disabled in prod for a reason")).toBeTruthy();
+    expect(comicSansDescription?.textContent).toBe(
+      "disabled in prod for a reason",
+    );
+    expect(
+      container
+        .querySelector("[data-tooltip]")
+        ?.getAttribute("data-tooltip"),
+    ).toBe("disabled in prod for a reason");
   });
 
   it("exposes the presentation-only dock variant without changing controls", () => {
@@ -88,6 +113,37 @@ describe("FeatureFlagsPanel", () => {
       (screen.getByLabelText("Comic Sans disabled") as HTMLInputElement)
         .disabled,
     ).toBe(true);
+  });
+
+  it("keeps labels and disabled explanations scoped to each rendered panel", () => {
+    const { container } = render(
+      <>
+        <FeatureFlagsPanel />
+        <FeatureFlagsPanel variant="dock" />
+      </>,
+    );
+    const panels = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-flag-panel-variant]"),
+    );
+
+    expect(panels).toHaveLength(2);
+    const headingIds = panels.map((panel) =>
+      panel.getAttribute("aria-labelledby"),
+    );
+    expect(new Set(headingIds).size).toBe(2);
+
+    for (const panel of panels) {
+      const headingId = panel.getAttribute("aria-labelledby");
+      expect(headingId).toBeTruthy();
+      expect(panel.contains(document.getElementById(headingId!))).toBe(true);
+
+      const comicSans = panel.querySelector<HTMLInputElement>("input:disabled");
+      const descriptionId = comicSans?.getAttribute("aria-describedby");
+      expect(descriptionId).toBeTruthy();
+      expect(panel.contains(document.getElementById(descriptionId!))).toBe(
+        true,
+      );
+    }
   });
 
   it("hydrates from the OS and versioned stores without changing row semantics", async () => {
@@ -143,6 +199,11 @@ describe("FeatureFlagsPanel", () => {
       { reaction: "flag-check", source: "confetti_on_scroll" },
       { reaction: "flag-check", source: "candid_mode" },
     ]);
+    expect(
+      getJourneySnapshot().events
+        .filter((event) => event.type === "played")
+        .map((event) => event.kind),
+    ).toEqual(["dark_mode", "flag", "flag"]);
     unsubscribe();
     unsubscribeMascot();
   });
