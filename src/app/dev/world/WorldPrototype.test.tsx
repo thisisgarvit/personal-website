@@ -84,9 +84,18 @@ describe("WorldPrototype", () => {
     });
     expect(workLink.getAttribute("href")).toBe(workItems[0].route);
 
-    const poster = world.querySelector('img[alt=""]');
-    expect(poster?.getAttribute("src")).toContain(
-      "/images/world/guide-light.webp",
+    const poster = world.querySelector("[data-world-poster]");
+    const posterCss = readFileSync(
+      resolve(process.cwd(), "src/features/world/world.module.css"),
+      "utf8",
+    );
+    expect(poster).not.toBeNull();
+    expect(poster?.querySelector("img")).toBeNull();
+    expect(posterCss).toMatch(
+      /\.poster\s*\{[\s\S]*?background:[\s\S]*?guide-light\.webp/,
+    );
+    expect(posterCss).toMatch(
+      /:global\(:root\[data-theme="dark"\]\) \.poster\s*\{[\s\S]*?guide-dark\.webp/,
     );
 
     const boardControls = screen.getByLabelText("Board scene test controls");
