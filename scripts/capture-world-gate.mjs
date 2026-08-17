@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 
 const baseURL = process.env.GATE_C_URL ?? "http://localhost:3100";
 const output = resolve("docs/qa/immersive/gate-c");
+const mobileOnly = process.env.GATE_C_MOBILE_ONLY === "true";
 
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -47,7 +48,7 @@ for (const capture of [
   { name: "desktop-dark-1440x900.png", width: 1440, height: 900, colorScheme: "dark" },
   { name: "mobile-light-390x844.png", width: 390, height: 844, colorScheme: "light" },
   { name: "mobile-dark-390x844.png", width: 390, height: 844, colorScheme: "dark" },
-]) {
+].filter((capture) => !mobileOnly || capture.width === 390)) {
   const context = await contextFor(capture);
   const page = await openWorld(context);
   if (capture.colorScheme === "dark") {
@@ -61,7 +62,7 @@ for (const capture of [
 for (const capture of [
   { name: "reduced-motion-light-1440x900.png", width: 1440, height: 900 },
   { name: "reduced-motion-mobile-light-390x844.png", width: 390, height: 844 },
-]) {
+].filter((capture) => !mobileOnly || capture.width === 390)) {
   const context = await contextFor({
     ...capture,
     colorScheme: "light",
@@ -75,7 +76,7 @@ for (const capture of [
   await context.close();
 }
 
-{
+if (!mobileOnly) {
   const context = await contextFor({ width: 1440, height: 900, colorScheme: "light" });
   const page = await openWorld(context);
   await page.locator("[data-world-canvas] canvas").evaluate((canvas) => {
@@ -90,7 +91,7 @@ for (const capture of [
   await context.close();
 }
 
-{
+if (!mobileOnly) {
   const context = await contextFor({ width: 1440, height: 900, colorScheme: "light" });
   const page = await openWorld(context);
   const canvas = page.locator("[data-world-canvas] canvas");

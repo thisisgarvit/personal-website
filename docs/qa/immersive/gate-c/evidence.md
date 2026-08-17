@@ -43,6 +43,16 @@ than estimated from the asset manifest.
 - [Mobile light, 390×844](./mobile-light-390x844.png)
 - [Mobile dark, 390×844](./mobile-dark-390x844.png)
 
+The three mobile artifacts were recaptured after the judged persona-label tune
+from `0.64rem` to `0.72rem`. Dimensions remain 390×844 and the four choices,
+Skip control, headline, both CTAs, and ticket boundary remain unclipped.
+
+| Refreshed mobile artifact | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `mobile-light-390x844.png` | 189,649 | `b2b737c8d8a40c4f22eec6b5d2761b3593eefad6bfe5444a3e5f90f604c66150` |
+| `mobile-dark-390x844.png` | 182,427 | `a32915d5d5887efd467c09043bc9b974cdfb9dc60afae590d91567c493435853` |
+| `reduced-motion-mobile-light-390x844.png` | 188,768 | `0963fc3d6575599f13843ae566132e15410873db9765499f11235038fe24095f` |
+
 ### Fallbacks
 
 - [Reduced motion, light, 1440×900](./reduced-motion-light-1440x900.png)
@@ -128,4 +138,3 @@ by approximately +0.1KB gzip; the lazy Three total remained 227.2KB.
   engine. These are operability checks, not visual-quality scores.
 - Apple and Taste scores are intentionally absent here. They belong to the
   independent Gate C judge.
-
