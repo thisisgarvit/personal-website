@@ -12,8 +12,8 @@ import {
 
 const { capture } = vi.hoisted(() => ({ capture: vi.fn() }));
 
-vi.mock("posthog-js", () => ({
-  default: { capture },
+vi.mock("./posthog-client", () => ({
+  capturePostHog: capture,
 }));
 
 /**

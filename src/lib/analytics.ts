@@ -1,4 +1,4 @@
-import posthog from "posthog-js";
+import { capturePostHog } from "./posthog-client";
 
 export const allowedAnalyticsEvents = [
   "resume_download",
@@ -54,7 +54,7 @@ export const analytics: AnalyticsAdapter = {
       process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN &&
       process.env.NEXT_PUBLIC_POSTHOG_HOST
     ) {
-      posthog.capture(event, propertyArgs[0]);
+      capturePostHog(event, propertyArgs[0]);
     }
   },
 };
