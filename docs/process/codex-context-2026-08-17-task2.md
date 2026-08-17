@@ -42,29 +42,28 @@
    2021 Growth Product intern are facts only; invent no outcomes.
 6. Funnel remains visible. Optional deeper expansion may come later.
 
-## Uncommitted Task 2 state
+## Gate B implementation state
 
 - `src/app/dev/world/page.tsx`
 - `src/app/dev/world/WorldPrototype.tsx`
 - `src/app/dev/world/world-prototype.module.css`
 - `src/app/dev/world/WorldPrototype.test.tsx`
 - `public/images/world/prototype-guide.webp`
-- Authority amendments in `DESIGN.md`, `PRD.md`, the immersive spec, and plan.
+- `src/app/dev/world/PersonaSatire.tsx` and tests
+- `src/data/storage.ts` persona session key
+- `docs/qa/immersive/gate-b-composition.md` and four final captures
+- Gate B optical lock in `DESIGN.md`
 
-The prototype already has chrome, experiment strip, exact hero copy, two CTAs,
-Muko poster, existing flags, and a real work ticket. Persona markup/evolution
-hook are not yet implemented. The focused test first needs a `matchMedia` stub
-and filesystem-safe source path.
+The prototype has chrome, the narrowed mobile experiment strip, exact hero
+copy, two CTAs, Muko poster, persona satire, feature-flag dock, final-GA hook,
+and one real work ticket. The public homepage remains untouched. True 390×844
+captures replaced invalid Chrome-window crops.
 
 ## Next sequence
 
-1. Repair test harness; verify baseline GREEN.
-2. Add persona/evolution contract test; observe RED.
-3. Implement static markup/CSS; verify GREEN.
-4. Render 1440×900 and 390×844 in light/dark; tune independently.
-5. Freeze markup and signal Claude for dock/persona behavior and tests.
-6. Capture and score Apple/Taste; run typecheck/lint/tests; commit Gate B only
-   after every threshold passes.
+1. Commit Gate B and mark Task 2 complete in the SDD ledger.
+2. Begin Task 3 world director/anchor contracts. Public migration remains
+   blocked until interactive Gate C also passes.
 
 ## Gate B bar
 
@@ -75,3 +74,8 @@ and filesystem-safe source path.
 - Static only: no Canvas, Three, or dynamic import; no homepage migration.
 - Taste at least 22/25 with no dimension below 4; static Apple gate passes; no
   dashboard-card stack and no fake duplicate ticket.
+
+Current scored evidence: Taste 23/25, Apple static-applicable 36/40. Claude's
+fix-round re-review is clean. Focused suite: 25/25 tests; non-incremental
+TypeScript, lint, and diff check exit 0. (`pnpm typecheck` itself is prevented
+from writing `tsconfig.tsbuildinfo` by the managed checkout sandbox.)

@@ -890,3 +890,19 @@ create or serve a split worktree during this implementation.
 - Career chronology is deferred. If revisited, use product release history;
   Mirogian and Languify appear only as source-verified facts with no invented
   outcomes.
+
+### Gate B Scene 1 optical lock — PASS (2026-08-17)
+
+- The isolated 1440×900 composition locks the headline at
+  `clamp(4.25rem, 5.8vw, 5.3rem) / .9`, a `58rem` maximum measure, and
+  `-.055em` tracking. The approved sentence resolves to exactly two lines;
+  `turn` remains readable, the `rn` pair does not collide, word boundaries stay
+  distinct, and the figure overlap does not reduce headline contrast.
+- The intermediate region retains `-.05em`. At 390×844, the headline uses
+  `clamp(2.5rem, 11.3vw, 2.85rem) / .92`, `22rem` maximum measure, and
+  `-.045em` tracking. It resolves to four intentional mobile lines with both
+  56px CTAs fully visible and the real work ticket entering the viewport.
+- This lock applies to the approved hero sentence and Archivo 800 only. Re-run
+  optical validation if the copy, weight, font file, or measure changes.
+- Evidence and the Apple/Taste scorecards live in
+  `docs/qa/immersive/gate-b-composition.md`.
