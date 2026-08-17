@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync } from "node:fs";
+import { resolve } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   deriveJourneyInsights,
@@ -13,7 +15,10 @@ import {
 import { JOURNEY_STORAGE_KEY } from "@/data/storage";
 
 describe("tab-local session journey", () => {
-  afterEach(() => resetJourneyForTests());
+  afterEach(() => {
+    resetJourneyForTests();
+    vi.restoreAllMocks();
+  });
 
   it("moves through real milestones while counting repeated play", () => {
     startJourney(1_000);
@@ -43,19 +48,59 @@ describe("tab-local session journey", () => {
   });
 
   it("pages the mascot only when a stage is reached for the first time", () => {
+    vi.spyOn(Date, "now").mockReturnValue(700);
     const signals: MascotSignal[] = [];
     const unsubscribe = subscribeMascotSignals((signal) => signals.push(signal));
 
     startJourney(100);
+    recordJourneyEvent({ type: "scrolled" });
     recordJourneyEvent({ type: "played", kind: "flag" });
     recordJourneyEvent({ type: "played", kind: "flag" });
     recordJourneyEvent({ type: "read-work", slug: "maxie" });
+    recordJourneyEvent({ type: "converted", target: "contact" });
 
-    expect(signals.map(({ reaction, source }) => ({ reaction, source }))).toEqual([
-      { reaction: "milestone", source: "journey:played" },
-      { reaction: "milestone", source: "journey:read-work" },
+    expect(signals).toEqual([
+      {
+        reaction: "milestone",
+        source: "journey:scrolled",
+        timestamp: 700,
+      },
+      {
+        reaction: "milestone",
+        source: "journey:played",
+        timestamp: 700,
+      },
+      {
+        reaction: "milestone",
+        source: "journey:read-work",
+        timestamp: 700,
+      },
+      {
+        reaction: "shipped",
+        source: "journey:converted",
+        timestamp: 700,
+      },
     ]);
     unsubscribe();
+  });
+
+  it("keeps production journey modules on the compatibility bus boundary", () => {
+    const journeyDirectory = resolve(process.cwd(), "src/features/journey");
+    const productionModules = readdirSync(journeyDirectory).filter(
+      (file) =>
+        /\.(ts|tsx)$/.test(file) &&
+        !file.endsWith(".test.ts") &&
+        !file.endsWith(".test.tsx"),
+    );
+    const rendererImport =
+      /(?:from\s+|import\s*\(\s*)["'](?:three(?:\/[^"']*)?|@react-three\/(?:fiber|drei)|@\/features\/world(?:\/[^"']*)?)["']/;
+
+    for (const file of productionModules) {
+      const source = readFileSync(resolve(journeyDirectory, file), "utf8");
+      expect(source, `${file} must not import world renderer code`).not.toMatch(
+        rendererImport,
+      );
+    }
   });
 
   it("writes only the disclosed tab-local stream and never transmits it", () => {
