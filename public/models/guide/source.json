@@ -69,11 +69,11 @@
       "note": "single bind-pose keyframe; procedural posing required"
     }
   ],
-  "rootScale": "glTF bakes a 0.01 FBX conversion matrix above the armature; resulting world bounds are ~6.40m tall, so production integration must rescale to scene units",
+  "rootScale": "The source glTF carries a 0.01 FBX conversion matrix. Production export removes that inherited runtime scale and bakes a 1.8-scene-unit normalization into armature and mesh data; final object scales are identity.",
   "trademarksOrThirdPartyPatches": "none visible in mesh or texture inspection",
   "attributionPolicy": "repository-only attribution approved by Garvit if selected; preserve exact creator/source/license/modification record",
   "schemaVersion": 1,
-  "status": "source-only; no production GLB exported in this pass",
+  "status": "production GLB exported, optimized, and verified",
   "selectedAt": "2026-08-17",
   "sourceAvailability": {
     "primaryPath": "/Users/garvits/Downloads/astronaut_character_stylized_rigged_free_model",
@@ -4095,11 +4095,2283 @@
       ]
     }
   ],
+  "productionAsset": {
+    "path": "public/models/guide/guide.glb",
+    "sha256": "30547b8f9fd5fa8c51484374a90394f9b8e481df28498df84d3a401827f5ee89",
+    "bytes": 413356,
+    "generator": "Khronos glTF Blender I/O v5.2.39",
+    "pipelineVersions": {
+      "blender": "5.2.0 LTS",
+      "gltfTransform": "4.4.2"
+    },
+    "geometry": {
+      "meshes": 1,
+      "materials": 1,
+      "primitives": 1,
+      "drawCallProxy": 1,
+      "uploadVertices": 6706,
+      "triangles": 11458,
+      "skins": 1,
+      "joints": 58
+    },
+    "bounds": {
+      "coordinateSystem": "glTF Y-up",
+      "min": [
+        -0.91113,
+        0.01025,
+        -0.22949
+      ],
+      "max": [
+        0.91211,
+        1.81055,
+        0.20996
+      ],
+      "height": 1.8003,
+      "targetHeight": 1.8,
+      "toleranceNote": "Meshopt float encoding changes inspected extrema by 0.0003 scene units (0.017%); authored normalization target is 1.8."
+    },
+    "textures": [
+      {
+        "name": "NPC_Mat_normal",
+        "mimeType": "image/webp",
+        "width": 1024,
+        "height": 1024,
+        "encodedBytes": 36264,
+        "sha256": "123d7647d8248b19e3855bfd072e9fbd46054c1afa7ca4775a1502264cdfe06e"
+      },
+      {
+        "name": "NPC_Mat_metallicRoughness",
+        "mimeType": "image/webp",
+        "width": 1024,
+        "height": 1024,
+        "encodedBytes": 63294,
+        "sha256": "c9ee4e0ae2d957a67833b96a2880f89b4a5b0f74dec068eee2b83d7a9f1b7fa0"
+      },
+      {
+        "name": "production-basecolor",
+        "mimeType": "image/webp",
+        "width": 1024,
+        "height": 1024,
+        "encodedBytes": 41512,
+        "sha256": "3be652f7572d54178fad7832bc488610e27ea864f94a16ded3dbf5776416926b"
+      }
+    ],
+    "extensionsUsed": [
+      "EXT_meshopt_compression",
+      "KHR_materials_specular",
+      "EXT_texture_webp"
+    ],
+    "extensionsRequired": [
+      "EXT_meshopt_compression",
+      "EXT_texture_webp"
+    ],
+    "animationClips": [
+      {
+        "name": "mixamo.com",
+        "channels": 174,
+        "samplers": 174,
+        "durationSeconds": 0,
+        "note": "Single bind-pose key exported over all 58 joints; no authored gesture pose was added."
+      }
+    ],
+    "palette": {
+      "releaseBlue": "#3F49E8",
+      "graphite": "#2A2D34",
+      "operations": [
+        {
+          "op": "image_recolor",
+          "image": "NPC_Mat_baseColor.jpeg",
+          "ubox": [
+            0.6,
+            0.86,
+            0.34,
+            0.62
+          ],
+          "hue_range": [
+            0.42,
+            0.75
+          ],
+          "sat_min": 0.25,
+          "target": "graphite",
+          "keep_value": true,
+          "pixelsChanged": 172994
+        },
+        {
+          "op": "image_recolor",
+          "image": "NPC_Mat_baseColor.jpeg",
+          "ubox": [
+            0.44,
+            0.63,
+            0.59,
+            0.72
+          ],
+          "hue_range": [
+            0.55,
+            0.78
+          ],
+          "sat_min": 0.3,
+          "target": "blue",
+          "keep_value": true,
+          "pixelsChanged": 34307
+        },
+        {
+          "op": "image_recolor",
+          "image": "NPC_Mat_baseColor.jpeg",
+          "ubox": [
+            0.25,
+            0.47,
+            0.42,
+            0.545
+          ],
+          "hue_range": [
+            0.55,
+            0.78
+          ],
+          "sat_min": 0.3,
+          "target": "blue",
+          "keep_value": true,
+          "pixelsChanged": 43507
+        }
+      ],
+      "editedBaseColorSha256": "2f3124a73b5bffa0c2f43445cd2a1cc0fc23568d00ce2ac14e8333a098175193"
+    },
+    "scaleNormalization": {
+      "originalInheritedScale": 0.01,
+      "originalLocalVertexSpan": 639.9694917201996,
+      "bakedUniformScale": 0.00281263407598026,
+      "finalArmatureObjectScale": [
+        1,
+        1,
+        1
+      ],
+      "finalMeshObjectScale": [
+        1,
+        1,
+        1
+      ],
+      "inheritedRuntimeScaleRemoved": true,
+      "method": "Detached the armature from the Sketchfab/FBX empty hierarchy, preserved world transforms, normalized local vertex span to 1.8, then applied armature and mesh transforms in Blender."
+    },
+    "optimization": {
+      "textureResize": "All maps resized from 2048x2048 to 1024x1024.",
+      "textureEncoding": "WebP via glTF-Transform 4.4.2.",
+      "geometryEncoding": "EXT_meshopt_compression via Blender 5.2 exporter with export_gltfpack_noq=true; positions remain float32 to avoid skinned-mesh quantization scale drift.",
+      "destructiveOperationsDisabled": [
+        "flatten",
+        "join",
+        "instance",
+        "palette",
+        "prune",
+        "resample",
+        "simplify",
+        "sparse",
+        "weld"
+      ]
+    },
+    "commands": [
+      "blender -b --python /private/tmp/garvit-guide-source/export_production.py -- <source.gltf> <muko-final.json> <guide-blender-meshopt.glb> <guide-export-report.json>",
+      "npx --yes @gltf-transform/cli@4.4.2 resize <guide-blender-meshopt.glb> <guide-resized.glb> --width 1024 --height 1024",
+      "npx --yes @gltf-transform/cli@4.4.2 webp <guide-resized.glb> <guide-final-candidate.glb>",
+      "blender -b --python /private/tmp/garvit-guide-source/recompress_meshopt.py -- <guide-final-candidate.glb> public/models/guide/guide.glb"
+    ],
+    "finalSceneRootNodeIndices": [
+      59
+    ],
+    "nodeCount": 60,
+    "nodeManifest": [
+      {
+        "index": 0,
+        "name": "mixamorig:LeftToe_End_051",
+        "parentIndex": 1,
+        "parentName": "mixamorig:LeftToeBase_050",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.10810339450836182,
+            -0.03752775117754936,
+            -0.012996654026210308
+          ],
+          "rotation": [
+            0.05057867616415024,
+            -0.7017972469329834,
+            -0.7098292708396912,
+            0.03263382986187935
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 1,
+        "name": "mixamorig:LeftToeBase_050",
+        "parentIndex": 2,
+        "parentName": "mixamorig:LeftFoot_049",
+        "childrenIndices": [
+          0
+        ],
+        "childrenNames": [
+          "mixamorig:LeftToe_End_051"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            1.0055373422801495e-7,
+            0.13880613446235657,
+            2.5657936930656433e-7
+          ],
+          "rotation": [
+            0.2939988076686859,
+            0.008168954402208328,
+            -0.0025134726893156767,
+            0.9557676315307617
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 2,
+        "name": "mixamorig:LeftFoot_049",
+        "parentIndex": 3,
+        "parentName": "mixamorig:LeftLeg_048",
+        "childrenIndices": [
+          1
+        ],
+        "childrenNames": [
+          "mixamorig:LeftToeBase_050"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            3.396089596208185e-7,
+            0.3981638550758362,
+            -1.4530087355524302e-7
+          ],
+          "rotation": [
+            0.4988132417201996,
+            0.046717021614313126,
+            -0.02693885564804077,
+            0.8650301694869995
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 3,
+        "name": "mixamorig:LeftLeg_048",
+        "parentIndex": 4,
+        "parentName": "mixamorig:LeftUpLeg_047",
+        "childrenIndices": [
+          2
+        ],
+        "childrenNames": [
+          "mixamorig:LeftFoot_049"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            1.4840043149888515e-7,
+            0.39719516038894653,
+            -8.419854680141725e-8
+          ],
+          "rotation": [
+            -0.026560697704553604,
+            0.00035324820782989264,
+            -0.013318094424903393,
+            0.9995583891868591
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 4,
+        "name": "mixamorig:LeftUpLeg_047",
+        "parentIndex": 56,
+        "parentName": "mixamorig:Hips_01",
+        "childrenIndices": [
+          3
+        ],
+        "childrenNames": [
+          "mixamorig:LeftLeg_048"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.08731706440448761,
+            -0.045869529247283936,
+            -0.006559279747307301
+          ],
+          "rotation": [
+            0.00034857375430874527,
+            0.015029451809823513,
+            -0.9996182918548584,
+            0.023180661723017693
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 5,
+        "name": "mixamorig:RightToe_End_056",
+        "parentIndex": 6,
+        "parentName": "mixamorig:RightToeBase_055",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.10732149332761765,
+            -0.03928491473197937,
+            -0.012868847697973251
+          ],
+          "rotation": [
+            0.05041451379656792,
+            0.7019290924072266,
+            0.7097651958465576,
+            0.03142203390598297
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 6,
+        "name": "mixamorig:RightToeBase_055",
+        "parentIndex": 7,
+        "parentName": "mixamorig:RightFoot_054",
+        "childrenIndices": [
+          5
+        ],
+        "childrenNames": [
+          "mixamorig:RightToe_End_056"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            2.4389009922742844e-8,
+            0.14122016727924347,
+            -7.82310962677002e-8
+          ],
+          "rotation": [
+            0.28842294216156006,
+            -0.00887663010507822,
+            0.002674578223377466,
+            0.9574582576751709
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 7,
+        "name": "mixamorig:RightFoot_054",
+        "parentIndex": 8,
+        "parentName": "mixamorig:RightLeg_053",
+        "childrenIndices": [
+          6
+        ],
+        "childrenNames": [
+          "mixamorig:RightToeBase_055"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -6.110421963967383e-7,
+            0.3981710970401764,
+            2.0111474441364408e-7
+          ],
+          "rotation": [
+            0.5040605068206787,
+            -0.04540090635418892,
+            0.026548057794570923,
+            0.8620655536651611
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 8,
+        "name": "mixamorig:RightLeg_053",
+        "parentIndex": 9,
+        "parentName": "mixamorig:RightUpLeg_052",
+        "childrenIndices": [
+          7
+        ],
+        "childrenNames": [
+          "mixamorig:RightFoot_054"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -1.4376200851984322e-7,
+            0.3972437381744385,
+            -9.371984788231202e-8
+          ],
+          "rotation": [
+            -0.024753989651799202,
+            -0.0003298384544905275,
+            0.013317547738552094,
+            0.9996048212051392
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 9,
+        "name": "mixamorig:RightUpLeg_052",
+        "parentIndex": 56,
+        "parentName": "mixamorig:Hips_01",
+        "childrenIndices": [
+          8
+        ],
+        "childrenNames": [
+          "mixamorig:RightLeg_053"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.0873170867562294,
+            -0.04586946964263916,
+            -0.006453989073634148
+          ],
+          "rotation": [
+            0.00039260557969100773,
+            -0.016941891983151436,
+            0.9995877742767334,
+            0.02317708730697632
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 10,
+        "name": "mixamorig:LeftHandIndex4_018",
+        "parentIndex": 11,
+        "parentName": "mixamorig:LeftHandIndex3_017",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.1924181431531906,
+            -0.5786468386650085,
+            1.4587730169296265
+          ],
+          "rotation": [
+            -0.5081075429916382,
+            -0.41533559560775757,
+            0.5898743867874146,
+            0.4705011248588562
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 11,
+        "name": "mixamorig:LeftHandIndex3_017",
+        "parentIndex": 12,
+        "parentName": "mixamorig:LeftHandIndex2_016",
+        "childrenIndices": [
+          10
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandIndex4_018"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00031535886228084564,
+            0.02864569053053856,
+            3.6205165088176727e-7
+          ],
+          "rotation": [
+            -0.036280177533626556,
+            1.817275574467203e-8,
+            -3.468549891749717e-7,
+            0.999341607093811
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 12,
+        "name": "mixamorig:LeftHandIndex2_016",
+        "parentIndex": 13,
+        "parentName": "mixamorig:LeftHandIndex1_015",
+        "childrenIndices": [
+          11
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandIndex3_017"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.0003955364227294922,
+            0.030618350952863693,
+            -5.450565367937088e-7
+          ],
+          "rotation": [
+            0.11549045890569687,
+            -1.1948495171054674e-7,
+            0.000001795350840438914,
+            0.9933086037635803
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 13,
+        "name": "mixamorig:LeftHandIndex1_015",
+        "parentIndex": 26,
+        "parentName": "mixamorig:LeftHand_010",
+        "childrenIndices": [
+          12
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandIndex2_016"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.030707325786352158,
+            0.14954912662506104,
+            -0.00319115724414587
+          ],
+          "rotation": [
+            0.08422162383794785,
+            -0.004831358324736357,
+            -0.057072725147008896,
+            0.9947994947433472
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 14,
+        "name": "mixamorig:LeftHandMiddle4_022",
+        "parentIndex": 15,
+        "parentName": "mixamorig:LeftHandMiddle3_021",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.1466347724199295,
+            -0.703438401222229,
+            1.4165736436843872
+          ],
+          "rotation": [
+            -0.49704083800315857,
+            -0.43259313702583313,
+            0.5672985315322876,
+            0.4939495027065277
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 15,
+        "name": "mixamorig:LeftHandMiddle3_021",
+        "parentIndex": 16,
+        "parentName": "mixamorig:LeftHandMiddle2_020",
+        "childrenIndices": [
+          14
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandMiddle4_022"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00015808828175067902,
+            0.023297984153032303,
+            3.57162207365036e-7
+          ],
+          "rotation": [
+            -0.06012221425771713,
+            -2.2042370062536065e-7,
+            4.056663556184503e-7,
+            0.9981910586357117
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 16,
+        "name": "mixamorig:LeftHandMiddle2_020",
+        "parentIndex": 17,
+        "parentName": "mixamorig:LeftHandMiddle1_019",
+        "childrenIndices": [
+          15
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandMiddle3_021"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.00007528718560934067,
+            0.02380441688001156,
+            -5.825422704219818e-7
+          ],
+          "rotation": [
+            0.052275970578193665,
+            9.853478104560054e-7,
+            0.000001564374429108284,
+            0.9986326694488525
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 17,
+        "name": "mixamorig:LeftHandMiddle1_019",
+        "parentIndex": 26,
+        "parentName": "mixamorig:LeftHand_010",
+        "childrenIndices": [
+          16
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandMiddle2_020"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.00496751070022583,
+            0.17487312853336334,
+            -0.0008871741592884064
+          ],
+          "rotation": [
+            0.13454025983810425,
+            -0.0061563546769320965,
+            -0.04530033841729164,
+            0.989853024482727
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 18,
+        "name": "mixamorig:LeftHandRing4_026",
+        "parentIndex": 19,
+        "parentName": "mixamorig:LeftHandRing3_025",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.11924333870410919,
+            -0.8355609774589539,
+            1.3372812271118164
+          ],
+          "rotation": [
+            -0.4667338728904724,
+            -0.4645228385925293,
+            0.5472181439399719,
+            0.5166530013084412
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 19,
+        "name": "mixamorig:LeftHandRing3_025",
+        "parentIndex": 20,
+        "parentName": "mixamorig:LeftHandRing2_024",
+        "childrenIndices": [
+          18
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandRing4_026"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00012994743883609772,
+            0.012846248224377632,
+            -1.73225998878479e-7
+          ],
+          "rotation": [
+            -0.18032363057136536,
+            2.672762491329195e-7,
+            -2.038081277078163e-7,
+            0.9836073517799377
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 20,
+        "name": "mixamorig:LeftHandRing2_024",
+        "parentIndex": 21,
+        "parentName": "mixamorig:LeftHandRing1_023",
+        "childrenIndices": [
+          19
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandRing3_025"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00006756186485290527,
+            0.013002058491110802,
+            -3.5669654607772827e-7
+          ],
+          "rotation": [
+            0.030520064756274223,
+            -0.0000012457586535674636,
+            9.534199989502667e-7,
+            0.9995341300964355
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 21,
+        "name": "mixamorig:LeftHandRing1_023",
+        "parentIndex": 26,
+        "parentName": "mixamorig:LeftHand_010",
+        "childrenIndices": [
+          20
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandRing2_024"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.03567500039935112,
+            0.1809302270412445,
+            -0.0031981542706489563
+          ],
+          "rotation": [
+            0.2227485328912735,
+            -0.011600327678024769,
+            -0.05070727691054344,
+            0.9734871983528137
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 22,
+        "name": "mixamorig:LeftHandThumb4_014",
+        "parentIndex": 23,
+        "parentName": "mixamorig:LeftHandThumb3_013",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.47262999415397644,
+            -0.28406327962875366,
+            1.4331892728805542
+          ],
+          "rotation": [
+            -0.7136257886886597,
+            -0.2480211853981018,
+            0.3284757733345032,
+            0.5668574571609497
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 23,
+        "name": "mixamorig:LeftHandThumb3_013",
+        "parentIndex": 24,
+        "parentName": "mixamorig:LeftHandThumb2_012",
+        "childrenIndices": [
+          22
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandThumb4_014"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.004727311432361603,
+            0.03198878467082977,
+            1.3667158782482147e-7
+          ],
+          "rotation": [
+            0.08955741673707962,
+            0.000004759089733852306,
+            3.307261806639872e-7,
+            0.9959816932678223
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 24,
+        "name": "mixamorig:LeftHandThumb2_012",
+        "parentIndex": 25,
+        "parentName": "mixamorig:LeftHandThumb1_011",
+        "childrenIndices": [
+          23
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandThumb3_013"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.005978046916425228,
+            0.05044111981987953,
+            2.0617153495550156e-7
+          ],
+          "rotation": [
+            0.11905471235513687,
+            -0.00000495260701427469,
+            0.000005511475592356874,
+            0.9928877353668213
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 25,
+        "name": "mixamorig:LeftHandThumb1_011",
+        "parentIndex": 26,
+        "parentName": "mixamorig:LeftHand_010",
+        "childrenIndices": [
+          24
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandThumb2_012"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.03248598426580429,
+            0.05455007404088974,
+            -0.000533451559022069
+          ],
+          "rotation": [
+            -0.00400671036913991,
+            -0.0013612420298159122,
+            0.3217184543609619,
+            0.9468259215354919
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 26,
+        "name": "mixamorig:LeftHand_010",
+        "parentIndex": 27,
+        "parentName": "mixamorig:LeftForeArm_09",
+        "childrenIndices": [
+          13,
+          17,
+          21,
+          25
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHandIndex1_015",
+          "mixamorig:LeftHandMiddle1_019",
+          "mixamorig:LeftHandRing1_023",
+          "mixamorig:LeftHandThumb1_011"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -1.0058283805847168e-7,
+            0.25593602657318115,
+            -7.211929187178612e-7
+          ],
+          "rotation": [
+            -0.06927841901779175,
+            -0.054874662309885025,
+            0.08542484790086746,
+            0.9924172163009644
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 27,
+        "name": "mixamorig:LeftForeArm_09",
+        "parentIndex": 28,
+        "parentName": "mixamorig:LeftArm_08",
+        "childrenIndices": [
+          26
+        ],
+        "childrenNames": [
+          "mixamorig:LeftHand_010"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            2.514570951461792e-8,
+            0.2513786554336548,
+            -0.0000021667801775038242
+          ],
+          "rotation": [
+            -0.02384178899228573,
+            0.0008733145659789443,
+            -0.03661543130874634,
+            0.9990445971488953
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 28,
+        "name": "mixamorig:LeftArm_08",
+        "parentIndex": 29,
+        "parentName": "mixamorig:LeftShoulder_07",
+        "childrenIndices": [
+          27
+        ],
+        "childrenNames": [
+          "mixamorig:LeftForeArm_09"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -8.547795005142689e-8,
+            0.11405794322490692,
+            -0.0000019026920199394226
+          ],
+          "rotation": [
+            -0.033640507608652115,
+            0.00046544522047042847,
+            -0.013838057406246662,
+            0.9993380904197693
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 29,
+        "name": "mixamorig:LeftShoulder_07",
+        "parentIndex": 53,
+        "parentName": "mixamorig:Spine2_04",
+        "childrenIndices": [
+          28
+        ],
+        "childrenNames": [
+          "mixamorig:LeftArm_08"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.05549132078886032,
+            0.11611739546060562,
+            -0.00016608047008048743
+          ],
+          "rotation": [
+            0.5324618816375732,
+            0.4650382101535797,
+            -0.5340232253074646,
+            0.46372732520103455
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 30,
+        "name": "mixamorig:HeadTop_End_06",
+        "parentIndex": 31,
+        "parentName": "mixamorig:Head_05",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.00045063230209052563,
+            -1.4560222625732422,
+            0.017446277663111687
+          ],
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 31,
+        "name": "mixamorig:Head_05",
+        "parentIndex": 32,
+        "parentName": "mixamorig:Neck_00",
+        "childrenIndices": [
+          30
+        ],
+        "childrenNames": [
+          "mixamorig:HeadTop_End_06"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            8.708259807699292e-11,
+            0.10876178741455078,
+            0.005440558772534132
+          ],
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 32,
+        "name": "mixamorig:Neck_00",
+        "parentIndex": 53,
+        "parentName": "mixamorig:Spine2_04",
+        "childrenIndices": [
+          31
+        ],
+        "childrenNames": [
+          "mixamorig:Head_05"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -3.3985814162917904e-11,
+            0.12408499419689178,
+            -5.025801286251408e-8
+          ],
+          "rotation": [
+            0.013698335736989975,
+            -6.124933094042717e-8,
+            6.453563794472927e-10,
+            0.9999061822891235
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 33,
+        "name": "mixamorig:RightHandIndex4_038",
+        "parentIndex": 34,
+        "parentName": "mixamorig:RightHandIndex3_037",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.07274340838193893,
+            -0.38874876499176025,
+            1.5301976203918457
+          ],
+          "rotation": [
+            -0.5587279200553894,
+            0.3989330232143402,
+            -0.595381498336792,
+            0.4173685312271118
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 34,
+        "name": "mixamorig:RightHandIndex3_037",
+        "parentIndex": 35,
+        "parentName": "mixamorig:RightHandIndex2_036",
+        "childrenIndices": [
+          33
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandIndex4_038"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.00009260885417461395,
+            0.028702255338430405,
+            2.3748725652694702e-8
+          ],
+          "rotation": [
+            0.019019030034542084,
+            -2.3217414479859144e-7,
+            2.2122911502719944e-8,
+            0.9998191595077515
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 35,
+        "name": "mixamorig:RightHandIndex2_036",
+        "parentIndex": 36,
+        "parentName": "mixamorig:RightHandIndex1_035",
+        "childrenIndices": [
+          34
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandIndex3_037"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00020506232976913452,
+            0.03141393885016441,
+            -5.005276761949062e-7
+          ],
+          "rotation": [
+            0.1307840794324875,
+            8.671754159195189e-8,
+            -2.2005237099165242e-7,
+            0.9914108514785767
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 36,
+        "name": "mixamorig:RightHandIndex1_035",
+        "parentIndex": 49,
+        "parentName": "mixamorig:RightHand_030",
+        "childrenIndices": [
+          35
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandIndex2_036"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.023645121604204178,
+            0.1503659039735794,
+            -0.0040625217370688915
+          ],
+          "rotation": [
+            0.08487995713949203,
+            0.005857461132109165,
+            0.06858105212450027,
+            0.9940109848976135
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 37,
+        "name": "mixamorig:RightHandMiddle4_042",
+        "parentIndex": 38,
+        "parentName": "mixamorig:RightHandMiddle3_041",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.08069424331188202,
+            -0.3477805554866791,
+            1.5469001531600952
+          ],
+          "rotation": [
+            -0.5565058588981628,
+            0.39277511835098267,
+            -0.6116685271263123,
+            0.40235626697540283
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 38,
+        "name": "mixamorig:RightHandMiddle3_041",
+        "parentIndex": 39,
+        "parentName": "mixamorig:RightHandMiddle2_040",
+        "childrenIndices": [
+          37
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandMiddle4_042"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00002156570553779602,
+            0.02322527766227722,
+            9.802170097827911e-8
+          ],
+          "rotation": [
+            0.061694394797086716,
+            4.047321624511824e-7,
+            6.275097348407144e-7,
+            0.9980951547622681
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 39,
+        "name": "mixamorig:RightHandMiddle2_040",
+        "parentIndex": 40,
+        "parentName": "mixamorig:RightHandMiddle1_039",
+        "childrenIndices": [
+          38
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandMiddle3_041"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00007431581616401672,
+            0.02517320215702057,
+            2.845190465450287e-7
+          ],
+          "rotation": [
+            0.020639169961214066,
+            -1.1178251924093274e-7,
+            2.7246990441653907e-8,
+            0.9997870326042175
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 40,
+        "name": "mixamorig:RightHandMiddle1_039",
+        "parentIndex": 49,
+        "parentName": "mixamorig:RightHand_030",
+        "childrenIndices": [
+          39
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandMiddle2_040"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.002056628465652466,
+            0.1742342710494995,
+            -0.0008502599084749818
+          ],
+          "rotation": [
+            0.1691949963569641,
+            0.014215930365025997,
+            0.08249776810407639,
+            0.982020914554596
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 41,
+        "name": "mixamorig:RightHandRing4_046",
+        "parentIndex": 42,
+        "parentName": "mixamorig:RightHandRing3_045",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.29283955693244934,
+            -0.4960673153400421,
+            1.4699406623840332
+          ],
+          "rotation": [
+            -0.4490332305431366,
+            0.47136563062667847,
+            -0.6514530777931213,
+            0.38960567116737366
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 42,
+        "name": "mixamorig:RightHandRing3_045",
+        "parentIndex": 43,
+        "parentName": "mixamorig:RightHandRing2_044",
+        "childrenIndices": [
+          41
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandRing4_046"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.0002959445118904114,
+            0.010653726756572723,
+            3.520399332046509e-7
+          ],
+          "rotation": [
+            -0.037784188985824585,
+            0.0000016347070186384371,
+            2.83790370758652e-7,
+            0.9992859363555908
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 43,
+        "name": "mixamorig:RightHandRing2_044",
+        "parentIndex": 44,
+        "parentName": "mixamorig:RightHandRing1_043",
+        "childrenIndices": [
+          42
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandRing3_045"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.000521048903465271,
+            0.03848974406719208,
+            2.8172507882118225e-7
+          ],
+          "rotation": [
+            0.12563465535640717,
+            -0.0000013126222029313794,
+            0.0000019235208128520753,
+            0.992076575756073
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 44,
+        "name": "mixamorig:RightHandRing1_043",
+        "parentIndex": 49,
+        "parentName": "mixamorig:RightHand_030",
+        "childrenIndices": [
+          43
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandRing2_044"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.02158777415752411,
+            0.1484813243150711,
+            -0.004522704519331455
+          ],
+          "rotation": [
+            0.09351148456335068,
+            0.019470909610390663,
+            0.20286880433559418,
+            0.9745361804962158
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 45,
+        "name": "mixamorig:RightHandThumb4_034",
+        "parentIndex": 46,
+        "parentName": "mixamorig:RightHandThumb3_033",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.5757277011871338,
+            -0.13815568387508392,
+            1.4138448238372803
+          ],
+          "rotation": [
+            -0.7520312666893005,
+            0.25393351912498474,
+            -0.31505173444747925,
+            0.5202971696853638
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 46,
+        "name": "mixamorig:RightHandThumb3_033",
+        "parentIndex": 47,
+        "parentName": "mixamorig:RightHandThumb2_032",
+        "childrenIndices": [
+          45
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandThumb4_034"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.00932774506509304,
+            0.03187663480639458,
+            -1.7834827303886414e-7
+          ],
+          "rotation": [
+            0.158259779214859,
+            -2.482997842889745e-7,
+            0.000008211816748371348,
+            0.9873975515365601
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 47,
+        "name": "mixamorig:RightHandThumb2_032",
+        "parentIndex": 48,
+        "parentName": "mixamorig:RightHandThumb1_031",
+        "childrenIndices": [
+          46
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandThumb3_033"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.009083644486963749,
+            0.04770850017666817,
+            -0.0000010320909495931119
+          ],
+          "rotation": [
+            0.09794342517852783,
+            -0.000003338778924444341,
+            -0.0000010448452485434245,
+            0.9951919913291931
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 48,
+        "name": "mixamorig:RightHandThumb1_031",
+        "parentIndex": 49,
+        "parentName": "mixamorig:RightHand_030",
+        "childrenIndices": [
+          47
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandThumb2_032"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.0262098778039217,
+            0.05468117818236351,
+            -0.0028837115969508886
+          ],
+          "rotation": [
+            -0.022968504577875137,
+            0.007552503142505884,
+            -0.3122573792934418,
+            0.9496898055076599
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 49,
+        "name": "mixamorig:RightHand_030",
+        "parentIndex": 50,
+        "parentName": "mixamorig:RightForeArm_029",
+        "childrenIndices": [
+          36,
+          40,
+          44,
+          48
+        ],
+        "childrenNames": [
+          "mixamorig:RightHandIndex1_035",
+          "mixamorig:RightHandMiddle1_039",
+          "mixamorig:RightHandRing1_043",
+          "mixamorig:RightHandThumb1_031"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -1.7508864402770996e-7,
+            0.2559592127799988,
+            -4.984904080629349e-7
+          ],
+          "rotation": [
+            -0.07737693935632706,
+            0.012977724894881248,
+            -0.10603943467140198,
+            0.9912618398666382
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 50,
+        "name": "mixamorig:RightForeArm_029",
+        "parentIndex": 51,
+        "parentName": "mixamorig:RightArm_028",
+        "childrenIndices": [
+          49
+        ],
+        "childrenNames": [
+          "mixamorig:RightHand_030"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            2.3283064365386963e-8,
+            0.25136932730674744,
+            -0.0000011484953574836254
+          ],
+          "rotation": [
+            -0.023878827691078186,
+            -0.0009014059905894101,
+            0.03772033378481865,
+            0.9990025758743286
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 51,
+        "name": "mixamorig:RightArm_028",
+        "parentIndex": 52,
+        "parentName": "mixamorig:RightShoulder_027",
+        "childrenIndices": [
+          50
+        ],
+        "childrenNames": [
+          "mixamorig:RightForeArm_029"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            1.6007106751203537e-8,
+            0.11405791342258453,
+            -0.0000014095567166805267
+          ],
+          "rotation": [
+            -0.03360370546579361,
+            -0.00041108831646852195,
+            0.012234699912369251,
+            0.9993603229522705
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 52,
+        "name": "mixamorig:RightShoulder_027",
+        "parentIndex": 53,
+        "parentName": "mixamorig:Spine2_04",
+        "childrenIndices": [
+          51
+        ],
+        "childrenNames": [
+          "mixamorig:RightArm_028"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -0.05549133941531181,
+            0.11612062156200409,
+            -0.0002706035738810897
+          ],
+          "rotation": [
+            0.5319520831108093,
+            -0.46547672152519226,
+            0.5345080494880676,
+            0.4633137881755829
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 53,
+        "name": "mixamorig:Spine2_04",
+        "parentIndex": 54,
+        "parentName": "mixamorig:Spine1_03",
+        "childrenIndices": [
+          29,
+          32,
+          52
+        ],
+        "childrenNames": [
+          "mixamorig:LeftShoulder_07",
+          "mixamorig:Neck_00",
+          "mixamorig:RightShoulder_027"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            2.2037927038809357e-11,
+            0.11029759049415588,
+            -4.4651244479609886e-8
+          ],
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 54,
+        "name": "mixamorig:Spine1_03",
+        "parentIndex": 55,
+        "parentName": "mixamorig:Spine_02",
+        "childrenIndices": [
+          53
+        ],
+        "childrenNames": [
+          "mixamorig:Spine2_04"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            5.601852315351152e-12,
+            0.0965103954076767,
+            -3.347693322552914e-8
+          ],
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 55,
+        "name": "mixamorig:Spine_02",
+        "parentIndex": 56,
+        "parentName": "mixamorig:Hips_01",
+        "childrenIndices": [
+          54
+        ],
+        "childrenNames": [
+          "mixamorig:Spine1_03"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            -2.4354122885039686e-11,
+            0.0826922059059143,
+            -0.0022661571856588125
+          ],
+          "rotation": [
+            -0.013698342256247997,
+            8.025998710081694e-8,
+            -8.932318773524628e-10,
+            0.9999061822891235
+          ],
+          "scale": null
+        }
+      },
+      {
+        "index": 56,
+        "name": "mixamorig:Hips_01",
+        "parentIndex": 57,
+        "parentName": "_rootJoint",
+        "childrenIndices": [
+          4,
+          9,
+          55
+        ],
+        "childrenNames": [
+          "mixamorig:LeftUpLeg_047",
+          "mixamorig:RightUpLeg_052",
+          "mixamorig:Spine_02"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": [
+            0.0004506333789322525,
+            0.9338000416755676,
+            -0.011555998586118221
+          ],
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 57,
+        "name": "_rootJoint",
+        "parentIndex": 59,
+        "parentName": "Object_4",
+        "childrenIndices": [
+          56
+        ],
+        "childrenNames": [
+          "mixamorig:Hips_01"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": null,
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 58,
+        "name": "Object_7",
+        "parentIndex": 59,
+        "parentName": "Object_4",
+        "childrenIndices": [],
+        "childrenNames": [],
+        "meshIndex": 0,
+        "skinIndex": 0,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": null,
+          "rotation": null,
+          "scale": null
+        }
+      },
+      {
+        "index": 59,
+        "name": "Object_4",
+        "parentIndex": null,
+        "parentName": null,
+        "childrenIndices": [
+          58,
+          57
+        ],
+        "childrenNames": [
+          "Object_7",
+          "_rootJoint"
+        ],
+        "meshIndex": null,
+        "skinIndex": null,
+        "cameraIndex": null,
+        "localTransform": {
+          "matrix": null,
+          "translation": null,
+          "rotation": null,
+          "scale": null
+        }
+      }
+    ],
+    "skinManifest": [
+      {
+        "index": 0,
+        "name": "Object_4",
+        "skeletonNodeIndex": null,
+        "inverseBindMatricesAccessor": 0,
+        "jointCount": 58,
+        "joints": [
+          {
+            "nodeIndex": 57,
+            "name": "_rootJoint",
+            "parentNodeIndex": 59,
+            "parentName": "Object_4"
+          },
+          {
+            "nodeIndex": 56,
+            "name": "mixamorig:Hips_01",
+            "parentNodeIndex": 57,
+            "parentName": "_rootJoint"
+          },
+          {
+            "nodeIndex": 4,
+            "name": "mixamorig:LeftUpLeg_047",
+            "parentNodeIndex": 56,
+            "parentName": "mixamorig:Hips_01"
+          },
+          {
+            "nodeIndex": 3,
+            "name": "mixamorig:LeftLeg_048",
+            "parentNodeIndex": 4,
+            "parentName": "mixamorig:LeftUpLeg_047"
+          },
+          {
+            "nodeIndex": 2,
+            "name": "mixamorig:LeftFoot_049",
+            "parentNodeIndex": 3,
+            "parentName": "mixamorig:LeftLeg_048"
+          },
+          {
+            "nodeIndex": 1,
+            "name": "mixamorig:LeftToeBase_050",
+            "parentNodeIndex": 2,
+            "parentName": "mixamorig:LeftFoot_049"
+          },
+          {
+            "nodeIndex": 0,
+            "name": "mixamorig:LeftToe_End_051",
+            "parentNodeIndex": 1,
+            "parentName": "mixamorig:LeftToeBase_050"
+          },
+          {
+            "nodeIndex": 9,
+            "name": "mixamorig:RightUpLeg_052",
+            "parentNodeIndex": 56,
+            "parentName": "mixamorig:Hips_01"
+          },
+          {
+            "nodeIndex": 8,
+            "name": "mixamorig:RightLeg_053",
+            "parentNodeIndex": 9,
+            "parentName": "mixamorig:RightUpLeg_052"
+          },
+          {
+            "nodeIndex": 7,
+            "name": "mixamorig:RightFoot_054",
+            "parentNodeIndex": 8,
+            "parentName": "mixamorig:RightLeg_053"
+          },
+          {
+            "nodeIndex": 6,
+            "name": "mixamorig:RightToeBase_055",
+            "parentNodeIndex": 7,
+            "parentName": "mixamorig:RightFoot_054"
+          },
+          {
+            "nodeIndex": 5,
+            "name": "mixamorig:RightToe_End_056",
+            "parentNodeIndex": 6,
+            "parentName": "mixamorig:RightToeBase_055"
+          },
+          {
+            "nodeIndex": 55,
+            "name": "mixamorig:Spine_02",
+            "parentNodeIndex": 56,
+            "parentName": "mixamorig:Hips_01"
+          },
+          {
+            "nodeIndex": 54,
+            "name": "mixamorig:Spine1_03",
+            "parentNodeIndex": 55,
+            "parentName": "mixamorig:Spine_02"
+          },
+          {
+            "nodeIndex": 53,
+            "name": "mixamorig:Spine2_04",
+            "parentNodeIndex": 54,
+            "parentName": "mixamorig:Spine1_03"
+          },
+          {
+            "nodeIndex": 29,
+            "name": "mixamorig:LeftShoulder_07",
+            "parentNodeIndex": 53,
+            "parentName": "mixamorig:Spine2_04"
+          },
+          {
+            "nodeIndex": 28,
+            "name": "mixamorig:LeftArm_08",
+            "parentNodeIndex": 29,
+            "parentName": "mixamorig:LeftShoulder_07"
+          },
+          {
+            "nodeIndex": 27,
+            "name": "mixamorig:LeftForeArm_09",
+            "parentNodeIndex": 28,
+            "parentName": "mixamorig:LeftArm_08"
+          },
+          {
+            "nodeIndex": 26,
+            "name": "mixamorig:LeftHand_010",
+            "parentNodeIndex": 27,
+            "parentName": "mixamorig:LeftForeArm_09"
+          },
+          {
+            "nodeIndex": 13,
+            "name": "mixamorig:LeftHandIndex1_015",
+            "parentNodeIndex": 26,
+            "parentName": "mixamorig:LeftHand_010"
+          },
+          {
+            "nodeIndex": 12,
+            "name": "mixamorig:LeftHandIndex2_016",
+            "parentNodeIndex": 13,
+            "parentName": "mixamorig:LeftHandIndex1_015"
+          },
+          {
+            "nodeIndex": 11,
+            "name": "mixamorig:LeftHandIndex3_017",
+            "parentNodeIndex": 12,
+            "parentName": "mixamorig:LeftHandIndex2_016"
+          },
+          {
+            "nodeIndex": 10,
+            "name": "mixamorig:LeftHandIndex4_018",
+            "parentNodeIndex": 11,
+            "parentName": "mixamorig:LeftHandIndex3_017"
+          },
+          {
+            "nodeIndex": 17,
+            "name": "mixamorig:LeftHandMiddle1_019",
+            "parentNodeIndex": 26,
+            "parentName": "mixamorig:LeftHand_010"
+          },
+          {
+            "nodeIndex": 16,
+            "name": "mixamorig:LeftHandMiddle2_020",
+            "parentNodeIndex": 17,
+            "parentName": "mixamorig:LeftHandMiddle1_019"
+          },
+          {
+            "nodeIndex": 15,
+            "name": "mixamorig:LeftHandMiddle3_021",
+            "parentNodeIndex": 16,
+            "parentName": "mixamorig:LeftHandMiddle2_020"
+          },
+          {
+            "nodeIndex": 14,
+            "name": "mixamorig:LeftHandMiddle4_022",
+            "parentNodeIndex": 15,
+            "parentName": "mixamorig:LeftHandMiddle3_021"
+          },
+          {
+            "nodeIndex": 21,
+            "name": "mixamorig:LeftHandRing1_023",
+            "parentNodeIndex": 26,
+            "parentName": "mixamorig:LeftHand_010"
+          },
+          {
+            "nodeIndex": 20,
+            "name": "mixamorig:LeftHandRing2_024",
+            "parentNodeIndex": 21,
+            "parentName": "mixamorig:LeftHandRing1_023"
+          },
+          {
+            "nodeIndex": 19,
+            "name": "mixamorig:LeftHandRing3_025",
+            "parentNodeIndex": 20,
+            "parentName": "mixamorig:LeftHandRing2_024"
+          },
+          {
+            "nodeIndex": 18,
+            "name": "mixamorig:LeftHandRing4_026",
+            "parentNodeIndex": 19,
+            "parentName": "mixamorig:LeftHandRing3_025"
+          },
+          {
+            "nodeIndex": 25,
+            "name": "mixamorig:LeftHandThumb1_011",
+            "parentNodeIndex": 26,
+            "parentName": "mixamorig:LeftHand_010"
+          },
+          {
+            "nodeIndex": 24,
+            "name": "mixamorig:LeftHandThumb2_012",
+            "parentNodeIndex": 25,
+            "parentName": "mixamorig:LeftHandThumb1_011"
+          },
+          {
+            "nodeIndex": 23,
+            "name": "mixamorig:LeftHandThumb3_013",
+            "parentNodeIndex": 24,
+            "parentName": "mixamorig:LeftHandThumb2_012"
+          },
+          {
+            "nodeIndex": 22,
+            "name": "mixamorig:LeftHandThumb4_014",
+            "parentNodeIndex": 23,
+            "parentName": "mixamorig:LeftHandThumb3_013"
+          },
+          {
+            "nodeIndex": 32,
+            "name": "mixamorig:Neck_00",
+            "parentNodeIndex": 53,
+            "parentName": "mixamorig:Spine2_04"
+          },
+          {
+            "nodeIndex": 31,
+            "name": "mixamorig:Head_05",
+            "parentNodeIndex": 32,
+            "parentName": "mixamorig:Neck_00"
+          },
+          {
+            "nodeIndex": 30,
+            "name": "mixamorig:HeadTop_End_06",
+            "parentNodeIndex": 31,
+            "parentName": "mixamorig:Head_05"
+          },
+          {
+            "nodeIndex": 52,
+            "name": "mixamorig:RightShoulder_027",
+            "parentNodeIndex": 53,
+            "parentName": "mixamorig:Spine2_04"
+          },
+          {
+            "nodeIndex": 51,
+            "name": "mixamorig:RightArm_028",
+            "parentNodeIndex": 52,
+            "parentName": "mixamorig:RightShoulder_027"
+          },
+          {
+            "nodeIndex": 50,
+            "name": "mixamorig:RightForeArm_029",
+            "parentNodeIndex": 51,
+            "parentName": "mixamorig:RightArm_028"
+          },
+          {
+            "nodeIndex": 49,
+            "name": "mixamorig:RightHand_030",
+            "parentNodeIndex": 50,
+            "parentName": "mixamorig:RightForeArm_029"
+          },
+          {
+            "nodeIndex": 36,
+            "name": "mixamorig:RightHandIndex1_035",
+            "parentNodeIndex": 49,
+            "parentName": "mixamorig:RightHand_030"
+          },
+          {
+            "nodeIndex": 35,
+            "name": "mixamorig:RightHandIndex2_036",
+            "parentNodeIndex": 36,
+            "parentName": "mixamorig:RightHandIndex1_035"
+          },
+          {
+            "nodeIndex": 34,
+            "name": "mixamorig:RightHandIndex3_037",
+            "parentNodeIndex": 35,
+            "parentName": "mixamorig:RightHandIndex2_036"
+          },
+          {
+            "nodeIndex": 33,
+            "name": "mixamorig:RightHandIndex4_038",
+            "parentNodeIndex": 34,
+            "parentName": "mixamorig:RightHandIndex3_037"
+          },
+          {
+            "nodeIndex": 40,
+            "name": "mixamorig:RightHandMiddle1_039",
+            "parentNodeIndex": 49,
+            "parentName": "mixamorig:RightHand_030"
+          },
+          {
+            "nodeIndex": 39,
+            "name": "mixamorig:RightHandMiddle2_040",
+            "parentNodeIndex": 40,
+            "parentName": "mixamorig:RightHandMiddle1_039"
+          },
+          {
+            "nodeIndex": 38,
+            "name": "mixamorig:RightHandMiddle3_041",
+            "parentNodeIndex": 39,
+            "parentName": "mixamorig:RightHandMiddle2_040"
+          },
+          {
+            "nodeIndex": 37,
+            "name": "mixamorig:RightHandMiddle4_042",
+            "parentNodeIndex": 38,
+            "parentName": "mixamorig:RightHandMiddle3_041"
+          },
+          {
+            "nodeIndex": 44,
+            "name": "mixamorig:RightHandRing1_043",
+            "parentNodeIndex": 49,
+            "parentName": "mixamorig:RightHand_030"
+          },
+          {
+            "nodeIndex": 43,
+            "name": "mixamorig:RightHandRing2_044",
+            "parentNodeIndex": 44,
+            "parentName": "mixamorig:RightHandRing1_043"
+          },
+          {
+            "nodeIndex": 42,
+            "name": "mixamorig:RightHandRing3_045",
+            "parentNodeIndex": 43,
+            "parentName": "mixamorig:RightHandRing2_044"
+          },
+          {
+            "nodeIndex": 41,
+            "name": "mixamorig:RightHandRing4_046",
+            "parentNodeIndex": 42,
+            "parentName": "mixamorig:RightHandRing3_045"
+          },
+          {
+            "nodeIndex": 48,
+            "name": "mixamorig:RightHandThumb1_031",
+            "parentNodeIndex": 49,
+            "parentName": "mixamorig:RightHand_030"
+          },
+          {
+            "nodeIndex": 47,
+            "name": "mixamorig:RightHandThumb2_032",
+            "parentNodeIndex": 48,
+            "parentName": "mixamorig:RightHandThumb1_031"
+          },
+          {
+            "nodeIndex": 46,
+            "name": "mixamorig:RightHandThumb3_033",
+            "parentNodeIndex": 47,
+            "parentName": "mixamorig:RightHandThumb2_032"
+          },
+          {
+            "nodeIndex": 45,
+            "name": "mixamorig:RightHandThumb4_034",
+            "parentNodeIndex": 46,
+            "parentName": "mixamorig:RightHandThumb3_033"
+          }
+        ]
+      }
+    ]
+  },
   "modificationRecord": [
     {
       "date": "2026-08-17",
       "operation": "provenance staging only",
       "result": "No mesh, rig, bind pose, material, texture, clip, scale, or source file was modified. Production guide.glb export is deliberately deferred."
+    },
+    {
+      "date": "2026-08-17",
+      "operation": "production export",
+      "result": "Removed the inherited 0.01 runtime scale by baking a 1.8-unit normalization into the armature and mesh; preserved the 58-joint bind rig and single primitive; baked the approved graphite/release-blue base-color edits; resized all maps to 1024px WebP; added lossless EXT_meshopt_compression without position quantization. No geometry, gesture pose, or bone names were authored. Three.js runtime removes colons from node names via PropertyBinding.sanitizeNodeName; raw GLB names in this manifest remain unchanged."
     }
   ]
 }
