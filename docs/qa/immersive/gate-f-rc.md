@@ -96,7 +96,7 @@ CTAs present, plus a real click-through round trip to a case route and back.
 | Engine | 1440×900 desktop | 390×844 mobile | WebGL denied |
 |---|---|---|---|
 | chromium | live scene, reachable, round-trip OK, 0 errors | same | poster shown, 0 canvas, 0 GLB requests, reachable |
-| firefox | live scene, reachable, round-trip OK, 0 errors | live scene, reachable, round-trip OK, **1 observation (§7.1)** | poster shown, 0 canvas, 0 GLB, reachable |
+| firefox | live scene, reachable, round-trip OK, 0 errors | live scene, reachable, round-trip OK, 0 errors (§7.1 resolved by `d323071`) | poster shown, 0 canvas, 0 GLB, reachable |
 | webkit | live scene, reachable, round-trip OK, 0 errors | same | poster shown, 0 canvas, 0 GLB, reachable |
 
 Additional cross-engine coverage from the full e2e run (§2): keyboard-only
@@ -199,7 +199,7 @@ horizontal overflow, both CTAs + all four case links present in every capture.
 
 ---
 
-## 7. Unresolved observations (non-blocking, for the design lead / codex)
+## 7. Observations record (7.1 resolved; 7.2 pending Garvit's decision)
 
 ### 7.1 Firefox: unhandled rejection when navigation aborts the lazy PostHog chunk — RESOLVED
 
@@ -307,12 +307,15 @@ Do not deploy any state without Garvit's separate authorization.
 
 ## 9. Handoff — what remains before the RC commit
 
-1. Design lead (codex): final Apple (≥34/40) and Taste (≥22/25) audits from
-   the §6 captures; judge §7.1 (fix vs accept) and §7.2 (waiver vs Windows
-   pass).
-2. Garvit: live play-through of the production build (10-second founder
-   read, guide quality, mobile discovery, case openings) — the
-   screenshare-worthy reaction is the acceptance criterion.
+1. Design lead (codex): final audit COMPLETE — **Apple 38/40, Taste 24/25,
+   visual/design PASS** (no dimension below 4). The §7.1 Firefox fix
+   (`d323071`) is independently verified by codex; nothing remains for
+   design judgment.
+2. Garvit: (a) §7.2 decision — Windows HCM waiver (codex + Claude recommend
+   waiver, real Windows check post-RC) or a Windows pass; (b) live
+   play-through of the production build (10-second founder read, guide
+   quality, mobile discovery, case openings) — the screenshare-worthy
+   reaction is the acceptance criterion.
 3. Only then: `feat: complete immersive portfolio rebuild` RC commit and the
    Step 10 final handoff record (final commit hash + scorecards appended
-   here).
+   here). No deploy without Garvit's separate authorization.
