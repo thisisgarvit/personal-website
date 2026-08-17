@@ -7,6 +7,7 @@ export type {
 export { WorldAnchor, type WorldAnchorProps } from "./WorldAnchor";
 export {
   WorldProvider,
+  useOptionalWorldDirector,
   useWorldDirector,
   useWorldSnapshot,
 } from "./WorldProvider";

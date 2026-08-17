@@ -41,6 +41,25 @@ test("homepage exposes one valid landmark path around the decorative world", asy
   ).toHaveCount(0);
 });
 
+test("mobile board navigation passes axe at 390px", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.locator("#work-board").scrollIntoViewIfNeeded();
+  await expect(page.getByRole("tablist", { name: "Board columns" })).toBeVisible();
+
+  const results = await new AxeBuilder({ page })
+    .include("#work-board")
+    .analyze();
+  const blocking = results.violations.filter(
+    (violation) =>
+      violation.impact === "serious" || violation.impact === "critical",
+  );
+  expect(
+    blocking,
+    blocking.map((violation) => violation.id).join(", "),
+  ).toEqual([]);
+});
+
 for (const route of PUBLIC_ROUTES) {
   for (const theme of THEMES) {
     test(`axe: ${route} [${theme}]`, async ({ page }, testInfo) => {

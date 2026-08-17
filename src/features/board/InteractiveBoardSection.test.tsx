@@ -13,6 +13,11 @@ import {
   subscribeMascotSignals,
   type MascotSignal,
 } from "@/features/mascot/signals";
+import {
+  WorldProvider,
+  useWorldDirector,
+  type WorldDirector,
+} from "@/features/world";
 import { InteractiveBoardSection } from "./InteractiveBoardSection";
 import {
   getBuildHealthSnapshot,
@@ -220,5 +225,140 @@ describe("InteractiveBoardSection", () => {
     expect(capture.released).toBe(true);
     expect(maxie.style.transform).toBe("");
     unsubscribe();
+  });
+
+  it("renders explicit mobile column navigation that reaches every column without drag", () => {
+    render(<InteractiveBoardSection />);
+
+    expect(screen.getByRole("tablist", { name: "Board columns" })).toBeTruthy();
+    expect(
+      screen.getAllByRole("tab").map((tab) => tab.textContent),
+    ).toEqual(["Shipped", "In progress", "Backlog"]);
+    expect(screen.getByText("1 of 3")).toBeTruthy();
+    const previous = screen.getByRole("button", {
+      name: "Previous column",
+    }) as HTMLButtonElement;
+    const next = screen.getByRole("button", {
+      name: "Next column",
+    }) as HTMLButtonElement;
+    expect(previous.disabled).toBe(true);
+    expect(next.disabled).toBe(false);
+
+    fireEvent.click(next);
+    expect(screen.getByText("2 of 3")).toBeTruthy();
+    expect(
+      screen.getByRole("tab", { name: "In progress" }).getAttribute("aria-selected"),
+    ).toBe("true");
+
+    fireEvent.click(next);
+    expect(screen.getByText("3 of 3")).toBeTruthy();
+    expect(next.disabled).toBe(true);
+    expect(previous.disabled).toBe(false);
+
+    fireEvent.click(screen.getByRole("tab", { name: "Shipped" }));
+    expect(screen.getByText("1 of 3")).toBeTruthy();
+
+    // Tickets stay real links; discovery never depends on drag.
+    expect(
+      screen.getByRole("link", { name: /Stay Portal/ }).getAttribute("href"),
+    ).toBe("/work/stay-portal");
+  });
+
+  it("publishes active work and drag state to the world director across a drag lifecycle", async () => {
+    installMatchMedia(true); // reduced motion → deterministic 160ms settle
+    vi.stubGlobal("PointerEvent", TestPointerEvent);
+    const directorRef: { current: WorldDirector | null } = { current: null };
+    function DirectorProbe() {
+      directorRef.current = useWorldDirector();
+      return null;
+    }
+
+    render(
+      <WorldProvider>
+        <DirectorProbe />
+        <InteractiveBoardSection />
+      </WorldProvider>,
+    );
+    const director = directorRef.current!;
+    const board = document.querySelector<HTMLElement>("[data-board]")!;
+    const columns = Array.from(
+      board.querySelectorAll<HTMLElement>("[data-column]"),
+    );
+    const maxie = document.querySelector<HTMLElement>("[data-ticket='maxie']")!;
+    const grip = screen.getByRole("button", { name: "Drag AI Browser — Maxie" });
+    const capture = { active: false };
+
+    Object.defineProperty(board, "getBoundingClientRect", {
+      value: () => new DOMRect(0, 0, 900, 600),
+    });
+    columns.forEach((column, index) => {
+      Object.defineProperty(column, "getBoundingClientRect", {
+        value: () => new DOMRect(index * 300, 0, 300, 600),
+      });
+    });
+    Object.defineProperty(maxie, "getBoundingClientRect", {
+      value: () => new DOMRect(325, 100, 250, 180),
+    });
+    Object.assign(grip, {
+      setPointerCapture: () => {
+        capture.active = true;
+      },
+      hasPointerCapture: () => capture.active,
+      releasePointerCapture: () => {
+        capture.active = false;
+      },
+    });
+
+    expect(director.getSnapshot().activeWork).toBeNull();
+    expect(director.getSnapshot().dragging).toBe(false);
+
+    fireEvent.pointerDown(grip, {
+      pointerId: 9,
+      pointerType: "mouse",
+      button: 0,
+      clientX: 540,
+      clientY: 150,
+    });
+    // Active work publishes immediately on pointer-down, before any drag.
+    expect(director.getSnapshot().activeWork).toBe("maxie");
+    expect(director.getSnapshot().dragging).toBe(false);
+
+    fireEvent.pointerMove(grip, {
+      pointerId: 9,
+      pointerType: "mouse",
+      clientX: 565,
+      clientY: 152,
+    });
+    expect(director.getSnapshot().dragging).toBe(true);
+
+    // Continuous pointer samples never publish discrete world state.
+    let notifications = 0;
+    const unsubscribe = director.subscribe(() => {
+      notifications += 1;
+    });
+    for (let step = 0; step < 15; step += 1) {
+      fireEvent.pointerMove(grip, {
+        pointerId: 9,
+        pointerType: "mouse",
+        clientX: 400 + step * 9,
+        clientY: 150 + step,
+      });
+    }
+    expect(notifications).toBe(0);
+    unsubscribe();
+
+    fireEvent.pointerUp(grip, {
+      pointerId: 9,
+      pointerType: "mouse",
+      clientX: 470,
+      clientY: 160,
+    });
+    // Dragging clears on release while the active work survives the settle.
+    expect(director.getSnapshot().dragging).toBe(false);
+    expect(director.getSnapshot().activeWork).toBe("maxie");
+
+    await waitFor(() => {
+      expect(director.getSnapshot().activeWork).toBeNull();
+    });
   });
 });

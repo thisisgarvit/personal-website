@@ -277,8 +277,11 @@
   .head {
     align-items: flex-start;
   }
+  /* Columns stay narrower than the scroll port so the next column
+     always peeks past the 24px gap (Gate D2 explicit discovery):
+     ≥16px of the neighbour at 320px, ~35px at 430px. */
   .board {
-    grid-template-columns: repeat(3, 86vw);
+    grid-template-columns: repeat(3, calc(82vw - 3rem));
   }
   /* Reset collapses to an accessible icon control (§5.7). */
   .resetLabel {

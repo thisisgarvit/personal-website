@@ -239,6 +239,16 @@ test.describe("keyboard-only homepage journey", () => {
     await expect(dialog).toBeHidden();
   });
 
+  test("desktop hides the mobile column navigation from the tab order", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator("[data-board-mobile-nav]")).toBeHidden();
+    // Hidden controls must not add keyboard stops (Gate D2: desktop
+    // keyboard travel is unchanged).
+    await expect(page.getByRole("tab")).toHaveCount(0);
+  });
+
   test("reset restores the authored matrix and shows the ceremony toast", async ({
     page,
   }) => {
@@ -259,6 +269,60 @@ test.describe("keyboard-only homepage journey", () => {
     ).toBeVisible();
     await expect(liveRegion(page)).toHaveText(
       "Board reset. No sprint ceremony required.",
+    );
+  });
+});
+
+/**
+ * Gate D2: the mobile column tabs are real buttons with a roving
+ * selection — Arrow keys move both focus and the active column, and the
+ * board's existing Alt+Arrow ticket movement is untouched alongside.
+ */
+test.describe("mobile column navigation keyboard support", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("tabs expose roving selection driven by arrow keys", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.locator("#work-board").scrollIntoViewIfNeeded();
+
+    const shipped = page.getByRole("tab", { name: "Shipped" });
+    const inProgress = page.getByRole("tab", { name: "In progress" });
+    const backlog = page.getByRole("tab", { name: "Backlog" });
+
+    await expect(shipped).toHaveAttribute("aria-selected", "true");
+    await expect(shipped).toHaveAttribute("tabindex", "0");
+    await expect(inProgress).toHaveAttribute("tabindex", "-1");
+
+    await shipped.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(inProgress).toBeFocused();
+    await expect(inProgress).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("[data-board-position]")).toHaveText("2 of 3");
+
+    await page.keyboard.press("End");
+    await expect(backlog).toBeFocused();
+    await expect(page.locator("[data-board-position]")).toHaveText("3 of 3");
+
+    await page.keyboard.press("Home");
+    await expect(shipped).toBeFocused();
+    await expect(page.locator("[data-board-position]")).toHaveText("1 of 3");
+  });
+
+  test("Alt+Arrow ticket movement still works alongside the tabs", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const ticket = page.getByRole("link", { name: /Stay Portal/ });
+    await ticket.focus();
+    await page.keyboard.press("Alt+ArrowRight");
+
+    await expect(
+      page.locator('[data-column="in-progress"] [data-ticket="stay-portal"]'),
+    ).toBeVisible();
+    await expect(liveRegion(page)).toHaveText(
+      "Stay Portal moved to In progress",
     );
   });
 });

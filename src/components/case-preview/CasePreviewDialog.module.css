@@ -220,4 +220,21 @@
   .facts {
     grid-template-columns: 1fr 1fr;
   }
+  /* Gate D2: the primary CTA stays inside the first screen — it sticks
+     to the dialog's scrollport bottom instead of hiding below the
+     artifact + facts stack. Same link, same analytics owner. */
+  .readCase {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: calc(100% + 2 * var(--space-4));
+    margin-inline: calc(-1 * var(--space-4));
+    margin-bottom: calc(-1 * var(--space-6));
+    padding: var(--space-3) var(--space-4);
+    background: var(--material-overlay);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border-top: var(--rule);
+  }
 }

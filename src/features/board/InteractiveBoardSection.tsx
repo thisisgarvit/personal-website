@@ -28,10 +28,13 @@ import {
   type WorkSlug,
 } from "@/data/work";
 import { emitMascotSignal } from "@/features/mascot/signals";
+import { useOptionalWorldDirector } from "@/features/world/WorldProvider";
 import { analytics } from "@/lib/analytics";
 import { publishBoardHealth } from "./build-health";
 import { recordJourneyEvent } from "@/features/journey/journey-store";
 import styles from "./board-interactions.module.css";
+import { MobileColumnNav } from "./MobileColumnNav";
+import { useBoardViewport } from "./useBoardViewport";
 import {
   DRAG_HYSTERESIS,
   GestureHistory,
@@ -116,6 +119,13 @@ export function InteractiveBoardSection() {
   const positions = userPositions ?? storedPositions;
   const reducedMotion = useReducedMotion();
   const boardRef = useRef<HTMLDivElement>(null);
+  /**
+   * Discrete world publication (Gate D2). The director is optional so the
+   * board keeps working without a world; only pointer-down / drag-start /
+   * release / settle-completion publish — never per-sample pointer data.
+   */
+  const worldDirector = useOptionalWorldDirector();
+  const boardViewport = useBoardViewport(boardRef, boardColumns.length);
   const ticketRefs = useRef(new Map<WorkSlug, HTMLElement>());
   const settles = useRef(new Map<WorkSlug, TicketSettleHandle>());
   const activeDrag = useRef<ActiveDrag | null>(null);
@@ -274,6 +284,7 @@ export function InteractiveBoardSection() {
       },
       dragging: false,
     };
+    worldDirector?.setActiveWork(item.slug);
   };
 
   const onGripPointerMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -302,6 +313,7 @@ export function InteractiveBoardSection() {
       drag.dragging = true;
       drag.element.dataset.dragState = "dragging";
       recordJourneyEvent({ type: "played", kind: "drag" });
+      worldDirector?.setDragging(true);
       emitMascotSignal({
         reaction: "drag-watch",
         source: drag.slug,
@@ -369,6 +381,9 @@ export function InteractiveBoardSection() {
     activeDrag.current = null;
     releaseCapture(drag);
     setDropTarget(null);
+    // Release clears drag state now; active work survives until settle.
+    worldDirector?.setDragging(false);
+    const clearActiveWork = () => worldDirector?.setActiveWork(null);
 
     if (!drag.dragging) {
       startSettle(
@@ -380,6 +395,7 @@ export function InteractiveBoardSection() {
           rotation: drag.rotation,
         },
         releaseVelocity,
+        clearActiveWork,
       );
       return;
     }
@@ -403,7 +419,10 @@ export function InteractiveBoardSection() {
     publishBoardHealth(nextPositions);
 
     const moved = ticketRefs.current.get(drag.slug);
-    if (!moved) return;
+    if (!moved) {
+      clearActiveWork();
+      return;
+    }
     moved.style.transform = "none";
     moved.style.removeProperty("will-change");
     delete moved.dataset.dragState;
@@ -421,6 +440,7 @@ export function InteractiveBoardSection() {
     };
     const velocity = reducedMotion ? { x: 0, y: 0 } : releaseVelocity;
     startSettle(drag.slug, moved, from, velocity, () => {
+      clearActiveWork();
       if (destination !== "shipped") return;
       emitMascotSignal({
         reaction: "shipped",
@@ -439,6 +459,7 @@ export function InteractiveBoardSection() {
     activeDrag.current = null;
     releaseCapture(drag);
     setDropTarget(null);
+    worldDirector?.setDragging(false);
     if (drag.dragging) {
       emitMascotSignal({
         reaction: "idle",
@@ -451,6 +472,7 @@ export function InteractiveBoardSection() {
       drag.element,
       { x: drag.currentX, y: drag.currentY, rotation: drag.rotation },
       drag.dragging ? { x: 0, y: 0 } : drag.inheritedVelocity,
+      () => worldDirector?.setActiveWork(null),
     );
   };
 
@@ -523,6 +545,8 @@ export function InteractiveBoardSection() {
       }
     }
     activeDrag.current = null;
+    worldDirector?.setDragging(false);
+    worldDirector?.setActiveWork(null);
     settles.current.forEach((settle) => settle.stop());
     settles.current.clear();
     ticketRefs.current.forEach((element) => {
@@ -576,6 +600,13 @@ export function InteractiveBoardSection() {
             </button>
           </div>
         </header>
+        <MobileColumnNav
+          columns={boardColumns}
+          activeIndex={boardViewport.activeIndex}
+          onSelect={boardViewport.scrollToIndex}
+          onPrevious={boardViewport.previous}
+          onNext={boardViewport.next}
+        />
         <div className={shellStyles.board} ref={boardRef} data-board>
           {boardColumns.map((column) => {
             const items = workItems.filter(
@@ -584,6 +615,7 @@ export function InteractiveBoardSection() {
             return (
               <section
                 key={column.id}
+                id={`board-column-${column.id}`}
                 className={`${shellStyles.column} ${styles.interactiveColumn}`}
                 data-column={column.id}
                 data-drop-target={dropTarget === column.id ? "true" : undefined}

@@ -58,6 +58,14 @@ export function useWorldDirector(): WorldDirector {
   return director;
 }
 
+/**
+ * Optional access for DOM features (e.g. the board) that publish discrete
+ * state when a world exists but must stay fully functional without one.
+ */
+export function useOptionalWorldDirector(): WorldDirector | null {
+  return useContext(WorldContext);
+}
+
 export function useWorldSnapshot(): WorldDiscreteState {
   const director = useWorldDirector();
   return useSyncExternalStore(

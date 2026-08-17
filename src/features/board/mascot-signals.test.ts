@@ -26,7 +26,11 @@ describe("MascotSignal contract", () => {
     unsubscribe();
   });
 
-  it("keeps production board modules on the compatibility bus boundary", () => {
+  it("keeps production board modules on the renderer boundary", () => {
+    // Task 6 (Gate D2) lets the board consume the WorldDirector contract
+    // (provider/store/types — plain React, no Three). The hard boundary
+    // stays: no R3F/Three/renderer module may enter a board production
+    // module (plan Task 3 Step 7).
     const boardDirectory = resolve(process.cwd(), "src/features/board");
     const productionModules = readdirSync(boardDirectory).filter(
       (file) =>
@@ -35,7 +39,7 @@ describe("MascotSignal contract", () => {
         !file.endsWith(".test.tsx"),
     );
     const rendererImport =
-      /(?:from\s+|import\s*\(\s*)["'](?:three(?:\/[^"']*)?|@react-three\/(?:fiber|drei)|@\/features\/world(?:\/[^"']*)?)["']/;
+      /(?:from\s+|import\s*\(\s*)["'](?:three(?:\/[^"']*)?|@react-three\/(?:fiber|drei)|@\/features\/world(?:\/(?:index|ExperienceWorld|WorldCanvas|GuideScene|guide-rig|guide-materials|scene-motion|capability-policy|asset-manifest))?)["']/;
 
     for (const file of productionModules) {
       const source = readFileSync(resolve(boardDirectory, file), "utf8");

@@ -341,6 +341,57 @@ test.describe("immersive world prototype", () => {
     await expect(page.locator("a[data-primary-cta]")).toHaveCount(2);
   });
 
+  test("homepage board drag stays intact beside the live world canvas", async ({
+    page,
+  }) => {
+    // Gesture-level board→world proof lives in the /dev/world fixtures and
+    // the InteractiveBoardSection unit contract (diagnostic data-guide-*
+    // attributes are dev-route-only). Here: the production board's drag
+    // physics complete underneath one pointer-transparent canvas.
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+    page.on("console", (message) => {
+      if (message.type() === "error") errors.push(`console: ${message.text()}`);
+    });
+    await installHighMemory(page);
+    await page.goto("/");
+    await page.evaluate(() => window.dispatchEvent(new Event("scroll")));
+    const world = page.locator("[data-experience-world]");
+    const canvas = page.locator("[data-world-canvas] canvas");
+    await expect(canvas).toHaveCount(1, { timeout: 20_000 });
+    await expect
+      .poll(() => world.getAttribute("data-scene-ready"), { timeout: 20_000 })
+      .toBe("true");
+    await expect(canvas).toHaveCSS("pointer-events", "none");
+
+    // Maxie stays in its own column: pure drag lifecycle, no incident or
+    // shipped side-effect.
+    await page.locator("#work-board").scrollIntoViewIfNeeded();
+    const grip = page.getByRole("button", { name: /Drag AI Browser — Maxie/ });
+    const gripBox = (await grip.boundingBox())!;
+    await page.mouse.move(gripBox.x + 22, gripBox.y + 22);
+    await page.mouse.down();
+    await page.mouse.move(gripBox.x + 90, gripBox.y + 34, { steps: 5 });
+    await expect(page.locator('[data-ticket="maxie"]')).toHaveAttribute(
+      "data-drag-state",
+      "dragging",
+    );
+
+    await page.mouse.move(gripBox.x + 40, gripBox.y + 20, { steps: 5 });
+    await page.mouse.up();
+    // Proven physics finish a real move: storage written, ticket at rest,
+    // exactly one canvas persisting, zero errors.
+    await expect
+      .poll(() => page.evaluate(() => sessionStorage.getItem("garvit-board:v1")))
+      .not.toBeNull();
+    await expect(page.locator('[data-ticket="maxie"]')).not.toHaveAttribute(
+      "data-drag-state",
+      /.+/,
+    );
+    await expect(page.locator("[data-world-canvas] canvas")).toHaveCount(1);
+    expect(errors).toEqual([]);
+  });
+
   test("keeps core content operable in forced colors and reduced transparency", async ({
     page,
   }) => {
