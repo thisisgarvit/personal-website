@@ -70,7 +70,14 @@ function FlagRow({
   );
 }
 
-export function FeatureFlagsPanel() {
+export interface FeatureFlagsPanelProps {
+  /** Presentation context only; flag state, ordering, and behavior stay shared. */
+  variant?: "panel" | "dock";
+}
+
+export function FeatureFlagsPanel({
+  variant = "panel",
+}: FeatureFlagsPanelProps) {
   const { flags, setFlag } = useFeatureFlags();
   const confettiSuppression = useEffectSuppression(
     flags.confetti_on_scroll,
@@ -82,7 +89,11 @@ export function FeatureFlagsPanel() {
 
   return (
     <>
-      <section className={opsStyles.panel} aria-labelledby="flags-title">
+      <section
+        className={opsStyles.panel}
+        aria-labelledby="flags-title"
+        data-flag-panel-variant={variant}
+      >
         <header className={opsStyles.panelTitle}>
           <span id="flags-title">Feature flags</span>
           <span className={opsStyles.flagCount}>3 / 4 live</span>

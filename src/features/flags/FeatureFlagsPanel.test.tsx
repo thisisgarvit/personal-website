@@ -49,7 +49,11 @@ describe("FeatureFlagsPanel", () => {
   });
 
   it("renders the locked four-row contract with authored defaults", () => {
-    render(<FeatureFlagsPanel />);
+    const { container } = render(<FeatureFlagsPanel />);
+
+    expect(
+      container.querySelector('[data-flag-panel-variant="panel"]'),
+    ).not.toBeNull();
 
     expect(screen.getByText("3 / 4 live")).toBeTruthy();
     expect(screen.getByText("field notes")).toBeTruthy();
@@ -71,6 +75,19 @@ describe("FeatureFlagsPanel", () => {
       "comic-sans-note",
     );
     expect(screen.getByText("disabled in prod for a reason")).toBeTruthy();
+  });
+
+  it("exposes the presentation-only dock variant without changing controls", () => {
+    const { container } = render(<FeatureFlagsPanel variant="dock" />);
+
+    expect(
+      container.querySelector('[data-flag-panel-variant="dock"]'),
+    ).not.toBeNull();
+    expect(screen.getAllByRole("checkbox")).toHaveLength(4);
+    expect(
+      (screen.getByLabelText("Comic Sans disabled") as HTMLInputElement)
+        .disabled,
+    ).toBe(true);
   });
 
   it("hydrates from the OS and versioned stores without changing row semantics", async () => {

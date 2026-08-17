@@ -1,0 +1,4 @@
+.root {
+  /* The world composition owns geometry; this module marks dock context only. */
+  --feature-flag-panel-context: dock;
+}
