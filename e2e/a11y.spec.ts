@@ -10,6 +10,37 @@ import { PUBLIC_ROUTES } from "./support";
 
 const THEMES = ["light", "dark"] as const;
 
+test("homepage exposes one valid landmark path around the decorative world", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await expect(page.getByRole("main")).toHaveCount(1);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  await expect(page.getByRole("contentinfo")).toHaveCount(1);
+  await expect(
+    page.getByRole("complementary", { name: "Feature flag dock" }),
+  ).toHaveCount(1);
+  await expect(
+    page.getByRole("complementary", { name: "Product controls" }),
+  ).toHaveCount(0);
+
+  const anchors = page.getByRole("main").locator("[data-world-anchor]");
+  await expect(anchors).toHaveCount(3);
+  expect(await anchors.evaluateAll((nodes) => nodes.map((node) => node.tagName)))
+    .toEqual(["DIV", "DIV", "DIV"]);
+  await expect(
+    page.locator("section[data-world-anchor] > section"),
+  ).toHaveCount(0);
+
+  const world = page.locator("[data-experience-world]");
+  await expect(world).toHaveCount(1);
+  await expect(world).toHaveAttribute("aria-hidden", "true");
+  await expect(
+    world.locator("main, nav, a, button, input, select, textarea"),
+  ).toHaveCount(0);
+});
+
 for (const route of PUBLIC_ROUTES) {
   for (const theme of THEMES) {
     test(`axe: ${route} [${theme}]`, async ({ page }, testInfo) => {

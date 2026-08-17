@@ -12,6 +12,31 @@ import { siteConfig, workItems } from "./support";
 test.use({ javaScriptEnabled: false });
 
 test.describe("no-JS homepage", () => {
+  test("keeps the authored poster, landmarks, and world order readable", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.goto("/");
+
+    const world = page.locator("[data-experience-world]");
+    const poster = world.locator("[data-world-poster]");
+    await expect(world).toHaveCount(1);
+    await expect(world).toHaveAttribute("aria-hidden", "true");
+    await expect(world.locator("canvas")).toHaveCount(0);
+    await expect(poster).toBeVisible();
+    await expect(poster).toHaveCSS("background-image", /guide-light\.webp/);
+    await expect(page.getByRole("main")).toHaveCount(1);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    expect(
+      await page
+        .getByRole("main")
+        .locator("[data-world-anchor]")
+        .evaluateAll((nodes) =>
+          nodes.map((node) => node.getAttribute("data-world-anchor")),
+        ),
+    ).toEqual(["hero", "board", "journey"]);
+  });
+
   test("hero and both CTAs are fully functional links", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
@@ -29,6 +54,7 @@ test.describe("no-JS homepage", () => {
       "href",
       `mailto:${siteConfig.email}`,
     );
+    await expect(page.locator("a[data-primary-cta]")).toHaveCount(2);
   });
 
   test("banner and latest release remain visible in the chrome", async ({
