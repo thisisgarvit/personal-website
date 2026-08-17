@@ -30,6 +30,7 @@ function initialState(): WorldDiscreteState {
 
 export function createWorldDirector(): WorldDirector {
   const listeners = new Set<() => void>();
+  const presentationListeners = new Set<() => void>();
   const anchors = new Map<WorldSceneId, HTMLElement>();
   const metrics = new Map<WorldSceneId, WorldAnchorMetrics>();
   let snapshot = initialState();
@@ -53,6 +54,11 @@ export function createWorldDirector(): WorldDirector {
     subscribe(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);
+    },
+
+    subscribePresentation(listener) {
+      presentationListeners.add(listener);
+      return () => presentationListeners.delete(listener);
     },
 
     registerAnchor(id, node) {
@@ -131,6 +137,7 @@ export function createWorldDirector(): WorldDirector {
         activeScene,
         activeRegionVisible: candidates.length > 0,
       });
+      presentationListeners.forEach((listener) => listener());
     },
 
     setActiveWork(activeWork) {

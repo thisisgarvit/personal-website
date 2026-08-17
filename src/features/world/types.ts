@@ -33,6 +33,7 @@ export interface WorldDiscreteState {
 export interface WorldDirector {
   getSnapshot(): WorldDiscreteState;
   subscribe(listener: () => void): () => void;
+  subscribePresentation(listener: () => void): () => void;
   registerAnchor(id: WorldSceneId, node: HTMLElement | null): void;
   readAnchor(id: WorldSceneId): WorldAnchorMetrics | null;
 

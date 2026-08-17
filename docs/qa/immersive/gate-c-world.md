@@ -1,6 +1,6 @@
 # Gate C — persistent immersive world
 
-**Status:** AWAITING CODEX JUDGMENT  
+**Status:** GATE C PASS  
 **Route:** `/dev/world`  
 **Mechanical verification:** PASS
 
@@ -39,42 +39,37 @@ Full command output, method limits, hashes, and every capture are recorded in
 - [Pager check](./gate-c/reaction-pager-check.png)
 - [Ship celebration](./gate-c/reaction-ship-celebration.png)
 
-## Apple interaction audit — judge only
-
-The implementing lane deliberately leaves these scores blank.
+## Apple interaction audit — Codex judgment
 
 | Principle | Score | Judge evidence |
 | --- | ---: | --- |
-| Purpose | — | — |
-| Agency | — | — |
-| Responsibility | — | — |
-| Familiarity | — | — |
-| Flexibility | — | — |
-| Simplicity | — | — |
-| Craft | — | — |
-| Delight | — | — |
+| Purpose | 5 | The product-world metaphor makes the promise visible: version chrome, experiment satire, a real work entry, and the guide all explain how Garvit thinks without a visitor task. |
+| Agency | 5 | Skip, replay, two primary CTAs, theme control, persona choices, work entry, and keyboard reach remain available while the world stays pointer-transparent. |
+| Responsibility | 5 | Reduced motion, Save-Data, performance kill, document visibility, renderer failure, and lazy loading all reduce cost without withholding the portfolio. |
+| Familiarity | 4 | Buttons, links, phase labels, and product chrome remain conventional; the persistent guide is novel but never owns navigation or input. |
+| Flexibility | 4 | Light/dark, 320–1600px widths, 200% page scale, keyboard, forced colors, and reduced transparency preserve the core route. |
+| Simplicity | 4 | The first screen is intentionally dense, but its reading order stays persona satire → evolution state → promise → proof copy → two CTAs. |
+| Craft | 5 | One canvas, 21 measured calls, velocity-preserving springs, current-theme poster parity, deliberate mobile crop, and zero console/serious axe failures show production discipline. |
+| Delight | 5 | The guide has distinct wave, watch, pager, resolution, milestone, and ship behaviors that are tied to real product actions rather than decorative loops. |
 
-**Apple total:** — / 40  
+**Apple total:** 37 / 40  
 **Blocking rule:** no dimension below 4.
 
-## Taste audit — judge only
-
-The implementing lane deliberately leaves these scores blank.
+## Taste audit — Codex judgment
 
 | Dimension | Score | Judge evidence |
 | --- | ---: | --- |
-| Composition and first-glance richness | — | — |
-| Hierarchy, density, and CTA comprehension | — | — |
-| Authorship and anti-template character | — | — |
-| Asset, material, palette, and pose judgment | — | — |
-| Responsive, theme, accessibility, and performance craft | — | — |
+| Composition and first-glance richness | 4 | The asymmetric guide overlap, oversized two-tone headline, glass persona surface, product chrome, and board peek create an immediately authored scene. Mobile deliberately uses the guide as a depth layer rather than shrinking it into an illustration card. |
+| Hierarchy, density, and CTA comprehension | 4 | Headline and lime/dark CTAs dominate; chrome stays dense while the content plane breathes. Mobile persona labels were raised to `0.72rem` while retaining 44px targets. |
+| Authorship and anti-template character | 5 | The MVP/BETA/GA evolution, candid role-collection joke, live feature dock, and action-reactive guide form a portfolio-specific product premise rather than a landing-page component stack. |
+| Asset, material, palette, and pose judgment | 5 | The sourced Muko rig is materially re-authored with graphite visor, release-blue comms, coral pager, lime state, coherent light/dark treatment, and clearly different reaction silhouettes. |
+| Responsive, theme, accessibility, and performance craft | 5 | Seven widths, 200% scale, keyboard, forced colors, reduced transparency, capability fallbacks, 21/30 calls, and all asset/bundle ceilings pass. The raw window scroll listener was removed in favor of the lazy Motion bridge. |
 
-**Taste total:** — / 25  
+**Taste total:** 23 / 25  
 **Blocking rule:** no dimension below 4.
 
 ## Release condition
 
-Mechanical acceptance is complete. The public homepage remains blocked until
-the independent judge records both audit tables and explicitly writes
-`Gate C PASS`. No public migration is authorized by this document.
-
+Mechanical acceptance and both independent audits pass. **Gate C PASS.** The
+public migration may begin under the approved hard-stop sequence; production
+surfaces remain subject to their own content and regression gates.

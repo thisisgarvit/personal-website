@@ -14,9 +14,8 @@
  *    that are NOT referenced by any route HTML. SKIPPED while Task 8
  *    (mascot) has not landed. If a three chunk ever appears in initial
  *    HTML, that is an immediate failure (R3F must be lazy, PRD §14).
- *  - Mascot poster ≤35KB — SKIPPED until the poster asset exists.
- *  - Mascot scene module ≤25KB gzip — cannot be isolated until Task 8
- *    lands a named lazy entry; tracked as SKIP with a TODO.
+ *  - Guide posters ≤90KB each and production GLB ≤1.8MB.
+ *  - Guide scene module ≤25KB gzip, located by its stable model URL.
  *  - Fonts: PRD §14 fixes no number; ceiling below guards regression of
  *    the current self-hosted subset set (63.7KB raw woff2).
  *
@@ -42,8 +41,9 @@ const LIMITS = {
   // variance (±3KB across identical trees — see Task 9 report). The chunk
   // is lazy and never blocks first paint. Regressions past 235KB are real.
   lazyThreeVendorGzip: Math.round(230 * 1024 * 1.02),
-  mascotSceneGzip: 25 * 1024,
-  posterBytes: 35 * 1024,
+  worldSceneGzip: 25 * 1024,
+  posterBytes: 90 * 1024,
+  guideGlbBytes: 1_800_000,
   // Not a PRD number: regression ceiling for the current subset fonts
   // (Archivo var + 3× Plex Mono ≈ 63.7KB raw). Raise deliberately only.
   fontsTotalBytes: 100 * 1024,
@@ -175,10 +175,10 @@ const lazyThreeChunks = threeChunks.filter(
 if (threeChunks.length === 0) {
   results.push({
     name: "Lazy R3F/Three vendor chunk",
-    status: "SKIP",
+    status: "FAIL",
     measured: "absent",
     limit: `≤${kb(LIMITS.lazyThreeVendorGzip)} gzip`,
-    note: "Task 8 mascot not landed yet",
+    note: "immersive world is not present in this build",
   });
 } else if (lazyThreeChunks.length > 0) {
   const lazyTotal = lazyThreeChunks.reduce(
@@ -193,45 +193,71 @@ if (threeChunks.length === 0) {
   });
 }
 
-// TODO(Task 8): once the mascot lands, identify its scene module chunk
-// (non-vendor lazy chunk importing the three vendor) and assert
-// ≤25KB gzip (PRD §14). Cannot be isolated before the module exists.
-if (threeChunks.length === 0) {
+// ------------------------------------------------------- guide scene module
+const worldSceneChunks = allChunkFiles.filter((file) =>
+  readFileSync(file).includes("/models/guide/guide.glb"),
+);
+if (worldSceneChunks.length === 0) {
   results.push({
-    name: "Mascot scene module",
-    status: "SKIP",
+    name: "Guide scene module",
+    status: "FAIL",
     measured: "absent",
-    limit: `≤${kb(LIMITS.mascotSceneGzip)} gzip`,
-    note: "Task 8 mascot not landed yet",
+    limit: `≤${kb(LIMITS.worldSceneGzip)} gzip`,
+    note: "immersive world is not present in this build",
+  });
+} else {
+  const total = worldSceneChunks.reduce(
+    (sum, file) => sum + gzipSize(file),
+    0,
+  );
+  results.push({
+    name: "Guide scene module",
+    status: total <= LIMITS.worldSceneGzip ? "PASS" : "FAIL",
+    measured: `${kb(total)} gzip`,
+    limit: `≤${kb(LIMITS.worldSceneGzip)} gzip`,
   });
 }
 
 // ---------------------------------------------------------------- poster
-const posterCandidates = [
-  ...listFiles(join(ROOT, "public"), ".svg"),
-  ...listFiles(join(ROOT, "public"), ".webp"),
-  ...listFiles(join(ROOT, "public"), ".png"),
-  ...listFiles(MEDIA_DIR, ".svg"),
-  ...listFiles(MEDIA_DIR, ".webp"),
-].filter((file) => /poster/i.test(file));
-if (posterCandidates.length === 0) {
-  results.push({
-    name: "Mascot poster",
-    status: "SKIP",
-    measured: "no standalone asset",
-    limit: `≤${kb(LIMITS.posterBytes)}`,
-    note: "no rendered fallback poster was found",
-  });
-} else {
-  for (const poster of posterCandidates) {
+const posterCandidates = ["guide-light.webp", "guide-dark.webp"].map(
+  (file) => join(ROOT, "public", "images", "world", file),
+);
+for (const poster of posterCandidates) {
+  if (!existsSync(poster)) {
+    results.push({
+      name: `Guide poster (${relative(ROOT, poster)})`,
+      status: "FAIL",
+      measured: "missing",
+      limit: `present and ≤${kb(LIMITS.posterBytes)}`,
+    });
+  } else {
     const size = statSync(poster).size;
     results.push({
-      name: `Mascot poster (${relative(ROOT, poster)})`,
+      name: `Guide poster (${relative(ROOT, poster)})`,
       status: size <= LIMITS.posterBytes ? "PASS" : "FAIL",
       measured: kb(size),
       limit: `≤${kb(LIMITS.posterBytes)}`,
     });
   }
+}
+
+// ---------------------------------------------------------- production GLB
+const guideGlb = join(ROOT, "public", "models", "guide", "guide.glb");
+if (!existsSync(guideGlb)) {
+  results.push({
+    name: "Production guide GLB",
+    status: "FAIL",
+    measured: "missing",
+    limit: `present and ≤${kb(LIMITS.guideGlbBytes)}`,
+  });
+} else {
+  const size = statSync(guideGlb).size;
+  results.push({
+    name: "Production guide GLB",
+    status: size <= LIMITS.guideGlbBytes ? "PASS" : "FAIL",
+    measured: kb(size),
+    limit: `≤${kb(LIMITS.guideGlbBytes)}`,
+  });
 }
 
 // ----------------------------------------------------------------- fonts

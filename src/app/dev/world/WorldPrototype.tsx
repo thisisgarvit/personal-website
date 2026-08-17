@@ -3,7 +3,13 @@ import { ExperimentStrip } from "@/components/experiment/ExperimentStrip";
 import { FeatureFlagDock } from "@/components/ops/FeatureFlagDock";
 import { siteConfig } from "@/data/site";
 import { kindTicketLabel, workItems } from "@/data/work";
+import { ExperienceWorld, WorldAnchor, WorldProvider } from "@/features/world";
 import { PersonaSatire } from "./PersonaSatire";
+import { HeroEvolution } from "./HeroEvolution";
+import {
+  BoardSignalControls,
+  JourneySignalControls,
+} from "./WorldPrototypeSignals";
 import styles from "./world-prototype.module.css";
 
 const featuredWork = workItems[0];
@@ -17,22 +23,16 @@ export function WorldPrototype() {
         <ExperimentStrip />
       </div>
 
-      <main className={styles.scene}>
-        <section
-          className={styles.releaseField}
-          aria-labelledby="world-prototype-title"
-          data-hero-evolution
-          data-hero-phase="ga"
-        >
+      <WorldProvider>
+        <ExperienceWorld />
+        <main className={styles.scene}>
+          <WorldAnchor id="hero" as="div" className={styles.heroAnchor}>
+            <section
+              className={styles.releaseField}
+              aria-labelledby="world-prototype-title"
+            >
           <div className={styles.copy} data-world-copy>
-            <h1 id="world-prototype-title" className={styles.headline}>
-              <span className={styles.headlineLine}>
-                {heroLead}
-              </span>{" "}
-              <span className={styles.headlineLine}>
-                into {heroTail}
-              </span>
-            </h1>
+            <HeroEvolution lead={heroLead} tail={heroTail} />
             <p className={styles.intro}>
               I’m Garvit. I write PRDs on GitHub, deploy prototypes on weekends,
               and build dashboards before asking engineering.
@@ -59,26 +59,15 @@ export function WorldPrototype() {
             </div>
           </div>
 
-          <picture className={styles.guide} data-world-guide>
-            <img
-              src="/images/world/prototype-guide.webp"
-              alt=""
-              aria-hidden="true"
-              width="1440"
-              height="900"
-              fetchPriority="high"
-            />
-          </picture>
+              <PersonaSatire />
+            </section>
 
-          <PersonaSatire />
-        </section>
-
-        <a
-          className={styles.boardEntry}
-          href={featuredWork.route}
-          aria-label={`Read ${featuredWork.title}`}
-          data-board-entry
-        >
+            <a
+              className={styles.boardEntry}
+              href={featuredWork.route}
+              aria-label={`Read ${featuredWork.title}`}
+              data-board-entry
+            >
           <span className={styles.ticketRail} aria-hidden="true" />
           <span className={styles.ticketMeta}>
             <span>{featuredWork.id}</span>
@@ -93,10 +82,43 @@ export function WorldPrototype() {
             <span>{featuredWork.points}</span>
           </span>
           <span className={styles.ticketAction}>Read case</span>
-        </a>
+            </a>
 
-        <FeatureFlagDock className={styles.dock} />
-      </main>
+            <FeatureFlagDock className={styles.dock} />
+          </WorldAnchor>
+
+          <WorldAnchor id="board" as="div" className={styles.fixtureAnchor}>
+            <section
+              className={styles.fixtureSection}
+              aria-labelledby="prototype-board-title"
+            >
+              <p className={styles.fixtureEyebrow}>Scene 02 / behavioral fixture</p>
+              <h2 id="prototype-board-title">Things I’ve built</h2>
+              <p>
+                The production board lands here after Scene 1 passes. These
+                controls prove the guide can follow direct manipulation without
+                owning it.
+              </p>
+              <BoardSignalControls />
+            </section>
+          </WorldAnchor>
+
+          <WorldAnchor id="journey" as="div" className={styles.fixtureAnchor}>
+            <section
+              className={styles.fixtureSection}
+              aria-labelledby="prototype-journey-title"
+            >
+              <p className={styles.fixtureEyebrow}>Scene 03 / behavioral fixture</p>
+              <h2 id="prototype-journey-title">Your session, instrumented</h2>
+              <p>
+                Same visitor-local journey stream, now with a guide that reacts
+                to progress instead of decorating the dashboard.
+              </p>
+              <JourneySignalControls />
+            </section>
+          </WorldAnchor>
+        </main>
+      </WorldProvider>
     </div>
   );
 }

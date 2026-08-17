@@ -24,10 +24,13 @@ describe("createWorldDirector", () => {
   it("keeps snapshot identity for continuous measurements", () => {
     const director = createWorldDirector();
     const before = director.getSnapshot();
+    const presentation = vi.fn();
+    director.subscribePresentation(presentation);
 
     director.measure(900);
 
     expect(director.getSnapshot()).toBe(before);
+    expect(presentation).toHaveBeenCalledTimes(1);
   });
 
   it("publishes each discrete change once and ignores idempotent setters", () => {

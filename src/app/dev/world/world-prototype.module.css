@@ -11,17 +11,20 @@
   padding: var(--space-4) 0 clamp(5rem, 8vw, 8rem);
 }
 
+.heroAnchor {
+  position: relative;
+}
+
 .experimentFrame {
   display: contents;
 }
 
 .releaseField {
   position: relative;
-  isolation: isolate;
   min-height: clamp(38rem, calc(100dvh - 8rem), 47rem);
   overflow: hidden;
   border-radius: var(--radius-dialog);
-  background: var(--color-panel-2);
+  background: color-mix(in srgb, var(--color-panel-2) 76%, transparent);
   box-shadow:
     0 28px 80px color-mix(in srgb, var(--color-ink) 11%, transparent),
     inset 0 1px 0 var(--material-highlight);
@@ -31,7 +34,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   background:
     linear-gradient(
@@ -68,11 +71,123 @@
     system-ui, sans-serif;
   letter-spacing: var(--track-hero);
   text-wrap: balance;
+  transition:
+    color 260ms var(--ease-out),
+    text-shadow 260ms var(--ease-out),
+    -webkit-text-stroke 260ms var(--ease-out);
 }
 
 .headlineLine {
   display: block;
   white-space: nowrap;
+}
+
+.evolution {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.evolution::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 2.6rem -1.2rem -1rem;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 16%, transparent);
+  border-radius: 3px;
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--color-release) 9%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-release) 9%, transparent) 1px,
+      transparent 1px
+    ),
+    color-mix(in srgb, var(--color-panel) 92%, white);
+  background-size: 20px 20px;
+  opacity: 0;
+  transform: rotate(-0.35deg) scale(0.985);
+  transition:
+    opacity 240ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.evolution[data-hero-phase="mvp"]::before {
+  background:
+    repeating-linear-gradient(
+      -2deg,
+      transparent 0 21px,
+      color-mix(in srgb, var(--color-ink) 7%, transparent) 21px 22px
+    ),
+    color-mix(in srgb, var(--color-panel) 94%, white);
+  opacity: 0.92;
+  transform: rotate(-0.8deg) scale(1);
+}
+
+.evolution[data-hero-phase="beta"]::before {
+  opacity: 0.72;
+  transform: rotate(0deg) scale(1);
+}
+
+.evolution[data-hero-phase="mvp"] .headline {
+  color: color-mix(in srgb, var(--color-ink) 72%, var(--color-canvas));
+  -webkit-text-stroke: 0.35px currentColor;
+  text-shadow:
+    1px 0 color-mix(in srgb, var(--color-ink) 18%, transparent),
+    -1px 1px color-mix(in srgb, var(--color-ink) 12%, transparent);
+}
+
+.evolution[data-hero-phase="beta"] .headline {
+  color: var(--color-ink);
+  -webkit-text-stroke: 0 transparent;
+  text-shadow: 9px 9px 0 color-mix(in srgb, var(--color-release) 8%, transparent);
+}
+
+.evolution[data-hero-phase="ga"] .releaseLine {
+  color: var(--color-release);
+}
+
+.phaseRail {
+  min-height: 44px;
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-muted);
+  font: 650 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+}
+
+.phaseRail span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  transition:
+    color 160ms var(--ease-out),
+    background 160ms var(--ease-out);
+}
+
+.phaseRail span[data-active="true"] {
+  background: var(--color-release);
+  color: var(--color-on-release);
+}
+
+.phaseRail button {
+  min-height: 44px;
+  margin-left: var(--space-2);
+  padding-inline: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.phaseRail button:hover {
+  background: color-mix(in srgb, var(--color-release) 10%, transparent);
+  color: var(--color-ink);
 }
 
 .intro {
@@ -329,6 +444,81 @@
   white-space: nowrap;
 }
 
+.fixtureAnchor {
+  min-height: 78vh;
+  scroll-margin-top: 6rem;
+  padding: clamp(7rem, 13vw, 13rem) clamp(1rem, 6vw, 6rem);
+  display: grid;
+  align-items: center;
+}
+
+.fixtureSection {
+  width: min(52rem, 100%);
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: var(--radius-dialog);
+  background: color-mix(in srgb, var(--color-panel) 92%, transparent);
+  box-shadow:
+    0 28px 80px color-mix(in srgb, var(--color-ink) 12%, transparent),
+    inset 0 1px 0 var(--material-highlight);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  backdrop-filter: blur(24px) saturate(125%);
+}
+
+.fixtureAnchor:nth-of-type(2) .fixtureSection,
+.fixtureAnchor:nth-of-type(3) .fixtureSection {
+  margin-left: auto;
+}
+
+.fixtureSection h2,
+.fixtureSection p {
+  margin: 0;
+}
+
+.fixtureSection h2 {
+  margin-top: var(--space-3);
+  font: 750 clamp(2.5rem, 5vw, 4.6rem) / 0.95 var(--font-archivo), system-ui,
+    sans-serif;
+  letter-spacing: -0.045em;
+}
+
+.fixtureSection > p:not(.fixtureEyebrow) {
+  max-width: 52ch;
+  margin-top: var(--space-5);
+  color: var(--color-muted);
+  font-size: var(--type-lead);
+}
+
+.fixtureEyebrow {
+  color: var(--color-release);
+  font: 650 var(--type-product) var(--font-plex-mono), monospace;
+  letter-spacing: var(--track-product);
+  text-transform: uppercase;
+}
+
+.signalControls {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.signalControls button {
+  min-height: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-button);
+  background: var(--color-panel-2);
+  color: var(--color-ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.signalControls button:hover {
+  border-color: var(--color-release);
+  background: var(--color-release);
+  color: var(--color-on-release);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .guide img {
     filter: brightness(0.48) saturate(0.82) contrast(1.2);
@@ -427,7 +617,7 @@
   }
 
   .personaChoices {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-1);
   }
 
@@ -435,6 +625,8 @@
     min-height: 44px;
     padding-inline: 0;
     font-size: 0.72rem;
+    line-height: 1.08;
+    white-space: normal;
   }
 
   .headline {
@@ -512,6 +704,19 @@
     min-width: 0;
     margin: var(--space-4) var(--space-4) 0;
   }
+
+  .fixtureAnchor {
+    min-height: 70vh;
+    padding: 6rem var(--space-4);
+  }
+
+  .fixtureSection {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .fixtureSection h2 {
+    font-size: clamp(2.25rem, 11vw, 3.2rem);
+  }
 }
 
 @media (max-width: 619.98px) and (prefers-color-scheme: dark) {
@@ -523,6 +728,14 @@
 @media (max-width: 619.98px) {
   :global(:root[data-theme="dark"]) .guide img {
     filter: brightness(0.72) saturate(0.8) contrast(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evolution::before,
+  .headline,
+  .phaseRail span {
+    transition: none;
   }
 }
 

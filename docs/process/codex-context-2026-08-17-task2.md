@@ -65,6 +65,25 @@ captures replaced invalid Chrome-window crops.
 2. Begin Task 3 world director/anchor contracts. Public migration remains
    blocked until interactive Gate C also passes.
 
+## Continuation — Task 3 locked / Task 4 active
+
+- Task 3 compatibility tests: `b8b791d`; persistent director/anchors:
+  `a84d15b`. Fresh gate: 21/21 focused tests, non-incremental TypeScript,
+  lint, and diff check passed. Independent spec/code-quality re-review passed
+  with no findings after the 8%-equality and provider-timer corrections.
+- Muko provenance/license manifest: `69bd8c9`. Production GLB export is
+  delegated to Claude as mechanical work; Codex owns its rendered judgment.
+- Task 4 world contracts are implemented locally (not yet committed): rig
+  adapter, critically damped scene targets, capability policy, one-canvas lazy
+  lifecycle, demand-rendered R3F guide, and `/dev/world` hero/board/journey
+  fixtures. Focused world tests are green; the obsolete static prototype test
+  is intentionally queued for Claude's immediate interface-lock migration.
+- Garvit's hero idea is now a real replayable MVP pencil-sheet → beta grid →
+  GA color sequence. The semantic headline and CTAs never wait; reduced motion
+  and no-JS materialize GA.
+- Public homepage migration remains blocked until the interactive `/dev/world`
+  render is visually audited and Gate C passes.
+
 ## Gate B bar
 
 - 1440: headline at most two lines; guide 40–50% meaningful crop; both CTAs
@@ -79,3 +98,30 @@ Current scored evidence: Taste 23/25, Apple static-applicable 36/40. Claude's
 fix-round re-review is clean. Focused suite: 25/25 tests; non-incremental
 TypeScript, lint, and diff check exit 0. (`pnpm typecheck` itself is prevented
 from writing `tsconfig.tsbuildinfo` by the managed checkout sandbox.)
+
+## Continuation — Gate C correction round
+
+- Production Muko asset: `8b5c44d`, 413,356 bytes, 11,458 triangles, one GLB
+  primitive, 58-joint semantic rig, 1024px WebP maps. Runtime-authored hardware
+  stays bone-attached in `GuideScene`: pager on chest; fitted comms modules on
+  head. The modules intentionally intersect the helmet silhouette; no external
+  band or floating tube remains.
+- Independent audit caught and Codex fixed: continuous anchor progress now
+  invalidates the demand world and feeds scene targets; pose/pointer channels
+  are spring-blended from presentation state; hidden/out-of-union playback
+  returns before simulation; journey idle settles; explicit theme overrides
+  select the matching fallback poster; authored coral/lime hardware is excluded
+  from the porcelain source reskin.
+- The approved hero MVP→beta→GA evolution remains. The audit's suggestion to
+  remove it was rejected because Garvit explicitly locked it after the cutoff
+  clarification.
+- `e7488b3` lazy-loads the already-approved PostHog client. Five-event whitelist
+  and pageview/autocapture initialization remain; initial homepage JS fell from
+  237.9KB to 161.2KB gzip. Session-local journey/world data still never enters
+  PostHog.
+- Claude now owns the maximum mechanical lane: Gate C E2E expansion,
+  axe/console/overflow checks, exact-camera poster export, capture matrix,
+  evidence records, and immediate public test/flag migrations after Codex
+  declares Gate C PASS. Codex retains art/motion tuning and Apple/Taste judgment.
+- Public homepage migration remains blocked until the final Gate C evidence and
+  scorecards pass.

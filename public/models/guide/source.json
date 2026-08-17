@@ -74,11 +74,20 @@
   "attributionPolicy": "repository-only attribution approved by Garvit if selected; preserve exact creator/source/license/modification record",
   "schemaVersion": 1,
   "status": "production GLB exported, optimized, and verified",
+  "runtimeAuthoredHardware": {
+    "reason": "Pager status and fitted helmet modules remain bone-attached code materials so a future guide-model swap stays bounded to the rig adapter and GuideScene.",
+    "attachments": {
+      "pager": "mixamorig:Spine2_04",
+      "headset": "mixamorig:Head_05"
+    },
+    "authoredMeshes": 6,
+    "baseModelDrawCalls": 1,
+    "maximumSceneDrawCalls": 30,
+    "fallbackRule": "Exact-camera posters include the same coral pager, lime status, and helmet modules."
+  },
   "selectedAt": "2026-08-17",
   "sourceAvailability": {
-    "primaryPath": "/Users/garvits/Downloads/astronaut_character_stylized_rigged_free_model",
-    "fallbackPath": "/private/tmp/garvit-guide-source/muko",
-    "selectedPath": "/Users/garvits/Downloads/astronaut_character_stylized_rigged_free_model",
+    "repositoryRecord": "docs/qa/immersive/source-manifests/muko.json",
     "readable": true
   },
   "sourceLicense": {
