@@ -1,3 +1,14 @@
+/**
+ * Shared signal bus — the single event stream that the board, flags,
+ * journey, and world modules publish/subscribe through.
+ *
+ * COMPATIBILITY NOTE (Task 9 / Gate F): the mascot rendering system was
+ * retired, but this bus and `reaction-machine.ts` are the preserved,
+ * canonical reaction contract now consumed by `src/features/world/**`
+ * (WorldProvider subscribes; world-store reduces). The `Mascot*` names
+ * are kept to avoid a rename-only churn across live consumers; do not
+ * create a parallel event bus in the world feature.
+ */
 import type { FeatureFlagKey } from "@/features/flags/definitions";
 import type { WorkSlug } from "@/data/work";
 

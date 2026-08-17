@@ -1,0 +1,740 @@
+{
+  "report": {
+    "baseURL": "http://rc.garvit-qa.test:3199",
+    "posthogOrigin": "https://us.i.posthog.com",
+    "outboundRequestCount": 125,
+    "outboundNonLocalHosts": [
+      "",
+      "rc.garvit-qa.test:3199",
+      "us-assets.i.posthog.com",
+      "us.i.posthog.com"
+    ],
+    "posthogCaptureRequests": 11,
+    "capturedPostHogEventNames": [
+      "$autocapture",
+      "$pageleave",
+      "$pageview",
+      "case_open",
+      "contact_click",
+      "full_case_read",
+      "persona_selected",
+      "resume_download"
+    ],
+    "customEvents": [
+      "case_open",
+      "contact_click",
+      "full_case_read",
+      "persona_selected",
+      "resume_download"
+    ],
+    "unapprovedCustomEvents": [],
+    "approvedEventsNotObserved": [],
+    "forbiddenPatternMatches": [],
+    "journeyStore": {
+      "key": "garvit-journey:v1",
+      "inSessionStorage": true,
+      "eventCount": 11,
+      "types": [
+        "landed",
+        "played",
+        "scrolled",
+        "read-work",
+        "converted"
+      ],
+      "inLocalStorage": false,
+      "onNetwork": false
+    },
+    "sessionStorageKeys": [
+      "garvit-persona:v1",
+      "garvit-flag-confetti:v1",
+      "garvit-board:v1",
+      "garvit-journey:v1",
+      "ph_phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te_session_registered_properties",
+      "ph_phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te_window_id",
+      "garvit-flag-candid:v1",
+      "ph_phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te_posthog"
+    ],
+    "localStorageKeys": [
+      "ph_phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te_posthog"
+    ],
+    "pageErrors": [],
+    "verdict": "PASS"
+  },
+  "outbound": [
+    {
+      "url": "http://rc.garvit-qa.test:3199/",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/1a4aa50920b5315c-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/98e207f02528a563-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/d3ebbfd689654d3a-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/db96af6b531dc71f-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/dfe11e32339bef1a.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/a55eb46e9a6eb3b1.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bfd26a3f3170e952.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/webpack-31116b348eff50ee.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/0864c686-d1329951f75a8abb.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/562-00b3022b3317a7a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/main-app-4025356132b9fd32.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/905-fe1b668e498d6f65.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/not-found-a2891d0fa49c7c20.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/layout-8a51d93ace9794a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/287-ad43f065e45d5699.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/973-03f8b73e3270185b.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/page-c437794f5e81e59b.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/images/world/guide-light.webp",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/stay-portal?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/maxie?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/agentic-calendar?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/notes/dynamic-island?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bbc9130fd70b6e7b.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/stay-portal?_rsc=1j6i9",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/maxie?_rsc=1rowz",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/agentic-calendar?_rsc=1nr05",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/notes/dynamic-island?_rsc=cdblr",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/e8ac9a42.0e2fbaff7c0a25d8.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/375a538c-4cc8bbb18c42b221.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/b19bb45c.4cf795a5d69d8b7d.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/d6309548.1e4c1a4d8e79fb4d.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/871.6d24e5374ca87797.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/491.b2a888158b89a366.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/907-a5e1a91189057c29.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/stay-portal/page-bac1afcec726c36a.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/maxie/page-dd45c4317f929e93.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/agentic-calendar/page-8d3e6e2d0fe09229.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/notes/dynamic-island/page-48b3451ecc2cf2c0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/exception-autocapture.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/array/phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te/config.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/models/guide/guide.glb",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us.i.posthog.com/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$pageview"
+      ]
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/surveys.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "https://us.i.posthog.com/flags/?v=2&compression=base64",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": []
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "persona_selected"
+      ]
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$autocapture",
+        "$autocapture",
+        "$autocapture",
+        "$autocapture"
+      ]
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/181-3e4fee590b195d4e.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/380.5e6b3146c6b0c58a.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/b1a134d0a228b736.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$autocapture",
+        "case_open"
+      ]
+    },
+    {
+      "url": "https://us.i.posthog.com/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$pageview"
+      ]
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$autocapture",
+        "full_case_read"
+      ]
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/maxie",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/1a4aa50920b5315c-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/98e207f02528a563-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/d3ebbfd689654d3a-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/db96af6b531dc71f-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/dfe11e32339bef1a.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bbc9130fd70b6e7b.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/a55eb46e9a6eb3b1.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bfd26a3f3170e952.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmaxie-prototype.a2a33dff.png&w=1080&q=75",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/webpack-31116b348eff50ee.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/0864c686-d1329951f75a8abb.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/562-00b3022b3317a7a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/main-app-4025356132b9fd32.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/905-fe1b668e498d6f65.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/not-found-a2891d0fa49c7c20.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/layout-8a51d93ace9794a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/907-a5e1a91189057c29.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/287-ad43f065e45d5699.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/maxie/page-dd45c4317f929e93.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/e8ac9a42.0e2fbaff7c0a25d8.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/exception-autocapture.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/array/phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te/config.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "https://us.i.posthog.com/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$pageview"
+      ]
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/surveys.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/1a4aa50920b5315c-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/98e207f02528a563-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/d3ebbfd689654d3a-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/media/db96af6b531dc71f-s.p.woff2",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/dfe11e32339bef1a.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/a55eb46e9a6eb3b1.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bfd26a3f3170e952.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/webpack-31116b348eff50ee.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/0864c686-d1329951f75a8abb.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/562-00b3022b3317a7a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/main-app-4025356132b9fd32.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/905-fe1b668e498d6f65.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/not-found-a2891d0fa49c7c20.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/layout-8a51d93ace9794a0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/287-ad43f065e45d5699.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/973-03f8b73e3270185b.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/page-c437794f5e81e59b.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/images/world/guide-light.webp",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/agentic-calendar?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/notes/dynamic-island?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/stay-portal?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/maxie?_rsc=1r34m",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/e8ac9a42.0e2fbaff7c0a25d8.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/375a538c-4cc8bbb18c42b221.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/b19bb45c.4cf795a5d69d8b7d.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/d6309548.1e4c1a4d8e79fb4d.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/871.6d24e5374ca87797.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/491.b2a888158b89a366.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/css/bbc9130fd70b6e7b.css",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/agentic-calendar?_rsc=1nr05",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/notes/dynamic-island?_rsc=cdblr",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/stay-portal?_rsc=1j6i9",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/work/maxie?_rsc=1rowz",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/agentic-calendar/page-8d3e6e2d0fe09229.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/exception-autocapture.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/array/phc_t9XxUzsEcLLve2RjW9sVFaZUBc85WmyW359H3yjCK2te/config.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/notes/dynamic-island/page-48b3451ecc2cf2c0.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/907-a5e1a91189057c29.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/maxie/page-dd45c4317f929e93.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/_next/static/chunks/app/work/stay-portal/page-bac1afcec726c36a.js",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "http://rc.garvit-qa.test:3199/models/guide/guide.glb",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us.i.posthog.com/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$pageview"
+      ]
+    },
+    {
+      "url": "https://us-assets.i.posthog.com/static/1.417.1/surveys.js",
+      "method": "GET",
+      "posthog": true
+    },
+    {
+      "url": "mailto:garvit.sukh@gmail.com",
+      "method": "GET",
+      "posthog": false
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": false,
+      "events": [
+        "$autocapture",
+        "resume_download",
+        "$autocapture",
+        "contact_click"
+      ]
+    },
+    {
+      "url": "https://us.i.posthog.com/i/v0/e/",
+      "method": "POST",
+      "posthog": true,
+      "beacon": true,
+      "events": [
+        "$pageleave"
+      ]
+    }
+  ]
+}

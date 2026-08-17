@@ -1,0 +1,958 @@
+{
+  "stills": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "light",
+      "board": {
+        "capture": "scene-board-1440-light.png",
+        "scene": "board",
+        "guideScreenBounds": {
+          "left": 178.7,
+          "top": 219.8,
+          "right": 514.2,
+          "bottom": 656
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "tickets": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 65,
+                "top": 419,
+                "right": 486,
+                "bottom": 634
+              },
+              {
+                "left": 510,
+                "top": 419,
+                "right": 930,
+                "bottom": 619
+              },
+              {
+                "left": 510,
+                "top": 635,
+                "right": 930,
+                "bottom": 851
+              },
+              {
+                "left": 954,
+                "top": 419,
+                "right": 1375,
+                "bottom": 661
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "grips": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 437,
+                "top": 424,
+                "right": 481,
+                "bottom": 468
+              },
+              {
+                "left": 881,
+                "top": 424,
+                "right": 925,
+                "bottom": 468
+              },
+              {
+                "left": 881,
+                "top": 640,
+                "right": 925,
+                "bottom": 684
+              },
+              {
+                "left": 1326,
+                "top": 424,
+                "right": 1370,
+                "bottom": 468
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "boardTabs": {
+            "count": 3,
+            "rects": [
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              },
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              },
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      },
+      "previewDialog": {
+        "count": 1,
+        "rects": [
+          {
+            "left": 174,
+            "top": 169,
+            "right": 1266,
+            "bottom": 747
+          }
+        ],
+        "anyOverlapWithGuide": true,
+        "guideScreenBounds": {
+          "left": 178.7,
+          "top": 223.1,
+          "right": 514.2,
+          "bottom": 659.2
+        },
+        "stackLevel": 141
+      },
+      "journey": {
+        "capture": "scene-journey-1440-light.png",
+        "scene": "journey",
+        "guideScreenBounds": {
+          "left": 941.9,
+          "top": 293.5,
+          "right": 1219.5,
+          "bottom": 656.9
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "funnelBars": {
+            "count": 5,
+            "rects": [
+              {
+                "left": 88,
+                "top": 342,
+                "right": 1352,
+                "bottom": 360
+              },
+              {
+                "left": 88,
+                "top": 429,
+                "right": 1352,
+                "bottom": 447
+              },
+              {
+                "left": 88,
+                "top": 515,
+                "right": 1352,
+                "bottom": 533
+              },
+              {
+                "left": 88,
+                "top": 602,
+                "right": 1352,
+                "bottom": 620
+              },
+              {
+                "left": 88,
+                "top": 688,
+                "right": 1352,
+                "bottom": 706
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "insightsCard": {
+            "count": 1,
+            "rects": [
+              {
+                "left": 997,
+                "top": 774,
+                "right": 1376,
+                "bottom": 826
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "colorScheme": "dark",
+      "board": {
+        "capture": "scene-board-1440-dark.png",
+        "scene": "board",
+        "guideScreenBounds": {
+          "left": 177.7,
+          "top": 220.5,
+          "right": 514.2,
+          "bottom": 656.8
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "tickets": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 65,
+                "top": 419,
+                "right": 486,
+                "bottom": 634
+              },
+              {
+                "left": 510,
+                "top": 419,
+                "right": 930,
+                "bottom": 619
+              },
+              {
+                "left": 510,
+                "top": 635,
+                "right": 930,
+                "bottom": 851
+              },
+              {
+                "left": 954,
+                "top": 419,
+                "right": 1375,
+                "bottom": 661
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "grips": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 437,
+                "top": 424,
+                "right": 481,
+                "bottom": 468
+              },
+              {
+                "left": 881,
+                "top": 424,
+                "right": 925,
+                "bottom": 468
+              },
+              {
+                "left": 881,
+                "top": 640,
+                "right": 925,
+                "bottom": 684
+              },
+              {
+                "left": 1326,
+                "top": 424,
+                "right": 1370,
+                "bottom": 468
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "boardTabs": {
+            "count": 3,
+            "rects": [
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              },
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              },
+              {
+                "left": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      },
+      "previewDialog": {
+        "count": 1,
+        "rects": [
+          {
+            "left": 174,
+            "top": 169,
+            "right": 1266,
+            "bottom": 747
+          }
+        ],
+        "anyOverlapWithGuide": true,
+        "guideScreenBounds": {
+          "left": 177.7,
+          "top": 221.2,
+          "right": 514.2,
+          "bottom": 657.5
+        },
+        "stackLevel": 141
+      },
+      "journey": {
+        "capture": "scene-journey-1440-dark.png",
+        "scene": "journey",
+        "guideScreenBounds": {
+          "left": 941.1,
+          "top": 292.6,
+          "right": 1219.4,
+          "bottom": 656
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "funnelBars": {
+            "count": 5,
+            "rects": [
+              {
+                "left": 88,
+                "top": 342,
+                "right": 1352,
+                "bottom": 360
+              },
+              {
+                "left": 88,
+                "top": 429,
+                "right": 1352,
+                "bottom": 447
+              },
+              {
+                "left": 88,
+                "top": 515,
+                "right": 1352,
+                "bottom": 533
+              },
+              {
+                "left": 88,
+                "top": 602,
+                "right": 1352,
+                "bottom": 620
+              },
+              {
+                "left": 88,
+                "top": 688,
+                "right": 1352,
+                "bottom": 706
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "insightsCard": {
+            "count": 1,
+            "rects": [
+              {
+                "left": 997,
+                "top": 774,
+                "right": 1376,
+                "bottom": 826
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "colorScheme": "light",
+      "board": {
+        "capture": "scene-board-390-light.png",
+        "scene": "board",
+        "guideScreenBounds": {
+          "left": -65.5,
+          "top": 281.3,
+          "right": 196.2,
+          "bottom": 624.1
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "tickets": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 33,
+                "top": 365,
+                "right": 305,
+                "bottom": 609
+              },
+              {
+                "left": 329,
+                "top": 365,
+                "right": 601,
+                "bottom": 594
+              },
+              {
+                "left": 329,
+                "top": 610,
+                "right": 601,
+                "bottom": 854
+              },
+              {
+                "left": 625,
+                "top": 365,
+                "right": 896,
+                "bottom": 630
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "grips": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 256,
+                "top": 370,
+                "right": 300,
+                "bottom": 414
+              },
+              {
+                "left": 552,
+                "top": 370,
+                "right": 596,
+                "bottom": 414
+              },
+              {
+                "left": 552,
+                "top": 615,
+                "right": 596,
+                "bottom": 659
+              },
+              {
+                "left": 847,
+                "top": 370,
+                "right": 891,
+                "bottom": 414
+              }
+            ],
+            "anyOverlapWithGuide": false
+          },
+          "boardTabs": {
+            "count": 3,
+            "rects": [
+              {
+                "left": 33,
+                "top": 203,
+                "right": 109,
+                "bottom": 247
+              },
+              {
+                "left": 117,
+                "top": 203,
+                "right": 223,
+                "bottom": 247
+              },
+              {
+                "left": 231,
+                "top": 203,
+                "right": 307,
+                "bottom": 247
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      },
+      "previewDialog": {
+        "count": 1,
+        "rects": [
+          {
+            "left": 17,
+            "top": 61,
+            "right": 373,
+            "bottom": 785
+          }
+        ],
+        "anyOverlapWithGuide": true,
+        "guideScreenBounds": {
+          "left": -65.5,
+          "top": 280.4,
+          "right": 196.2,
+          "bottom": 623.0999999999999
+        },
+        "stackLevel": 141
+      },
+      "journey": {
+        "capture": "scene-journey-390-light.png",
+        "scene": "journey",
+        "guideScreenBounds": {
+          "left": 202.6,
+          "top": 314.1,
+          "right": 437.2,
+          "bottom": 616.1
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "funnelBars": {
+            "count": 5,
+            "rects": [
+              {
+                "left": 48,
+                "top": 247,
+                "right": 342,
+                "bottom": 265
+              },
+              {
+                "left": 48,
+                "top": 333,
+                "right": 342,
+                "bottom": 351
+              },
+              {
+                "left": 48,
+                "top": 419,
+                "right": 342,
+                "bottom": 437
+              },
+              {
+                "left": 48,
+                "top": 506,
+                "right": 342,
+                "bottom": 524
+              },
+              {
+                "left": 48,
+                "top": 592,
+                "right": 342,
+                "bottom": 610
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "insightsCard": {
+            "count": 1,
+            "rects": [
+              {
+                "left": 32,
+                "top": 849,
+                "right": 358,
+                "bottom": 921
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "colorScheme": "dark",
+      "board": {
+        "capture": "scene-board-390-dark.png",
+        "scene": "board",
+        "guideScreenBounds": {
+          "left": -65.3,
+          "top": 281.5,
+          "right": 196.3,
+          "bottom": 624.3
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "tickets": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 33,
+                "top": 365,
+                "right": 305,
+                "bottom": 609
+              },
+              {
+                "left": 329,
+                "top": 365,
+                "right": 601,
+                "bottom": 594
+              },
+              {
+                "left": 329,
+                "top": 610,
+                "right": 601,
+                "bottom": 854
+              },
+              {
+                "left": 625,
+                "top": 365,
+                "right": 896,
+                "bottom": 630
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "grips": {
+            "count": 4,
+            "rects": [
+              {
+                "left": 256,
+                "top": 370,
+                "right": 300,
+                "bottom": 414
+              },
+              {
+                "left": 552,
+                "top": 370,
+                "right": 596,
+                "bottom": 414
+              },
+              {
+                "left": 552,
+                "top": 615,
+                "right": 596,
+                "bottom": 659
+              },
+              {
+                "left": 847,
+                "top": 370,
+                "right": 891,
+                "bottom": 414
+              }
+            ],
+            "anyOverlapWithGuide": false
+          },
+          "boardTabs": {
+            "count": 3,
+            "rects": [
+              {
+                "left": 33,
+                "top": 203,
+                "right": 109,
+                "bottom": 247
+              },
+              {
+                "left": 117,
+                "top": 203,
+                "right": 223,
+                "bottom": 247
+              },
+              {
+                "left": 231,
+                "top": 203,
+                "right": 307,
+                "bottom": 247
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      },
+      "previewDialog": {
+        "count": 1,
+        "rects": [
+          {
+            "left": 20,
+            "top": 73,
+            "right": 370,
+            "bottom": 784
+          }
+        ],
+        "anyOverlapWithGuide": true,
+        "guideScreenBounds": {
+          "left": -65.4,
+          "top": 280.2,
+          "right": 196.20000000000002,
+          "bottom": 622.9
+        },
+        "stackLevel": 141
+      },
+      "journey": {
+        "capture": "scene-journey-390-dark.png",
+        "scene": "journey",
+        "guideScreenBounds": {
+          "left": 202.7,
+          "top": 314.3,
+          "right": 437.2,
+          "bottom": 616.3
+        },
+        "stageBeneath": {
+          "stageZ": 2,
+          "anchorZ": [
+            {
+              "id": "hero",
+              "z": 3
+            },
+            {
+              "id": "board",
+              "z": 4
+            },
+            {
+              "id": "journey",
+              "z": 4
+            }
+          ],
+          "stagePointerEvents": "none"
+        },
+        "elements": {
+          "funnelBars": {
+            "count": 5,
+            "rects": [
+              {
+                "left": 48,
+                "top": 247,
+                "right": 342,
+                "bottom": 265
+              },
+              {
+                "left": 48,
+                "top": 333,
+                "right": 342,
+                "bottom": 351
+              },
+              {
+                "left": 48,
+                "top": 419,
+                "right": 342,
+                "bottom": 437
+              },
+              {
+                "left": 48,
+                "top": 506,
+                "right": 342,
+                "bottom": 524
+              },
+              {
+                "left": 48,
+                "top": 592,
+                "right": 342,
+                "bottom": 610
+              }
+            ],
+            "anyOverlapWithGuide": true
+          },
+          "insightsCard": {
+            "count": 1,
+            "rects": [
+              {
+                "left": 32,
+                "top": 849,
+                "right": 358,
+                "bottom": 921
+              }
+            ],
+            "anyOverlapWithGuide": false
+          }
+        }
+      }
+    }
+  ],
+  "video": {
+    "capture": "hero-board-journey-normal.webm",
+    "slowed": "hero-board-journey-0.25x.webm",
+    "interaction": "grip drag on AI Browser — Maxie (drag-watch reaction)",
+    "journey": {
+      "scene": "journey",
+      "guideScreenBounds": {
+        "left": 941.5,
+        "top": 291.5,
+        "right": 1219.4,
+        "bottom": 654.9
+      },
+      "stageBeneath": {
+        "stageZ": 2,
+        "anchorZ": [
+          {
+            "id": "hero",
+            "z": 3
+          },
+          {
+            "id": "board",
+            "z": 4
+          },
+          {
+            "id": "journey",
+            "z": 4
+          }
+        ],
+        "stagePointerEvents": "none"
+      },
+      "elements": {
+        "funnelBars": {
+          "count": 5,
+          "rects": [
+            {
+              "left": 88,
+              "top": 317,
+              "right": 1352,
+              "bottom": 335
+            },
+            {
+              "left": 88,
+              "top": 404,
+              "right": 1352,
+              "bottom": 422
+            },
+            {
+              "left": 88,
+              "top": 490,
+              "right": 1352,
+              "bottom": 508
+            },
+            {
+              "left": 88,
+              "top": 577,
+              "right": 1352,
+              "bottom": 595
+            },
+            {
+              "left": 88,
+              "top": 663,
+              "right": 1352,
+              "bottom": 681
+            }
+          ],
+          "anyOverlapWithGuide": true
+        },
+        "insightsCard": {
+          "count": 1,
+          "rects": [
+            {
+              "left": 997,
+              "top": 749,
+              "right": 1376,
+              "bottom": 801
+            }
+          ],
+          "anyOverlapWithGuide": false
+        }
+      }
+    }
+  }
+}

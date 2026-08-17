@@ -456,3 +456,68 @@ Rollback:
   null stub and with both default/isolated dist directories. Webpack compiles,
   typechecks, prerenders all routes, and satisfies the same budget script; dev
   may continue using Turbopack.
+
+# Gate F additions — immersive world runtime status and obsolete-module removal (Task 9)
+
+Status annotations only; the authoritative behavior contracts are the
+Immersive Product World amendments in `DESIGN.md` and `PRD.md` §19.
+
+## Implemented world runtime (`src/features/world/`)
+
+- **One-canvas lifecycle — implemented.** `ExperienceWorld.tsx` owns the
+  single lazy, pointer-transparent, fixed-stage R3F canvas
+  (`WorldCanvas.tsx`, `frameloop="demand"`). The canvas mounts on demand,
+  runs continuously only during look/reaction/transition, pauses when
+  `document.hidden` or outside the hero/board/journey anchor union, and
+  resumes from presentation state.
+- **World director + anchor API — implemented.** `world-store.ts` is the
+  external-store director (discrete state only; scroll/pointer/springs stay
+  mutable render-loop values). `WorldAnchor.tsx` registers the named
+  `hero`/`board`/`journey` DOM anchors; `WorldProvider.tsx` supplies the
+  stable director and subscribes to the shared signal bus. Public surface is
+  `src/features/world/index.ts` exactly.
+- **Selected model + license path — implemented.** The production guide is
+  `public/models/guide/guide.glb` (Muko_Art astronaut base, CC-BY-4.0,
+  fitted/optimized per Gate A/Gate C). License, source URL, revision,
+  original/final hashes, and the modification record live in
+  `public/models/guide/LICENSE.md` + `source.json` (repository-only
+  attribution per Garvit's decision).
+- **Fallback policy — implemented.** `capability-policy.ts` is the
+  world-named port of the reduced-motion / Save-Data / low-memory /
+  performance-kill / renderer-failure truth table (incl. WebGL
+  context-creation probe and `webglcontextlost` handoff). Fallback renders
+  the camera-matched theme posters `public/images/world/guide-{light,dark}.webp`
+  via media-selected sources so only one theme downloads; no layout shift at
+  handoff (measured 0.0 CLS delta in Gate F context-loss evidence).
+- **Two-stream analytics boundary — implemented and validated.** The
+  session funnel lives only in `sessionStorage["garvit-journey:v1"]`
+  (journey-store); PostHog receives pageviews/autocapture plus exactly the
+  five allowlisted custom events. Real-session wire evidence:
+  `docs/qa/immersive/gate-f/analytics-session.json`.
+- **Mobile board navigation — implemented.** `MobileColumnNav.tsx` +
+  `useBoardViewport.ts` provide labelled column tabs, `1 of 3` position,
+  previous/next controls, and next-column peek at 320/390/430px; every
+  project reachable without dragging.
+- **Budgets — enforced.** `scripts/check-budgets.mts` enforces (no SKIP):
+  homepage initial JS ≤170KB gzip, lazy Three vendor ≤235KB gzip, world
+  scene module ≤25KB gzip, guide GLB ≤1.8MB, active poster ≤90KB, fonts
+  ≤100KB. Gate F fresh-build results: all PASS (see
+  `docs/qa/immersive/gate-f-rc.md`).
+
+## Obsolete modules removed (Gate F cleanup)
+
+Deleted after the reachability proof (`rg` sweep recorded in
+`docs/qa/immersive/gate-f-rc.md`): `src/features/mascot/MascotExperience*`,
+`MascotPoster*`, `SourcedMascotScene.tsx`, `capability-policy*`,
+`character-poses*`, `rig*`, `robot-rig*`, `mascot-model-contract.test.ts`,
+`mascot.module.css`; `src/components/ops/OperationsRail.tsx`,
+`MascotSlot.tsx`, `FlagsPanel.tsx` (static shell) and their dead
+`ops.module.css` classes; `public/mascot/**` (robot GLB + posters +
+license). The "Task 8 additions — mascot runtime" and elevation
+`SourcedMascotScene` sections above are historical records of removed code.
+
+**Preserved:** `src/features/mascot/signals.ts` and `reaction-machine.ts`
+remain the single shared signal bus / reaction reducer consumed by board,
+flags, journey, and world (`src/features/mascot/index.ts` documents the
+compatibility surface). There is deliberately no duplicate event bus in
+`src/features/world`.

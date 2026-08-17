@@ -1,0 +1,420 @@
+{
+  "core": [
+    {
+      "name": "home-1440x900-light.png",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "light",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "axeBlocking": [],
+      "errors": []
+    },
+    {
+      "name": "home-1440x900-dark.png",
+      "width": 1440,
+      "height": 900,
+      "colorScheme": "dark",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "axeBlocking": [],
+      "errors": []
+    },
+    {
+      "name": "home-390x844-light.png",
+      "width": 390,
+      "height": 844,
+      "colorScheme": "light",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "axeBlocking": [],
+      "errors": []
+    },
+    {
+      "name": "home-390x844-dark.png",
+      "width": 390,
+      "height": 844,
+      "colorScheme": "dark",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "axeBlocking": [],
+      "errors": []
+    }
+  ],
+  "failures": [
+    {
+      "name": "failure-no-js",
+      "fallback": "none",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/maxie",
+        "caseH1": "AI Browser — Maxie"
+      },
+      "glbRequests": 0,
+      "errors": []
+    },
+    {
+      "name": "failure-storage-denied",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "glbRequests": 1,
+      "errors": []
+    },
+    {
+      "name": "failure-webgl-denied",
+      "fallback": "renderer-failure",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "glbRequests": 0,
+      "errors": []
+    },
+    {
+      "name": "failure-save-data",
+      "fallback": "save-data",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "glbRequests": 0,
+      "errors": []
+    },
+    {
+      "name": "failure-context-loss",
+      "before": {
+        "fallback": "none",
+        "canvasCount": 1
+      },
+      "fallback": "renderer-failure",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "handoffLayoutShift": 0,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    }
+  ],
+  "engines": [
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "height": 900,
+      "name": "engine-chromium-1440.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "height": 844,
+      "name": "engine-chromium-390.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "name": "webgl-denied (chromium)",
+      "fallback": "renderer-failure",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "glbRequests": 0,
+      "errors": []
+    },
+    {
+      "engine": "firefox",
+      "width": 1440,
+      "height": 900,
+      "name": "engine-firefox-1440.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    },
+    {
+      "engine": "firefox",
+      "width": 390,
+      "height": 844,
+      "name": "engine-firefox-390.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": [
+        "pageerror: Loading chunk 340 failed.\n(error: http://localhost:3199/_next/static/chunks/e8ac9a42.0e2fbaff7c0a25d8.js)"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "name": "webgl-denied (firefox)",
+      "fallback": "renderer-failure",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "glbRequests": 0,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "height": 900,
+      "name": "engine-webkit-1440.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "height": 844,
+      "name": "engine-webkit-390.png",
+      "fallback": "none",
+      "sceneReady": "true",
+      "canvasCount": 1,
+      "posterVisible": false,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "roundTrip": {
+        "target": "/work/stay-portal",
+        "caseH1": "Stay Portal"
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "name": "webgl-denied (webkit)",
+      "fallback": "renderer-failure",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterVisible": true,
+      "caseLinksPresent": [
+        "/work/stay-portal",
+        "/work/maxie",
+        "/work/agentic-calendar",
+        "/notes/dynamic-island"
+      ],
+      "resumeCta": true,
+      "contactCta": true,
+      "horizontalOverflow": false,
+      "glbRequests": 0,
+      "errors": []
+    }
+  ],
+  "vitals": {
+    "lcpMs": 72,
+    "cls": 0.0001,
+    "inpMsWorst": 104,
+    "interactionCount": 5,
+    "ceilings": {
+      "lcpMs": 2500,
+      "cls": 0.05,
+      "inp": "best-effort"
+    }
+  }
+}

@@ -1043,3 +1043,29 @@ remain binding.
   390×844, normal/slowed interaction evidence, reduced-motion and poster/WebGL
   failure captures, scorecards, and bundle/asset/console/axe/Core Web Vitals
   evidence under `docs/qa/immersive/`.
+
+### Gate F implementation status — 2026-08-17
+
+Status annotations only; the contracts above are unchanged.
+
+- **Product and interface contract — implemented.** Continuous world with
+  named anchors and one lazy `pointer-events: none` canvas; DOM remains the
+  complete interface (validated with JS disabled, storage denied, WebGL
+  denied, context loss, and Save-Data — every project link and both CTAs
+  work without the canvas); public order as specified; real-ticket hero
+  overlap; OperationsRail removed in favor of the dock with unchanged flag
+  semantics; Muko-based abstract guide with repository-only attribution;
+  signal/reaction reducer authoritative; board physics/keyboard/storage/
+  reset/preview semantics preserved; case openings artifact-led.
+- **Analytics contract — implemented and wire-validated.**
+  `garvit-journey:v1` never leaves `sessionStorage`; PostHog received
+  pageviews/autocapture plus exactly `resume_download`, `contact_click`,
+  `case_open`, `full_case_read`, `persona_selected` in the Gate F real-session
+  capture (`docs/qa/immersive/gate-f/analytics-session.json`); zero
+  scene/guide/board-position/funnel-stage custom events observed.
+- **Delivery contract — status.** Model ceilings, canvas policy, budgets,
+  1440×900 and 390×844 composition requirements, and mobile board discovery
+  all verified in Gate F (`docs/qa/immersive/gate-f-rc.md`); D3 Apple/Taste
+  closed at 38/40 and 24/25. Outstanding before the RC commit: the design
+  lead's final Apple/Taste audit from the fresh Gate F captures and Garvit's
+  live visual acceptance (plan Task 9 Steps 5 and 8).

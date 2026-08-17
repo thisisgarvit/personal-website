@@ -526,23 +526,26 @@ visibly inside the frame above the board panel edge in both themes.
 
 | Apple criterion | Score (/5) | Notes |
 |---|---|---|
-| Purpose | — | |
-| Agency | — | |
-| Responsibility | — | |
-| Familiarity | — | |
-| Flexibility | — | |
-| Simplicity | — | |
-| Craft | — | |
-| Delight | — | |
-| **Apple total** | **— /40** | |
+| Purpose | 5 | |
+| Agency | 5 | CTA-in-fold restored at medium heights |
+| Responsibility | 5 | |
+| Familiarity | 4 | |
+| Flexibility | 5 | Height-aware spacing holds across band heights |
+| Simplicity | 4 | |
+| Craft | 5 | |
+| Delight | 5 | |
+| **Apple total** | **38/40** | Gate ≥34, no dimension <4 — PASS |
 
 | Taste criterion | Score (/5) | Notes |
 |---|---|---|
-| Composition | — | |
-| Hierarchy | — | |
-| Authorship | — | |
-| Asset/material | — | |
-| Responsive craft | — | |
-| **Taste total** | **— /25** | |
+| Composition | 5 | |
+| Hierarchy | 5 | Conversion path unambiguous at 1024×768 |
+| Authorship | 5 | |
+| Asset/material | 4 | |
+| Responsive craft | 5 | |
+| **Taste total** | **24/25** | Gate ≥22, no dimension <4 — PASS |
 
-Verdict: —
+Verdict: **PASS — Gate D3 closed.** Scored by the design lead (codex)
+from the refreshed §10.4 captures and the §10.5 gate table. Codex
+independently verified the tree clean at `4c9ae3c` and confirmed all
+gates PASS. Remaining work proceeds under Task 9 / Gate F.

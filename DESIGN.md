@@ -906,3 +906,30 @@ create or serve a split worktree during this implementation.
   optical validation if the copy, weight, font file, or measure changes.
 - Evidence and the Apple/Taste scorecards live in
   `docs/qa/immersive/gate-b-composition.md`.
+
+### Gate F implementation status — 2026-08-17
+
+Status annotations only; no approved copy above changes.
+
+- **Implemented and verified in the release candidate:** the continuous
+  hero/board/journey product world with one lazy pointer-transparent canvas;
+  chrome → experiment strip → hero → board → journey → footer order with the
+  real board overlapping upward; the compact feature-flag dock (OperationsRail
+  dissolved); the abstract metaverse field agent built from the Gate A Muko
+  selection with repository-only attribution; scene-driven critically damped
+  transitions with presentation-state re-entry; camera-matched light/dark
+  poster fallbacks for reduced motion, Save-Data, low capability, performance
+  kill, and renderer failure; explicit 320/390/430 mobile board discovery;
+  the Gate B optical type lock; and the two-stream analytics contract
+  (wire-validated — see `docs/qa/immersive/gate-f/analytics-session.json`).
+- **Budgets:** all asset/bundle ceilings above enforced by
+  `scripts/check-budgets.mts` and passing with no SKIP on the fresh Gate F
+  production build.
+- **Obsolete implementations removed:** the retired CaptainRipley robot
+  runtime, its posters/GLB, the OperationsRail/MascotSlot wrappers, and the
+  static FlagsPanel shell were deleted in Gate F after an unreachability
+  proof; the shared signal bus and reaction reducer are preserved unchanged.
+- Gate D3 closed at Apple 38/40 / Taste 24/25
+  (`docs/qa/immersive/gate-d-home.md` §10.6). Gate F evidence index:
+  `docs/qa/immersive/gate-f-rc.md`. The final Apple/Taste audit and Garvit's
+  live play-through remain open before the RC commit.
