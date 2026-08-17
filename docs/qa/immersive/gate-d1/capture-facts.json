@@ -1,0 +1,58 @@
+[
+  {
+    "name": "desktop-light-1440x900.png",
+    "width": 1440,
+    "height": 900,
+    "colorScheme": "light",
+    "initialSessionStorageLength": 0,
+    "personaVisible": true,
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "themeOverride": null
+  },
+  {
+    "name": "desktop-dark-1440x900.png",
+    "width": 1440,
+    "height": 900,
+    "colorScheme": "dark",
+    "initialSessionStorageLength": 0,
+    "personaVisible": true,
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "themeOverride": null
+  },
+  {
+    "name": "mobile-light-390x844.png",
+    "width": 390,
+    "height": 844,
+    "colorScheme": "light",
+    "initialSessionStorageLength": 0,
+    "personaVisible": true,
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "themeOverride": null
+  },
+  {
+    "name": "mobile-dark-390x844.png",
+    "width": 390,
+    "height": 844,
+    "colorScheme": "dark",
+    "initialSessionStorageLength": 0,
+    "personaVisible": true,
+    "worldCount": 1,
+    "sceneReady": true,
+    "mainCount": 1,
+    "h1Count": 1,
+    "primaryCtaCount": 2,
+    "themeOverride": null
+  }
+]
