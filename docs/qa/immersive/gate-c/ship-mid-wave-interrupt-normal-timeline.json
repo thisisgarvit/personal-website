@@ -1,0 +1,567 @@
+[
+  {
+    "t": 200,
+    "frame": null,
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 958,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 959,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 1,
+    "position": "1.7007,-1.0517,0.0000",
+    "drawCalls": null
+  },
+  {
+    "t": 1121,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 2,
+    "position": "1.7022,-1.0549,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1121,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 2,
+    "position": "1.7022,-1.0549,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1249,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 4,
+    "position": "1.7031,-1.0569,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1311,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 5,
+    "position": "1.7032,-1.0571,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1454,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 7,
+    "position": "1.7032,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1522,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 8,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1653,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 10,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1712,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 11,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1820,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 13,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 1943,
+    "scene": "hero",
+    "gesture": "wave",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 15,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2030,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 17,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2123,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 19,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2256,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 22,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2343,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 24,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2446,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2519,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2620,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2721,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2821,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2923,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3024,
+    "scene": "hero",
+    "gesture": "ship-celebration",
+    "reaction": "shipped",
+    "playing": "true",
+    "frame": 26,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3148,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 28,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3238,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 30,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3326,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 32,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3453,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 35,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3539,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 37,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3635,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 39,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3732,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 41,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3860,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 44,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3947,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 46,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4035,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 48,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4171,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 51,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4255,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 53,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4339,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 55,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4468,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 58,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4554,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 60,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4641,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 62,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4770,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4838,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4940,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5041,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5142,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5243,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5344,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5445,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5547,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5648,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5748,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5849,
+    "scene": "hero",
+    "gesture": "idle",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 65,
+    "position": "1.7033,-1.0573,0.0000",
+    "drawCalls": 21
+  }
+]

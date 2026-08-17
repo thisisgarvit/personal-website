@@ -1,0 +1,692 @@
+[
+  {
+    "t": 2570,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 24,
+    "position": "-1.9425,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2696,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 27,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2782,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 29,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2875,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 31,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 2998,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 34,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3080,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 36,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3208,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 39,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3290,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 41,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3373,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3469,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3570,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3671,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3773,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3872,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 3974,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4075,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "drag-watch",
+    "playing": "true",
+    "frame": 43,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4279,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 46,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4280,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 46,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4408,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 49,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4493,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 51,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4617,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 54,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4698,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4780,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4881,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 4982,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5084,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5185,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5286,
+    "scene": "board",
+    "gesture": "drag-watch",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 56,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5472,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 58,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5517,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 59,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5611,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 61,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5693,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 63,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5817,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 66,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 5900,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 68,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6033,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 71,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6118,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 73,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6203,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 75,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6336,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 78,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6410,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 79,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6534,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 82,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6618,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 84,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6702,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 86,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6838,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 89,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 6930,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 90,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7006,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 91,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7115,
+    "scene": "board",
+    "gesture": "pager-check",
+    "reaction": "incident",
+    "playing": "true",
+    "frame": 93,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7258,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 96,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7304,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 97,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7455,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 100,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7549,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 102,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7642,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 104,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7748,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 106,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7806,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 7907,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8008,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8115,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8216,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8316,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8416,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8518,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8618,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8720,
+    "scene": "board",
+    "gesture": "resolution",
+    "reaction": "resolved",
+    "playing": "true",
+    "frame": 107,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8871,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 108,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 8951,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 110,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 9035,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 112,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 9164,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 115,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 9267,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 117,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 9352,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 119,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  },
+  {
+    "t": 9436,
+    "scene": "board",
+    "gesture": "board-guide",
+    "reaction": "idle",
+    "playing": "true",
+    "frame": 121,
+    "position": "-1.9426,-0.9689,-0.1000",
+    "drawCalls": 21
+  }
+]

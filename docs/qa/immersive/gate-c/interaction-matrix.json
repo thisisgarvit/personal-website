@@ -1,0 +1,73 @@
+{
+  "recordings": [
+    {
+      "file": "look-tracking-normal.webm",
+      "shows": "Fine-pointer head/torso look tracking a smooth sweep, an abrupt corner jump (interruption from current presentation values), then settle toward the idle glance."
+    },
+    {
+      "file": "wave-settle-normal.webm",
+      "shows": "One wave on session mount, then spring settle into the idle hero composition. Timeline JSON shows gesture wave->idle."
+    },
+    {
+      "file": "scene-target-interrupt-normal.webm",
+      "shows": "Scene target travel hero->board, journey target grabbed mid-flight, then interrupted back to board — springs continue from current presentation values (see position timeline; no snap to scene origin)."
+    },
+    {
+      "file": "reaction-sequence-normal.webm",
+      "shows": "Test-control arbitration: drag-watch -> incident held while dragging -> pager-check on drag end -> resolution -> settle to idle."
+    },
+    {
+      "file": "ship-mid-wave-interrupt-normal.webm",
+      "shows": "Ship signal fired ~0.4s into the mount wave. Timeline shows reaction=shipped queued during gesture=wave, then ship-celebration taking over from current pose values and settling."
+    }
+  ],
+  "captures": [
+    {
+      "file": "save-data-fallback-light-1440x900.png",
+      "reason": "save-data",
+      "fallback": "save-data",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterOpacity": "1",
+      "posterImage": "url(\"/images/world/guide-light.webp\")",
+      "glbRequested": false
+    },
+    {
+      "file": "performance-kill-fallback-light-1440x900.png",
+      "reason": "performance-kill",
+      "fallback": "performance-kill",
+      "sceneReady": "false",
+      "canvasCount": 0,
+      "posterOpacity": "1",
+      "posterImage": "url(\"/images/world/guide-light.webp\")",
+      "glbRequested": false
+    },
+    {
+      "file": "webgl-disabled-fallback-light-1440x900.png",
+      "reason": "webgl-context-creation-failure (--disable-webgl)",
+      "fallback": "none",
+      "sceneReady": "false",
+      "canvasLayers": 1,
+      "posterOpacity": "1",
+      "ctasVisible": 2,
+      "threeConsoleErrors": 3,
+      "finding": "Poster stays visible and content/CTAs remain intact (no layout shift), but data-world-fallback stays 'none' and data-scene-ready stays 'false': a context-CREATION failure inside the R3F Canvas is logged by three.js yet never reaches setRendererFailed — WorldBoundary only catches render-phase throws and the onCreated webglcontextlost listener is never installed. Context LOSS after creation does reach renderer-failure (see renderer-failure-light-1440x900.png)."
+    }
+  ],
+  "console": {
+    "errors": [],
+    "pass": true
+  },
+  "axe": {
+    "light": {
+      "blocking": [],
+      "needsReview": [],
+      "pass": true
+    },
+    "dark": {
+      "blocking": [],
+      "needsReview": [],
+      "pass": true
+    }
+  }
+}
