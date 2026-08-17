@@ -104,3 +104,106 @@ engineering.
    deviation); the public production build still 404s that route.
 3. No other deviation: no dependency changes, no analytics event names
    added, no copy changes, no CSS re-tuning of codex's draft.
+
+## Gate D1 correction round (visual acceptance)
+
+Date: 2026-08-17 · Base: `e085623` · Corrections ordered by the design lead
+after judging the first D1 captures (engineering pass, design fail: Apple
+34/40, Taste 20/25 — asset/material 3/5). Three blocking items, all fixed at
+the CSS layer. **No `src/features/world/` file was touched** — no material,
+lighting, or scene-motion change; the render itself was always fine, it was
+being veiled by the hero panel.
+
+### Correction 1 — mascot contrast (worst in dark mode)
+
+Root cause: the hero panel painted a uniform
+`color-mix(in srgb, var(--color-panel-2) 76%, transparent)` wash across its
+full width — including the guide zone — on top of the `::after` scrims. In
+dark mode that put a 76% near-black film over the white suit (watermark); in
+light mode it flattened all suit shading.
+
+Changes (`src/components/hero/Hero.module.css`):
+
+- `.hero` background is now a 90° gradient: 82% panel-mix at the copy edge,
+  76% at 50%, falling to 12%/10% across 82–100% — full text backing on the
+  left, near-clear glass over the guide.
+- `.hero::after` horizontal scrim's transparent stop pulled in from 76% to
+  68% so it no longer bleeds over the guide's torso.
+- `.hero::after` bottom scrim *strengthened* (88% → 52% at 16% → transparent
+  at 34%) so the guide's feet ground out into canvas before the board panel
+  (94% opaque `--material-panel`) composites over them — without this, the
+  deeper board overlap (correction 2) left ghost legs visible through the
+  board surface.
+
+Result at 1440×900 (verified at full size and 360px thumbnail): LIGHT —
+helmet, dark visor, shoulders, both arms, orange pager, and full body
+silhouette read clearly. DARK — visor boundary and torso separation (chest
+straps/hardware against the lit suit) visible; the headline remains the
+dominant mass, guide reads as a supporting character. Same result at
+390×844 in both themes.
+
+### Correction 2 — desktop board teaser at 1440×900
+
+Changes:
+
+- `.hero` max height 47rem → 44rem (`Hero.module.css`).
+- `.boardAnchor` overlap deepened: `clamp(-4.5rem, -4vw, -3rem)` →
+  `clamp(-11rem, -11.5vw, -3rem)` (`page.module.css`).
+- `.dock` raised: `bottom: clamp(7.5rem, 10vw, 10rem)` →
+  `clamp(9rem, 14vw, 13rem)`; tablet override (≤880px) 7rem → 8.5rem so the
+  2vw+ dock/board gap holds across the 620–1440 range.
+
+Measured at 1440×900 (production build, machine-read rects): board heading
+fully in frame (y699–760), first real ticket row tops visibly entering
+(GAR-101 / GAR-204 / GAR-309 rows, top y865 → 35px in frame — real board,
+no cloned teaser), dock bottom y614 vs board top y650 = **36px optical
+clearance** (≥24 required), both CTAs fully visible (bottom y609).
+
+### Correction 3 — mobile dock peek at 390×844
+
+Change: mobile `.hero` min-height `calc(100dvh - 5.75rem)` →
+`calc(100dvh - 10.25rem)` (`Hero.module.css`). The dock stays in-flow below
+the hero (not forced above the fold).
+
+Measured at 390×844: dock top y801 → **43px of the dock header** ("FEATURE
+FLAGS · 3 / 4 live") visible at the bottom edge (32–56px window), both CTAs
+fully visible (bottoms y633/y697).
+
+### Iterations
+
+Three visual iterations against a dev server with Playwright screenshots +
+machine-read geometry per pass:
+
+1. Gradient unveil + height/overlap/dock rebalance — geometry landed, but a
+   trial 18.5rem dock width wrapped the `confetti_on_scroll` row, and the
+   deeper overlap exposed ghost legs through the translucent board panel.
+2. Dock width restored to 20rem; bottom scrim strengthened to ground the
+   guide at the board edge — both themes clean.
+3. Overlap eased to -11.5vw and tablet dock offset raised to keep ≥24px
+   dock/board clearance across mid widths (final: 36px at 1440×900).
+
+### Gate results (fresh, after final iteration)
+
+| Gate | Result |
+|---|---|
+| `pnpm typecheck` / `pnpm lint` / `pnpm test` (43 files, 163 tests) | PASS |
+| `pnpm build` (webpack, `NEXT_DIST_DIR=.next-e2e`, `NEXT_PUBLIC_WORLD_PROTOTYPE=1`) | PASS |
+| `pnpm check:budgets` | PASS — homepage initial JS 157.2KB gzip (≤170KB); all other budgets unchanged |
+| chromium e2e `home` + `no-js` + `a11y` + `journey` + `world` | PASS — 37/37 |
+| chromium regression sweep (`keyboard`, `responsive`, `reduced-motion`, `network`, `case-routes`, `phone-reveal`) | PASS — 35 passed, 1 intentional engine skip |
+
+Harness note: an initial e2e run showed 5 spurious failures because the
+previous session's `pnpm start` was still holding port 3111 and serving a
+stale copy of `.next-e2e` that had been rebuilt underneath it. Verified by
+building HEAD into a separate dist dir (all green), then killed the stale
+server and re-ran — all green. No test was changed.
+
+### Captures
+
+The four canonical shots were re-captured from the production build and
+overwrite the originals in place (`docs/qa/immersive/gate-d/home-{1440x900,390x844}-{light,dark}.png`),
+with `capture-facts.json` regenerated on the same schema (1 world
+scene-ready, 1 main, 1 h1, 2 primary CTAs, DELHI / IST once on desktop,
+chrome-hidden at 390px). The capture harness is now committed as
+`scripts/capture-homepage-gate-d.mjs` (same wait conditions and PostHog
+blocking as the gate-d1 script).

@@ -21,7 +21,9 @@
 }
 
 .boardAnchor {
-  margin-top: clamp(-4.5rem, -4vw, -3rem);
+  /* Deep overlap so the board heading and the top of the first ticket
+     row enter the 1440x900 first fold as a teaser. */
+  margin-top: clamp(-11rem, -11.5vw, -3rem);
 }
 
 .journeyAnchor {
@@ -31,7 +33,7 @@
 .dock {
   position: absolute;
   right: clamp(1.25rem, 3vw, 3rem);
-  bottom: clamp(7.5rem, 10vw, 10rem);
+  bottom: clamp(9rem, 14vw, 13rem);
   z-index: 5;
   width: min(20rem, 27vw);
   min-width: 18rem;
@@ -56,7 +58,7 @@
 @media (max-width: 879.98px) {
   .dock {
     right: var(--space-4);
-    bottom: 7rem;
+    bottom: 8.5rem;
   }
 }
 
