@@ -283,6 +283,37 @@ for (const viewport of mobileViewports) {
 }
 
 /**
+ * Gate D3 final correction — the conversion path is locked "big and
+ * unmissable": at 1024×768 (medium height, 880–1179px composition) BOTH
+ * hero CTAs must sit fully inside the initial viewport with ≥16px bottom
+ * clearance. Regression: the 16rem persona-tray reservation plus the
+ * wrapped headline pushed both CTAs below the fold.
+ */
+test("hero CTAs land fully inside the initial viewport at 1024x768", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto("/");
+  const hero = page.getByRole("region", {
+    name: /I turn fuzzy product ideas/i,
+  });
+
+  for (const name of [/Download resume/i, /Contact Garvit/i] as const) {
+    const cta = hero.getByRole("link", { name });
+    await expect(cta).toBeVisible();
+    const box = (await cta.boundingBox())!;
+    expect(box, String(name)).not.toBeNull();
+    expect(box.x, `${name} left edge`).toBeGreaterThanOrEqual(0);
+    expect(box.y, `${name} top edge`).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width, `${name} right edge`).toBeLessThanOrEqual(1024);
+    expect(
+      box.y + box.height,
+      `${name} bottom edge must clear the fold by >=16px`,
+    ).toBeLessThanOrEqual(768 - 16);
+  }
+});
+
+/**
  * Gate D3 — entering /#work-board must land "Things I've built" below
  * the sticky product chrome at every matrix width (mobile regression:
  * the heading used to sit beneath the chrome).

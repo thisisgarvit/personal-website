@@ -120,6 +120,46 @@
   }
 }
 
+/* Gate D3 final correction (880–1179px, medium heights): the 16rem tray
+   reservation plus the wrapped headline pushed both CTAs below a 768px
+   fold. At viewport heights ≤930px the reservation compresses toward
+   the tray's real band (24px offset + 120px tray = 144px) and the
+   intro/CTA gaps step down one token — type, 56px targets, copy, and
+   the dock-column width reservation are untouched. Above 930px even the
+   tallest band composition (880px, five-line headline) already keeps
+   both CTAs inside the fold with ≥16px clearance, so the approved tall
+   composition stands. */
+@media (max-width: 1179.98px) and (min-width: 880px) and (max-height: 929.98px) {
+  .copy {
+    /* 10.5rem clears the tray band (144px) by 24px. Bottom padding
+       stays 8rem: the board anchor's deep-overlap teaser hangs off the
+       hero's BOTTOM edge, so shrinking the bottom padding would raise
+       the board over the CTA row — the top-side reductions alone lift
+       the CTAs while preserving the approved board/CTA gap per width. */
+    padding-top: 10.5rem;
+  }
+
+  .intro,
+  .actions {
+    margin-top: var(--space-4);
+  }
+}
+
+/* 880–1023px: the headline wraps to five lines (~288px), so the copy
+   needs one more step — the persona tray rises to a 12px offset (its
+   paired rule in PersonaSatire.module.css) and the reservation follows
+   it down to 9rem, keeping a 12px tray↔copy clearance. */
+@media (max-width: 1023.98px) and (min-width: 880px) and (max-height: 929.98px) {
+  .copy {
+    padding-top: 9rem;
+  }
+
+  .intro,
+  .actions {
+    margin-top: var(--space-3);
+  }
+}
+
 @media (max-width: 879.98px) {
   .hero {
     min-height: 46rem;

@@ -142,6 +142,16 @@
   }
 }
 
+/* Gate D3 final correction (880–1023px, medium heights ≤930px): the
+   five-line headline needs every non-type pixel — the phase rail's gap
+   to the headline steps down to 4px. Rail min-height (44px targets) and
+   all type sizes are unchanged. */
+@media (max-width: 1023.98px) and (min-width: 880px) and (max-height: 929.98px) {
+  .phaseRail {
+    margin-bottom: var(--space-1);
+  }
+}
+
 @media (max-width: 619.98px) {
   .headline {
     max-width: 22rem;

@@ -414,3 +414,135 @@ targets/springs) untouched — design-owned.
 | **Taste total** | **— /25** | |
 
 Verdict: —
+
+## 10. D3 FINAL correction (rescore 33/40 + 20/25 → CTAs below fold at 1024×768)
+
+### 10.1 The failed rescore (design lead)
+
+| Apple criterion | Score (/5) |
+|---|---|
+| Purpose | 5 |
+| Agency | 3 |
+| Responsibility | 5 |
+| Familiarity | 4 |
+| Flexibility | 3 |
+| Simplicity | 4 |
+| Craft | 4 |
+| Delight | 5 |
+| **Apple total** | **33/40** |
+
+| Taste criterion | Score (/5) |
+|---|---|
+| Composition | 4 |
+| Hierarchy | 3 |
+| Authorship | 5 |
+| Asset/material | 5 |
+| Responsive craft | 3 |
+| **Taste total** | **20/25** |
+
+**Cause (evidence `matrix/home-1024x768-{light,dark}.png`, pre-fix):**
+at 1024×768 BOTH hero CTAs (Download resume, Contact Garvit) sat
+entirely below the initial viewport — the §9.2 correction's 16rem
+persona-tray reservation plus the 880–1179 wrapped headline pushed the
+conversion path off-screen at medium heights (resume CTA bottom edge:
+**828px** in a 768px viewport). Violates the locked big/unmissable-CTA
+requirement.
+
+### 10.2 What changed (height-aware spacing only — no type, target, copy, model, dock-semantics, or board-overlap change)
+
+All rules are gated on `max-height: 929.98px` — above 930px of viewport
+height even the tallest band composition (880px width, five-line
+headline) already kept both CTAs inside the fold with ≥16px clearance,
+so the approved tall composition stands untouched.
+
+`src/components/hero/Hero.module.css` (inside the existing 880–1179px
+band):
+
+- `.copy` `padding-top` 16rem → **10.5rem** (persona band is 24px offset
+  + 120px tray = 144px; 168px reservation keeps a 24px clearance).
+  `padding-bottom` stays **8rem** — the board anchor's deep-overlap
+  teaser hangs off the hero's bottom edge, so only top-side reductions
+  lift the CTAs; the approved board/CTA gap per width is preserved
+  exactly (verified 10.2px at 1024w, same as pre-fix).
+- `.intro` / `.actions` `margin-top` `--space-8` → `--space-4`.
+- 880–1023.98px step (five-line headline, ~288px): `padding-top`
+  **9rem**, gaps `--space-3`.
+
+Paired tray rule (`PersonaSatire.module.css`, 880–1023.98px only): the
+tray rises to `top: var(--space-3)` (12px) so its band ends at 132px —
+the 9rem (144px) reservation keeps a 12px tray↔copy clearance. Tray
+height, targets, type unchanged.
+
+`HeroEvolution.module.css` (880–1023.98px only): `.phaseRail`
+`margin-bottom` `--space-2` → `--space-1` (rail min-height 44px kept).
+
+### 10.3 TDD record (new e2e, `e2e/responsive.spec.ts`)
+
+New test "hero CTAs land fully inside the initial viewport at
+1024x768": both CTA bounding rects fully inside the viewport with
+bottom ≤ 768−16.
+
+- **FAIL observed at 930b80f**: `Download resume bottom edge must clear
+  the fold by >=16px — Expected: <= 752, Received: 828.0625`.
+- **PASS after fix** (chromium + webkit, production server): both CTAs
+  at y 652.1→708.1 — **59.9px** bottom clearance.
+
+Post-fix geometry (scene-settled, production build, height 768):
+
+| Width | CTA bottom | Fold clearance | Tray↔copy clearance | Board top − CTA bottom |
+|---|---|---|---|---|
+| 880 | 750.3 | 17.7px | 12px (tray b 244, rail t 256) | +26.8px (unchanged vs pre-fix) |
+| 1024 | 708.1 | 59.9px | 24px (tray b 256, rail t 280) | +10.2px (unchanged vs pre-fix) |
+| 1179 | 746.3 | 21.7px | 24px | −7.6px (pre-existing authored teaser overlap, unchanged) |
+
+All §9.2 non-intersection invariants re-asserted by the existing suite
+(dock vs H1/intro/CTA/persona; persona vs H1/intro/CTA at 768×1024 and
+1024×768): dock column stays horizontally disjoint from copy and tray
+at all band widths (e.g. 1024w: dock left 688 vs copy/tray right 664).
+
+### 10.4 Captures refreshed (overwritten)
+
+- `matrix/home-1024x768-light.png` — both CTAs fully visible, board
+  teaser edge below them, 0 console errors.
+- `matrix/home-1024x768-dark.png` — same, dark scheme.
+
+Verified by reading the refreshed captures: both CTA rectangles sit
+visibly inside the frame above the board panel edge in both themes.
+
+### 10.5 Fresh gates (this correction, in order, isolated dist `.next-d3d`, restarted production server :3142)
+
+| Gate | Result |
+|---|---|
+| `pnpm typecheck` | PASS |
+| `pnpm lint` | PASS |
+| `pnpm test` (47 files / 185 tests) | PASS |
+| `NEXT_DIST_DIR=.next-d3d NEXT_PUBLIC_WORLD_PROTOTYPE=1 pnpm build` (fresh dist) | PASS |
+| `NEXT_DIST_DIR=.next-d3d pnpm check:budgets` | PASS (all, no SKIP) |
+| `responsive.spec.ts` FULL, chromium + webkit (fresh prod server) | 66/66 PASS (incl. new CTA-in-viewport test on both engines) |
+| `world.spec.ts` + `reduced-motion.spec.ts` + `home.spec.ts`, chromium | 22/22 PASS |
+| 1024×768 capture pair (light+dark) | 0 console errors, CTAs in frame |
+
+### 10.6 Final rescore (for the design lead)
+
+| Apple criterion | Score (/5) | Notes |
+|---|---|---|
+| Purpose | — | |
+| Agency | — | |
+| Responsibility | — | |
+| Familiarity | — | |
+| Flexibility | — | |
+| Simplicity | — | |
+| Craft | — | |
+| Delight | — | |
+| **Apple total** | **— /40** | |
+
+| Taste criterion | Score (/5) | Notes |
+|---|---|---|
+| Composition | — | |
+| Hierarchy | — | |
+| Authorship | — | |
+| Asset/material | — | |
+| Responsive craft | — | |
+| **Taste total** | **— /25** | |
+
+Verdict: —

@@ -96,6 +96,17 @@
   }
 }
 
+/* Gate D3 final correction pair (880–1023px, medium heights ≤930px):
+   the hero copy's tray reservation compresses to 9rem at these sizes
+   (Hero.module.css), so the tray itself rises to a 12px offset — its
+   band ends at 132px, keeping a 12px clearance to the copy. Tray
+   height, targets, and type are unchanged. */
+@media (max-width: 1023.98px) and (min-width: 880px) and (max-height: 929.98px) {
+  .tray {
+    top: var(--space-3);
+  }
+}
+
 @media (max-width: 619.98px) {
   .tray {
     top: var(--space-3);

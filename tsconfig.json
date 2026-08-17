@@ -40,7 +40,9 @@
     ".next-d3/types/**/*.ts",
     ".next-d3/dev/types/**/*.ts",
     ".next-d3c/types/**/*.ts",
-    ".next-d3c/dev/types/**/*.ts"
+    ".next-d3c/dev/types/**/*.ts",
+    ".next-d3d/types/**/*.ts",
+    ".next-d3d/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
