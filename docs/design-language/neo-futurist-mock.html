@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>garvit.app — Neo Futurist Design-Language Mock</title>
+<style>
+/* ================================================================
+   NEO FUTURIST VISUAL-SYSTEM MOCK
+   Serves DD-010 (Neo Futurist system lock), DD-011 (Amplitude-informed
+   cockpit hierarchy), DD-017 (no-gradient default; seams need explicit
+   proposal approval). Flow/copy/structure taken from storyboard.md —
+   its visuals are placeholders only (DD-009); nothing here reuses that
+   file's palette or materials. GI-013/GI-014: thick chassis system,
+   monochrome base with sparse strictly-semantic lime/coral accents.
+
+   Real production fonts, relative @font-face, no CDN:
+   Archivo = display, IBM Plex Mono = labels/system copy.
+   ================================================================ */
+@font-face{
+  font-family:"Archivo";
+  src:url("/src/fonts/Archivo-400-800.woff2") format("woff2");
+  font-weight:400 800; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/src/fonts/IBMPlexMono-400.woff2") format("woff2");
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/src/fonts/IBMPlexMono-500.woff2") format("woff2");
+  font-weight:500; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  src:url("/src/fonts/IBMPlexMono-600.woff2") format("woff2");
+  font-weight:600; font-style:normal; font-display:swap;
+}
+
+/* ================================================================
+   TOKENS — light is PRIMARY. Dark is a stress-check via
+   prefers-color-scheme + explicit toggle. Chassis borders/fills use
+   these variables exclusively so the whole system inverts for free.
+   ================================================================ */
+:root{
+  --canvas:#F4F2E9;
+  --panel:#FBFAF4;
+  --panel-alt:#EEEBDC;
+  --ink:#131310;
+  --ink-rgb:19,19,16;
+  --graphite-900:#1C1C17;
+  --graphite-700:#3B3A31;
+  --graphite-500:#6B6A5C;
+  --graphite-300:#A6A497;
+  --graphite-150:#D9D6C8;
+  --graphite-100:#E7E4D6;
+  --rule:rgba(19,19,16,.22);
+  --rule-strong:rgba(19,19,16,.55);
+  --muted:#6B6A5C;
+
+  /* semantic-only accents — never decorative fields (DD-010) */
+  --lime:#CBED45;
+  --lime-ink:#12180A;
+  --coral:#FF6B52;
+  --lilac:#C4B7FF;
+
+  /* fixed authored-dark constants — deliberately NOT redeclared inside
+     the dark-mode/data-theme blocks below, so the onboarding stage and
+     the hero's GA band stay the same authored near-black regardless of
+     the light/dark toggle (same logic as the cockpit's own fixed
+     instrument palette). */
+  --stage-ink:#1C1C17;
+
+  --border-chassis:3px;
+  --border-chassis-lg:4px;
+  --radius-lg:28px;
+  --radius-md:18px;
+  --radius-sm:10px;
+  --radius-pill:999px;
+
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem;
+  --space-5:1.5rem; --space-6:2rem; --space-7:3rem; --space-8:4rem; --space-9:6rem;
+
+  --font-display:"Archivo","Arial Narrow",Helvetica,Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --canvas:#0C0C0A; --panel:#161611; --panel-alt:#1E1E17;
+    --ink:#F4F2E9; --ink-rgb:244,242,233;
+    --graphite-900:#F4F2E9; --graphite-700:#C9C7B6; --graphite-500:#93917F;
+    --graphite-300:#46453A; --graphite-150:#26251E; --graphite-100:#1B1B15;
+    --rule:rgba(244,242,233,.24); --rule-strong:rgba(244,242,233,.55);
+    --muted:#9C9A89;
+  }
+}
+:root[data-theme="dark"]{
+  --canvas:#0C0C0A; --panel:#161611; --panel-alt:#1E1E17;
+  --ink:#F4F2E9; --ink-rgb:244,242,233;
+  --graphite-900:#F4F2E9; --graphite-700:#C9C7B6; --graphite-500:#93917F;
+  --graphite-300:#46453A; --graphite-150:#26251E; --graphite-100:#1B1B15;
+  --rule:rgba(244,242,233,.24); --rule-strong:rgba(244,242,233,.55);
+  --muted:#9C9A89;
+}
+:root[data-theme="light"]{
+  --canvas:#F4F2E9; --panel:#FBFAF4; --panel-alt:#EEEBDC;
+  --ink:#131310; --ink-rgb:19,19,16;
+  --graphite-900:#1C1C17; --graphite-700:#3B3A31; --graphite-500:#6B6A5C;
+  --graphite-300:#A6A497; --graphite-150:#D9D6C8; --graphite-100:#E7E4D6;
+  --rule:rgba(19,19,16,.22); --rule-strong:rgba(19,19,16,.55);
+  --muted:#6B6A5C;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; height:100%; }
+body{
+  background:var(--canvas);
+  color:var(--ink);
+  font-family:var(--font-display);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+img{ max-width:100%; display:block; }
+button{ font-family:inherit; cursor:pointer; }
+.mono{ font-family:var(--font-mono); }
+svg{ display:block; }
+
+.label-tiny{
+  font-family:var(--font-mono);
+  font-size:.62rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+/* ================================================================
+   STATE PANELS — proven mechanic reused verbatim from
+   storyboard.html (one full-viewport surface active at a time;
+   hash routes; ?capture=1 / #capture hides all data-reviewer chrome).
+   ================================================================ */
+.state-panel{
+  position:fixed; inset:0; width:100%;
+  height:100svh; height:100dvh;
+  display:none; flex-direction:column;
+  overflow-y:auto; overflow-x:hidden;
+}
+.state-panel.active{ display:flex; }
+
+.reviewer-chrome{ position:fixed; z-index:1000; }
+
+#theme-toggle{
+  top:14px; right:14px;
+  background:var(--ink); color:var(--canvas);
+  border:none; border-radius:var(--radius-pill);
+  padding:.5rem .95rem;
+  font-family:var(--font-mono); font-size:.64rem;
+  letter-spacing:.08em; text-transform:uppercase;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
+}
+#theme-toggle:focus-visible{ outline:2px solid var(--lime); outline-offset:2px; }
+
+#proposal-toggle{
+  top:14px; right:132px;
+  background:transparent; color:var(--coral);
+  border:1px dashed var(--coral); border-radius:var(--radius-pill);
+  padding:.48rem .85rem;
+  font-family:var(--font-mono); font-size:.6rem;
+  letter-spacing:.06em; text-transform:uppercase;
+}
+#proposal-toggle:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+
+.state-tabs{
+  bottom:14px; left:50%; transform:translateX(-50%);
+  display:flex; gap:.25rem;
+  background:rgba(19,19,16,.72);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(244,242,233,.16);
+  border-radius:var(--radius-pill);
+  padding:.3rem;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.state-tab{
+  border:none; background:transparent; color:rgba(244,242,233,.6);
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.05em;
+  padding:.4rem .68rem; border-radius:var(--radius-pill); white-space:nowrap;
+  text-transform:uppercase;
+}
+.state-tab.active{ background:var(--lime); color:var(--lime-ink); font-weight:700; }
+.state-tab:focus-visible{ outline:2px solid var(--lime); outline-offset:2px; }
+
+.reviewer-note{
+  position:absolute;
+  font-family:var(--font-mono); font-size:.56rem; letter-spacing:.03em;
+  color:rgba(244,242,233,.85);
+  background:rgba(19,19,16,.82);
+  border:1px dashed rgba(244,242,233,.45);
+  border-radius:4px; padding:.25rem .5rem;
+  z-index:60; pointer-events:none;
+}
+
+/* PROPOSAL layer — DD-017. Hidden by default and force-hidden in
+   capture mode regardless of toggle state, so a screenshot can never
+   accidentally ship an unapproved material-lighting/seam treatment. */
+.proposal-layer{ display:none; }
+body.show-proposal .proposal-layer{ display:block; }
+body.capture-mode .proposal-layer{ display:none !important; }
+.proposal-tag{
+  position:absolute; z-index:55;
+  font-family:var(--font-mono); font-size:.56rem; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--coral); background:var(--panel);
+  border:1px dashed var(--coral); border-radius:6px;
+  padding:.3rem .55rem; white-space:nowrap;
+}
+
+/* ================================================================
+   CHASSIS SYSTEM — thick black rounded frames, asymmetric modular
+   panes, hairline rules as the default separator (gradients are a
+   proposal-only device per DD-017).
+   ================================================================ */
+.chassis{
+  border:var(--border-chassis) solid var(--ink);
+  border-radius:var(--radius-lg);
+  background:var(--panel);
+}
+.chassis-sm{
+  border:2px solid var(--ink);
+  border-radius:var(--radius-sm);
+  background:var(--panel);
+}
+.hairline{ background:var(--rule); }
+
+.tex-hatch{ position:relative; }
+.tex-hatch::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:repeating-linear-gradient(115deg, rgba(var(--ink-rgb),.14) 0 1px, transparent 1px 9px);
+}
+.tex-hatch-dark::after{
+  background-image:repeating-linear-gradient(115deg, rgba(244,242,233,.14) 0 1px, transparent 1px 9px);
+}
+.tex-grid{ position:relative; }
+.tex-grid::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(var(--ink-rgb),.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--ink-rgb),.14) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+.tex-grid-dark::after{
+  background-image:
+    linear-gradient(rgba(244,242,233,.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,242,233,.13) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+
+.btn{
+  font-family:var(--font-display);
+  font-weight:800; font-size:.9rem;
+  padding:0 1.6rem; min-height:56px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--radius-sm);
+  transition:transform .15s ease;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn:focus-visible{ outline:2px solid var(--lime); outline-offset:3px; }
+.btn-lime{ background:var(--lime); color:var(--lime-ink); border:var(--border-chassis) solid var(--ink); }
+.btn-chassis{ background:var(--panel); color:var(--ink); border:var(--border-chassis) solid var(--ink); }
+
+/* ================================================================
+   ONBOARDING STAGE — DD-001–DD-005. Same design language as the
+   homepage, not a separate cinematic universe: a near-white canvas
+   holding ONE large thick black rounded chassis frame; the interior
+   is a near-black graphite pane. Composition (frame size/position)
+   is identical across Welcome/Persona/Punchline/Reveal — only the
+   content inside changes. No starfield, no radial glow (DD-017).
+   ================================================================ */
+.onboard-shell{
+  flex:1 1 auto; display:flex;
+  padding:clamp(14px,2.6vw,32px);
+  background:var(--canvas);
+}
+.stage-chassis{
+  position:relative;
+  flex:1 1 auto;
+  border:var(--border-chassis-lg) solid var(--ink);
+  border-radius:var(--radius-lg);
+  background:var(--stage-ink);
+  color:#F4F2E9;
+  overflow:hidden;
+  isolation:isolate;
+  display:flex;
+}
+.stage-chassis::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:repeating-linear-gradient(115deg, rgba(244,242,233,.05) 0 1px, transparent 1px 12px);
+}
+.stage-mark{
+  position:absolute; top:1.6rem; left:2rem; z-index:5;
+  font-family:var(--font-mono); font-size:.68rem; letter-spacing:.04em;
+  color:rgba(244,242,233,.72);
+}
+.stage-mark b{ color:#F4F2E9; font-weight:700; }
+.stage-step{
+  position:absolute; top:1.7rem; right:2rem; z-index:5;
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(244,242,233,.5);
+}
+.stage-frame{
+  position:relative; z-index:2; flex:1;
+  display:flex; width:100%; padding:0 5vw;
+}
+.guide-render{ width:100%; height:100%; object-fit:contain; object-position:center bottom; display:block; }
+
+/* consistent crop-to-fill guide sizing across the whole onboarding
+   sequence (~12-16% desktop visible-character width, per storyboard.md
+   §Persona correction) — same wrap geometry reused on every state so
+   the character reads as literally the same size throughout. */
+.guide-wrap{
+  position:relative; z-index:2; flex:0 0 auto;
+  width:min(18vw, 250px); height:min(94vh, 860px);
+  overflow:hidden;
+}
+.guide-wrap .guide-render{ transform:scale(2.35); transform-origin:center bottom; }
+
+/* ---- Welcome ---- */
+.state-welcome .stage-frame{ align-items:center; justify-content:space-between; gap:3vw; }
+.welcome-copy{ position:relative; z-index:3; max-width:min(42vw, 620px); flex:0 0 auto; }
+.welcome-headline{
+  font-weight:800; font-size:clamp(2.2rem, 4.6vw, 3.8rem);
+  line-height:1.05; letter-spacing:-.02em; margin:0 0 1.1rem; color:#F8F7F1;
+}
+.welcome-sub{ font-size:clamp(.92rem,1.3vw,1.08rem); line-height:1.5; color:var(--graphite-500); margin:0 0 2.2rem; max-width:30ch; }
+.welcome-guide-wrap{ align-self:flex-end; margin-bottom:2vh; }
+
+/* ---- Persona (same .stage-chassis) ---- */
+.state-persona .stage-frame{ align-items:center; justify-content:flex-start; gap:4vw; }
+.persona-copy{ position:relative; z-index:3; max-width:min(40vw, 580px); }
+.persona-headline{
+  font-weight:800; font-size:clamp(1.8rem,3.2vw,2.7rem);
+  line-height:1.1; letter-spacing:-.015em; color:#F8F7F1; margin:0 0 1.3rem; max-width:16ch;
+}
+.persona-disclosure{ font-size:.72rem; letter-spacing:.02em; color:var(--graphite-500); margin:0 0 1.6rem; max-width:42ch; }
+.persona-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.85rem; max-width:32rem; }
+.persona-chip{
+  background:rgba(244,242,233,.05);
+  border:2px solid rgba(244,242,233,.28);
+  border-radius:var(--radius-sm);
+  padding:1.05rem 1.2rem;
+  font-weight:800; font-size:.95rem; letter-spacing:.01em; text-transform:uppercase;
+  color:#EFEDE4; text-align:left;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.persona-chip:hover{ transform:translateY(-2px); border-color:var(--lime); background:rgba(203,237,69,.08); }
+.persona-chip:focus-visible{ outline:2px solid var(--lime); outline-offset:2px; }
+.persona-guide-wrap{ align-self:flex-end; margin-bottom:3vh; opacity:.94; }
+
+/* ---- Punchline (same .stage-chassis) ---- */
+.state-punchline .stage-frame{ align-items:center; justify-content:center; text-align:center; flex-direction:column; gap:2rem; position:relative; }
+.punchline-pill{
+  font-size:.64rem; letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(244,242,233,.07); border:1px solid rgba(244,242,233,.25);
+  border-radius:var(--radius-pill); padding:.42rem .95rem; color:#D6D3C6;
+}
+.punchline-pill b{ color:var(--lime); }
+.punchline-line{
+  font-weight:800; font-size:clamp(1.9rem,4.2vw,3.2rem); line-height:1.12;
+  letter-spacing:-.015em; color:#F8F7F1; max-width:20ch; margin:0;
+}
+.punchline-guide-wrap{ position:absolute; right:6vw; bottom:0; }
+
+/* ---- Reveal — in-place still. Homepage echo underneath, stage
+   chassis dissolving on top via opacity ONLY (no wipe, no seam line,
+   no clip-path wedge — storyboard.md's binding production note). ---- */
+.state-reveal{ background:var(--canvas); }
+.reveal-echo{ position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; overflow:hidden; }
+.reveal-dissolve{
+  position:absolute; inset:0; z-index:2;
+  display:flex; padding:clamp(14px,2.6vw,32px);
+  opacity:.32;
+  transition:opacity .2s ease;
+}
+.reveal-dissolve .stage-chassis{ background:var(--stage-ink); }
+.reveal-dissolve .stage-frame{ align-items:center; justify-content:center; }
+.reveal-dissolve .punchline-line{ opacity:.5; font-size:clamp(1.4rem,3vw,2.2rem); }
+.reveal-caption{
+  position:absolute; z-index:6; bottom:2rem; left:50%; transform:translateX(-50%);
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); background:var(--panel); border:1px solid var(--rule);
+  border-radius:var(--radius-pill); padding:.4rem .9rem;
+}
+
+/* ================================================================
+   HOMEPAGE — DD-006/007. Text-led static triptych hero: MVP/BETA/GA
+   read simultaneously as maturity-as-materiality, monochrome, one
+   chassis card. Sparse feature-flag dock. Board peek.
+   ================================================================ */
+.state-homepage{ background:var(--canvas); color:var(--ink); }
+.hp-chrome{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.1rem 5vw; border-bottom:2px solid var(--ink); flex:0 0 auto;
+}
+.hp-logo{ font-weight:800; font-size:1.05rem; letter-spacing:-.01em; }
+.hp-nav{ display:flex; gap:1.8rem; }
+.hp-nav a{ color:var(--ink); text-decoration:none; opacity:.6; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; }
+.hp-nav a.current{ opacity:1; }
+.hp-resume-ghost{
+  border:2px solid var(--ink); border-radius:var(--radius-pill);
+  padding:.4rem 1rem; color:var(--ink); text-decoration:none;
+  font-family:var(--font-mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+}
+
+.hp-main{ flex:1 1 auto; display:flex; flex-direction:column; padding:2.4vh 5vw 0; min-height:0; gap:1.6vh; }
+
+.hero-card{
+  position:relative;
+  border:var(--border-chassis-lg) solid var(--ink);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  flex:1 1 auto; min-height:0;
+  isolation:isolate;
+  display:flex;
+}
+.hero-band{ position:relative; height:100%; }
+/* Maturity-as-materiality: all three bands stay in the dark graphite
+   register (so the white headline/intro reads cleanly across the
+   whole card, never crossing onto a light field) and instead encode
+   MVP → BETA → GA as increasing darkness/resolution: MVP is the
+   lightest, roughest graphite with a loose sketch hatch; BETA is a
+   mid-graphite with a structured grid; GA resolves to solid ink with
+   the single lime semantic signal (the tracking chip) living only
+   there. */
+/* MVP — sketch/hatch texture, roughest/lightest graphite */
+.hero-band.mvp{ width:18%; background:#5B594C; }
+.hero-band.mvp::after{
+  content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(115deg, rgba(244,242,233,.16) 0 1px, transparent 1px 8px);
+}
+/* BETA — structured line/grid, mid-graphite */
+.hero-band.beta{ width:24%; background:#3B3A31; }
+.hero-band.beta::after{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(244,242,233,.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,242,233,.14) 1px, transparent 1px);
+  background-size:20px 20px;
+}
+/* GA — solid graphite/ink, one lime semantic signal lives here only */
+.hero-band.ga{ flex:1; background:var(--stage-ink); }
+
+.band-tag{
+  position:absolute; top:1rem; z-index:6;
+  font-family:var(--font-mono); font-size:.58rem; letter-spacing:.16em; text-transform:uppercase;
+  padding:.3rem .6rem; border-radius:4px; color:var(--ink);
+  border:1.5px solid var(--ink); background:var(--panel);
+}
+.band-tag.mvp{ left:.9rem; }
+.band-tag.beta{ left:calc(18% + .9rem); }
+.band-tag.ga{ right:.9rem; color:#F4F2E9; border-color:rgba(244,242,233,.5); background:rgba(244,242,233,.08); }
+
+/* default seam: a plain hairline rule (DD-017 compliant) */
+.hero-seam{ position:absolute; top:0; bottom:0; width:1px; z-index:4; background:rgba(var(--ink-rgb),.4); }
+.hero-seam.s1{ left:18%; }
+.hero-seam.s2{ left:42%; }
+/* PROPOSAL — feathered material-light seam. Needs explicit approval
+   before it can replace the hairline default (DD-017). */
+.hero-seam-proposal{ position:absolute; top:0; bottom:0; width:6%; z-index:3; pointer-events:none; }
+.hero-seam-proposal.p1{ left:15%; background:linear-gradient(90deg, transparent, rgba(var(--ink-rgb),.22), transparent); }
+.hero-seam-proposal.p2{ left:39%; background:linear-gradient(90deg, transparent, rgba(var(--ink-rgb),.3), transparent); }
+
+.hero-copy{ position:relative; z-index:5; padding:2.4rem 2.6rem; max-width:56%; color:#F4F2E9; }
+.hero-headline{
+  font-weight:800; font-size:clamp(1.5rem,2.6vw,2.5rem);
+  line-height:1.06; letter-spacing:-.02em; margin:0 0 .95rem;
+}
+.hero-intro{ font-size:.88rem; line-height:1.55; color:rgba(244,242,233,.7); max-width:40ch; margin:0; }
+.hero-ctas{ position:relative; z-index:5; margin-top:auto; padding:0 2.6rem 2.2rem; display:flex; gap:.75rem; align-self:flex-start; }
+.hero-copy-col{ position:absolute; inset:0; display:flex; flex-direction:column; z-index:5; }
+
+.hero-guide-wrap{ position:absolute; right:-2.2%; bottom:-1.4%; z-index:5; width:min(26%,290px); height:min(80%,480px); }
+/* correction round 2 (§10 item 5): crop-to-fill instead of contain — the
+   upper-body render was already the right crop (feet flush to canvas
+   bottom) but contain's letterboxing left it reading small/isolated in
+   the GA field. object-fit:cover on the image itself clips to the image's
+   own box (no wrapper overflow:hidden needed, so the tracking chip above
+   it — a sibling, absolutely positioned outside this box — stays
+   unclipped); the wrap's negative right/bottom bleed past the hero-card's
+   inner edge and get cropped by the card's own overflow:hidden chassis
+   frame, on purpose. */
+.hero-guide-wrap .guide-render{ object-fit:cover; object-position:center bottom; }
+.hero-status-chip{
+  position:absolute; z-index:7; top:-1.5rem; left:-1.2rem;
+  display:inline-flex; align-items:center; gap:.45rem;
+  background:rgba(203,237,69,.16); border:2px solid var(--lime); color:#F4F2E9;
+  border-radius:var(--radius-pill); padding:.45rem .8rem;
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+  transition:transform .15s ease, background .15s ease;
+}
+.hero-status-chip:hover{ transform:translateY(-2px); background:rgba(203,237,69,.26); }
+.hero-status-chip:focus-visible{ outline:2px solid var(--lime); outline-offset:3px; }
+.hero-status-arrow{ color:var(--lime); font-weight:800; }
+.hero-status-dot{ width:7px; height:7px; border-radius:50%; background:var(--lime); flex:0 0 auto; }
+
+/* --- feature flags: quiet chassis modules --- */
+.flags-block{ flex:0 0 auto; }
+.flags-head{ color:var(--muted); margin:0 0 .55rem; }
+.flags-row{ display:flex; gap:.55rem; flex-wrap:wrap; }
+.flag-chip{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono); font-size:.66rem;
+  padding:.5rem .8rem; border-radius:var(--radius-sm);
+  background:var(--panel); border:1.5px solid var(--ink);
+}
+.flag-chip .flag-key{ font-weight:700; }
+.flag-chip .flag-purpose{ color:var(--muted); letter-spacing:.06em; }
+.flag-dot{ width:7px; height:7px; border-radius:50%; background:var(--graphite-300); flex:0 0 auto; }
+.flag-dot.on{ background:var(--lime); }
+.flag-chip.locked{ opacity:.6; border-style:dashed; }
+.flag-chip.locked .flag-dot{ background:var(--coral); }
+
+/* --- board preview: chassis-topped ticket peek --- */
+.board-preview{ flex:0 0 auto; position:relative; height:11vh; min-height:82px; }
+.board-preview-head{ position:absolute; left:0; top:0; z-index:2; font-weight:800; font-size:1rem; }
+.board-card{
+  position:absolute; left:0; right:0; top:1.9rem;
+  background:var(--panel); border:var(--border-chassis) solid var(--ink);
+  border-bottom:none;
+  border-radius:var(--radius-md) var(--radius-md) 0 0;
+  padding:1rem 1.4rem 0;
+}
+.board-card-kicker{ color:var(--graphite-500); margin:0 0 .35rem; }
+.board-card-title{ font-weight:800; font-size:1.05rem; margin:0 0 .3rem; }
+.board-card-desc{ font-size:.82rem; color:var(--muted); max-width:56ch; margin:0; }
+
+/* mobile: three maturity states stacked/segmented, cohesive single card */
+.hero-band.mvp-mobile, .hero-band.beta-mobile{ display:none; }
+
+/* ================================================================
+   SESSION COCKPIT — DD-008/DD-011. Amplitude research translated:
+   dominant vertical funnel LEFT ~70%, diminished benchmark pane
+   RIGHT ~30% (darker ground), instrument metric cards, insights,
+   trust line, visible close. Fixed dark instrument palette,
+   independent of the light/dark toggle (same authored-surface logic
+   as the onboarding stage).
+   ================================================================ */
+.state-cockpit{
+  --c-bg:#0C0C0A; --c-panel:#17170F; --c-panel-2:#111109; --c-ink:#F4F2E9; --c-muted:#8B8A78; --c-rule:rgba(244,242,233,.16);
+  background:var(--c-bg); color:var(--c-ink);
+}
+.ck-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 5vw; border-bottom:2px solid var(--c-rule); flex:0 0 auto;
+}
+.ck-status-chip{
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--lime); border:1.5px solid var(--c-rule); border-radius:var(--radius-pill); padding:.42rem .85rem;
+}
+.ck-status-dot{ width:7px; height:7px; border-radius:50%; background:var(--lime); }
+.ck-close{
+  width:38px; height:38px; border-radius:50%;
+  background:var(--c-panel); border:1.5px solid var(--c-rule); color:var(--c-ink);
+  font-size:1.05rem; line-height:1; display:flex; align-items:center; justify-content:center;
+}
+.ck-close:focus-visible{ outline:2px solid var(--lime); outline-offset:2px; }
+
+.ck-body{ padding:3vh 5vw 4vh; flex:1 1 auto; overflow-y:auto; min-height:0; }
+.ck-heading{ font-weight:800; font-size:clamp(1.35rem,2.3vw,2rem); letter-spacing:-.02em; margin:0 0 .5rem; }
+.ck-sub{ color:var(--c-muted); font-size:.86rem; margin:0 0 2rem; max-width:56ch; }
+
+.ck-panes{ display:grid; grid-template-columns:70% 30%; gap:1.6rem; align-items:stretch; }
+.ck-pane{ border:2px solid var(--c-rule); border-radius:var(--radius-md); padding:1.5rem 1.6rem; }
+.ck-pane-you{ background:var(--c-panel); }
+.ck-pane-bench{ background:var(--c-panel-2); }
+.ck-pane-label{ color:var(--c-muted); margin-bottom:1.2rem; display:flex; justify-content:space-between; align-items:center; }
+
+.ck-chart{ display:flex; align-items:flex-end; gap:clamp(10px,1.6vw,22px); height:210px; border-bottom:1.5px solid var(--c-rule); }
+.ck-col{ flex:1 1 0; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end; }
+.ck-track{ position:relative; width:100%; max-width:52px; height:100%; }
+.ck-fill{ position:absolute; left:0; right:0; border-radius:4px 4px 0 0; }
+.ck-fill.solid{ background:var(--lime); bottom:0; }
+.ck-fill.hatch{ background-color:rgba(244,242,233,.08); }
+.ck-fill.hatch::after{
+  content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(115deg, rgba(244,242,233,.35) 0 1px, transparent 1px 6px);
+}
+.ck-fill.drop{ outline:2px solid var(--coral); outline-offset:-2px; }
+.ck-drop-mark{ position:absolute; top:-1.15rem; right:-.3rem; width:8px; height:8px; border-radius:50%; background:var(--coral); }
+.ck-col-label{ margin-top:.6rem; text-align:center; }
+.ck-col-name{ font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; color:var(--c-muted); display:block; }
+.ck-col-pct{ font-size:.72rem; font-weight:600; color:var(--c-ink); display:block; margin-top:.15rem; }
+
+.ck-bench .ck-fill.solid{ background:var(--graphite-500); }
+.ck-bench .ck-chart{ height:150px; opacity:.85; }
+
+.ck-table{ margin-top:1.6rem; width:100%; border-collapse:collapse; font-size:.72rem; }
+.ck-table th{ text-align:left; font-weight:600; color:var(--c-muted); letter-spacing:.1em; text-transform:uppercase; font-size:.58rem; padding:.4rem .5rem; border-bottom:1.5px solid var(--c-rule); }
+.ck-table td{ padding:.45rem .5rem; border-bottom:1px solid var(--c-rule); }
+.ck-table td.num{ font-family:var(--font-mono); text-align:right; }
+.ck-table tr.drop-row td{ color:var(--coral); }
+.ck-table .drop-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--coral); margin-right:.4rem; }
+
+.ck-instruments{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-top:1.8rem; }
+.ck-stat{ border:2px solid var(--c-rule); border-radius:var(--radius-md); padding:1rem 1.2rem; }
+.ck-stat-label{ color:var(--c-muted); margin-bottom:.5rem; }
+.ck-stat-value{ font-weight:800; font-size:1.5rem; letter-spacing:-.01em; }
+
+.ck-insights{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.4rem; }
+.ck-insight{ background:var(--c-panel); border-left:2px solid var(--lilac); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:.85rem 1.05rem; font-size:.82rem; line-height:1.5; }
+
+.ck-trust{ margin-top:2.2rem; padding-top:1.3rem; border-top:1px dashed var(--c-rule); font-family:var(--font-mono); font-size:.68rem; color:var(--c-muted); font-style:italic; max-width:64ch; }
+
+/* ================================================================
+   RESPONSIVE — every state still fills the viewport. Triptych
+   becomes a stacked segmented card so MVP/BETA/GA stay visible.
+   Cockpit stacks funnel → benchmark → instruments → insights.
+   ================================================================ */
+@media (max-width:760px){
+  .onboard-shell{ padding:12px; }
+  .stage-frame{ flex-direction:column; justify-content:center; padding:0 6vw 4vh; gap:1.4rem; }
+  .stage-mark{ top:1.2rem; left:1.4rem; }
+  .stage-step{ display:none; }
+
+  .state-welcome .stage-frame{ justify-content:center; }
+  .welcome-copy{ max-width:none; }
+  .welcome-headline{ font-size:1.9rem; }
+  .welcome-guide-wrap{ order:-1; align-self:center; margin:1vh 0 0; }
+
+  .state-persona .stage-frame{ padding-top:5vh; }
+  .persona-copy{ max-width:none; }
+  .persona-grid{ max-width:none; }
+  .persona-guide-wrap{ align-self:flex-end; margin-bottom:.6rem; }
+
+  .punchline-guide-wrap{ position:relative; right:auto; bottom:auto; }
+
+  .guide-wrap{ width:30vw; height:min(48vh,410px); }
+  .guide-wrap .guide-render{ transform:scale(2.4); }
+
+  .hp-nav{ display:none; }
+  .hp-main{ padding:2vh 6vw 0; overflow:visible; }
+  .hero-card{ flex-direction:column; flex:0 0 auto; height:auto; }
+  .hero-band.mvp,.hero-band.beta{ width:100%; height:52px; flex:0 0 auto; }
+  .hero-band.mvp{ order:-4; } .hero-band.beta{ order:-3; }
+  /* GA is pulled out of the in-flow strip stack and becomes an
+     absolutely-positioned fill sitting BEHIND the headline/intro/
+     guide/CTAs — those in-flow siblings determine the card's total
+     height; GA's fill just matches it, so the whole lower portion
+     reads as one continuous dark GA surface instead of a strip
+     followed by an unrelated light slab. */
+  .hero-band.ga{ position:absolute; z-index:1; top:104px; left:0; right:0; bottom:0; width:auto; height:auto; }
+  .hero-seam,.hero-seam-proposal{ display:none; }
+  .band-tag.mvp{ top:.9rem; left:.9rem; } .band-tag.beta{ top:calc(52px + .9rem); left:.9rem; }
+  .band-tag.ga{ top:calc(104px + .9rem); left:auto; right:.9rem; }
+  .hero-copy-col{ position:relative; z-index:4; }
+  .hero-copy{ position:relative; max-width:none; padding:2.6rem 1.2rem .5rem; }
+  .hero-headline{ font-size:1.4rem; }
+  .hero-ctas{ position:relative; flex-direction:column; padding:.4rem 1.2rem 1.3rem; margin-top:0; }
+  .hero-guide-wrap{ position:relative; z-index:4; right:auto; bottom:auto; width:46%; height:auto; aspect-ratio:3/4; margin:.4rem 1.2rem 1rem auto; }
+  .hero-status-chip{ top:-1.1rem; left:auto; right:.3rem; white-space:nowrap; }
+
+  .flags-row{ flex-direction:column; align-items:stretch; }
+  .board-card{ padding:.85rem 1.1rem 0; }
+
+  .ck-body{ padding:2.4vh 6vw 5vh; }
+  .ck-panes{ grid-template-columns:1fr; }
+  .ck-instruments{ grid-template-columns:1fr; }
+  .ck-insights{ grid-template-columns:1fr; }
+  .ck-table{ font-size:.66rem; }
+}
+
+/* ================================================================
+   CAPTURE-MODE HARD OVERRIDE — direction-audit fix. Consolidated
+   into one rule and placed LAST in the stylesheet on purpose: this
+   guarantees it wins the cascade over any theme/dark-mode rule
+   (including future ones) regardless of selector specificity ties,
+   in every color scheme. Previously this hide was split across three
+   separate declarations near the top of the file; merging + moving
+   it here removes any chance of a dark-theme rule landing after it
+   and leaking reviewer-only chrome (toggles, state tabs, annotation
+   notes) into a ?capture=1 / #capture still.
+   ================================================================ */
+body.capture-mode .reviewer-chrome,
+body.capture-mode .reviewer-note,
+body.capture-mode [data-reviewer]{ display:none !important; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     REVIEWER CHROME — hidden entirely under ?capture=1 / #capture.
+     ============================================================ -->
+<button id="theme-toggle" class="reviewer-chrome" data-reviewer type="button" aria-pressed="false">Dark mode</button>
+<button id="proposal-toggle" class="reviewer-chrome" data-reviewer type="button" aria-pressed="false">Show seam proposal</button>
+
+<nav class="state-tabs reviewer-chrome" data-reviewer aria-label="Design-language state switcher">
+  <button class="state-tab" data-goto="welcome" type="button">Welcome</button>
+  <button class="state-tab" data-goto="persona" type="button">Persona</button>
+  <button class="state-tab" data-goto="punchline" type="button">Punchline</button>
+  <button class="state-tab" data-goto="reveal" type="button">Reveal</button>
+  <button class="state-tab" data-goto="homepage" type="button">Homepage</button>
+  <button class="state-tab" data-goto="cockpit" type="button">Cockpit</button>
+</nav>
+
+<!-- ============================================================
+     STATE 1 — WELCOME (GI-004, DD-001)
+     ============================================================ -->
+<section class="state-panel state-welcome" id="state-welcome" data-state="welcome">
+  <div class="onboard-shell">
+    <div class="stage-chassis">
+      <div class="stage-mark mono">garvit<b>.app</b></div>
+      <div class="stage-step">01 · Welcome</div>
+      <div class="stage-frame">
+        <div class="welcome-copy">
+          <h1 class="welcome-headline">Welcome to garvit.app.</h1>
+          <p class="welcome-sub mono">Garvit asked me to keep this brief.</p>
+          <button class="btn btn-lime" type="button" data-goto="persona">Continue →</button>
+        </div>
+        <div class="guide-wrap welcome-guide-wrap">
+          <img class="guide-render" src="../storyboard-recovery/assets/guide-alpha-wave.png" alt="Garvit's 3D guide character waving hello">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 2 — PERSONA (GI-005/006, DD-002/003/004)
+     ============================================================ -->
+<section class="state-panel state-persona" id="state-persona" data-state="persona">
+  <div class="onboard-shell">
+    <div class="stage-chassis">
+      <div class="stage-mark mono">garvit<b>.app</b></div>
+      <div class="stage-step">02 · Persona</div>
+      <div class="stage-frame">
+        <div class="persona-copy">
+          <h2 class="persona-headline">Quick question. What brings you here?</h2>
+          <p class="persona-disclosure mono">your pick goes to PostHog.</p>
+          <div class="persona-grid">
+            <button class="persona-chip" type="button" data-goto="punchline">Founder</button>
+            <button class="persona-chip" type="button" data-goto="punchline">Recruiter</button>
+            <button class="persona-chip" type="button" data-goto="punchline">Product lead</button>
+            <button class="persona-chip" type="button" data-goto="punchline">Just browsing</button>
+          </div>
+        </div>
+        <div class="guide-wrap persona-guide-wrap">
+          <img class="guide-render" src="../storyboard-recovery/assets/guide-alpha-full.png" alt="Garvit's 3D guide character standing to the side while the visitor picks a persona">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 3 — PUNCHLINE (GI-005, DD-003)
+     ============================================================ -->
+<section class="state-panel state-punchline" id="state-punchline" data-state="punchline">
+  <div class="onboard-shell">
+    <div class="stage-chassis">
+      <div class="stage-mark mono">garvit<b>.app</b></div>
+      <div class="stage-step">03 · Punchline</div>
+      <div class="stage-frame">
+        <div class="punchline-pill mono">selected → <b>Founder</b></div>
+        <p class="punchline-line">Noted. This changes nothing. It never does.</p>
+        <div class="guide-wrap punchline-guide-wrap">
+          <img class="guide-render" src="../storyboard-recovery/assets/guide-alpha-full.png" alt="Garvit's 3D guide character reacting to the visitor's pick">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 4 — REVEAL (in-place still; storyboard.md's binding
+     dissolve note: opacity-only crossfade, no wipe/seam/wedge)
+     ============================================================ -->
+<section class="state-panel state-reveal" id="state-reveal" data-state="reveal">
+  <div class="reveal-echo">
+    <!-- ============ HOMEPAGE ECHO (same markup/classes as the Homepage state, so the reveal shows the real surface, not a stand-in) ============ -->
+    <div class="hp-chrome">
+      <div class="hp-logo">garvit</div>
+      <nav class="hp-nav"><a href="#" class="current">Work</a><a href="#">Board</a><a href="#">About</a><a href="#">Contact</a></nav>
+      <a class="hp-resume-ghost mono" href="#">Résumé ↓</a>
+    </div>
+    <div class="hp-main">
+      <div class="hero-card">
+        <div class="hero-band mvp"></div>
+        <div class="hero-band beta"></div>
+        <div class="hero-band ga"></div>
+        <div class="hero-seam s1"></div>
+        <div class="hero-seam s2"></div>
+        <span class="band-tag mvp mono">MVP</span>
+        <span class="band-tag beta mono">BETA</span>
+        <span class="band-tag ga mono">GA</span>
+        <div class="hero-copy-col">
+          <div class="hero-copy">
+            <h1 class="hero-headline">I turn fuzzy product ideas into things people can use</h1>
+            <p class="hero-intro">I'm Garvit. I write PRDs on GitHub, deploy prototypes on weekends, and build dashboards before asking engineering.</p>
+          </div>
+          <div class="hero-ctas">
+            <button class="btn btn-lime" type="button">Download resume</button>
+            <button class="btn btn-chassis" type="button">Contact Garvit</button>
+          </div>
+        </div>
+        <div class="hero-guide-wrap">
+          <button class="hero-status-chip mono" type="button" aria-label="Session tracking, 4 of 5 stages tracked">
+            <span class="hero-status-dot"></span>TRACKING · 4/5 <span class="hero-status-arrow">→</span> OPEN
+          </button>
+          <img class="guide-render" src="../storyboard-recovery/assets/guide-alpha-upper.png" alt="Garvit's 3D guide character, waist-up, integrated into the GA band">
+        </div>
+      </div>
+      <div class="flags-block">
+        <p class="flags-head label-tiny">FEATURE FLAGS · 3/4 LIVE</p>
+        <div class="flags-row">
+          <span class="flag-chip mono"><span class="flag-dot"></span><span class="flag-key">dark_mode</span><span class="flag-purpose">THEME</span>off</span>
+          <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">confetti_on_scroll</span><span class="flag-purpose">SHIP SIGNAL</span>on</span>
+          <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">candid_mode</span><span class="flag-purpose">FIELD NOTES</span>on</span>
+          <span class="flag-chip mono locked"><span class="flag-dot"></span><span class="flag-key">comic_sans</span><span class="flag-purpose">PROD LOCKED</span>disabled</span>
+        </div>
+      </div>
+      <div class="board-preview">
+        <h3 class="board-preview-head">Things I've built</h3>
+        <div class="board-card">
+          <p class="board-card-kicker mono label-tiny">GAR-101 · PRODUCT</p>
+          <p class="board-card-title">Stay Portal</p>
+          <p class="board-card-desc">Five apartments, flexible bookings, and no more spreadsheet collisions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal-dissolve">
+    <div class="stage-chassis">
+      <div class="stage-frame">
+        <p class="punchline-line">Noted. This changes nothing. It never does.</p>
+      </div>
+    </div>
+  </div>
+  <div class="reveal-caption mono">in-place dissolve · opacity only, no wipe</div>
+</section>
+
+<!-- ============================================================
+     STATE 5 — HOMEPAGE (DD-006/007, GI-008/009)
+     ============================================================ -->
+<section class="state-panel state-homepage" id="state-homepage" data-state="homepage">
+  <div class="hp-chrome">
+    <div class="hp-logo">garvit</div>
+    <nav class="hp-nav">
+      <a href="#" class="current">Work</a>
+      <a href="#">Board</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <a class="hp-resume-ghost mono" href="#">Résumé ↓</a>
+  </div>
+
+  <div class="hp-main">
+    <div class="hero-card">
+      <div class="hero-band mvp"></div>
+      <div class="hero-band beta"></div>
+      <div class="hero-band ga"></div>
+
+      <!-- default seam: hairline rule (DD-017 compliant) -->
+      <div class="hero-seam s1"></div>
+      <div class="hero-seam s2"></div>
+      <!-- PROPOSAL: feathered material-light seam, needs explicit approval -->
+      <div class="hero-seam-proposal proposal-layer p1"></div>
+      <div class="hero-seam-proposal proposal-layer p2"></div>
+      <span class="proposal-tag proposal-layer" style="top:.9rem; left:12%;">PROPOSAL — feather seam</span>
+
+      <span class="band-tag mvp mono">MVP</span>
+      <span class="band-tag beta mono">BETA</span>
+      <span class="band-tag ga mono">GA</span>
+
+      <div class="hero-copy-col">
+        <div class="hero-copy">
+          <h1 class="hero-headline">I turn fuzzy product ideas into things people can use</h1>
+          <p class="hero-intro">I'm Garvit. I write PRDs on GitHub, deploy prototypes on weekends, and build dashboards before asking engineering.</p>
+        </div>
+        <div class="hero-ctas">
+          <button class="btn btn-lime" type="button">Download resume</button>
+          <button class="btn btn-chassis" type="button">Contact Garvit</button>
+        </div>
+      </div>
+
+      <div class="hero-guide-wrap">
+        <button class="hero-status-chip mono" type="button" data-goto="cockpit" aria-label="Session tracking, 4 of 5 stages tracked — open the session cockpit">
+          <span class="hero-status-dot"></span>TRACKING · 4/5 <span class="hero-status-arrow">→</span> OPEN
+        </button>
+        <span class="reviewer-note" data-reviewer style="top:-3.3rem; left:-1.2rem;">↳ clickable — opens cockpit</span>
+        <img class="guide-render" src="../storyboard-recovery/assets/guide-alpha-upper.png" alt="Garvit's 3D guide character, waist-up, integrated into the GA release band">
+      </div>
+    </div>
+
+    <div class="flags-block">
+      <p class="flags-head label-tiny">FEATURE FLAGS · 3/4 LIVE</p>
+      <div class="flags-row">
+        <span class="flag-chip mono" id="flag-dark-mode"><span class="flag-dot" id="flag-dark-mode-dot"></span><span class="flag-key">dark_mode</span><span class="flag-purpose">THEME</span><span id="flag-dark-mode-state">off</span></span>
+        <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">confetti_on_scroll</span><span class="flag-purpose">SHIP SIGNAL</span>on</span>
+        <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">candid_mode</span><span class="flag-purpose">FIELD NOTES</span>on</span>
+        <span class="flag-chip mono locked"><span class="flag-dot"></span><span class="flag-key">comic_sans</span><span class="flag-purpose">PROD LOCKED</span>disabled</span>
+      </div>
+    </div>
+
+    <div class="board-preview">
+      <h3 class="board-preview-head">Things I've built</h3>
+      <div class="board-card">
+        <p class="board-card-kicker mono label-tiny">GAR-101 · PRODUCT</p>
+        <p class="board-card-title">Stay Portal</p>
+        <p class="board-card-desc">Five apartments, flexible bookings, and no more spreadsheet collisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 6 — SESSION COCKPIT (DD-008/DD-011)
+     ============================================================ -->
+<section class="state-panel state-cockpit" id="state-cockpit" data-state="cockpit">
+  <div class="ck-topbar">
+    <div class="ck-status-chip mono"><span class="ck-status-dot"></span>tracking · 4/5</div>
+    <button class="ck-close" type="button" aria-label="Close session cockpit" data-goto="homepage">✕</button>
+  </div>
+
+  <div class="ck-body">
+    <h2 class="ck-heading">Your session, instrumented</h2>
+    <p class="ck-sub mono">Left: computed live from what you actually did on this page — no page reload, no server round-trip. Right: an authored reference, not a measurement of anyone real.</p>
+
+    <div class="ck-panes">
+      <div class="ck-pane ck-pane-you">
+        <div class="ck-pane-label label-tiny"><span>YOUR SESSION</span><span>LIVE</span></div>
+        <div class="ck-chart">
+          <div class="ck-col">
+            <div class="ck-track">
+              <div class="ck-fill solid" style="bottom:0; height:100%;"></div>
+            </div>
+            <div class="ck-col-label"><span class="ck-col-name mono">Landed</span><span class="ck-col-pct mono">Reached</span></div>
+          </div>
+          <div class="ck-col">
+            <div class="ck-track">
+              <div class="ck-fill solid" style="bottom:0; height:100%;"></div>
+            </div>
+            <div class="ck-col-label"><span class="ck-col-name mono">Scrolled</span><span class="ck-col-pct mono">Reached</span></div>
+          </div>
+          <div class="ck-col">
+            <div class="ck-track">
+              <div class="ck-fill solid" style="bottom:0; height:100%;"></div>
+            </div>
+            <div class="ck-col-label"><span class="ck-col-name mono">Played</span><span class="ck-col-pct mono">Reached</span></div>
+          </div>
+          <div class="ck-col">
+            <div class="ck-track">
+              <div class="ck-fill solid" style="bottom:0; height:50%;"></div>
+              <div class="ck-fill hatch" style="bottom:50%; height:50%;"></div>
+            </div>
+            <div class="ck-col-label"><span class="ck-col-name mono">Read work</span><span class="ck-col-pct mono">In progress</span></div>
+          </div>
+          <div class="ck-col">
+            <div class="ck-track">
+              <div class="ck-fill hatch" style="bottom:0; height:100%;"></div>
+            </div>
+            <div class="ck-col-label"><span class="ck-col-name mono">Contact</span><span class="ck-col-pct mono">Not yet</span></div>
+          </div>
+        </div>
+
+        <table class="ck-table mono">
+          <thead><tr><th>Stage</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Landed</td><td class="num">Reached</td></tr>
+            <tr><td>Scrolled</td><td class="num">Reached</td></tr>
+            <tr><td>Played</td><td class="num">Reached</td></tr>
+            <tr><td>Read work</td><td class="num">In progress</td></tr>
+            <tr><td>Contact</td><td class="num">Not yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ck-pane ck-pane-bench ck-bench">
+        <div class="ck-pane-label label-tiny"><span>TYPICAL VISITOR</span><span>AUTHORED REFERENCE</span></div>
+        <div class="ck-chart">
+          <div class="ck-col"><div class="ck-track"><div class="ck-fill solid" style="bottom:0; height:100%;"></div></div><div class="ck-col-label"><span class="ck-col-name mono">Landed</span><span class="ck-col-pct mono">100%</span></div></div>
+          <div class="ck-col"><div class="ck-track"><div class="ck-fill solid drop" style="bottom:0; height:58%;"></div><div class="ck-drop-mark" aria-hidden="true"></div></div><div class="ck-col-label"><span class="ck-col-name mono">Scrolled</span><span class="ck-col-pct mono">58%</span></div></div>
+          <div class="ck-col"><div class="ck-track"><div class="ck-fill solid" style="bottom:0; height:24%;"></div></div><div class="ck-col-label"><span class="ck-col-name mono">Played</span><span class="ck-col-pct mono">24%</span></div></div>
+          <div class="ck-col"><div class="ck-track"><div class="ck-fill solid" style="bottom:0; height:9%;"></div></div><div class="ck-col-label"><span class="ck-col-name mono">Read work</span><span class="ck-col-pct mono">9%</span></div></div>
+          <div class="ck-col"><div class="ck-track"><div class="ck-fill solid" style="bottom:0; height:2%;"></div></div><div class="ck-col-label"><span class="ck-col-name mono">Contact</span><span class="ck-col-pct mono">2%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ck-instruments">
+      <div class="ck-stat"><div class="ck-stat-label label-tiny">Time here</div><div class="ck-stat-value">4m 12s</div></div>
+      <div class="ck-stat"><div class="ck-stat-label label-tiny">Deliberate acts</div><div class="ck-stat-value">27</div></div>
+      <div class="ck-stat"><div class="ck-stat-label label-tiny">Furthest signal</div><div class="ck-stat-value" style="font-size:1.1rem;">Read work</div></div>
+    </div>
+
+    <div class="ck-insights">
+      <div class="ck-insight">You lingered on "Read work" longer than most visitors who get that far.</div>
+      <div class="ck-insight">You're one stage from contact — most visitors stop at "Scrolled."</div>
+    </div>
+
+    <p class="ck-trust mono">this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme-toggle');
+  var proposalBtn = document.getElementById('proposal-toggle');
+  var flagDot = document.getElementById('flag-dark-mode-dot');
+  var flagState = document.getElementById('flag-dark-mode-state');
+
+  function applyTheme(mode){
+    root.setAttribute('data-theme', mode);
+    themeBtn.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+    themeBtn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+    if(flagDot){ flagDot.classList.toggle('on', mode === 'dark'); }
+    if(flagState){ flagState.textContent = mode === 'dark' ? 'on' : 'off'; }
+  }
+  var themeParam = new URLSearchParams(location.search).get('theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(themeParam === 'dark' || themeParam === 'light' ? themeParam : (prefersDark ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', function(){
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  proposalBtn.addEventListener('click', function(){
+    var on = document.body.classList.toggle('show-proposal');
+    proposalBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    proposalBtn.textContent = on ? 'Hide seam proposal' : 'Show seam proposal';
+  });
+
+  var KNOWN_STATES = ['welcome','persona','punchline','reveal','homepage','cockpit'];
+  var panels = {};
+  KNOWN_STATES.forEach(function(s){ panels[s] = document.getElementById('state-' + s); });
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.state-tab'));
+
+  function currentHashTokens(){
+    return location.hash.replace('#','').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+  function isCaptureMode(){
+    var params = new URLSearchParams(location.search);
+    if(params.get('capture') === '1'){ return true; }
+    return currentHashTokens().indexOf('capture') > -1;
+  }
+  function stateFromHash(){
+    var tokens = currentHashTokens();
+    for(var i=0;i<tokens.length;i++){
+      if(KNOWN_STATES.indexOf(tokens[i]) > -1){ return tokens[i]; }
+    }
+    return 'welcome';
+  }
+  function render(){
+    var state = stateFromHash();
+    KNOWN_STATES.forEach(function(s){
+      if(panels[s]){ panels[s].classList.toggle('active', s === state); }
+    });
+    tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-goto') === state); });
+    var capture = isCaptureMode();
+    document.body.classList.toggle('capture-mode', capture);
+    if(capture){ document.body.classList.remove('show-proposal'); }
+    document.body.setAttribute('data-active-state', state);
+  }
+  function goto(state){
+    var tokens = currentHashTokens().filter(function(t){ return KNOWN_STATES.indexOf(t) === -1; });
+    tokens.unshift(state);
+    location.hash = tokens.join(',');
+    render();
+  }
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-goto]');
+    if(el){ goto(el.getAttribute('data-goto')); }
+  });
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+</body>
+</html>

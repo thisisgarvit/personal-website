@@ -1,0 +1,286 @@
+{
+  "generated_by": "docs/design-language/captures/proof.py (run from scratchpad, output only)",
+  "source_html": "docs/design-language/neo-futurist-mock.html",
+  "server": "python3 -m http.server 8791 (repo root)",
+  "pixel_variance_methodology": {
+    "note": "The spec's suggested check ('sample 100 pixels, require >10 distinct colors') was tried first (both pure-random and stratified 10x10 grid sampling) and produced false failures on legitimate captures: this design language is deliberately monochrome with large flat panels (see neo-futurist-mock.html's own comment: 'monochrome base with sparse strictly-semantic lime/coral accents'), so a 100-point sample can legitimately land entirely inside one flat panel (e.g. cockpit's dark instrument panes) even on a correct, real render. To keep the anti-fraud guarantee without that false-positive risk, a REAL 404 was captured from the same server/viewport as a calibration reference: full-image distinct-color count was 175 for the 404 vs. 1181-8279 for every real mock capture. The gate below uses full-image distinct-color count > 500 (well above the 404's 175, well below the real captures' floor) as the actual pass/fail signal; the random100/grid100 sample counts are still computed and reported per-file for transparency.",
+    "reference_404_full_image_distinct_colors": 175,
+    "reference_404_sha256": "5946387ac5a70638df5b1738a4682095c9f8ea3dd4bfaa4df7ede278b35e8bc2",
+    "full_color_threshold_used": 500
+  },
+  "checks": {
+    "not_all_png_hashes_identical": true,
+    "no_two_different_states_share_hash": true,
+    "all_full_image_distinct_colors_gt_threshold": true
+  },
+  "files": [
+    {
+      "name": "cockpit-1440-dark.png",
+      "bytes": 77434,
+      "sha256": "e852f493585f86caa38bc8f29ea8f80c475acf87deb91aadf76588df4e70d006",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "cockpit",
+        "panelVisible": true,
+        "markerText": "YOUR SESSIONLIVE",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 9,
+      "distinct_color_sample_grid100": 9,
+      "full_image_distinct_colors": 1361
+    },
+    {
+      "name": "cockpit-1440-light.png",
+      "bytes": 77394,
+      "sha256": "78358fa192b63d6714ec95c5dd5b136520cf03a9b4511a08a97545af6a6dd098",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "cockpit",
+        "panelVisible": true,
+        "markerText": "YOUR SESSIONLIVE",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 7,
+      "distinct_color_sample_grid100": 9,
+      "full_image_distinct_colors": 1360
+    },
+    {
+      "name": "cockpit-390-light.png",
+      "bytes": 43071,
+      "sha256": "391839f2f6bbcf90bae8d20176aff7acde393f9ea40a3404ca481bb483522030",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "cockpit",
+        "panelVisible": true,
+        "markerText": "YOUR SESSIONLIVE",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 10,
+      "distinct_color_sample_grid100": 11,
+      "full_image_distinct_colors": 1181
+    },
+    {
+      "name": "homepage-1440-dark.png",
+      "bytes": 160768,
+      "sha256": "f3b02fe60c26907e0f9122486086051bad2e94b2fef7e6b24663c1bbddc08521",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "homepage",
+        "panelVisible": true,
+        "markerText": "I turn fuzzy product ideas into things people can use",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 13,
+      "distinct_color_sample_grid100": 14,
+      "full_image_distinct_colors": 8733
+    },
+    {
+      "name": "homepage-1440-light.png",
+      "bytes": 161764,
+      "sha256": "22194e8f039833f36ccefb33fb8cb3747e50bc48ef192668fa8c67d4ceacdbcf",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "homepage",
+        "panelVisible": true,
+        "markerText": "I turn fuzzy product ideas into things people can use",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 13,
+      "distinct_color_sample_grid100": 14,
+      "full_image_distinct_colors": 8752
+    },
+    {
+      "name": "homepage-390-light.png",
+      "bytes": 59571,
+      "sha256": "7ddd2ba215423b85799e0fb8f158ade2ed5c70285ba9744d0906f4ec54c9ae08",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "homepage",
+        "panelVisible": true,
+        "markerText": "I turn fuzzy product ideas into things people can use",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 13,
+      "distinct_color_sample_grid100": 13,
+      "full_image_distinct_colors": 3954
+    },
+    {
+      "name": "persona-1440-light.png",
+      "bytes": 201027,
+      "sha256": "ae37bd31c906a29e8af4d388514661f17f0c872891c8a1a4ed5ff3b6d0c22299",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "persona",
+        "panelVisible": true,
+        "markerText": "Quick question. What brings you here?",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 9,
+      "distinct_color_sample_grid100": 5,
+      "full_image_distinct_colors": 7449
+    },
+    {
+      "name": "persona-390-light.png",
+      "bytes": 74715,
+      "sha256": "b9015ab47e0291d4108fc00dd9c3e558c245ed0bd789597d7249784aecc6d779",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "persona",
+        "panelVisible": true,
+        "markerText": "Quick question. What brings you here?",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 10,
+      "distinct_color_sample_grid100": 8,
+      "full_image_distinct_colors": 3653
+    },
+    {
+      "name": "punchline-1440-light.png",
+      "bytes": 184805,
+      "sha256": "b8c1837c762d735ea2a2b50946339f10447b4c2f0283f752e5ad0abb06e96fae",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "punchline",
+        "panelVisible": true,
+        "markerText": "Noted. This changes nothing. It never does.",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 14,
+      "distinct_color_sample_grid100": 9,
+      "full_image_distinct_colors": 7531
+    },
+    {
+      "name": "punchline-390-light.png",
+      "bytes": 64475,
+      "sha256": "e1dfbf1620da0285dd6477437ef00aab311da68c8e0440b4c373e514e0c22fb4",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "punchline",
+        "panelVisible": true,
+        "markerText": "Noted. This changes nothing. It never does.",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 12,
+      "distinct_color_sample_grid100": 14,
+      "full_image_distinct_colors": 3591
+    },
+    {
+      "name": "reveal-1440-light.png",
+      "bytes": 216610,
+      "sha256": "c0b8b5681c04053e9c85599c833356285347df1cdd6427b9bc672a8231579d71",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "reveal",
+        "panelVisible": true,
+        "markerText": "in-place dissolve \u00b7 opacity only, no wipe",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 13,
+      "distinct_color_sample_grid100": 16,
+      "full_image_distinct_colors": 4940
+    },
+    {
+      "name": "reveal-390-light.png",
+      "bytes": 86215,
+      "sha256": "99379d6ae333f08dac192794b398a89dc2e3fb748b54899b03a9a692bbe0ae1c",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "reveal",
+        "panelVisible": true,
+        "markerText": "in-place dissolve \u00b7 opacity only, no wipe",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 29,
+      "distinct_color_sample_grid100": 14,
+      "full_image_distinct_colors": 3770
+    },
+    {
+      "name": "welcome-1440-dark.png",
+      "bytes": 193387,
+      "sha256": "4390fc0360e1eaf39e9d0eb51923215f85ad196d16c46f896918707b988b9a05",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "welcome",
+        "panelVisible": true,
+        "markerText": "Welcome to garvit.app.",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 14,
+      "distinct_color_sample_grid100": 9,
+      "full_image_distinct_colors": 8279
+    },
+    {
+      "name": "welcome-1440-light.png",
+      "bytes": 192331,
+      "sha256": "4313428ec9022174cf0135ef0787042e16edaf6fc37754a753dad297cdc4b3d4",
+      "width": 1440,
+      "height": 900,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": {
+        "activeState": "welcome",
+        "panelVisible": true,
+        "markerText": "Welcome to garvit.app.",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 19,
+      "distinct_color_sample_grid100": 9,
+      "full_image_distinct_colors": 8171
+    },
+    {
+      "name": "welcome-390-light.png",
+      "bytes": 63922,
+      "sha256": "2e763ebfbf651b9910f57b66db007fbd911229d676a2b5dbdd423b82f8032cb6",
+      "width": 390,
+      "height": 844,
+      "innerWidth_logged": 390,
+      "dom_marker_asserted": {
+        "activeState": "welcome",
+        "panelVisible": true,
+        "markerText": "Welcome to garvit.app.",
+        "markerOk": true
+      },
+      "distinct_color_sample_random100": 10,
+      "distinct_color_sample_grid100": 12,
+      "full_image_distinct_colors": 3940
+    },
+    {
+      "name": "welcome-detail-1440.png",
+      "bytes": 68261,
+      "sha256": "6dffb27d9f7e9ed648f743fe27d4953b06ae2f0844eec49227d8ed9764c6a374",
+      "width": 374,
+      "height": 577,
+      "innerWidth_logged": 1440,
+      "dom_marker_asserted": "zoomed crop for N-1 (raised hand vs chassis top edge) / N-2 (01\u00b7WELCOME label vs helmet overlap) review",
+      "distinct_color_sample_random100": 27,
+      "distinct_color_sample_grid100": 27,
+      "full_image_distinct_colors": 5381
+    }
+  ],
+  "partial_update_note": "2026-08-18 Sonnet-lane pixel correction: only homepage-1440-light.png, homepage-1440-dark.png, and homepage-390-light.png were recaptured and replaced below (guide render made materially larger + chassis-edge cropped in the GA field; tracking-chip healthy-status dot changed coral -> lime). Every other entry in this file is untouched from the prior capture round and still reflects its original screenshot/hash."
+}

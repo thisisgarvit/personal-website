@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>garvit.app — Recovery Storyboard V2</title>
+<style>
+/* ============================================================
+   TOKENS — locked palette, light default / dark via [data-theme]
+   Font stand-ins only: production uses Archivo (display) and
+   IBM Plex Mono (product/system annotation). No CDN fonts here.
+   ============================================================ */
+:root{
+  --canvas:#EDF0EB;
+  --panel:#F8F9F4;
+  --ink:#171923;
+  --release-blue:#4E56D9;
+  --merge-lime:#CBED45;
+  --incident-coral:#FF6B52;
+  --question-lilac:#C4B7FF;
+  --context-cyan:#72D7D0;
+  --rule:#AEB7AD;
+  --muted:#5F675F;
+  --font-display: "Archivo","Arial Narrow",Helvetica,Arial,sans-serif;
+  --font-mono: "IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --canvas:#101319; --panel:#191D25; --ink:#F2F4ED; --release-blue:#818AF3; --rule:#3D4650; --muted:#A9B2A9; }
+}
+:root[data-theme="dark"]{ --canvas:#101319; --panel:#191D25; --ink:#F2F4ED; --release-blue:#818AF3; --rule:#3D4650; --muted:#A9B2A9; }
+:root[data-theme="light"]{ --canvas:#EDF0EB; --panel:#F8F9F4; --ink:#171923; --release-blue:#4E56D9; --rule:#AEB7AD; --muted:#5F675F; }
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; height:100%; }
+body{
+  background:var(--canvas);
+  color:var(--ink);
+  font-family:var(--font-display);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+img{ max-width:100%; display:block; }
+button{ font-family:inherit; cursor:pointer; }
+.mono{ font-family:var(--font-mono); }
+svg{ display:block; }
+
+/* ============================================================
+   MANDATE 1 — PRESENTATION
+   One full-viewport state at a time. No filmstrip, no stacked
+   documentation page. Reviewer chrome (tabs + theme toggle) is
+   small, corner-positioned, and fully hidden in capture mode.
+   ============================================================ */
+.state-panel{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100svh;
+  height:100dvh;
+  display:none;
+  flex-direction:column;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.state-panel.active{ display:flex; }
+
+.reviewer-chrome{ position:fixed; z-index:1000; }
+
+#theme-toggle{
+  top:14px; right:14px;
+  background:var(--ink);
+  color:var(--canvas);
+  border:none;
+  border-radius:999px;
+  padding:.5rem .95rem;
+  font-family:var(--font-mono);
+  font-size:.64rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+#theme-toggle:focus-visible{ outline:2px solid var(--merge-lime); outline-offset:2px; }
+
+.state-tabs{
+  bottom:14px; left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:.3rem;
+  background:rgba(20,22,28,.55);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  padding:.3rem;
+  box-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+.state-tab{
+  border:none;
+  background:transparent;
+  color:rgba(255,255,255,.62);
+  font-family:var(--font-mono);
+  font-size:.62rem;
+  letter-spacing:.04em;
+  padding:.42rem .75rem;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.state-tab.active{ background:var(--merge-lime); color:#12180A; font-weight:700; }
+.state-tab:focus-visible{ outline:2px solid var(--merge-lime); outline-offset:2px; }
+
+/* capture mode: pure product frames, zero reviewer chrome */
+body.capture-mode .reviewer-chrome{ display:none !important; }
+body.capture-mode [data-reviewer]{ display:none !important; }
+
+/* reviewer-only micro annotation — small, dashed, never present in
+   capture mode; used sparingly (mandate 5's chip callout only) */
+.reviewer-note{
+  position:absolute;
+  font-family:var(--font-mono);
+  font-size:.56rem;
+  letter-spacing:.03em;
+  color:rgba(255,255,255,.75);
+  background:rgba(10,12,18,.72);
+  border:1px dashed rgba(255,255,255,.4);
+  border-radius:4px;
+  padding:.25rem .5rem;
+  z-index:40;
+  pointer-events:none;
+}
+body.capture-mode .reviewer-note{ display:none !important; }
+
+/* ============================================================
+   SHARED — the authored dark stage (Welcome / Persona / Punchline)
+   IDENTICAL background across all three states: same gradient
+   anchor, same starfield — this is the continuity the design lead
+   asked for. Fixed dark palette, independent of the light/dark
+   toggle: a cinematic authored surface, not a themed one.
+   ============================================================ */
+.stage{
+  background:
+    radial-gradient(ellipse 900px 700px at 74% 32%, rgba(63,73,232,.32), transparent 60%),
+    linear-gradient(180deg, #05060A 0%, #0A0C11 45%, #0A0C11 100%);
+  color:#F2F4ED;
+  position:relative;
+  isolation:isolate;
+}
+.stage::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 20%, rgba(255,255,255,.55) 0, transparent 100%),
+    radial-gradient(1.2px 1.2px at 32% 68%, rgba(255,255,255,.4) 0, transparent 100%),
+    radial-gradient(1.6px 1.6px at 58% 15%, rgba(255,255,255,.45) 0, transparent 100%),
+    radial-gradient(1.2px 1.2px at 74% 78%, rgba(255,255,255,.35) 0, transparent 100%),
+    radial-gradient(1.4px 1.4px at 88% 34%, rgba(255,255,255,.5) 0, transparent 100%),
+    radial-gradient(1px 1px at 6% 82%, rgba(255,255,255,.3) 0, transparent 100%),
+    radial-gradient(1px 1px at 46% 46%, rgba(255,255,255,.25) 0, transparent 100%);
+  opacity:.85;
+  pointer-events:none;
+  z-index:0;
+}
+.stage-frame{
+  position:relative; z-index:2;
+  flex:1;
+  display:flex;
+  width:100%;
+  padding:0 6vw;
+}
+
+/* ---- guide art: real Cycles alpha renders ----
+   The original guide-alpha-*.png exports came back 100% transparent
+   (a camera-framing bug in the headless Blender script, not a content
+   problem — see storyboard.md). Re-rendered from public/models/guide/
+   guide.glb with world-space mesh bounds driving the camera; these are
+   genuine RGBA renders (1600x2000) with real alpha, not an authored
+   stand-in. object-fit:contain + bottom anchoring reproduces the old
+   SVG's xMidYMax framing so every placement below keeps its composition. */
+.guide-render{ width:100%; height:100%; object-fit:contain; object-position:center bottom; display:block; }
+
+/* ============================================================
+   MANDATE 2 — WELCOME
+   ============================================================ */
+.state-welcome .stage-frame{
+  align-items:center;
+  justify-content:space-between;
+  gap:2vw;
+}
+.welcome-mark{
+  position:absolute; top:5vh; left:6vw; z-index:5;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.03em;
+  color:rgba(242,244,237,.7);
+}
+.welcome-mark b{ color:#F2F4ED; font-weight:700; }
+.welcome-copy{
+  position:relative; z-index:3;
+  max-width:min(46vw, 640px);
+  flex:0 0 auto;
+}
+.welcome-headline{
+  font-weight:800;
+  font-size:clamp(2.3rem, 5vw, 4.1rem);
+  line-height:1.04;
+  letter-spacing:-.02em;
+  margin:0 0 1.1rem;
+  color:#F8F9F4;
+}
+.welcome-sub{
+  font-size:clamp(.95rem, 1.4vw, 1.15rem);
+  line-height:1.5;
+  color:#B7BECF;
+  margin:0 0 2.1rem;
+  max-width:30ch;
+}
+.welcome-cta{
+  display:inline-flex; align-items:center; gap:.55rem;
+  background:var(--merge-lime); color:#12180A;
+  border:none; border-radius:9px;
+  padding:0 1.9rem; min-height:56px;
+  font-weight:800; font-size:1rem;
+}
+.welcome-cta:hover{ transform:translateY(-2px); }
+.welcome-guide-wrap{
+  position:relative; z-index:2;
+  flex:0 0 auto;
+  width:min(52vw, 620px);
+  height:min(88vh, 900px);
+  display:flex; align-items:flex-end; justify-content:center;
+}
+
+/* ============================================================
+   MANDATE 3 — PERSONA (same .stage as Welcome)
+   ============================================================ */
+.state-persona .stage-frame{
+  align-items:center;
+  justify-content:flex-start;
+  gap:4vw;
+}
+.persona-copy{ position:relative; z-index:3; max-width:min(38vw, 560px); flex:1 1 auto; }
+.persona-headline{
+  font-weight:800;
+  font-size:clamp(1.9rem, 3.6vw, 2.9rem);
+  line-height:1.1;
+  letter-spacing:-.015em;
+  color:#F8F9F4;
+  margin:0 0 1.5rem;
+  max-width:16ch;
+}
+.persona-disclosure{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.01em;
+  color:#8B93A7;
+  margin:0 0 1.6rem;
+  max-width:40ch;
+}
+.persona-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.85rem;
+  max-width:34rem;
+}
+.persona-chip{
+  background:rgba(242,244,237,.06);
+  border:1px solid rgba(242,244,237,.18);
+  border-radius:10px;
+  padding:1.1rem 1.2rem;
+  font-weight:700;
+  font-size:1rem;
+  color:#EDEFE9;
+  text-align:left;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.persona-chip:hover{ transform:translateY(-2px); border-color:var(--merge-lime); background:rgba(242,244,237,.1); }
+.persona-chip:focus-visible{ outline:2px solid var(--merge-lime); outline-offset:2px; }
+.persona-guide-wrap{
+  position:relative; z-index:2;
+  flex:0 0 auto;
+  width:min(18vw, 260px);
+  height:min(94vh, 850px);
+  align-self:flex-end;
+  margin-bottom:4vh;
+  opacity:.92;
+  overflow:hidden;
+}
+/* MANDATE 2 — the source render's opaque figure occupies only ~25% of the
+   PNG's own width (camera framing kept a lot of transparent margin around
+   a slim standing figure), so sizing the wrap alone left the character
+   reading as near-invisible even though the box itself looked reasonably
+   placed. Zooming the image in (bottom-anchored, so the figure still
+   "stands" on the same ground line) and letting the wrap clip the excess
+   is what actually enlarges the *character*, not just its bounding box. */
+.persona-guide-wrap .guide-render,
+.punchline-guide-wrap .guide-render{
+  transform:scale(2.85);
+  transform-origin:center bottom;
+}
+
+/* ============================================================
+   MANDATE 4 — PUNCHLINE (same .stage)
+   No diagonal lime seam graphic. The reveal itself (the move to
+   Homepage) is a production-only in-place feathered material
+   dissolve — a note for engineering, not a graphic drawn here.
+   ============================================================ */
+.state-punchline .stage-frame{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  flex-direction:column;
+  gap:2.4rem;
+  position:relative;
+}
+.punchline-pill{
+  font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase;
+  background:rgba(242,244,237,.08); border:1px solid rgba(242,244,237,.22);
+  border-radius:999px; padding:.4rem .9rem; color:#C9CEDB;
+}
+.punchline-pill b{ color:var(--context-cyan); }
+.punchline-line{
+  font-weight:800;
+  font-size:clamp(2rem, 4.6vw, 3.4rem);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  color:#F8F9F4;
+  max-width:20ch;
+  margin:0;
+}
+.punchline-guide-wrap{
+  position:absolute;
+  right:8vw; bottom:0;
+  width:min(18vw, 260px);
+  height:min(94vh, 850px);
+  overflow:hidden;
+}
+/* ============================================================
+   MANDATE 5–8 — HOMEPAGE
+   ============================================================ */
+.state-homepage{ background:var(--canvas); color:var(--ink); }
+.hp-chrome{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 5vw;
+  border-bottom:1px solid var(--rule);
+  flex:0 0 auto;
+}
+.hp-logo{ font-weight:800; font-size:1.05rem; letter-spacing:-.01em; }
+.hp-nav{ display:flex; gap:2rem; font-size:.86rem; font-weight:600; }
+.hp-nav a{ color:var(--ink); text-decoration:none; opacity:.72; }
+.hp-nav a.current{ opacity:1; }
+.hp-resume-ghost{
+  border:1px solid var(--rule);
+  border-radius:999px;
+  padding:.4rem .9rem;
+  color:var(--ink);
+  text-decoration:none;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+}
+
+.hp-main{ flex:1 1 auto; display:flex; flex-direction:column; padding:2.6vh 5vw 0; min-height:0; }
+
+.hero-card{
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  flex:1 1 auto;
+  min-height:0;
+  box-shadow:0 24px 60px rgba(20,25,60,.24);
+  isolation:isolate;
+  display:flex;
+}
+.hero-band{ position:relative; height:100%; }
+.hero-band.mvp{ width:32%; background:#23262E; }
+.hero-band.beta{ width:34%; background:#171B2E; }
+.hero-band.ga{ flex:1; background:var(--release-blue); }
+.hero-band.mvp::after{
+  content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px);
+  mix-blend-mode:overlay;
+}
+.hero-band.beta::after{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(114,215,208,.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(114,215,208,.14) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+/* MANDATE 3 — GA gets its own pass of the same "line texture" language as
+   MVP (diagonal hatch) and BETA (grid), just in the GA band's own faint
+   white-on-blue register, so the surface reads as one authored geometry
+   family across all three bands instead of two textured panels glued to
+   a flat color swatch. */
+.hero-band.ga::after{
+  content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.055) 0 1px, transparent 1px 14px);
+  mix-blend-mode:overlay;
+}
+/* MANDATE 6 — one continuous baseline grid across the whole card,
+   so the three bands read as one authored surface with a shared
+   geometry rather than three glued panels. Feathered seams only,
+   no hard vertical rules. */
+.hero-baseline-grid{
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  background-image:repeating-linear-gradient(180deg, rgba(255,255,255,.05) 0 1px, transparent 1px 34px);
+}
+.hero-seam{ position:absolute; top:0; bottom:0; width:8%; z-index:2; pointer-events:none; }
+.hero-seam.s1{ left:28%; background:linear-gradient(90deg, rgba(23,27,46,0), #171B2E 60%, rgba(23,27,46,0)); opacity:.7; }
+/* MANDATE 3 — the GA seam gets a noticeably wider feather than the
+   MVP/BETA seam so GA reads as growing out of BETA rather than a flat
+   color panel glued on afterward. */
+.hero-seam.s2{ left:56%; width:20%; background:linear-gradient(90deg, rgba(23,27,46,0), var(--release-blue) 55%, rgba(23,27,46,0)); opacity:.6; }
+
+.band-tag{
+  position:absolute; top:1.2rem; z-index:6;
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em;
+  padding:.28rem .55rem; border-radius:4px; color:#EDF0EB;
+  border:1px solid rgba(237,240,235,.35);
+}
+.band-tag.mvp{ left:1.2rem; }
+.band-tag.beta{ left:35%; }
+.band-tag.ga{ right:1.2rem; background:rgba(203,237,69,.16); border-color:rgba(203,237,69,.5); color:var(--merge-lime); }
+
+.hero-copy{ position:absolute; left:0; top:0; z-index:4; padding:2.8rem 3rem; max-width:56%; }
+.hero-headline{
+  font-weight:800; font-size:clamp(1.7rem, 2.9vw, 2.7rem);
+  line-height:1.05; letter-spacing:-.02em; color:#F8F9F4; margin:0 0 1rem;
+}
+.hero-intro{ font-size:.92rem; line-height:1.55; color:rgba(248,249,244,.78); max-width:42ch; margin:0; }
+.hero-ctas{ position:absolute; left:3rem; bottom:2.2rem; z-index:4; display:flex; gap:.8rem; }
+.btn{
+  font-weight:700; font-size:.86rem; padding:0 1.5rem; min-height:50px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:9px; border:none; transition:transform .15s ease;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn-lime{ background:var(--merge-lime); color:#12180A; }
+.btn-ink{ background:#F8F9F4; color:#12141C; }
+
+/* guide integrated directly into the GA field — no card, no border,
+   no porthole. Sits on the release-blue surface like it belongs
+   there; the SVG's own transparency does the work a real alpha PNG
+   would have done. */
+.hero-guide-wrap{
+  position:absolute; right:3%; bottom:3%; z-index:5;
+  width:min(26%, 288px);
+  aspect-ratio:320/300;
+}
+.hero-status-chip{
+  position:absolute; z-index:7;
+  top:-1.5rem; left:-1.6rem;
+  display:inline-flex; align-items:center; gap:.45rem;
+  /* MANDATE 5 — button-like fill/border in the resting state (not just on
+     hover), so a single still frame reads as "this opens something" rather
+     than as a passive status readout. */
+  background:rgba(203,237,69,.14);
+  border:1px solid rgba(203,237,69,.55);
+  color:#EDEFE9;
+  border-radius:999px;
+  padding:.45rem .8rem;
+  font-family:var(--font-mono);
+  font-size:.62rem; letter-spacing:.05em; text-transform:uppercase;
+  font-weight:700;
+  box-shadow:0 10px 24px rgba(0,0,0,.3);
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.hero-status-chip:hover{ transform:translateY(-2px); border-color:var(--merge-lime); background:rgba(203,237,69,.22); }
+.hero-status-chip:focus-visible{ outline:2px solid var(--merge-lime); outline-offset:3px; }
+.hero-status-arrow{ color:var(--merge-lime); font-weight:800; }
+.hero-status-dot{ width:7px; height:7px; border-radius:50%; background:var(--incident-coral); flex:0 0 auto; }
+
+/* --- MANDATE 7 — feature flags, real names, subordinate in-flow surface --- */
+.flags-block{ flex:0 0 auto; padding:1.1rem 0; }
+.flags-head{
+  font-family:var(--font-mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 .6rem;
+}
+.flags-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
+.flag-chip{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono); font-size:.68rem;
+  padding:.45rem .75rem; border-radius:7px;
+  background:var(--panel); border:1px solid var(--rule);
+}
+.flag-chip .flag-key{ font-weight:700; }
+.flag-chip .flag-purpose{ color:var(--muted); }
+.flag-dot{ width:7px; height:7px; border-radius:50%; background:var(--rule); flex:0 0 auto; }
+.flag-dot.on{ background:var(--merge-lime); }
+.flag-chip.locked{ opacity:.55; }
+.flag-chip.locked .flag-dot{ background:var(--incident-coral); }
+
+/* --- MANDATE 8 — board preview, real ticket edge crop --- */
+.board-preview{
+  flex:0 0 auto;
+  position:relative;
+  height:10vh;
+  min-height:78px;
+  border-top:1px solid var(--rule);
+  margin-top:.4rem;
+}
+.board-preview-head{
+  position:absolute; left:0; top:.2rem; z-index:2;
+  font-weight:800; font-size:1rem; color:var(--ink);
+}
+.board-card{
+  position:absolute; left:0; right:0; top:1.9rem;
+  background:var(--panel);
+  border:1px solid var(--rule);
+  border-radius:14px 14px 0 0;
+  box-shadow:0 -10px 26px rgba(0,0,0,.06);
+  padding:1rem 1.4rem 0;
+}
+.board-card-kicker{
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--release-blue); margin:0 0 .35rem;
+}
+.board-card-title{ font-weight:800; font-size:1.05rem; margin:0 0 .3rem; }
+.board-card-desc{ font-size:.82rem; color:var(--muted); max-width:56ch; margin:0; }
+
+/* ============================================================
+   MANDATE 9 — COCKPIT (bespoke instrument panel, unchanged design)
+   ============================================================ */
+.state-cockpit{
+  --c-bg:#0D1016; --c-panel:#161A22; --c-ink:#EEF1EA; --c-muted:#7C8496;
+  background:var(--c-bg); color:var(--c-ink);
+}
+.f4-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.3rem 5vw; border-bottom:1px solid #232838; flex:0 0 auto;
+}
+.f4-status-chip{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--context-cyan); border:1px solid #232838; border-radius:999px; padding:.4rem .85rem;
+}
+.f4-status-dot{ width:7px; height:7px; border-radius:50%; background:var(--context-cyan); }
+.f4-close{
+  width:38px; height:38px; border-radius:50%;
+  background:#161A22; border:1px solid #2A3040; color:var(--c-ink);
+  font-size:1.1rem; line-height:1; display:flex; align-items:center; justify-content:center;
+}
+.f4-close:focus-visible{ outline:2px solid var(--merge-lime); outline-offset:2px; }
+
+.f4-body{ padding:3.4vh 5vw 5vh; max-width:1180px; margin:0 auto; flex:1 1 auto; }
+.f4-heading{ font-weight:800; font-size:clamp(1.5rem, 2.6vw, 2.2rem); letter-spacing:-.02em; margin:0 0 .5rem; }
+.f4-sub{ color:var(--c-muted); font-size:.9rem; margin:0 0 2.4rem; max-width:52ch; }
+
+.f4-grid{ display:grid; grid-template-columns:1.5fr 1fr; gap:2.6rem; }
+
+.funnel{ display:flex; flex-direction:column; gap:1.3rem; }
+.funnel-row{ display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:1rem; }
+.funnel-label{ font-size:.8rem; font-weight:600; }
+.funnel-bars{ display:flex; flex-direction:column; gap:.32rem; }
+.funnel-bar-track{ height:9px; border-radius:5px; background:#1D222E; overflow:hidden; position:relative; }
+.funnel-bar-fill{ height:100%; border-radius:5px; }
+.funnel-bar-fill.you{ background:var(--merge-lime); }
+.funnel-bar-fill.typical{ background:#3C4356; }
+.funnel-pct{ font-family:var(--font-mono); font-size:.7rem; text-align:right; color:var(--c-muted); }
+.funnel-you-tag{ font-family:var(--font-mono); font-size:.6rem; letter-spacing:.03em; margin-left:.5rem; color:var(--merge-lime); opacity:.9; }
+.funnel-you-tag.pending{ color:var(--c-muted); }
+.funnel-drop{ font-family:var(--font-mono); font-size:.6rem; color:var(--incident-coral); padding-left:150px; margin-top:-.8rem; opacity:.85; }
+.funnel-legend{ display:flex; gap:1.3rem; margin-top:.4rem; font-family:var(--font-mono); font-size:.62rem; color:var(--c-muted); }
+.legend-dot{ width:8px; height:8px; border-radius:2px; display:inline-block; margin-right:.4rem; vertical-align:middle; }
+
+.f4-side{ display:flex; flex-direction:column; gap:1.4rem; }
+.stat-tile{ background:var(--c-panel); border:1px solid #232838; border-radius:12px; padding:1rem 1.2rem; }
+.stat-label{ font-family:var(--font-mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--c-muted); margin-bottom:.4rem; }
+.stat-value{ font-weight:800; font-size:1.4rem; letter-spacing:-.01em; }
+
+.insight{ background:var(--c-panel); border-left:2px solid var(--question-lilac); border-radius:0 10px 10px 0; padding:.85rem 1.05rem; font-size:.84rem; line-height:1.5; }
+
+.f4-trust{ margin-top:2.8rem; padding-top:1.4rem; border-top:1px dashed #232838; font-family:var(--font-mono); font-size:.7rem; color:var(--c-muted); font-style:italic; max-width:60ch; }
+
+/* ============================================================
+   RESPONSIVE — narrow viewports, every state still fills the
+   viewport (mandate 1). Triptych becomes a stacked band card so
+   all three MVP/BETA/GA states stay visible (mandate 6).
+   ============================================================ */
+@media (max-width:760px){
+  .welcome-mark{ top:4vh; left:6vw; }
+  .stage-frame{ flex-direction:column; justify-content:center; padding:0 7vw 4vh; gap:1.6rem; }
+  .state-welcome .stage-frame{ flex-direction:column; justify-content:center; align-items:stretch; }
+  .welcome-guide-wrap{ width:100%; height:42vh; align-self:center; order:-1; }
+  .welcome-copy{ max-width:none; }
+  .welcome-headline{ font-size:2.1rem; }
+
+  .state-persona .stage-frame{ flex-direction:column; justify-content:center; padding:6vh 7vw 4vh; }
+  /* MANDATE 2, mobile — same crop-to-fill treatment as desktop, re-tuned
+     for the 390px frame: a taller box gives the bottom-anchored zoom room
+     to clear the figure's head without clipping it. */
+  .persona-guide-wrap{ width:28vw; height:min(44vh, 375px); align-self:flex-end; margin:0 0 1rem; overflow:hidden; }
+  .persona-grid{ grid-template-columns:1fr 1fr; max-width:none; }
+
+  .punchline-guide-wrap{ position:relative; right:auto; bottom:auto; width:28vw; height:min(44vh, 375px); overflow:hidden; }
+  .persona-guide-wrap .guide-render,
+  .punchline-guide-wrap .guide-render{ transform:scale(2.9); transform-origin:center bottom; }
+
+  .hp-nav{ display:none; }
+  .hp-main{ padding:2vh 6vw 0; overflow:visible; min-width:0; }
+  .hero-card{
+    flex-direction:column;
+    flex:0 0 auto;
+    height:auto;
+    overflow:hidden;
+    min-width:0;
+  }
+  .hero-copy,.hero-ctas,.hero-guide-wrap{ min-width:0; }
+  /* MANDATE 6, mobile — MVP/BETA stay as compact stacked precursor
+     strips at the top (so the release history is still visible, never
+     GA-only), but GA itself is no longer a third 56px strip: it becomes
+     the main hero body. GA is pulled out of the strip stack and made an
+     absolutely-positioned fill behind the headline/intro/guide/CTAs —
+     those in-flow siblings determine the card's height, GA's fill just
+     matches it, so headline → intro → guide → both CTAs all read as one
+     continuous GA-colored surface instead of strips-then-white-slab. */
+  .hero-band.mvp,.hero-band.beta{
+    position:relative; width:100%; height:56px; flex:0 0 auto;
+  }
+  .hero-band.mvp{ order:-4; }
+  .hero-band.beta{ order:-3; }
+  .hero-band.ga{
+    position:absolute; z-index:1;
+    top:112px; left:0; right:0; bottom:0;
+    width:auto; height:auto;
+  }
+  .hero-seam,.hero-baseline-grid{ display:none; }
+  /* band-tags are absolute siblings of the bands (not nested inside
+     them), so on mobile each needs its own top offset matching its
+     band's stacked position — 56px per band — rather than the shared
+     top:1.2rem/left:% trick that only works in the desktop row layout. */
+  .band-tag.mvp{ top:1.1rem; left:1rem; }
+  .band-tag.beta{ top:calc(56px + 1.1rem); left:1rem; }
+  /* GA's tag moves to the top-right (matching its desktop position)
+     instead of stacking under MVP/BETA's left column — it now sits over
+     the big GA card, not a same-height strip, so lining it up under the
+     others would collide with the headline that starts at the same
+     left edge. */
+  .band-tag.ga{ top:calc(112px + 1rem); left:auto; right:1rem; }
+  .hero-copy{
+    position:relative; order:-1; z-index:4;
+    max-width:none; padding:2.6rem 1.3rem .6rem;
+  }
+  .hero-headline{ font-size:1.5rem; }
+  .hero-ctas{
+    position:relative; order:1; z-index:4;
+    left:auto; bottom:auto;
+    flex-direction:column;
+    padding:.4rem 1.3rem 1.4rem;
+  }
+  .hero-guide-wrap{
+    position:relative; order:0; z-index:4;
+    right:auto; bottom:auto;
+    width:42%; aspect-ratio:320/300;
+    margin:.4rem 1.3rem 0 auto;
+  }
+  .hero-status-chip{ top:-1.1rem; left:auto; right:.4rem; white-space:nowrap; }
+
+  .flags-row{ flex-direction:column; align-items:stretch; }
+  .board-card{ padding:.8rem 1.1rem 0; }
+
+  /* MANDATE 1 — COCKPIT, true single-column reflow. The funnel-row's
+     fixed 150px label + 60px pct columns were the actual overflow
+     source: CSS grid tracks don't shrink below their content's
+     min-content by default, so those two fixed columns forced the row
+     wider than the 390px panel — invisibly, because the panel's own
+     overflow-x:hidden clips it instead of producing a scrollbar. Funnel
+     first, then metrics + insights (f4-side, already in that order in
+     the DOM), fully stacked, zero fixed-width columns left standing. */
+  .f4-topbar{ padding:1.1rem 6vw; }
+  .f4-body{ padding:2.6vh 6vw 6vh; }
+  .f4-grid{ grid-template-columns:1fr; gap:2.2rem; }
+  .funnel-row{ grid-template-columns:1fr; gap:.35rem; }
+  .funnel-pct{ text-align:left; }
+  .funnel-drop{ padding-left:0; }
+  .funnel-legend{ flex-wrap:wrap; row-gap:.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     REVIEWER CHROME — tabs + theme toggle. Hidden entirely when
+     ?capture=1 or #capture is present (mandate 1).
+     ============================================================ -->
+<button id="theme-toggle" class="reviewer-chrome" data-reviewer type="button" aria-pressed="false">Dark mode</button>
+
+<nav class="state-tabs reviewer-chrome" data-reviewer aria-label="Storyboard state switcher">
+  <button class="state-tab" data-goto="welcome" type="button">Welcome</button>
+  <button class="state-tab" data-goto="persona" type="button">Persona</button>
+  <button class="state-tab" data-goto="punchline" type="button">Punchline</button>
+  <button class="state-tab" data-goto="homepage" type="button">Homepage</button>
+  <button class="state-tab" data-goto="cockpit" type="button">Cockpit</button>
+</nav>
+
+<!-- ============================================================
+     GUIDE ART — real Cycles renders of public/models/guide/guide.glb
+     (docs/storyboard-recovery/assets/guide-alpha-*.png). Three poses:
+     wave (Welcome), full standing (Persona + Punchline, small), upper
+     waist-up crop (Homepage GA integrated bust). See storyboard.md's
+     "Guide asset" note for how the earlier empty renders got fixed.
+     ============================================================ -->
+
+<!-- ============================================================
+     STATE 1 — WELCOME (mandate 2)
+     ============================================================ -->
+<section class="state-panel stage state-welcome" id="state-welcome" data-state="welcome">
+  <div class="welcome-mark">garvit<b>.app</b></div>
+  <div class="stage-frame">
+    <div class="welcome-copy">
+      <h1 class="welcome-headline">Welcome to garvit.app.</h1>
+      <p class="welcome-sub">Garvit asked me to keep this brief.</p>
+      <button class="welcome-cta" type="button" data-goto="persona">Continue →</button>
+    </div>
+    <div class="welcome-guide-wrap">
+      <img class="guide-render" src="assets/guide-alpha-wave.png" alt="Garvit's 3D guide character, an astronaut-style figure in a light suit with blue trim, waving hello">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 2 — PERSONA (mandate 3, same .stage as Welcome)
+     ============================================================ -->
+<section class="state-panel stage state-persona" id="state-persona" data-state="persona">
+  <div class="stage-frame">
+    <div class="persona-copy">
+      <h2 class="persona-headline">Quick question. What brings you here?</h2>
+      <p class="persona-disclosure mono">your pick is logged via PostHog. nothing else is.</p>
+      <div class="persona-grid">
+        <button class="persona-chip" type="button" data-goto="punchline">Founder</button>
+        <button class="persona-chip" type="button" data-goto="punchline">Recruiter</button>
+        <button class="persona-chip" type="button" data-goto="punchline">Product lead</button>
+        <button class="persona-chip" type="button" data-goto="punchline">Just browsing</button>
+      </div>
+    </div>
+    <div class="persona-guide-wrap">
+      <img class="guide-render" src="assets/guide-alpha-full.png" alt="Garvit's 3D guide character standing, off to the side while the visitor picks a persona">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 3 — PUNCHLINE (mandate 4, same .stage)
+     ============================================================ -->
+<section class="state-panel stage state-punchline" id="state-punchline" data-state="punchline">
+  <div class="stage-frame">
+    <div class="punchline-pill mono">selected → <b>Founder</b></div>
+    <p class="punchline-line">Noted. This changes nothing. It never does.</p>
+    <div class="punchline-guide-wrap">
+      <img class="guide-render" src="assets/guide-alpha-full.png" alt="Garvit's 3D guide character standing, reacting to the visitor's pick">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 4 — HOMEPAGE (mandates 5, 6, 7, 8)
+     ============================================================ -->
+<section class="state-panel state-homepage" id="state-homepage" data-state="homepage">
+  <div class="hp-chrome">
+    <div class="hp-logo">garvit</div>
+    <nav class="hp-nav">
+      <a href="#" class="current">Work</a>
+      <a href="#">Board</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <a class="hp-resume-ghost" href="#">Résumé ↓</a>
+  </div>
+
+  <div class="hp-main">
+    <div class="hero-card">
+      <div class="hero-band mvp"></div>
+      <div class="hero-band beta"></div>
+      <div class="hero-band ga"></div>
+      <div class="hero-baseline-grid"></div>
+      <div class="hero-seam s1"></div>
+      <div class="hero-seam s2"></div>
+      <span class="band-tag mvp">MVP</span>
+      <span class="band-tag beta">BETA</span>
+      <span class="band-tag ga">GA</span>
+
+      <div class="hero-copy">
+        <h1 class="hero-headline">I turn fuzzy product ideas into things people can use</h1>
+        <p class="hero-intro">I'm Garvit. I write PRDs on GitHub, deploy prototypes on weekends, and build dashboards before asking engineering.</p>
+      </div>
+
+      <div class="hero-ctas">
+        <button class="btn btn-lime" type="button">Download resume</button>
+        <button class="btn btn-ink" type="button">Contact Garvit</button>
+      </div>
+
+      <div class="hero-guide-wrap">
+        <button class="hero-status-chip" type="button" data-goto="cockpit" aria-label="Session tracking, 4 of 5 stages reached — open the session cockpit">
+          <span class="hero-status-dot"></span>TRACKING · 4/5 <span class="hero-status-arrow">→</span> OPEN
+        </button>
+        <span class="reviewer-note" data-reviewer style="top:-3.4rem; left:-1.4rem;">↳ clickable — opens cockpit</span>
+        <img class="guide-render" src="assets/guide-alpha-upper.png" alt="Garvit's 3D guide character, waist-up, integrated into the GA release band">
+      </div>
+    </div>
+
+    <div class="flags-block">
+      <p class="flags-head">FEATURE FLAGS · 3/4 live</p>
+      <div class="flags-row">
+        <span class="flag-chip mono" id="flag-dark-mode"><span class="flag-dot" id="flag-dark-mode-dot"></span><span class="flag-key">dark_mode</span><span class="flag-purpose">THEME</span><span id="flag-dark-mode-state">off</span></span>
+        <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">confetti_on_scroll</span><span class="flag-purpose">SHIP SIGNAL</span>on</span>
+        <span class="flag-chip mono"><span class="flag-dot on"></span><span class="flag-key">candid_mode</span><span class="flag-purpose">FIELD NOTES</span>on</span>
+        <span class="flag-chip mono locked"><span class="flag-dot"></span><span class="flag-key">comic_sans</span><span class="flag-purpose">PROD LOCKED</span>disabled</span>
+      </div>
+    </div>
+
+    <div class="board-preview">
+      <h3 class="board-preview-head">Things I've built</h3>
+      <div class="board-card">
+        <p class="board-card-kicker mono">GAR-101 · PRODUCT</p>
+        <p class="board-card-title">Stay Portal</p>
+        <p class="board-card-desc">Five apartments, flexible bookings, and no more spreadsheet collisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATE 5 — COCKPIT (mandate 9, unchanged bespoke design)
+     ============================================================ -->
+<section class="state-panel state-cockpit" id="state-cockpit" data-state="cockpit">
+  <div class="f4-topbar">
+    <div class="f4-status-chip"><span class="f4-status-dot"></span>tracking · 4/5</div>
+    <button class="f4-close" type="button" aria-label="Close session cockpit" data-goto="homepage">✕</button>
+  </div>
+
+  <div class="f4-body">
+    <h2 class="f4-heading">Your session, instrumented</h2>
+    <p class="f4-sub">Every bar below is computed from what you actually did on this page — no page reload, no server round-trip.</p>
+
+    <div class="f4-grid">
+      <div class="funnel">
+        <div class="funnel-row">
+          <div class="funnel-label">Arrived <span class="funnel-you-tag mono">reached</span></div>
+          <div class="funnel-bars">
+            <div class="funnel-bar-track"><div class="funnel-bar-fill you" style="width:100%"></div></div>
+            <div class="funnel-bar-track"><div class="funnel-bar-fill typical" style="width:100%"></div></div>
+          </div>
+          <div class="funnel-pct mono">100%</div>
+        </div>
+
+        <div class="funnel-row">
+          <div class="funnel-label">Explored work <span class="funnel-you-tag mono">reached</span></div>
+          <div class="funnel-bars">
+            <div class="funnel-bar-track"><div class="funnel-bar-fill you" style="width:100%"></div></div>
+            <div class="funnel-bar-track"><div class="funnel-bar-fill typical" style="width:71%"></div></div>
+          </div>
+          <div class="funnel-pct mono">71%</div>
+        </div>
+        <div class="funnel-drop mono">↓ typical drop-off here: 29%</div>
+
+        <div class="funnel-row">
+          <div class="funnel-label">Opened a PRD <span class="funnel-you-tag mono">reached</span></div>
+          <div class="funnel-bars">
+            <div class="funnel-bar-track"><div class="funnel-bar-fill you" style="width:100%"></div></div>
+            <div class="funnel-bar-track"><div class="funnel-bar-fill typical" style="width:34%"></div></div>
+          </div>
+          <div class="funnel-pct mono">34%</div>
+        </div>
+        <div class="funnel-drop mono">↓ typical drop-off here: 37% — you're already rare here</div>
+
+        <div class="funnel-row">
+          <div class="funnel-label">Opened a prototype <span class="funnel-you-tag mono">reached</span></div>
+          <div class="funnel-bars">
+            <div class="funnel-bar-track"><div class="funnel-bar-fill you" style="width:100%"></div></div>
+            <div class="funnel-bar-track"><div class="funnel-bar-fill typical" style="width:19%"></div></div>
+          </div>
+          <div class="funnel-pct mono">19%</div>
+        </div>
+        <div class="funnel-drop mono">↓ typical drop-off here: 15%</div>
+
+        <div class="funnel-row">
+          <div class="funnel-label">Reached contact <span class="funnel-you-tag pending mono">not yet</span></div>
+          <div class="funnel-bars">
+            <div class="funnel-bar-track"><div class="funnel-bar-fill you" style="width:0%"></div></div>
+            <div class="funnel-bar-track"><div class="funnel-bar-fill typical" style="width:6%"></div></div>
+          </div>
+          <div class="funnel-pct mono">6%</div>
+        </div>
+
+        <div class="funnel-legend">
+          <span><span class="legend-dot" style="background:var(--merge-lime);"></span>you, this session (reached / not yet)</span>
+          <span><span class="legend-dot" style="background:#3C4356;"></span>typical visitor benchmark, %</span>
+        </div>
+      </div>
+
+      <div class="f4-side">
+        <div class="stat-tile">
+          <div class="stat-label mono">time on site</div>
+          <div class="stat-value">4m 12s</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label mono">interactions</div>
+          <div class="stat-value">27</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label mono">furthest stage</div>
+          <div class="stat-value">Opened a prototype</div>
+        </div>
+        <div class="insight">You spent longer on the PRD than the prototype. Rare — most people do the opposite.</div>
+        <div class="insight">You're one stage from contact. Most visitors stop at "explored work."</div>
+      </div>
+    </div>
+
+    <p class="f4-trust">this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme-toggle');
+  var flagDot = document.getElementById('flag-dark-mode-dot');
+  var flagState = document.getElementById('flag-dark-mode-state');
+
+  function applyTheme(mode){
+    root.setAttribute('data-theme', mode);
+    themeBtn.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+    themeBtn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+    if(flagDot){ flagDot.classList.toggle('on', mode === 'dark'); }
+    if(flagState){ flagState.textContent = mode === 'dark' ? 'on' : 'off'; }
+  }
+  var themeParam = new URLSearchParams(location.search).get('theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(themeParam === 'dark' || themeParam === 'light' ? themeParam : (prefersDark ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', function(){
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  var KNOWN_STATES = ['welcome','persona','punchline','homepage','cockpit'];
+  var panels = {};
+  KNOWN_STATES.forEach(function(s){ panels[s] = document.getElementById('state-' + s); });
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.state-tab'));
+
+  function currentHashTokens(){
+    return location.hash.replace('#','').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+  function isCaptureMode(){
+    var params = new URLSearchParams(location.search);
+    if(params.get('capture') === '1'){ return true; }
+    return currentHashTokens().indexOf('capture') > -1;
+  }
+  function stateFromHash(){
+    var tokens = currentHashTokens();
+    for(var i=0;i<tokens.length;i++){
+      if(KNOWN_STATES.indexOf(tokens[i]) > -1){ return tokens[i]; }
+    }
+    return 'welcome';
+  }
+  function render(){
+    var state = stateFromHash();
+    KNOWN_STATES.forEach(function(s){
+      if(panels[s]){ panels[s].classList.toggle('active', s === state); }
+    });
+    tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-goto') === state); });
+    document.body.classList.toggle('capture-mode', isCaptureMode());
+    document.body.setAttribute('data-active-state', state);
+  }
+  function goto(state){
+    var tokens = currentHashTokens().filter(function(t){ return KNOWN_STATES.indexOf(t) === -1; });
+    tokens.unshift(state);
+    location.hash = tokens.join(',');
+    render();
+  }
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-goto]');
+    if(el){ goto(el.getAttribute('data-goto')); }
+  });
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+</body>
+</html>
