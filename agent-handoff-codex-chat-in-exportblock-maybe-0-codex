@@ -1,8 +1,11 @@
 # Agent handoff — Codex chat launched from ExportBlock, work performed in Garvit-Portfolio-July
 
-**Prepared:** 2026-09-06 (Asia/Kolkata)  
-**Intended reader:** a fresh coding/design agent taking over Garvit Sukhija's portfolio  
-**Canonical project directory:** `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July`  
+**Prepared:** 2026-09-06 (Asia/Kolkata)
+
+**Intended reader:** a fresh coding/design agent taking over Garvit Sukhija's portfolio
+
+**Canonical project directory:** `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July`
+
 **Do not mistake for the project:** `/Users/garvits/Downloads/ExportBlock-82649866-1469-4d7b-9b00-ccea531172d5-Part-1`
 
 This is a decision-grade reconstruction of the long Codex/Claude/Garvit working chat, tied back to the repository. It is not a verbatim transcript. It intentionally records the versions, client reactions, supersessions, implementation gates, commit IDs, branches, current risks, and the correct next move so a new agent does not repeat the same cycles.
@@ -113,7 +116,8 @@ The repeated failure was over-indexing on the “quiet” half while under-apply
 
 ### Version 0 — reference scouting
 
-**Artifacts:** `design-refs-codex.md`, `design-refs-claude.md`, `design-directions-curated.md` (later moved under `docs/process/`).  
+**Artifacts:** `design-refs-codex.md`, `design-refs-claude.md`, `design-directions-curated.md` (later moved under `docs/process/`).
+
 **State:** research input only.
 
 The crucial lesson, restated by Garvit later, was that in the sites he loved **the interaction is the website**. This was repeatedly under-applied.
@@ -135,7 +139,8 @@ The crucial lesson, restated by Garvit later, was that in the sites he loved **t
 - MVP Budget: “no one is coming to judge how they think to my website”
 - CTAs were too small.
 
-**What survives:** portfolio-not-resume rule, licensed/OFL fonts, candid register, accessibility discipline, anti-template guardrails.  
+**What survives:** portfolio-not-resume rule, licensed/OFL fonts, candid register, accessibility discipline, anti-template guardrails.
+
 **What died:** MVP Budget and the idea that one small toy attached to a restrained brochure was sufficient.
 
 ### Version 2 — interaction-forward figure + OS expectation
@@ -240,7 +245,8 @@ Board behavior that was specifically hands-on verified and should be preserved:
 
 ### Version 5 — elevation round
 
-**Artifacts/plan:** `docs/process/ELEVATION-BRIEF.md`, `docs/superpowers/plans/2026-08-16-elevation.md`, `docs/qa/elevation-audit.md`.  
+**Artifacts/plan:** `docs/process/ELEVATION-BRIEF.md`, `docs/superpowers/plans/2026-08-16-elevation.md`, `docs/qa/elevation-audit.md`.
+
 **Main commit:** `e47b999`.
 
 Garvit rejected the first production RC's visible quality:
@@ -280,7 +286,8 @@ The first sourced model was a realistic human/game-NPC. Garvit rejected it as th
 
 ### Version 5b — PostHog and repository restructure checkpoint
 
-**Commit/tag:** `f8b91fe`, tagged `checkpoint/pre-sougen-rebuild-2026-08-17`.  
+**Commit/tag:** `f8b91fe`, tagged `checkpoint/pre-sougen-rebuild-2026-08-17`.
+
 **Commit subject:** `feat: PostHog analytics integration + repo restructure`.
 
 This is the checkpoint Garvit wanted to show other people/agents. It contains the approved elevated robot/session experience before the Sougen-inspired immersive rebuild.
