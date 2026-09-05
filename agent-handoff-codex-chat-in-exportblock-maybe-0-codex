@@ -12,7 +12,7 @@ This is a decision-grade reconstruction of the long Codex/Claude/Garvit working 
 ## 0. Read this first — current truth in one screen
 
 1. The active portfolio repository has always been `~/Documents/Side-Projects/Garvit-Portfolio-July`. The Codex application was launched with an ExportBlock directory as its ambient/default workspace, but commands for this project explicitly used the Garvit-Portfolio-July path. Nothing was migrated from ExportBlock into the portfolio repository during this chat.
-2. `main` is currently at `7ffc57b` and tracks `origin/main` at `https://github.com/thisisgarvit/personal-website.git`.
+2. The last non-handoff repository commit is `7ffc57b`; `origin/main` was at that commit when this document was prepared. This handoff itself is committed after that baseline, so use `git log -1` for the exact current documentation tip. Remote: `https://github.com/thisisgarvit/personal-website.git`.
 3. The last implemented production site is the **immersive product-world RC**, mechanically strong but **rejected by Garvit at final play-through for visual/product-direction reasons**. Do not mistake Gate F's green test suite for client approval.
 4. The replacement direction is a **Neo Futurist visual system**: warm near-white outer canvas, thick rounded black chassis, asymmetric panes, tactile graphite/monochrome materiality, tiny technical labels, generous negative space, and sparse lime/coral semantic accents. This came from Garvit's supplied reference image. It is not a request to clone that image.
 5. The replacement flow is a single fullscreen onboarding surface with internal states: **Welcome → Persona → Punchline → in-place homepage reveal**. It must not become multiple pages, routes, or scrolling screens.
@@ -628,8 +628,9 @@ Do not use the older `execution-rfc-outline.md` estimate as authority; the track
 
 ### Current branch and remote
 
-- `main` → `7ffc57b` (`add env + superpowers notes`).
-- `origin/main` → `7ffc57b`.
+- Last non-handoff commit on `main`: `7ffc57b` (`add env + superpowers notes`).
+- `origin/main` was at `7ffc57b` when this handoff was prepared; local `main` contains the later handoff documentation commit(s).
+- Run `git log -1 --oneline --decorate` rather than treating this prose as a self-referential Git tip.
 - Remote: `https://github.com/thisisgarvit/personal-website.git`.
 - Remote repository is public.
 - Repo-local identity expected: `thisisgarvit <garvit.sukh@gmail.com>`, not work identity `GarvitLT`.
