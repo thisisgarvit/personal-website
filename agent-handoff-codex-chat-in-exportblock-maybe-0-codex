@@ -1,0 +1,934 @@
+# Agent handoff — Codex chat launched from ExportBlock, work performed in Garvit-Portfolio-July
+
+**Prepared:** 2026-09-06 (Asia/Kolkata)  
+**Intended reader:** a fresh coding/design agent taking over Garvit Sukhija's portfolio  
+**Canonical project directory:** `/Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July`  
+**Do not mistake for the project:** `/Users/garvits/Downloads/ExportBlock-82649866-1469-4d7b-9b00-ccea531172d5-Part-1`
+
+This is a decision-grade reconstruction of the long Codex/Claude/Garvit working chat, tied back to the repository. It is not a verbatim transcript. It intentionally records the versions, client reactions, supersessions, implementation gates, commit IDs, branches, current risks, and the correct next move so a new agent does not repeat the same cycles.
+
+---
+
+## 0. Read this first — current truth in one screen
+
+1. The active portfolio repository has always been `~/Documents/Side-Projects/Garvit-Portfolio-July`. The Codex application was launched with an ExportBlock directory as its ambient/default workspace, but commands for this project explicitly used the Garvit-Portfolio-July path. Nothing was migrated from ExportBlock into the portfolio repository during this chat.
+2. `main` is currently at `7ffc57b` and tracks `origin/main` at `https://github.com/thisisgarvit/personal-website.git`.
+3. The last implemented production site is the **immersive product-world RC**, mechanically strong but **rejected by Garvit at final play-through for visual/product-direction reasons**. Do not mistake Gate F's green test suite for client approval.
+4. The replacement direction is a **Neo Futurist visual system**: warm near-white outer canvas, thick rounded black chassis, asymmetric panes, tactile graphite/monochrome materiality, tiny technical labels, generous negative space, and sparse lime/coral semantic accents. This came from Garvit's supplied reference image. It is not a request to clone that image.
+5. The replacement flow is a single fullscreen onboarding surface with internal states: **Welcome → Persona → Punchline → in-place homepage reveal**. It must not become multiple pages, routes, or scrolling screens.
+6. The Neo Futurist design mock exists and was judged PASS by Codex after a final homepage-guide correction, but **Garvit never typed the requested final `LOCK` in this chat**. Therefore `DD-010` is still provisional on disk and production migration remains blocked by `DD-014` until Garvit explicitly approves the pixels.
+7. The design package is currently **untracked**: `docs/design-language/neo-futurist-mock.html`, notes, verdict, captures, and related storyboard files. The parallel implementation RFC itself is tracked at commit `bbc12e9`.
+8. The next agent should first show Garvit the mock at `http://localhost:8495/docs/design-language/neo-futurist-mock.html` (restart the repo-root static server if necessary), ask for a binary pixel lock, then update the decision register and execute `docs/design-language/execution-rfc.md` with parallel agents.
+9. Critical repository hygiene: commit `7ffc57b` added a tracked `.env` containing `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and `NEXT_PUBLIC_POSTHOG_HOST`, and the public remote is at the same commit. These are client-exposed PostHog values rather than a server secret, but tracking `.env` contradicts the project's earlier “keys via env vars, never committed” rule and permits ingestion abuse. Before further public promotion, untrack `.env`, ensure `.gitignore` covers it, assess/rotate the PostHog project token, and keep only `.env.example`. Do not print values in logs or handoffs.
+10. The tracked RFC currently names `docs/design-language/neo-futurist-direction.md` as a post-lock authority, but that file does not yet exist. At pixel lock, either promote the approved content from `neo-futurist-notes.md` into that path or amend the RFC to name the committed approved notes. Do not let agents implement against a missing authority file.
+
+---
+
+## 1. Authority and collaboration protocol
+
+Garvit explicitly corrected the collaboration model after Claude reviews began to dominate the conversation:
+
+- **Garvit + Codex make product and design decisions.**
+- **Claude is the tech lead/execution machine and an advisory second brain.** Claude's reviews are evidence and recommendations, not truth and not client approval.
+- Garvit said he would talk to Codex, not directly to Claude. Codex must interpret Claude's output and take unclear product/design decisions back to Garvit.
+- Never treat text sitting unsubmitted in Claude's tmux prompt as Garvit approval. This caused confusion once; stale draft text was cleared and the authority protocol was recorded.
+- Codex owns art direction, composition, spec, product judgment, and gate scoring. Claude should own mechanical implementation, tests, measurement, repetitive migrations, screenshots, and evidence.
+- Model-tier preference from Garvit:
+  - Haiku for inventory, repetitive QA, screenshots, test/docs grunt work.
+  - Sonnet for implementation and integration.
+  - Opus 5 sparingly for architecture/design contradiction and taste review.
+  - Fable 5 for orchestration/review, not for doing every task itself.
+- Garvit asked for aggressive delegation and parallel work after the design lock. The accepted execution RFC reflects that.
+- Before every lane, read:
+  1. `docs/process/garvit-idea-ledger.md`
+  2. `docs/process/direction-decision-register.md`
+  3. this handoff
+- Every implementation lane must name the affected `GI-*` and `DD-*` entries and end with one of: `aligned`, `possible drift`, or `decision required`.
+
+The permanent idea/decision records were created at `f0a693c` specifically because Garvit observed that his inputs were being buried by context compaction.
+
+---
+
+## 2. Product goal and audience
+
+This is a **product portfolio**, not a resume website.
+
+Ten-second audience test:
+
+- A startup founder trusts Garvit's product sense and wants to screenshare the site to a cofounder.
+- HR/recruiters appreciate the aesthetics and can immediately find the resume/contact paths.
+- A product lead trusts the decisions, exclusions, evidence discipline, and candor.
+
+Standing content/voice rules:
+
+- Work leads; chronology does not.
+- Resume exists as a large explicit **Download resume** CTA.
+- Case studies should show situation → bet → artifact → decisions/exclusions → evidence → next change.
+- Candid microcopy and mechanic-driven humor are welcome; jokey prose everywhere is not.
+- Location is **Delhi / IST**, never Bengaluru.
+- Approved hero sentence: **“I turn fuzzy product ideas into things people can use.”**
+- Approved public email: `garvit.sukh@gmail.com`.
+- Approved phone: `+91 7508883655`, with the implemented privacy treatment: reveal control is client-rendered only; no-JS users get email and no dead phone control.
+- Career roadmap is deferred. If built later, use a release/Jira framing, not a chronological resume spine. Factual internship entries:
+  - Mirogian — Business Development Intern, April 2020–September 2020.
+  - Languify — Growth Product Intern, June 2021–December 2021.
+  - Do not invent outcomes or metrics.
+
+Primary work/content already present:
+
+- Stay Portal — shipped booking manager for five flexibly rented apartments.
+- AI Browser / Maxie — 0→1 product concept.
+- Agentic Calendar — product concept and prototype/system thinking.
+- Dynamic Island — product teardown/note.
+
+---
+
+## 3. Reference-scouting and taste interpretation
+
+The first task was reference scouting: 8–12 underrated personal sites from Reddit, Behance, Figma Community, X threads, godly.website, minimal.gallery, and dark.design, avoiding famous defaults such as Brittany Chiang, Bruno Simon, and typical Awwwards winners. Outputs are preserved in:
+
+- `docs/process/design-refs-codex.md`
+- `docs/process/design-refs-claude.md`
+- `docs/process/design-directions-curated.md`
+
+Garvit's most useful taste votes:
+
+**Loved:** mc1ane.com, sj.land, gokulkrishnan.com, alejandroverdeja.com, marco.fyi, gkoberger.com, chusmargallo.space, getcoleman.com, samuelfaith.com.
+
+What those votes actually meant:
+
+- He likes a quiet/polished base, but not austerity.
+- The memorable interaction should be a committed playable object.
+- The interaction should prove something about the person or site; garnish is insufficient.
+- Humor should arise from mechanics or candid microcopy.
+- He responds to rich, interactive first-glance composition.
+
+**Explicitly not the target:** borisverks.com, justinfarrugia.com, molly.info and dark/resume-dense utility aesthetics; voice-heavy zines; doodle/webcam art portfolios; generic Awwwards spectacle.
+
+The repeated failure was over-indexing on the “quiet” half while under-applying the “committed play” half.
+
+---
+
+## 4. Complete version history and client steers
+
+### Version 0 — reference scouting
+
+**Artifacts:** `design-refs-codex.md`, `design-refs-claude.md`, `design-directions-curated.md` (later moved under `docs/process/`).  
+**State:** research input only.
+
+The crucial lesson, restated by Garvit later, was that in the sites he loved **the interaction is the website**. This was repeatedly under-applied.
+
+### Version 1 — “Quiet Operator, One Killer Toy”
+
+**Artifacts:**
+
+- `docs/process/DESIGN-BRIEF.md`
+- `docs/process/design-concept.md`
+- `docs/process/style-tile.html`
+
+**Direction:** calm editorial portfolio, cool mineral palette, Schibsted Grotesk + Fragment Mono, portfolio-led IA, one contained PM-thinking toy. Three toy concepts were specified; MVP Budget was recommended.
+
+**Garvit verdict: REJECTED.** Important verbatim reactions:
+
+- “not easy to consume at first glance”
+- “isn't it a very simple website? what is the use of such research if this was the outcome”
+- MVP Budget: “no one is coming to judge how they think to my website”
+- CTAs were too small.
+
+**What survives:** portfolio-not-resume rule, licensed/OFL fonts, candid register, accessibility discipline, anti-template guardrails.  
+**What died:** MVP Budget and the idea that one small toy attached to a restrained brochure was sufficient.
+
+### Version 2 — interaction-forward figure + OS expectation
+
+**Artifact:** `docs/process/DESIGN-BRIEF-V2.md`.
+
+Initial interpretation combined:
+
+- a Three.js cursor-tracking figure, initially paired with a funny Amplitude-like event log;
+- a desktop-OS metaphor with draggable windows.
+
+Garvit corrected this: the OS reference described the **energy/bar**, not a command to build a whole OS shell. The 3D figure remained wanted, but **figure only—no event log**.
+
+### Version 2a — two comparison mocks
+
+**Artifacts:**
+
+- `docs/process/mock-a-os-section.html`
+- `docs/process/mock-b-no-os.html`
+
+Mock A was a normal modern scrollable site with one mini-desktop section. Mock B was a scrollable site without windows and with micro-interactions.
+
+**Garvit verdict: both dead/rejected.** “This is a static website and not much creative—what did you learn from the references?”
+
+Lesson: scrollable brochure + decorative interactions still missed the target.
+
+### Version 3 — “This site is my product” vertical slice
+
+**Artifacts:**
+
+- `docs/process/CONCEPT-SPEC-product-site.md`
+- `docs/process/slice-product.html`
+- `docs/process/slice-notes.md`
+
+**Chosen premise:** the portfolio behaves like a product Garvit is visibly PM-ing: `garvit.app`, version chrome, release notes, A/B joke, real feature flags, draggable sprint-board tickets, candid microcopy, and a mascot reacting to visitor actions.
+
+Key vertical-slice behaviors:
+
+- `garvit.app v2.4.1` chrome and release popover.
+- Dismissible “variant B” strip.
+- Working flags: `dark_mode`, `confetti_on_scroll`, disabled `comic_sans`, and `candid_mode`/FIELD NOTES.
+- Large Download resume and Contact CTAs.
+- Sprint board as the portfolio index; tickets open case previews and can move with pointer or keyboard.
+- Polished Canvas placeholder mascot; no event log.
+
+**Garvit verdict:** approved as the basis for production, with a request for a cleaner/more expanded density gradient below the dense product chrome.
+
+### Version 4 — production plan, DESIGN.md, PRD, and production shell
+
+The workflow was intentionally plan → Claude review → DESIGN.md → review → PRD → review → tiered build.
+
+Main planning artifacts:
+
+- `docs/process/BUILD-PLAN-BRIEF.md`
+- `docs/process/production-plan-v1.md`
+- `docs/process/plan-review-claude-v1.md`
+- `docs/process/production-plan-v2-delta.md`
+- `docs/process/plan-signoff.md`
+- `DESIGN.md`
+- `docs/process/design-review-claude.md`
+- `docs/process/open-questions-answers.md`
+- `docs/process/plan-amendment-work-split.md`
+- `PRD.md`
+- `docs/process/prd-review-claude.md`
+
+Important planning amendments:
+
+- Procedural R3F figure selected initially instead of GLB.
+- OG card elevated to a judged taste surface.
+- Hero tracking optically validated; final DESIGN.md values: `-.055em` large, `-.05em` medium, `-.045em` small. `-.065em` was rejected because of the `rn` collision.
+- Keyboard board moves are immediate with focus travel, a 160ms non-spatial destination acknowledgement, and exact live announcement.
+- Named anti-AI-slop requirement added.
+- Apple design skill became the primary interaction/material lens.
+- Fonts locked to licensed Archivo + IBM Plex Mono; SF Pro and patched Nerd Fonts banned.
+- PRD phone contradiction resolved: client-only reveal; no-JS omits the phone UI.
+- Undefined `21 SP*` board asterisk had to be defined or removed.
+
+### Version 4a — production tasks 3–10
+
+Production foundation and main feature work landed across commits `ae7e5e3` through `890c638`:
+
+- Next.js App Router foundation, typed data, route shells, local OFL fonts.
+- Token/shell implementation with task-4 screenshots.
+- Working feature flags.
+- Case-study content/routes.
+- Sprint-board physics, keyboard path, session persistence, reset, and preview dialog.
+- Procedural R3F mascot.
+- QA/CI/budget harness.
+- Name-first OG card: **Garvit Sukhija** with descriptor **“I turn fuzzy product ideas into things people can use”**. Do not use “Product Manager who builds” or “— Product Manager” as the OG headline/tagline.
+- Craft/performance pass.
+
+Board behavior that was specifically hands-on verified and should be preserved:
+
+- Pointer-up is treated as a final sample in low-sample drags.
+- Presentation-value re-grab via DOMMatrix.
+- Rubber band `0.55`.
+- Projection decay `.998`, capped at `280px`.
+- Velocity handed to independent X/Y springs.
+- Keyboard Alt+Arrow move with focus travel and live announcement.
+- `sessionStorage` key `garvit-board:v1`.
+- Reset clears authored state and uses the exact toast.
+
+### Version 5 — elevation round
+
+**Artifacts/plan:** `docs/process/ELEVATION-BRIEF.md`, `docs/superpowers/plans/2026-08-16-elevation.md`, `docs/qa/elevation-audit.md`.  
+**Main commit:** `e47b999`.
+
+Garvit rejected the first production RC's visible quality:
+
+- mascot looked “third grade” / “2000 not 2026”;
+- Apple/impeccable craft was spent on invisible mechanics instead of visible surfaces;
+- “What is the on-call PM even doing?”
+
+Rules changed:
+
+- Procedural-only mascot rule revoked.
+- Reuse-over-scratch explicitly approved.
+- Sourced free/properly licensed rigged character allowed.
+- Motionsites.ai and 21st.dev permitted as recipe sources, but only after curation/re-tokenization.
+- Apply real material/depth hierarchy to visible surfaces.
+
+The mascot's job evolved twice:
+
+1. **On-call incident responder:** dragging shipped work out of Shipped caused a coral incident and dragging it back resolved it.
+2. **Superseded identity — session journey tracker:** the guide observes this visitor's journey and reacts to milestones. The incident loop may survive only as a journey event; all “on-call” naming must disappear.
+
+New “Your session, instrumented” section:
+
+- Landed → Scrolled → Played → Read work → Converted.
+- Live, browser-local current-session stream.
+- Time, interactions, furthest stage, candid insights.
+- Amplitude-style live bars plus an authored “typical visitor” comparison.
+- Zero visitor homework: display, not score.
+
+Small approved scope addition: 404 became a blameless SEV-3 postmortem with impact, root cause (“PM overestimated his own information architecture”), and links home/board.
+
+### Version 5a — rejected sourced human, accepted robot
+
+The first sourced model was a realistic human/game-NPC. Garvit rejected it as the wrong species: uncanny face, grafted orange headset, sci-fi bodysuit, violation of the “abstract figure, not a likeness” rule.
+
+`cad427e` replaced it with a stylized robot. **Mascot V2 passed:** big head, simplified friendly face, fitted props, release-blue/coral palette, poster pipeline, and retained reaction/signals architecture.
+
+### Version 5b — PostHog and repository restructure checkpoint
+
+**Commit/tag:** `f8b91fe`, tagged `checkpoint/pre-sougen-rebuild-2026-08-17`.  
+**Commit subject:** `feat: PostHog analytics integration + repo restructure`.
+
+This is the checkpoint Garvit wanted to show other people/agents. It contains the approved elevated robot/session experience before the Sougen-inspired immersive rebuild.
+
+PostHog decision history:
+
+- Claude initially declined real PostHog because it conflicted with the privacy gag.
+- Garvit explicitly overruled that. PostHog is approved.
+- Pageviews and autocapture are enabled; session recording remains off unless Garvit explicitly enables it.
+- Custom-event allowlist now has five entries:
+  - `resume_download`
+  - `contact_click`
+  - `case_open`
+  - `full_case_read`
+  - `persona_selected`
+- Session journey/world/guide/board/funnel events never feed PostHog.
+- Exact trust line: **“this funnel is computed in your browser. PostHog sees the rest. I check it obsessively.”**
+
+The repo was also restructured: process docs moved under `docs/process/`, research under `docs/research/`, while `content-source/`, app code, tests, public assets, and scripts stayed at the root.
+
+### Version 6 — Sougen-inspired immersive product world
+
+Garvit asked whether modern sites should feel like `sougen.co`, then asked Codex to lead and Claude to follow. He challenged the robot's visual level and asked about Sougen-level 3D. `img2threejs` was considered as a possible asset route, then the team chose a sourced-model/contact-sheet gate rather than blindly generating a model.
+
+**Spec/plan commits:**
+
+- `4c5fad3` — immersive design specification.
+- `82d480c` — implementation plan.
+- `d3ba08d` — authority/contracts locked after Claude review.
+
+Architecture selected: a persistent 3D guide moving through hero, board, and journey scenes, with DOM content remaining authoritative. Not a full navigable 3D world. Case-study routes remained readable DOM pages.
+
+Claude's corrections incorporated:
+
+- Use the PostHog trust line, not the obsolete “I never see it.”
+- No new PostHog captures from scene/guide/funnel.
+- Model licensing stored in repo; visible attribution not required by Garvit.
+- Two-line hero tracking optically revalidate.
+- Contact sheet → Scene 1 prototype → full migration hard-stop order.
+- Test migration follows every interface lock.
+
+#### Gate A — model selection
+
+- Garvit manually downloaded Muko from Sketchfab.
+- Quaternius free-tier fallback was inspected and rejected for uncanny/unclothed NPC qualities and because the desired Regular rig was paid-only.
+- Muko won, scored 36/40, and Garvit approved it.
+- Muko facts: ~11.5k triangles, 58-joint Mixamo-style rig, single material/atlas-friendly setup, no authored animation clips, CC-BY license stored in repo, model-specific assumptions confined to `guide-rig.ts` and `GuideScene`.
+- Model swap was intentionally kept bounded for a future replacement.
+
+Key commits: `f6d77b6`, `11aa219`, `1e24c61`, `8285302`.
+
+#### Gate B — isolated Scene 1
+
+`/dev/world` proved static composition, persona instrumentation draft, feature-flag dock, Muko poster, hero copy, CTAs, and first ticket. Final commit `cffbde9`; Taste 23/25, Apple static-applicable 36/40.
+
+Important later supersession: that Gate B persona surface was optional/skippable. Garvit later changed it to mandatory onboarding satire; do not reuse the old Skip handler.
+
+#### Gate C — persistent WebGL world
+
+World director, anchors, R3F guide, rig/material adapters, posters, capability policy, and lifecycle were implemented. Key commits `b8b791d` through `c642050`.
+
+Verified measurements:
+
+- 21 draw calls, ceiling 30.
+- 11,458 GLB triangles, ceiling 25k.
+- 413,356 bytes on disk / 314,280 gzip transfer, ceiling 1.8MB.
+- one canvas.
+- theme-specific posters around 15KB and 13KB.
+- world pauses while document hidden/outside active anchors.
+- Save-Data, reduced motion, performance kill, renderer failure, and WebGL-creation failure fall back to posters.
+
+#### Gate D1 — homepage migration
+
+Commit `e085623`, then visual correction `bdd89a3`.
+
+The page gained one provider/world/main/H1, hero→board→journey anchors, one feature dock, CTA preservation, hero evolution, and a board teaser. Corrections improved guide contrast, desktop ticket teaser, and mobile dock peek.
+
+#### Gate D2 — board/world integration
+
+Commit `634e5ef`.
+
+- Explicit mobile column tablist with roving selection, `n of 3`, clamped previous/next, and 28px next-column peek.
+- All projects reachable at 320/390/430 without drag.
+- Board-to-world signals publish discrete state only; move-storm test proves no continuous React publication.
+- Desktop physics, storage, keyboard behavior preserved.
+
+#### Gate E — case-study openings
+
+Commit `2e0412a`, dark evidence `50ef24e`.
+
+- Stay: day-view artifact.
+- Maxie: promoted prototype.
+- Agentic Calendar: authored system diagram with sourced facts.
+- Dynamic Island: authored continuity diagram clearly labeled not an Apple asset.
+- Decision/constraint/outcome treatments and previous/next case navigation.
+- 404 stopped borrowing the case shell.
+
+#### Gate D3 — integrated craft and responsive correction rounds
+
+Commits `8370c80`, `930b80f`, `4c9ae3c`.
+
+Issues found/fixed:
+
+- `#work-board` sticky-chrome anchor offset.
+- Five initial 320px/200%-text overflows plus three more exposed by the probe.
+- Poster painted over experiment/footer in fallback modes.
+- Medium-width hero/dock and persona/copy collisions.
+- Removed journey gradients that violated the design authority.
+- Suppressed the mobile board peek only under enlarged text.
+- Added integrated guide-motion evidence.
+- Reclaimed vertical space at 1024×768 so both CTAs remained visible.
+
+Final recorded design scores: Apple 38/40 and Taste 24/25; all dimensions ≥4.
+
+#### Gate F — release-candidate preparation
+
+Commits `682f320`, `d323071`, `8ae39db`, `79802d3`.
+
+- Removed obsolete pre-world mascot/rail modules after reachability proof.
+- Full release suite: 162 tests at initial Gate F; 360 E2E passed across Chromium/WebKit/Firefox with 9 documented engine skips; 11/11 budgets passed with no SKIP.
+- After Firefox lazy-PostHog rejection fix: 164 unit tests, Firefox 120, Chromium 123, zero reproduced page errors, budget unchanged.
+- Live analytics split verified: pageview/autocapture plus exactly the five custom events; local journey retained five milestones.
+- Failure paths verified: no-JS, storage denial, Save-Data, WebGL denial, live context loss.
+- Garvit chose option `1`, recorded as a waiver for unavailable real Windows High-Contrast evidence; Windows HCM became the first post-RC task.
+
+**Crucial:** despite all of those green gates, Garvit rejected the RC's overall visual/product result. His reaction was that it did not reflect the discussed three-act onboarding, the MVP/Beta/GA idea was not legible, Apple cleanliness was gone, session instrumentation had reused the old component, and too much effort had gone into 3D rendering rather than the experience. This is the clearest example of why mechanical gates cannot approve design.
+
+### Version 7 — recovery: explicit three-act onboarding and session cockpit
+
+Garvit restated the intended experience:
+
+- A modern SaaS-like locked arrival screen.
+- Muko enters/welcomes with a simple animation.
+- Four role options appear **on the same screen**.
+- Selection produces the satire payoff.
+- A simple transition reveals the homepage beneath.
+- These are internal states of one surface, not pages.
+
+Final onboarding decisions:
+
+- Persona selection is mandatory.
+- No Skip.
+- Escape/click-outside cannot dismiss the onboarding.
+- Choices: Founder / Recruiter / Product lead / Just browsing.
+- Exact payoff: **“Noted. This changes nothing. It never does.”**
+- `persona_selected` must go to PostHog so Garvit can know visitor type.
+- Selection does not personalize the site.
+- Onboarding cooldown is 24 hours and writes only after selection.
+- Reload mid-flow returns to Persona.
+- Degraded tiers retain the same DOM flow and use poster/crossfade treatment; only no-JS and crawlers bypass.
+
+Homepage decisions:
+
+- Restore the clean, strong text-led homepage feeling.
+- Static single-card MVP/Beta/GA triptych is preferred; transition allowed only if demonstrably better.
+- Feature flags are subordinate.
+- Kanban board follows below.
+
+Session decisions:
+
+- Retire the old full-width session analytics shell.
+- Most session feedback lives at the guide/model level: pose, pager/status, compact `TRACKING · n/5 → OPEN` affordance.
+- Clicking opens a bespoke fullscreen session cockpit, not a route and not a re-skinned case dialog.
+- Reuse focus-trap/focus-restoration plumbing where appropriate.
+- No new analytics event for opening the cockpit.
+
+### Version 7a — storyboard recovery package
+
+**Untracked artifacts:** `docs/storyboard-recovery/`.
+
+Iterations:
+
+- V1 storyboard was rejected as reviewer documentation rather than a fullscreen experience; avatar was tiny/porthole-like and analytics looked reused.
+- V2 used real transparent astronaut renders and full-viewport capture states.
+- V2.1 corrected mobile cockpit reflow, guide scale, GA saturation, mobile hero composition, and made the tracking chip visibly actionable.
+- Reviewer chrome was then removed from capture mode.
+
+Garvit approved the **flow**, but explicitly said the storyboard did **not define the final design language** and disliked its page/analytics styling. This is codified by `DD-009`. Do not resurrect storyboard colors/components as approved pixels.
+
+### Version 8 — Neo Futurist design-language mock
+
+Garvit supplied a Neo Futurist reference image showing a near-white page, thick black rounded chassis, large media pane, asymmetric modular side panes, monochrome/tactile materiality, tiny uppercase labels, hard contrast, and sparse controls. He chose **sparse accents**, not strict monochrome.
+
+For the session cockpit, official Amplitude sources were researched in `docs/storyboard-recovery/research/amplitude-funnel-patterns.md`. Translation rules:
+
+- Use Amplitude's recognizable funnel hierarchy, not its trade dress.
+- Dominant left pane: this visitor's live session.
+- Diminished right pane: authored `typical visitor` benchmark.
+- Current visitor stages are reached / in progress / not yet—not fake aggregate counts.
+- Benchmark percentages must be explicitly labeled authored/illustrative.
+- Graphite bars and crosshatch encode drop-off/unfinished regions.
+- Instrument metrics use thick frames, tiny spaced labels, and large mono numerals.
+- Mobile stacks the panes.
+
+**Current untracked package:**
+
+- `docs/design-language/neo-futurist-mock.html`
+- `docs/design-language/neo-futurist-notes.md`
+- `docs/design-language/opus-verdict.md`
+- `docs/design-language/captures/`
+- `docs/design-language/execution-rfc-outline.md`
+
+**Tracked RFC:** `docs/design-language/execution-rfc.md` at `bbc12e9`.
+
+Mock states:
+
+- Welcome
+- Persona
+- Punchline
+- Reveal midpoint (review-only, not a route/state users can navigate to)
+- Homepage
+- Session cockpit
+
+Final correction made before this handoff:
+
+- Homepage guide switched to a larger upper-body crop anchored into the GA field.
+- Healthy tracking dot changed from coral to lime; coral is now reserved for alert/benchmark-drop semantics.
+- Desktop light/dark and 390 captures regenerated with proof.
+
+Codex's last recorded visual judgment: onboarding PASS, cockpit PASS, homepage PASS after the upper-body correction. The user was asked to reply `LOCK`, but did not do so before asking about Git and this handoff. Therefore do not manufacture the missing client lock.
+
+### Version 8a — vintage-anime idea, explicitly deferred to V2
+
+Garvit suggested retaining the Neo Futurist language but converting the guide to a vintage-anime style, initially referencing Zoro, and using generated shots/2.5D animation rather than live 3D.
+
+Decision:
+
+- Strong future direction, but **V2 only**.
+- Do not use literal Zoro or copied One Piece IP on a public portfolio.
+- Create an original anime-inspired “product ronin”/guide if pursued.
+- Pre-rendered transparent WebP/AVIF frames or alpha video with parallax/masks can outperform live 3D for authored welcome/poses.
+- Live 3D is justified only when continuous gaze, live reactions, and world continuity materially improve the experience.
+- V1 keeps the existing Muko/WebGL system plus poster fallbacks; no new character-production rabbit hole.
+
+---
+
+## 5. Locked decisions and unresolved decisions
+
+The canonical table is `docs/process/direction-decision-register.md`. Summary:
+
+### Locked
+
+- One fullscreen onboarding surface: Welcome → Persona → Punchline → in-place reveal.
+- Mandatory one-tap persona selection; no Skip or hidden dismissal.
+- Exact four persona choices and exact punchline.
+- `persona_selected` goes to PostHog; local journey stream stays separate.
+- 24-hour completion timestamp writes only after selection; reload mid-flow returns to Persona.
+- Static simultaneous MVP/Beta/GA triptych unless a reviewed transition is clearly better.
+- Homepage order: text-led hero → subordinate flags → board.
+- Old always-visible analytics shell retires; compact guide-level entry opens a fullscreen cockpit.
+- Storyboard V2.1 is flow-only.
+- Career roadmap deferred.
+- V1 guide is Muko live WebGL + matching fallback posters; vintage anime is V2.
+- DESIGN.md remains authority for behavior, accessibility, content, and validated interaction contracts; visible composition/material/palette are reopened.
+- Exact PostHog/session trust line.
+- No production migration before Neo Futurist pixels are explicitly approved.
+
+### Still unresolved / must be formally recorded at pixel lock
+
+- `DD-010`: Neo Futurist pixels remain `Provisional`, even though Codex gave a PASS. Requires Garvit's explicit approval.
+- `DD-017`: choose/record the seam rule. Opus and Codex recommendation: **hairline seam; reject feathered gradient as default**.
+- Benchmark numbers `100/58/24/9/2`: treat as illustrative authored reference and label them, or replace with explicitly sourced numbers. Never imply they are observed audience analytics.
+- Exact persona disclosure recommendation: **“your pick goes to PostHog.”** It is accurate and non-exclusive; Garvit has not separately copy-locked this line.
+- Update the register to reflect the final homepage-guide crop and lime healthy-status dot when the pixel lock lands.
+
+### Supersession chains a new agent must understand
+
+- Zero visitor homework → amended only for mandatory one-tap persona satire with “Just browsing” as the frictionless option.
+- Persona gate rejected by Codex → un-rejected and explicitly required by Garvit once its satire purpose was clarified.
+- Four-event/no-real-analytics stance → superseded by Garvit's PostHog approval and five-event whitelist.
+- On-call incident mascot → superseded by session-journey-tracker identity.
+- Procedural figure → superseded by reuse/sourced-character policy.
+- Realistic sourced human → rejected; stylized robot passed; later immersive rebuild selected Muko.
+- Full OS shell → rejected as a literal requirement; it was only an ambition reference.
+- Storyboard V2.1 visual approval → explicitly demoted to flow-only.
+- Original fully locked DESIGN.md visuals → partially reopened for Neo Futurist redesign; behavior/accessibility contracts survive.
+
+---
+
+## 6. Current implementation architecture worth preserving
+
+Do not rebuild these without a demonstrated interface gap:
+
+- `src/features/board/**` — proven pointer/keyboard physics, persistence, mobile tab navigation, previews, world signals.
+- `src/features/flags/**` — real toggles, confetti limits, dark-mode override, disabled Comic Sans, journey signal bridge.
+- `src/features/journey/journey-store.ts` and observer — browser-local session stream.
+- `src/features/world/**` — one lazy R3F canvas, world director, guide rig/materials, capability policy, poster fallback.
+- `src/lib/analytics.ts` and `src/lib/posthog-client.ts` — typed five-event allowlist and resilient lazy client.
+- Case-study routes/data/artifacts.
+- 404 SEV-3 postmortem.
+- Name-first OG card.
+- Phone reveal privacy behavior.
+- CI, budgets, three-browser E2E harness, reduced-motion/no-JS/failure paths.
+
+Current world architecture:
+
+- `WorldSceneId = "hero" | "board" | "journey"`.
+- Persistent director publishes only discrete state; pointer/scroll presentation samples do not churn React state.
+- Muko-specific rig assumptions stay in `guide-rig.ts` and `GuideScene.tsx` so a future guide swap is bounded.
+- Canvas is pointer-transparent; DOM owns semantics and navigation.
+- R3F/Three is lazy and absent from initial homepage scripts.
+
+---
+
+## 7. Neo Futurist parallel execution RFC
+
+Canonical file: `docs/design-language/execution-rfc.md` (`bbc12e9`).
+
+Entry gate: Garvit pixel-locks the mock, then Codex updates the direction register.
+
+Parallel lanes:
+
+1. **Foundations/chassis — Sonnet:** Neo tokens, materials, reusable chassis primitives; only corresponding global import touched.
+2. **Contract tests/QA — Haiku:** failing E2E contracts, capture scripts, evidence; no production edits.
+3. **Onboarding — Sonnet:** new `src/features/onboarding/**`, state machine, storage, persona telemetry, accessibility; consumes existing world and analytics.
+4. **Homepage/hero — Sonnet:** static triptych, status slot, flags presentation; no board/flag behavior edits.
+5. **Session cockpit — Sonnet:** new `src/features/cockpit/**`, fullscreen Radix surface reading existing journey store.
+6. **Integration — senior Sonnet:** exclusive `page.tsx`/page CSS ownership, wire interfaces, retire old visual shells only after replacements pass.
+
+Frozen proposed interfaces:
+
+```tsx
+<OnboardingExperience />
+<Hero statusSlot={<SessionCockpitLauncher />} />
+<SessionCockpitLauncher />
+```
+
+Storage proposal:
+
+```ts
+// localStorage: garvit-onboarding:v1
+type OnboardingCompletion = { completedAt: number };
+
+// sessionStorage: garvit-onboarding-tab:v1
+type OnboardingTabState = { step: "persona" };
+```
+
+Target execution after pixel lock: 8–12 focused wall-clock hours using parallel lanes, excluding Garvit approval latency and limited to one correction round.
+
+Do not use the older `execution-rfc-outline.md` estimate as authority; the tracked RFC supersedes it.
+
+---
+
+## 8. Git state, branches, tag, remote, and worktrees
+
+### Current branch and remote
+
+- `main` → `7ffc57b` (`add env + superpowers notes`).
+- `origin/main` → `7ffc57b`.
+- Remote: `https://github.com/thisisgarvit/personal-website.git`.
+- Remote repository is public.
+- Repo-local identity expected: `thisisgarvit <garvit.sukh@gmail.com>`, not work identity `GarvitLT`.
+
+### Long-lived local branches
+
+- `codex/elevation` → `e47b999`; fully contained in main and 49 commits behind main.
+- `codex/mascot-v2` → `cad427e`; fully contained in main and 48 commits behind main. It is checked out in the ExportBlock-area worktree `.../garvit-elevation`.
+- Do not delete branches/worktrees without Garvit's explicit approval; they are historical waypoints.
+
+### Checkpoint tag
+
+- `checkpoint/pre-sougen-rebuild-2026-08-17`
+- Annotated tag target: `f8b91fe4dfc67f248c0b8cd6b54c82f01687033d`
+- Meaning: elevated robot/session-journey portfolio after PostHog integration and repo restructure, immediately before Sougen-inspired immersive rebuild.
+
+For a local review agent, use an isolated worktree rather than checking out the shared main tree:
+
+```bash
+git worktree add /tmp/garvit-portfolio-checkpoint checkpoint/pre-sougen-rebuild-2026-08-17
+```
+
+Then run the checkpoint on an unused local port and actively test the Kanban board, keyboard moves, flags, case previews, and session funnel. Do not modify main.
+
+### Current untracked files
+
+As of this handoff:
+
+```text
+docs/design-language/captures/
+docs/design-language/execution-rfc-outline.md
+docs/design-language/neo-futurist-mock.html
+docs/design-language/neo-futurist-notes.md
+docs/design-language/opus-verdict.md
+docs/storyboard-recovery/
+```
+
+These belong to Garvit; do not clean or discard them. The final Neo Futurist package should be committed only after verifying the exact current capture set and recording the client pixel lock.
+
+---
+
+## 9. Complete commit inventory
+
+All commits visible in the current repository, oldest to newest:
+
+| Commit | Date | Meaning |
+|---|---|---|
+| `7ea926b` | 2026-03-17 | Initial public-repo LICENSE commit. |
+| `d351a79` | 2026-08-15 | Approved design artifacts, PRD, content sources; initial history import. |
+| `ae7e5e3` | 2026-08-15 | Next.js foundation / Task 3. |
+| `e9426eb` | 2026-08-15 | Design tokens and structural shell / Task 4. |
+| `ba26d0c` | 2026-08-15 | Production feature flags. |
+| `ef240df` | 2026-08-15 | Case-study content and route port / Task 5. |
+| `3ebd42e` | 2026-08-15 | Sprint-board physics. |
+| `751351c` | 2026-08-15 | Added `@types/three` for mascot task. |
+| `5267337` | 2026-08-15 | Procedural on-call mascot. |
+| `2f0e816` | 2026-08-15 | QA harnesses, budgets, CI, deploy wiring / Task 9. |
+| `fb95c2a` | 2026-08-15 | Garvit content decisions: sourced S25 fact, screenshot decision, OG direction. |
+| `1dbf638` | 2026-08-15 | Name-first social/OG card. |
+| `890c638` | 2026-08-15 | Production craft pass. |
+| `dc1ba9e` | 2026-08-15 | Vendored Impeccable/taste skill and adoption decision. |
+| `5d42eab` | 2026-08-15 | 2% build-variance tolerance for lazy vendor chunk budget. |
+| `e47b999` | 2026-08-15 | Elevation build with sourced session journey. Branch waypoint `codex/elevation`. |
+| `cad427e` | 2026-08-15 | Replaced realistic analyst with stylized robot. Branch waypoint `codex/mascot-v2`. |
+| `f8b91fe` | 2026-08-15 | PostHog integration + repo restructure; checkpoint tag target. |
+| `4c5fad3` | 2026-08-17 | Immersive portfolio design specification. |
+| `82d480c` | 2026-08-17 | Immersive implementation plan. |
+| `d3ba08d` | 2026-08-17 | Immersive authority/contracts lock. |
+| `4364525` | 2026-08-17 | Journey E2E aligned to PostHog disclosure. |
+| `f6d77b6` | 2026-08-17 | Initial guide-candidate evidence. |
+| `11aa219` | 2026-08-17 | Fixed candidate contact-sheet crops. |
+| `1e24c61` | 2026-08-17 | Gate A inspection and contact sheets. |
+| `8285302` | 2026-08-17 | Selected Muko guide model. |
+| `840138a` | 2026-08-17 | Persona-selection analytics. |
+| `e0c0286` | 2026-08-17 | Feature-flag dock variant. |
+| `cffbde9` | 2026-08-17 | Proved immersive hero composition / Gate B. |
+| `b8b791d` | 2026-08-17 | Preserved world signal compatibility. |
+| `a84d15b` | 2026-08-17 | Persistent world director. |
+| `69bd8c9` | 2026-08-17 | Guide source provenance. |
+| `8b5c44d` | 2026-08-17 | Production guide GLB export. |
+| `fb41ee7` | 2026-08-17 | Migrated immersive-world contracts/tests. |
+| `b5e096d` | 2026-08-17 | Exported guide fallback posters. |
+| `e7488b3` | 2026-08-17 | Lazy-loaded PostHog client. |
+| `6dc0e8b` | 2026-08-17 | Finalized guide fallback posters. |
+| `881d50c` | 2026-08-17 | Recorded immersive-world gate evidence. |
+| `835cf97` | 2026-08-17 | Persistent guide world. |
+| `12b3f95` | 2026-08-17 | Refreshed mobile world evidence. |
+| `fab5ca1` | 2026-08-17 | Homepage-world composition contract tests. |
+| `4c4692b` | 2026-08-17 | Scoped feature-flag dock semantics. |
+| `c17ee6a` | 2026-08-17 | Gate C renderer measurements and interaction matrix. |
+| `16a6e50` | 2026-08-17 | Poster fallback when WebGL context creation fails. |
+| `c642050` | 2026-08-17 | WebGL probe test stub for jsdom lifecycle tests. |
+| `6a22673` | 2026-08-17 | Locked public immersive-homepage contracts. |
+| `8928450` | 2026-08-17 | Captured Gate D1 homepage evidence. |
+| `e085623` | 2026-08-17 | Migrated homepage into product world / Gate D1. |
+| `bdd89a3` | 2026-08-17 | Gate D1 contrast, teaser, and mobile dock corrections. |
+| `2e0412a` | 2026-08-17 | Artifact-led case openings / Gate E. |
+| `634e5ef` | 2026-08-17 | Board-to-world integration and mobile board nav / Gate D2. |
+| `50ef24e` | 2026-08-17 | Completed Gate E dark evidence. |
+| `8370c80` | 2026-08-17 | Integrated immersive craft / Gate D3. |
+| `930b80f` | 2026-08-17 | D3 collision/gradient/200%-text/motion corrections. |
+| `4c9ae3c` | 2026-08-17 | Final 1024×768 hero CTA correction. |
+| `682f320` | 2026-08-17 | Gate F release-candidate preparation and obsolete cleanup. |
+| `d323071` | 2026-08-17 | Made lazy PostHog chunk rejection non-fatal/retryable. |
+| `8ae39db` | 2026-08-17 | Reconciled Gate F evidence after Firefox fix. |
+| `79802d3` | 2026-08-17 | Recorded Garvit's Windows HCM waiver. |
+| `f0a693c` | 2026-08-18 | Added Garvit idea ledger + direction decision register. |
+| `bbc12e9` | 2026-08-18 | Added tracked Neo Futurist parallel execution RFC. |
+| `49c1029` | 2026-08-18 | Merged/preserved public repository LICENSE without force-push. |
+| `c60f030` | 2026-09-05 | Added Superpowers SDD notes. |
+| `7ffc57b` | 2026-09-05 | Added `.env` plus SDD notes; current main/origin main. Security hygiene required as noted above. |
+
+The September SDD ledger added at `c60f030` records only early immersive Tasks 0–2 and is stale relative to the later Gate D/E/F history already on main. It is historical context, not the current execution tracker.
+
+---
+
+## 10. Verification history and budgets
+
+The implemented immersive RC's last authoritative evidence is under `docs/qa/immersive/`.
+
+Representative gates:
+
+- Task 4 shell screenshots: 1440×900 and 390×844, light/dark.
+- D1: 163 unit tests, 37/37 targeted E2E plus regression sweep, homepage JS ~157.2KB/170KB.
+- D2/E combined: 185 unit tests; board and cases verified across desktop/mobile and dark/light.
+- D3 final: Apple 38/40, Taste 24/25, homepage JS 159.5KB/170KB; Chromium 122/122, WebKit 116 plus documented skips.
+- Gate F: build/type/lint/test/budget pass, 360 E2E passed across three engines, failure-mode captures, live analytics split proof.
+- Web vitals measured locally around LCP 68ms, CLS 0.0001, INP 104ms. Treat local LCP as directional, not internet production data.
+
+Performance ceilings to preserve:
+
+- initial homepage JS ≤170KB gzip;
+- case routes ≤170KB gzip;
+- lazy Three/R3F vendor chunk ≤234.6KB gzip;
+- world/guide scene module ≤25KB gzip;
+- guide GLB ≤1.8MB;
+- each poster ≤90KB;
+- total fonts ≤100KB.
+
+Important philosophical warning: these gates prove robustness, not taste. Garvit rejected the visually green RC. The new design must be judged from real rendered pixels and interaction, then verified mechanically.
+
+---
+
+## 11. Accessibility, fallback, mobile, and analytics contracts
+
+### Accessibility
+
+- Every interaction must have keyboard/touch/screen-reader parity.
+- 44px minimum primary targets.
+- Board keyboard move retains focus travel and live announcement.
+- Cockpit is a real dialog: focus trap, Escape close, focus restoration.
+- Onboarding is intentionally mandatory: Escape/outside click do not dismiss. “Just browsing” is the accessible low-friction choice.
+- Reduced motion preserves state with immediate/crossfade behavior.
+- No-JS keeps authoritative homepage/case links; onboarding bypasses.
+- Forced-colors/Windows HCM still needs a real Windows pass after the recorded waiver.
+
+### Mobile
+
+- 320, 390, and 430 are first-class; 768/1024 medium layouts must avoid hero/dock collisions.
+- Mobile board must remain fully discoverable via tablist/previous/next; drag is optional.
+- 200% text at 320/390 must reflow without horizontal overflow.
+- Neo Futurist cockpit panes stack on mobile.
+- Both hero CTAs must remain visible and unmistakable.
+
+### Analytics
+
+- Five custom events only, plus PostHog pageviews/autocapture.
+- `persona_selected` payload is currently typed as:
+
+```ts
+{
+  persona: "founder" | "recruiter" | "product_lead" | "just_browsing";
+  surface: "hero_onboarding";
+  $set: { visitor_persona: samePersona };
+}
+```
+
+- No custom event for scene transitions, guide reactions, board motion, funnel milestones, or cockpit open.
+- Current-session funnel remains session-local/browser-local.
+- Session recording remains disabled without a fresh explicit decision.
+
+---
+
+## 12. Known process failures to avoid
+
+1. **Research without synthesis:** reference lists do not matter if the delivered interaction remains a static brochure.
+2. **Mechanical green ≠ design approved:** the long immersive RC passed extensive gates and still missed Garvit's intended experience.
+3. **Do not let Claude's recommendation become a lock:** Garvit explicitly corrected this governance issue.
+4. **Do not lose decisions to compaction:** update the idea ledger and decision register as soon as Garvit gives a meaningful steer.
+5. **Do not duplicate lanes:** Codex and Claude once duplicated Gate A model work, causing multiple HEAD rewrites and wasted tokens. Freeze file ownership.
+6. **Do not trust screenshot claims without artifacts:** one mock-capture run produced duplicated 404 pages. The corrected Neo package includes `capture-proof.json` with hashes, viewport logs, DOM markers, and color-variance checks.
+7. **Do not use stale servers:** a reported board failure was caused by Claude's stale server, not the code.
+8. **Do not create split-checkout play-through ambiguity:** parallel agents may use isolated worktrees, but Garvit's final play-through must run from one declared integration worktree and commit.
+9. **Do not reopen solved mechanics:** preserve board, flags, cases, world capability policy, and analytics unless the new visual contract demonstrates a real interface gap.
+10. **Do not spend the critical path rebuilding 3D:** V1 reuses Muko. Vintage-anime/original 2.5D is V2.
+11. **Do not silently clean untracked files:** storyboard and design-language packages are user work.
+12. **Do not commit real `.env` files:** current main violates this and needs remediation.
+13. **Do not start from a missing design authority:** resolve the RFC's `neo-futurist-direction.md` reference at the pixel-lock commit.
+
+---
+
+## 13. Recommended next-agent sequence
+
+### Step 1 — establish the exact baseline
+
+```bash
+cd /Users/garvits/Documents/Side-Projects/Garvit-Portfolio-July
+git status -sb
+git log -5 --oneline --decorate
+```
+
+Do not reset, clean, or switch branches while the untracked design packages exist.
+
+### Step 2 — read authority before proposing anything
+
+Read, in order:
+
+1. `agent-handoff-codex-chat-in-exportblock-maybe-0-codex`
+2. `docs/process/garvit-idea-ledger.md`
+3. `docs/process/direction-decision-register.md`
+4. `docs/design-language/neo-futurist-notes.md`
+5. `docs/design-language/opus-verdict.md`
+6. `docs/design-language/execution-rfc.md`
+7. Relevant surviving sections of `DESIGN.md`, `PRD.md`, and `ARCHITECTURE.md`.
+
+### Step 3 — get the missing pixel lock
+
+Serve repo root and show:
+
+```text
+/docs/design-language/neo-futurist-mock.html#welcome
+/docs/design-language/neo-futurist-mock.html#persona
+/docs/design-language/neo-futurist-mock.html#homepage
+/docs/design-language/neo-futurist-mock.html#cockpit
+```
+
+Ask Garvit one binary question: does this visual system ship as V1? Do not ask him to re-litigate every prior feature.
+
+If approved:
+
+- Change `DD-010` to Locked.
+- Resolve `DD-017` to hairline/no feather unless Garvit explicitly chooses otherwise.
+- Record illustrative benchmark labeling.
+- Record exact persona disclosure copy.
+- Mark DD-014's precondition satisfied; do not delete the decision.
+- Commit the full design-language package and updated registers with capture proof.
+
+If rejected:
+
+- Ask for the single highest-impact mismatch.
+- Permit one bounded design correction, update the ledger/register, and stop. Do not create another broad concept round.
+
+### Step 4 — remediate `.env`
+
+Before public showcase/deploy, inspect without printing values, untrack `.env`, restore ignore rules, and assess token rotation. This is an explicit hygiene task, not a visual redesign.
+
+### Step 5 — execute the RFC in parallel
+
+- Foundation tokens + Haiku contract tests start together.
+- Onboarding, homepage, and cockpit run in parallel after the token contract freezes.
+- Integration owner alone touches `page.tsx` and retires old shells.
+- Full cross-browser/budget matrix runs once after integration, not redundantly after every CSS iteration.
+- Codex/Garvit get one integrated pixel review and one bounded correction round.
+
+### Step 6 — release gate
+
+- Re-run unit/type/lint/build/budgets.
+- Run focused Chrome/WebKit/Firefox E2E and failure modes.
+- Verify analytics payload and separation.
+- Verify no `.env` or personal files are committed.
+- Run Garvit's live desktop/mobile play-through from the declared integration commit.
+- Only then create the RC/deploy commit; deployment requires separate authorization.
+
+---
+
+## 14. Fast orientation links
+
+- Original chosen concept: `docs/process/CONCEPT-SPEC-product-site.md`
+- Production design authority, with later amendments: `DESIGN.md`
+- Product/behavior authority, with later amendments: `PRD.md`
+- Architecture and surviving contracts: `ARCHITECTURE.md`
+- Garvit ideas: `docs/process/garvit-idea-ledger.md`
+- Decision/supersession register: `docs/process/direction-decision-register.md`
+- Immersive spec: `docs/superpowers/specs/2026-08-17-immersive-product-world-design.md`
+- Immersive implementation plan: `docs/superpowers/plans/2026-08-17-immersive-product-world.md`
+- Final old-RC evidence: `docs/qa/immersive/gate-f-rc.md`
+- Recovery storyboard: `docs/storyboard-recovery/storyboard.html`
+- Neo Futurist mock: `docs/design-language/neo-futurist-mock.html`
+- Neo design notes: `docs/design-language/neo-futurist-notes.md`
+- Opus visual review: `docs/design-language/opus-verdict.md`
+- Parallel production RFC: `docs/design-language/execution-rfc.md`
+- Checkpoint tag: `checkpoint/pre-sougen-rebuild-2026-08-17` → `f8b91fe`.
+
+---
+
+## 15. Final handoff statement
+
+The project is not missing engineering capability; it is waiting on one explicit client visual lock. The previous RC proves the mechanics, content, fallback strategy, and test harness. The next build should be a visual-shell migration governed by the Neo Futurist mock, not another reinvention of the board, cases, analytics, or 3D pipeline.
+
+The correct finish is:
+
+**Lock one coherent visual system → implement three visible surfaces in parallel → integrate once → judge real pixels once → release.**
